@@ -20,9 +20,9 @@
     // color: $primary;
   }
   
-  a:hover {
-    // color: $primary__hover !important;
-  }
+  // a:hover {
+  //   color: $primary__hover !important;
+  // }
   
   .bangla {
     font-family: 'Hind Siliguri' !important;
@@ -30,4 +30,8 @@
   
   svg {
     font-size: 2.5rem !important;
+  }
+
+  .minHeight {
+    min-height: 60vh;
   }

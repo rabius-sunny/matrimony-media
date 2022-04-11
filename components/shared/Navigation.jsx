@@ -1,4 +1,3 @@
-/* This example requires Tailwind CSS v2.0+ */
 import { Fragment } from 'react'
 import { Popover, Transition } from '@headlessui/react'
 import {
@@ -14,19 +13,19 @@ const solutions = [
     },
     {
         name: 'আমাদের সম্পর্কে',
-        href: '/',
+        href: '/about-us',
     },
     {
         name: 'প্রশ্নোত্তর',
-        href: '/',
+        href: '/qa',
     },
     {
         name: 'টিউটোরিয়াল',
-        href: '/',
+        href: '/tutorials',
     },
     {
         name: 'যোগাযোগ',
-        href: '/',
+        href: '/contact-us',
     }
 ]
 
@@ -36,14 +35,16 @@ export default function Navigation() {
             <div className="max-w-7xl mx-auto px-4 sm:px-6">
                 <div className="flex justify-between items-center border-b-2 border-gray-100 py-6 md:justify-start md:space-x-10">
                     <div className="flex justify-start lg:w-0 lg:flex-1">
-                        <a href="/" className='flex'>
-                            <img
-                                className="h-8 w-auto sm:h-10"
-                                src="/images/logo.jpg"
-                                alt=""
-                            />
-                            <span className="text-red-400 font-bold text-2xl pl-3">mysite.com</span>
-                        </a>
+                        <Link href="/">
+                            <a className='flex'>
+                                <img
+                                    className="h-8 w-auto sm:h-10"
+                                    src="/images/logo.jpg"
+                                    alt="logo"
+                                />
+                                <span className="text-red-400 font-bold text-2xl pl-3">mysite.com</span>
+                            </a>
+                        </Link>
                     </div>
                     <div className="-mr-2 -my-2 md:hidden">
                         <Popover.Button className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
@@ -86,14 +87,16 @@ export default function Navigation() {
                         <div className="pt-5 pb-6 px-5">
                             <div className="flex items-center justify-between">
                                 <div>
-                                    <a href="/" className='flex'>
-                                        <img
-                                            className="h-8 w-auto"
-                                            src="/images/logo.jpg"
-                                            alt="Workflow"
-                                        />
-                                        <span className="text-red-400 font-bold text-xl pl-3">mysite.com</span>
-                                    </a>
+                                    <Link href="/">
+                                        <a className='flex'>
+                                            <img
+                                                className="h-8 w-auto"
+                                                src="/images/logo.jpg"
+                                                alt="Workflow"
+                                            />
+                                            <span className="text-red-400 font-bold text-xl pl-3">mysite.com</span>
+                                        </a>
+                                    </Link>
 
                                 </div>
                                 <div className="-mr-2">

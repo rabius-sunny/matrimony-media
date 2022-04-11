@@ -1,6 +1,6 @@
 export default function Footer() {
   return <footer>
-    <section className="bg-red-600">
+    <section className="bg-gradient-to-r from-rose-600 to-pink-600">
       <div className="container">
         <div className="top">
           <div className="grid grid-cols-2">
@@ -11,8 +11,8 @@ export default function Footer() {
             </div>
             <div className="col-span-2 md:col-span-1">
               <div className="links text-center md:text-right">
-                <span className="text-2xl text-white">Facebook page</span>
-                <span className="text-2xl text-white">Facebook group</span>
+                <span className="text-xl md:text-2xl text-white">Facebook page</span>
+                <span className="text-xl md:text-2xl text-white">Facebook group</span>
               </div>
             </div>
           </div>

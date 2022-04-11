@@ -1,0 +1,10 @@
+.contactus {
+  form {
+    min-width: 100%;
+
+    @media (min-width: 768px) {
+      min-width: 700px;
+    }
+
+  }
+}

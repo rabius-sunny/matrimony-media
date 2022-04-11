@@ -119,7 +119,7 @@ export default function Dropdown({ legend }) {
             <Listbox value={selected} onChange={setSelected}>
                 <Listbox.Label className="block text-sm font-medium text-white">{legend}</Listbox.Label>
                 <div className="relative mt-1">
-                    <Listbox.Button className="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    <Listbox.Button className="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-red-800 focus:border-red-800 sm:text-sm">
                         <span className="block truncate">{selected.name}</span>
                         <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
                             <SelectorIcon
@@ -139,7 +139,7 @@ export default function Dropdown({ legend }) {
                                 <Listbox.Option
                                     key={personIdx}
                                     className={({ active }) =>
-                                        `cursor-default select-none relative py-2 pl-10 pr-4 ${active ? 'text-amber-900 bg-amber-100' : 'text-gray-900'
+                                        `cursor-default select-none relative py-2 pl-10 pr-4 ${active ? 'text-red-600 bg-red-100' : 'text-gray-900'
                                         }`
                                     }
                                     value={person}
@@ -153,7 +153,7 @@ export default function Dropdown({ legend }) {
                                                 {person.name}
                                             </span>
                                             {selected ? (
-                                                <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">
+                                                <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-red-600">
                                                     <CheckIcon className="w-5 h-5" aria-hidden="true" />
                                                 </span>
                                             ) : null}
