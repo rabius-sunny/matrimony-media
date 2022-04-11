@@ -2,62 +2,47 @@
 import { Fragment } from 'react'
 import { Popover, Transition } from '@headlessui/react'
 import {
-    ChartBarIcon,
-    CursorClickIcon,
     MenuIcon,
-    RefreshIcon,
-    ShieldCheckIcon,
-    ViewGridIcon,
     XIcon,
 } from '@heroicons/react/outline'
-import { ChevronDownIcon } from '@heroicons/react/solid'
 import Link from 'next/link'
 
 const solutions = [
     {
-        name: 'Analytics',
-        description: 'Get a better understanding of where your traffic is coming from.',
-        href: '#',
-        icon: ChartBarIcon,
+        name: 'হোম',
+        href: '/',
     },
     {
-        name: 'Engagement',
-        description: 'Speak directly to your customers in a more meaningful way.',
-        href: '#',
-        icon: CursorClickIcon,
-    },
-    { name: 'Security', description: "Your customers' data will be safe and secure.", href: '#', icon: ShieldCheckIcon },
-    {
-        name: 'Integrations',
-        description: "Connect with third-party tools that you're already using.",
-        href: '#',
-        icon: ViewGridIcon,
+        name: 'আমাদের সম্পর্কে',
+        href: '/',
     },
     {
-        name: 'Automations',
-        description: 'Build strategic funnels that will drive your customers to convert',
-        href: '#',
-        icon: RefreshIcon,
+        name: 'প্রশ্নোত্তর',
+        href: '/',
+    },
+    {
+        name: 'টিউটোরিয়াল',
+        href: '/',
+    },
+    {
+        name: 'যোগাযোগ',
+        href: '/',
     }
 ]
 
-function classNames(...classes) {
-    return classes.filter(Boolean).join(' ')
-}
-
-export default function Example() {
+export default function Navigation() {
     return (
-        <Popover className="relative bg-white">
+        <Popover className="relative bg-white z-20">
             <div className="max-w-7xl mx-auto px-4 sm:px-6">
                 <div className="flex justify-between items-center border-b-2 border-gray-100 py-6 md:justify-start md:space-x-10">
                     <div className="flex justify-start lg:w-0 lg:flex-1">
-                        <a href="#">
-                            <span className="sr-only">Workflow</span>
+                        <a href="/" className='flex'>
                             <img
                                 className="h-8 w-auto sm:h-10"
-                                src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
+                                src="/images/logo.jpg"
                                 alt=""
                             />
+                            <span className="text-red-400 font-bold text-2xl pl-3">mysite.com</span>
                         </a>
                     </div>
                     <div className="-mr-2 -my-2 md:hidden">
@@ -67,31 +52,21 @@ export default function Example() {
                         </Popover.Button>
                     </div>
                     <div className="hidden md:flex space-x-10">
-                        <Link href="/" className="text-base font-medium text-gray-500 hover:text-gray-900">
-                            Home
-                        </Link>
-                        <a href="#" className="text-base font-medium text-gray-500 hover:text-gray-900">
-                            About Us
-                        </a>
-                        <a href="#" className="text-base font-medium text-gray-500 hover:text-gray-900">
-                            QA
-                        </a>
-                        <a href="#" className="text-base font-medium text-gray-500 hover:text-gray-900">
-                            Tutorial
-                        </a>
-                        <a href="#" className="text-base font-medium text-gray-500 hover:text-gray-900">
-                            Contact
-                        </a>
+                        {
+                            solutions.map(item => <Link href={item.href}>
+                                <a className="text-base font-medium text-red-500 hover:text-red-400">{item.name}</a>
+                            </Link>)
+                        }
                     </div>
                     <div className="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
-                        <a href="#" className="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
-                            Sign in
+                        <a href="/" className="whitespace-nowrap text-base font-medium text-red-500 hover:text-red-400">
+                            সাইন ইন
                         </a>
                         <a
-                            href="#"
-                            className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+                            href="/"
+                            className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-red-600 hover:bg-red-700"
                         >
-                            Sign up
+                            সাইন আপ
                         </a>
                     </div>
                 </div>
@@ -111,11 +86,15 @@ export default function Example() {
                         <div className="pt-5 pb-6 px-5">
                             <div className="flex items-center justify-between">
                                 <div>
-                                    <img
-                                        className="h-8 w-auto"
-                                        src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
-                                        alt="Workflow"
-                                    />
+                                    <a href="/" className='flex'>
+                                        <img
+                                            className="h-8 w-auto"
+                                            src="/images/logo.jpg"
+                                            alt="Workflow"
+                                        />
+                                        <span className="text-red-400 font-bold text-xl pl-3">mysite.com</span>
+                                    </a>
+
                                 </div>
                                 <div className="-mr-2">
                                     <Popover.Button className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
@@ -126,36 +105,26 @@ export default function Example() {
                             </div>
                             <div className="mt-6">
                                 <nav className="grid gap-y-8">
-                                    <Link href="/" className="text-base font-medium text-gray-500 hover:text-gray-900">
-                                        Home
-                                    </Link>
-                                    <a href="#" className="text-base font-medium text-gray-500 hover:text-gray-900">
-                                        About Us
-                                    </a>
-                                    <a href="#" className="text-base font-medium text-gray-500 hover:text-gray-900">
-                                        QA
-                                    </a>
-                                    <a href="#" className="text-base font-medium text-gray-500 hover:text-gray-900">
-                                        Tutorial
-                                    </a>
-                                    <a href="#" className="text-base font-medium text-gray-500 hover:text-gray-900">
-                                        Contact
-                                    </a>
+                                    {
+                                        solutions.map(item => <Link href={item.href}>
+                                            <a className="text-base font-medium text-red-500 hover:text-red-400">{item.name}</a>
+                                        </Link>)
+                                    }
                                 </nav>
                             </div>
                         </div>
                         <div className="py-6 px-5 space-y-6">
                             <div>
                                 <a
-                                    href="#"
-                                    className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+                                    href="/"
+                                    className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-red-600 hover:bg-red-700"
                                 >
-                                    Sign up
+                                    সাইন আপ
                                 </a>
                                 <p className="mt-6 text-center text-base font-medium text-gray-500">
-                                    Existing user?{' '}
-                                    <a href="#" className="text-indigo-600 hover:text-indigo-500">
-                                        Sign in
+                                    অ্যাকাউন্ট আছে?{' '}
+                                    <a href="/" className="text-red-600 hover:text-red-500">
+                                        সাইন ইন
                                     </a>
                                 </p>
                             </div>
@@ -163,6 +132,6 @@ export default function Example() {
                     </div>
                 </Popover.Panel>
             </Transition>
-        </Popover>
+        </Popover >
     )
 }

@@ -1,14 +1,28 @@
 .home {
     &__top {
-        background-image: url('../../../public/images/homebg.jpg');
+        background-image: url('../../../public/images/homebg2.jpg');
         background-position: center center;
         background-repeat: no-repeat;
         background-size: cover;
         padding: 150px 0 100px 0;
+        @media (max-width: 767px) {
+            padding: 50px 0
+        }
         h1 {
-            color: white;
+            color: crimson;
             font-size: 2.5rem;
             text-align: center;
+            @media (max-width: 470px) {
+                font-size: 1.8rem;
+            }
+        }
+    }
+    &__options {
+        // background-color: red;
+    }
+    &__achievements {
+        img {
+            height: 80px;
         }
     }
 }
