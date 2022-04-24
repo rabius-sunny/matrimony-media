@@ -1,15 +1,9 @@
 footer {
-  .top {
-    .links {
-      span:first-child {
-        padding-right: 15px;
-      }
-    }
-  }
-
-  .bottom {
-    span:first-child {
-      padding-right: 15px;
+  ul>li{
+    color: #ffffffc0;
+    padding: 5px 0;
+    &:hover {
+      color: white;
     }
   }
 }

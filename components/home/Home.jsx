@@ -1,16 +1,17 @@
 import { achieves } from "../../assets/fakedata";
 import Hometext from "../others/Hometext";
 import Dropdown from "./Dropdown";
+import Featured from "./Featured";
 
 export default function Home() {
     return <div className="home">
-        <div className="home__top">
 
+        {/* Hero Section */}
+        <div className="home__top">
             <div className="container grid grid-cols-12 gap-6">
                 <div className="col-span-12 md:col-span-5 order-last md:order-1">
                     <div className="hidden md:block px-8 py-2 border-4 bg-red-600 rounded-lg border-red-600 ">
                         <Dropdown legend="আমি খুঁজছি" />
-                        <Dropdown legend='বৈবাহিক অবস্থা' />
                         <Dropdown legend='জেলা' />
                         <div>
                             <label className="block text-sm font-medium text-white mb-1" htmlFor="biono">বায়োডাটা নং.</label>
@@ -30,7 +31,7 @@ export default function Home() {
                 </div>
             </div>
         </div>
-        <div className="pt-10">
+        <div className="pt-10 md:pt-0">
             <div className="container">
                 <div className="block md:hidden px-8 py-2 border-4 bg-red-600 rounded-lg border-red-600 ">
                     <Dropdown legend="আমি খুঁজছি" />
@@ -47,20 +48,10 @@ export default function Home() {
                     </div>
                 </div>
             </div>
-            <hr className="mt-10 md:hidden" />
+            <hr className="mt-10 md:mt-0 md:hidden" />
         </div>
 
-        <div className="home__options">
-            <div className="container text-center py-28">
-                <h1 className="mb-24">
-                    <span className="py-8 px-8 sm:px-28 rounded bg-red-600 text-white text-lg sm:text-xl md:text-3xl">আপনার বায়োডাটা তৈরি করুন</span>
-                </h1>
-                <h2>
-                    <span className="py-6 px-6 sm:px-20 rounded bg-red-500 text-white text-lg sm:text-lg md:text-2xl">কীভাবে বায়োডাটা তৈরি করবেন</span>
-                </h2>
-            </div>
-        </div>
-
+        {/* Acheivements */}
         <section className="home__achievements">
             <div className="container grid grid-cols-12 gap-4 text-center">
                 {
@@ -73,6 +64,23 @@ export default function Home() {
             </div>
         </section>
 
+        {/* Featured Biodata */}
+        <Featured />
+
+        {/* Tutorial */}
+        <div className="home__options bg-red-500 pb-28">
+            <h1 className="text-center text-4xl text-white pt-16 pb-20">টিউটোরিয়াল</h1>
+            <div className="container text-center">
+                <h1 className="mb-24">
+                    <span className="py-8 px-8 sm:px-28 rounded bg-white text-red-500 text-lg sm:text-xl md:text-3xl">আপনার বায়োডাটা তৈরি করুন</span>
+                </h1>
+                <h2>
+                    <span className="py-6 px-6 sm:px-20 rounded bg-slate-200 text-red-500 text-lg sm:text-lg md:text-2xl">কীভাবে বায়োডাটা তৈরি করবেন</span>
+                </h2>
+            </div>
+        </div>
+
+        {/* Guide */}
         <section className="bg-gray-200">
             <div className="container">
                 <h1 className="text-center text-red-600 text-3xl pb-6">

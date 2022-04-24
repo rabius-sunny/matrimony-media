@@ -2,24 +2,39 @@ export default function Footer() {
   return <footer>
     <section className="bg-gradient-to-r from-rose-600 to-pink-600">
       <div className="container">
-        <div className="top">
-          <div className="grid grid-cols-2">
-            <div className="col-span-2 pb-8 md:pb-0 md:col-span-1 text-center md:text-left">
-              <span className="text-2xl text-white">
-                &copy; 2022-2023 | matrimonysite.com
-              </span>
-            </div>
-            <div className="col-span-2 md:col-span-1">
-              <div className="links text-center md:text-right">
-                <span className="text-xl md:text-2xl text-white">Facebook page</span>
-                <span className="text-xl md:text-2xl text-white">Facebook group</span>
-              </div>
+        <div className="grid grid-cols-5">
+
+          <div className="col-span-3 lg:col-span-2">
+            <h2 className="text-xl mb-4 text-white font-bold">Pages</h2>
+            <ul>
+              <li>ফেভারিট</li>
+              <li>প্রশ্নোত্তর</li>
+              <li>আমাদের সম্পর্কে</li>
+              <li>যোগাযোগ</li>
+            </ul>
+          </div>
+          <div className="col-span-2">
+            <div className="">
+              <h2 className="text-xl mb-4 text-white font-bold">Important Links</h2>
+              <ul>
+                <li>importantlink.com</li>
+                <li>importantlink.com</li>
+                <li>importantlink.com</li>
+                <li>importantlink.com</li>
+              </ul>
             </div>
           </div>
-        </div>
-        <div className="bottom text-center pt-10">
-          <span className="text-white">Privacy Policy</span>
-          <span className="text-white">Terms & Conditions</span>
+          <div className="col-span-5 mt-8 lg:mt-0 text-center lg:text-left lg:col-span-1">
+            <div className="">
+              <h2 className="text-xl mb-4 text-white font-bold">Important Links</h2>
+              <ul className='underline'>
+                <li>Blog title goes here, blog title goes here</li>
+                <li>Blog title goes here, blog title goes here</li>
+                <li>Blog title goes here, blog title goes here</li>
+                <li>Blog title goes here, blog title goes here</li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
     </section>
