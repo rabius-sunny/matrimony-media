@@ -5,8 +5,10 @@ import Head from 'next/head'
 import Navigation from '../components/shared/Navigation'
 import Footer from '../components/shared/Footer'
 import Layout from '../components/shared/Layout'
+import { useRouter } from 'next/router'
 
 export default function MyApp({ Component, pageProps }) {
+
   return <>
     <Head>
       <link rel="preconnect" href="https://fonts.googleapis.com" />

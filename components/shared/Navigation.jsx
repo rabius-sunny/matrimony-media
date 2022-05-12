@@ -109,7 +109,7 @@ export default function Navigation() {
                                 <div className="mt-6">
                                     <Menu.Items className="grid gap-y-8">
                                         {
-                                            solutions.map(item => <Menu.Item>
+                                            solutions.map(item => <Menu.Item key={item.href}>
                                                 {({ active }) => (
                                                     <button
                                                         onClick={() => router.push(item.href)}
