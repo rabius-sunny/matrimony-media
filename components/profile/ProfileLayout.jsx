@@ -3,7 +3,7 @@ import avatar from 'public/images/avatar.svg'
 
 export default function ProfileLayout({ children }) {
   return (
-    <div className='container my-8'>
+    <div className='container my-8' style={{ minHeight: '60vh' }}>
       <div className='profile__grid'>
         <div className='grid grid-cols-12 gap-4'>
           <div className='col-span-12 md:col-span-4'>

@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import ProfileRoutes from 'components/profile/ProfileRoutes'
 import FieldInput from 'components/profile/FieldInput'
 
-export default function Name() {
+export default function MarriageRelated() {
   const router = useRouter()
   const activeRoute = (routename) =>
     router.route.split('/edit')[1] === routename ? true : false
@@ -15,10 +15,15 @@ export default function Name() {
     <ProfileLayout>
       <ProfileRoutes activeRoute={activeRoute} />
       <FieldInput
-        legend='সম্পূর্ণ নাম'
+        legend='অভিভাবক আপনার বিয়েতে রাজি কি না?'
         handleChange={handlechange}
-        description='নাম নেয়া হচ্ছে ভেরিফিকেশনের জন্য, পূর্ণ নাম লিখবেন। আপনার নাম কারো সাথে শেয়ার করা হবে না।'
-        placeholder='মোঃ রবিউস সানী'
+        required={true}
+        name='name'
+      />
+      <FieldInput
+        legend='বিয়ে কেন করছেন? বিয়ে সম্পর্কে আপনার ধারণা কি?'
+        handleChange={handlechange}
+        description='সংক্ষেপে বর্ণনা করুন।'
         required={true}
         name='name'
       />

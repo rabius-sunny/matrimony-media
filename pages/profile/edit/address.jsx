@@ -1,16 +1,36 @@
 import { useRouter } from 'next/router'
-import React from 'react'
 import ProfileLayout from 'components/profile/ProfileLayout'
 import ProfileRoutes from 'components/profile/ProfileRoutes'
+import FieldInput from 'components/profile/FieldInput'
 
 export default function Address() {
   const router = useRouter()
-  const activeRoute = routename =>
+  const activeRoute = (routename) =>
     router.route.split('/edit')[1] === routename ? true : false
+  const handlechange = (e) => {}
   return (
     <ProfileLayout>
       <ProfileRoutes activeRoute={activeRoute} />
-      <h1 className='text-3xl text-red-500'>Address</h1>
+      <FieldInput
+        legend='স্থায়ী ঠিকানা'
+        handleChange={handlechange}
+        placeholder='গুলশান-২, ঢাকা'
+        required={true}
+        name='permanent_address'
+      />
+      <FieldInput
+        legend='বর্তমান ঠিকানা'
+        handleChange={handlechange}
+        placeholder='ভাটারা, গুলশান-২, ঢাকা'
+        required={true}
+        name='current_address'
+      />
+      <FieldInput
+        legend='কোথায় বড় হয়েছেন?'
+        handleChange={handlechange}
+        required={true}
+        name='being_address'
+      />
     </ProfileLayout>
   )
 }
