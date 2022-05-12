@@ -1,23 +1,28 @@
-import Link from 'next/link'
+import ProfileLayout from 'components/profile/ProfileLayout'
 import { useRouter } from 'next/router'
 import React from 'react'
-import { formRoutes } from '../../../assets/fakedata'
+import ProfileRoutes from 'components/profile/ProfileRoutes'
+import FieldInput from 'components/profile/FieldInput'
 
 export default function Name() {
   const router = useRouter()
-  const activeRoute = routename => router.route.split('/edit')[1] === routename ? true : false
+  const activeRoute = routename =>
+    router.route.split('/edit')[1] === routename ? true : false
+  const handlechange = e => {
+    console.log(e.target.value)
+  }
+
   return (
-    <div className='container my-8'>
-      <div className="flex items-center flex-wrap">
-        {
-          formRoutes.map((route, index) => <Link key={index} href={'/profile/edit' + route.link}>
-            <a className={`${activeRoute(route.link) ? 'bg-orange-500' : 'bg-blue-500'} p-2 text-white m-2`}>
-              {route.name}
-            </a>
-          </Link>)
-        }
-      </div>
-      <h1 className='text-red-500 text-3xl'>Name</h1>
-    </div>
+    <ProfileLayout>
+      <ProfileRoutes activeRoute={activeRoute} />
+      <FieldInput
+        legend='সম্পূর্ণ নাম'
+        handleChange={handlechange}
+        description='নাম নেয়া হচ্ছে ভেরিফিকেশনের জন্য, পূর্ণ নাম লিখবেন। আপনার নাম কারো সাথে শেয়ার করা হবে না।'
+        placeholder='মোঃ রবিউস সানী'
+        required={true}
+        name='name'
+      />
+    </ProfileLayout>
   )
 }

@@ -1,4 +1,4 @@
-import { achieves } from '../../assets/fakedata'
+import { achieves } from 'assets/fakedata'
 import Hometext from '../others/Hometext'
 import Dropdown from './Dropdown'
 import Featured from './Featured'
