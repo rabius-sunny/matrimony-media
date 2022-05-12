@@ -1,7 +1,17 @@
+import Head from "next/head";
 import ColoredHeader from "../components/shared/ColoredHeader";
+import image from 'public/images/homebg2.jpg'
 
 export default function AboutUs() {
   return <div className="aboutus">
+    <Head>
+      <title>Matrimony Media</title>
+      <meta property="og:title" content="Matrimony Media" />
+      <meta property="description" content="Description text for matrimony media. This is description for meta." />
+      <meta property="og:description" content="Description text for matrimony media. This is description for meta." />
+      <meta property="og:image" content={image} />
+      <meta property="og:url" content="https://matrimony-media.vercel.app/about-us" />
+    </Head>
     <ColoredHeader heading='আমাদের সম্পর্কে' />
     <div className="container2 minHeight">
       <hr className="my-10" />
