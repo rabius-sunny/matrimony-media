@@ -17,14 +17,13 @@ import FieldInput from 'components/profile/FieldInput'
 
 export default function GeneralInfo() {
   const router = useRouter()
-  const activeRoute = (routename) =>
+  const activeRoute = routename =>
     router.route.split('/edit')[1] === routename ? true : false
 
-  const handlechange = (e) => {}
+  const handlechange = e => {}
   return (
     <ProfileLayout>
       <ProfileRoutes activeRoute={activeRoute} />
-      <ProfileDrop legend='বায়োডাটার ধরন' data={_type} />
       <ProfileDrop legend='বৈবাহিক অবস্থা' data={_condition} />
       <ProfileDrop legend='স্থায়ী ঠিকানা' data={_address_jilla} />
       <ProfileDrop legend='বিভাগ' data={_address_division} />
@@ -37,7 +36,7 @@ export default function GeneralInfo() {
       <ProfileDrop legend='রক্তের গ্রুপ' data={_bloodGroup} />
       <FieldInput
         legend='পেশা'
-        handleChange={handlechange}
+        handlechange={handlechange}
         description='সর্বোচ্চ ৩ শব্দে শুধু পদবী লিখবেন। পেশা সম্পর্কে বিস্তারিত লিখার জন্য সামনে প্রশ্ন আসছে।'
         placeholder='সফটওয়্যার ইঞ্জিনিয়ার'
         required={true}
@@ -45,7 +44,7 @@ export default function GeneralInfo() {
       />
       <FieldInput
         legend='মাসিক আয়'
-        handleChange={handlechange}
+        handlechange={handlechange}
         description='জানাতে অনিচ্ছুক হলে ঘরটি ফাঁকা রাখুন।'
         placeholder='৩০ হাজার'
         name='income'

@@ -7,20 +7,20 @@ import { useRouter } from 'next/router'
 const solutions = [
   {
     name: 'ফেভারিট',
-    href: '/favorite',
+    href: '/favorite'
   },
   {
     name: 'প্রশ্নোত্তর',
-    href: '/qa',
+    href: '/qa'
   },
   {
     name: 'আমাদের সম্পর্কে',
-    href: '/about-us',
+    href: '/about-us'
   },
   {
     name: 'যোগাযোগ',
-    href: '/contact-us',
-  },
+    href: '/contact-us'
+  }
 ]
 
 export default function Navigation() {
@@ -54,7 +54,7 @@ export default function Navigation() {
               {/* </Popover.Button> */}
             </div>
             <div className='hidden space-x-10 md:flex'>
-              {solutions.map((item) => (
+              {solutions.map(item => (
                 <Link href={item.href} key={item.href}>
                   <a className='text-base font-medium text-red-500 hover:text-red-400'>
                     {item.name}
@@ -63,7 +63,7 @@ export default function Navigation() {
               ))}
             </div>
             <div className='hidden items-center justify-end md:flex md:flex-1 lg:w-0'>
-              <Link href='/profile/edit/name'>
+              <Link href='/sign-in'>
                 <a className='ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700'>
                   সিভি পাঠান
                 </a>
@@ -111,7 +111,7 @@ export default function Navigation() {
                 </div>
                 <div className='mt-6'>
                   <Menu.Items className='grid gap-y-8'>
-                    {solutions.map((item) => (
+                    {solutions.map(item => (
                       <Menu.Item key={item.href}>
                         {({ active }) => (
                           <button
@@ -128,12 +128,11 @@ export default function Navigation() {
               </div>
               <div className='space-y-6 py-6 px-5'>
                 <div>
-                  <a
-                    href='/'
-                    className='flex w-full items-center justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700'
-                  >
-                    সিভি পাঠান
-                  </a>
+                  <Link href='/sign-in'>
+                    <a className='flex w-full items-center justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700'>
+                      সিভি পাঠান
+                    </a>
+                  </Link>
                 </div>
               </div>
             </div>

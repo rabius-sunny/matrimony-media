@@ -5,29 +5,29 @@ import FieldInput from 'components/profile/FieldInput'
 
 export default function Address() {
   const router = useRouter()
-  const activeRoute = (routename) =>
+  const activeRoute = routename =>
     router.route.split('/edit')[1] === routename ? true : false
-  const handlechange = (e) => {}
+  const handlechange = e => {}
   return (
     <ProfileLayout>
       <ProfileRoutes activeRoute={activeRoute} />
       <FieldInput
         legend='স্থায়ী ঠিকানা'
-        handleChange={handlechange}
+        handlechange={handlechange}
         placeholder='গুলশান-২, ঢাকা'
         required={true}
         name='permanent_address'
       />
       <FieldInput
         legend='বর্তমান ঠিকানা'
-        handleChange={handlechange}
+        handlechange={handlechange}
         placeholder='ভাটারা, গুলশান-২, ঢাকা'
         required={true}
         name='current_address'
       />
       <FieldInput
         legend='কোথায় বড় হয়েছেন?'
-        handleChange={handlechange}
+        handlechange={handlechange}
         required={true}
         name='being_address'
       />

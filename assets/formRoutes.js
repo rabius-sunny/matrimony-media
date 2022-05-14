@@ -1,6 +1,6 @@
 const formRoutes = [
   {
-    name: 'নাম',
+    name: 'প্রাথমিক',
     link: '/name'
   },
   {
