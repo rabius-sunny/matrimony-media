@@ -3,6 +3,7 @@ import { Menu, Popover, Transition } from '@headlessui/react'
 import { MenuIcon, XIcon } from '@heroicons/react/outline'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import useAuth from 'hooks/useAuth'
 
 const solutions = [
   {
@@ -25,6 +26,7 @@ const solutions = [
 
 export default function Navigation() {
   const router = useRouter()
+  const auth = useAuth()
 
   return (
     <Popover className='relative z-20 bg-white'>
@@ -63,7 +65,7 @@ export default function Navigation() {
               ))}
             </div>
             <div className='hidden items-center justify-end md:flex md:flex-1 lg:w-0'>
-              <Link href='/sign-in'>
+              <Link href={auth ? '/profile/edit/name' : '/sign-in'}>
                 <a className='ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700'>
                   সিভি পাঠান
                 </a>
@@ -128,7 +130,7 @@ export default function Navigation() {
               </div>
               <div className='space-y-6 py-6 px-5'>
                 <div>
-                  <Link href='/sign-in'>
+                  <Link href={auth ? '/profile/edit/name' : '/sign-in'}>
                     <a className='flex w-full items-center justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700'>
                       সিভি পাঠান
                     </a>

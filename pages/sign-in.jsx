@@ -1,8 +1,9 @@
 import { useState } from 'react'
+import userRequest from 'services/userRequest'
 
 export default function Signin() {
   const [data, setData] = useState({
-    name: '',
+    username: '',
     phone: ''
   })
 
@@ -15,7 +16,14 @@ export default function Signin() {
     ) {
       alert('Please enter a valid phone number')
     } else {
-      console.log(data)
+      userRequest
+        .signIn(data)
+        .then(data => {
+          localStorage.setItem('token', data.token)
+          console.log(data.message)
+          window.location.reload()
+        })
+        .catch(err => alert(err.response.data.message))
     }
   }
   const onChange = e => setData({ ...data, [e.target.name]: e.target.value })
@@ -50,7 +58,7 @@ export default function Signin() {
               </h2>
 
               <p className='mt-3 text-white dark:text-gray-300'>
-                Enter with your name and phone
+                Enter with your username and phone
               </p>
             </div>
 
@@ -58,15 +66,15 @@ export default function Signin() {
               <form onSubmit={onSubmit}>
                 <div>
                   <label
-                    htmlFor='name'
+                    htmlFor='username'
                     className='mb-2 block text-sm text-white dark:text-gray-200'
                   >
-                    Name
+                    Username
                   </label>
                   <input
-                    type='text'
-                    name='name'
-                    id='name'
+                    type='username'
+                    name='username'
+                    id='username'
                     required
                     onChange={onChange}
                     placeholder='Rabius Sunny'
