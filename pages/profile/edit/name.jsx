@@ -1,4 +1,5 @@
 import ProfileLayout from 'components/profile/ProfileLayout'
+import { useState } from 'react'
 import { useRouter } from 'next/router'
 import ProfileRoutes from 'components/profile/ProfileRoutes'
 import FieldInput from 'components/profile/FieldInput'
@@ -6,15 +7,16 @@ import ProfileDrop from 'components/profile/ProfileDrop'
 import { _type } from 'assets/profileinfo'
 
 export default function Name() {
+  const [input, setInput] = useState('')
   const router = useRouter()
   const activeRoute = routename =>
     router.route.split('/edit')[1] === routename ? true : false
   const handlechange = e => {
-    console.log(e.target.value)
+    setInput(e.target.value)
   }
 
   return (
-    <ProfileLayout>
+    <ProfileLayout body={input}>
       <ProfileRoutes activeRoute={activeRoute} />
       <FieldInput
         legend='সম্পূর্ণ নাম'

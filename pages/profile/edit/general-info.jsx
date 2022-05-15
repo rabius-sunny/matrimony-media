@@ -22,7 +22,7 @@ export default function GeneralInfo() {
 
   const handlechange = e => {}
   return (
-    <ProfileLayout>
+    <ProfileLayout body={router.route}>
       <ProfileRoutes activeRoute={activeRoute} />
       <ProfileDrop legend='বৈবাহিক অবস্থা' data={_condition} />
       <ProfileDrop legend='স্থায়ী ঠিকানা' data={_address_jilla} />

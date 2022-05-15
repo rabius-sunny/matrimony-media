@@ -9,7 +9,7 @@ export default function Address() {
     router.route.split('/edit')[1] === routename ? true : false
   const handlechange = e => {}
   return (
-    <ProfileLayout>
+    <ProfileLayout body={router.route}>
       <ProfileRoutes activeRoute={activeRoute} />
       <FieldInput
         legend='স্থায়ী ঠিকানা'

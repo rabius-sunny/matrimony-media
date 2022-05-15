@@ -1,7 +1,8 @@
 import Image from 'next/image'
 import avatar from 'public/images/avatar.svg'
+import SaveButton from './SaveButton'
 
-export default function ProfileLayout({ children }) {
+export default function ProfileLayout(props) {
   return (
     <div className='container my-8' style={{ minHeight: '60vh' }}>
       <div className='profile__grid'>
@@ -16,7 +17,9 @@ export default function ProfileLayout({ children }) {
               </button>
             </div>
           </div>
-          <div className='col-span-12 md:col-span-8'>{children}</div>
+          <div className='col-span-12 md:col-span-8'>
+            {props.children} <SaveButton body={props.body} />
+          </div>
         </div>
       </div>
     </div>

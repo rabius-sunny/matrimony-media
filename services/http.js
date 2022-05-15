@@ -6,9 +6,8 @@ const instance = axios.create({
   timeout: 20000
 })
 
-// Add a request interceptor
+// Adding a request interceptor
 instance.interceptors.request.use(function (config) {
-  // Do something before request is sent
   console.log('Api is being called')
   return {
     ...config,
@@ -18,6 +17,7 @@ instance.interceptors.request.use(function (config) {
   }
 })
 
+// Common function to get acctual data from response
 const responseBody = response => response.data
 
 const requests = {

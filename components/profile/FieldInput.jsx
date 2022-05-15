@@ -17,7 +17,7 @@ export default function FieldInput({
         <textarea
           type={type ?? 'text'}
           placeholder={placeholder ?? ''}
-          handleChange={handlechange}
+          onChange={handlechange}
           name={name}
           rows={5}
           className='w-full rounded border-2 border-red-200 bg-red-100 px-4 py-2 font-medium text-red-400 shadow-md focus:outline-red-500'
@@ -26,7 +26,7 @@ export default function FieldInput({
         <input
           type={type ?? 'text'}
           placeholder={placeholder ?? ''}
-          handleChange={handlechange}
+          onChange={handlechange}
           name={name}
           className='w-full rounded border-2 border-red-200 bg-red-100 px-4 py-2 font-medium text-red-400 shadow-md focus:outline-red-500'
         />
