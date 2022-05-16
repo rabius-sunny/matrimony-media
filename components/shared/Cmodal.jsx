@@ -1,7 +1,7 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useState } from 'react'
 
-export default function Cmodal() {
+const Cmodal = () => {
   const [isOpen, setIsOpen] = useState(true)
 
   const closeModal = () => setIsOpen(false)
@@ -9,7 +9,7 @@ export default function Cmodal() {
 
   return (
     <>
-      <div className='fixed inset-0 flex items-center justify-center'>
+      <div>
         <button
           type='button'
           onClick={openModal}
@@ -76,3 +76,4 @@ export default function Cmodal() {
     </>
   )
 }
+export default Cmodal

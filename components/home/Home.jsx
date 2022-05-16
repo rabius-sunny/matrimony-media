@@ -16,7 +16,8 @@ export default function Home() {
               <div>
                 <label
                   className='mb-1 block text-sm font-medium text-white'
-                  htmlFor='biono'>
+                  htmlFor='biono'
+                >
                   বায়োডাটা নং.
                 </label>
                 <input
@@ -50,7 +51,8 @@ export default function Home() {
             <div>
               <label
                 className='mb-1 block text-sm font-medium text-white'
-                htmlFor='biono'>
+                htmlFor='biono'
+              >
                 বায়োডাটা নং.
               </label>
               <input
