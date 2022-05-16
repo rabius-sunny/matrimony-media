@@ -1,6 +1,5 @@
 import axios from 'axios'
 const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL
-console.log('baseUrl', baseURL)
 const instance = axios.create({
   baseURL,
   timeout: 20000
@@ -8,7 +7,6 @@ const instance = axios.create({
 
 // Adding a request interceptor
 instance.interceptors.request.use(function (config) {
-  console.log('Api is being called')
   return {
     ...config,
     headers: {

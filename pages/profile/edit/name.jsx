@@ -5,7 +5,6 @@ import ProfileRoutes from 'components/profile/ProfileRoutes'
 import FieldInput from 'components/profile/FieldInput'
 import { _type } from 'assets/profileinfo'
 import DropdownProfile from 'components/profile/DropdownProfile'
-import Cmodal from 'components/shared/Cmodal'
 
 export default function Name() {
   const [name, setName] = useState('')

@@ -5,7 +5,10 @@ class UserRequests {
     return requests.post('/sign-in', body)
   }
   getUser() {
-    return requests.get('get-user')
+    return requests.get('/get-user')
+  }
+  getType() {
+    return requests.get('/get-type')
   }
 }
 

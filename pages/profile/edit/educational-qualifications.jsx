@@ -3,7 +3,6 @@ import { useRouter } from 'next/router'
 import { useState } from 'react'
 import ProfileRoutes from 'components/profile/ProfileRoutes'
 import FieldInput from 'components/profile/FieldInput'
-import ProfileDrop from 'components/profile/ProfileDrop'
 import DropdownProfile from 'components/profile/DropdownProfile'
 
 export default function Education() {
