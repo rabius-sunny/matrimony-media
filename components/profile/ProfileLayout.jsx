@@ -18,7 +18,8 @@ export default function ProfileLayout(props) {
             </div>
           </div>
           <div className='col-span-12 md:col-span-8'>
-            {props.children} <SaveButton body={props.body} />
+            {props.children}{' '}
+            <SaveButton body={props.body} warning={props.warning} />
           </div>
         </div>
       </div>

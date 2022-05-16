@@ -3,20 +3,22 @@ import { useState } from 'react'
 import { useRouter } from 'next/router'
 import ProfileRoutes from 'components/profile/ProfileRoutes'
 import FieldInput from 'components/profile/FieldInput'
-import ProfileDrop from 'components/profile/ProfileDrop'
 import { _type } from 'assets/profileinfo'
+import DropdownProfile from 'components/profile/DropdownProfile'
 
 export default function Name() {
-  const [input, setInput] = useState('')
+  const [name, setName] = useState('')
+  const [type, setType] = useState(_type[0])
   const router = useRouter()
   const activeRoute = routename =>
     router.route.split('/edit')[1] === routename ? true : false
   const handlechange = e => {
-    setInput(e.target.value)
+    setName(e.target.value)
   }
+  const warning = () => (name.toString().length < 1 ? true : false)
 
   return (
-    <ProfileLayout body={input}>
+    <ProfileLayout body={{ name, type }} warning={warning}>
       <ProfileRoutes activeRoute={activeRoute} />
       <FieldInput
         legend='সম্পূর্ণ নাম'
@@ -26,7 +28,12 @@ export default function Name() {
         required={true}
         name='name'
       />
-      <ProfileDrop legend='বায়োডাটার ধরন' data={_type} />
+      <DropdownProfile
+        legend='বায়োডাটার ধরন'
+        selected={type}
+        setSelected={setType}
+        data={_type}
+      />
     </ProfileLayout>
   )
 }
