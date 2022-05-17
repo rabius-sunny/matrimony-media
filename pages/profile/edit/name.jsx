@@ -18,7 +18,7 @@ export default function Name() {
   const warning = () => (name.toString().length < 1 ? true : false)
 
   return (
-    <ProfileLayout body={{ name, type }} warning={warning}>
+    <ProfileLayout body={{ name, type }} warning={warning()}>
       <ProfileRoutes activeRoute={activeRoute} />
       <FieldInput
         legend='সম্পূর্ণ নাম'

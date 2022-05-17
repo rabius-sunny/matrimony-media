@@ -16,6 +16,7 @@ import ProfileDrop from 'components/profile/ProfileDrop'
 import FieldInput from 'components/profile/FieldInput'
 import { useState } from 'react'
 import DropdownProfile from 'components/profile/DropdownProfile'
+import SearchDropdownProfile from 'components/profile/SearchDropdownProfile'
 
 export default function GeneralInfo() {
   const router = useRouter()
@@ -60,7 +61,7 @@ export default function GeneralInfo() {
           weight,
           blood
         }}
-        warning={warning}
+        warning={warning()}
       >
         <ProfileRoutes activeRoute={activeRoute} />
         <DropdownProfile
@@ -69,7 +70,7 @@ export default function GeneralInfo() {
           legend='বৈবাহিক অবস্থা'
           data={_condition}
         />
-        <DropdownProfile
+        <SearchDropdownProfile
           selected={permanent_jilla}
           setSelected={setPermanent_jilla}
           legend='স্থায়ী ঠিকানা'

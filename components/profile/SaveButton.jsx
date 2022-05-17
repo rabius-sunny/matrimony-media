@@ -3,7 +3,7 @@ export default function SaveButton({ body, warning }) {
     <div className='my-8'>
       <button
         onClick={() =>
-          !warning()
+          !warning
             ? console.log('body from save button', body)
             : alert('please fill all required field!')
         }
