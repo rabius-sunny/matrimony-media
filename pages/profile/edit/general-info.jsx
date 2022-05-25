@@ -1,6 +1,7 @@
 import ProfileLayout from 'components/profile/ProfileLayout'
 import ProfileRoutes from 'components/profile/ProfileRoutes'
 import { useRouter } from 'next/router'
+import { useForm } from 'react-hook-form'
 import {
   _type,
   _condition,
@@ -12,133 +13,390 @@ import {
   _weight,
   _bloodGroup
 } from 'assets/profileinfo'
-import ProfileDrop from 'components/profile/ProfileDrop'
 import FieldInput from 'components/profile/FieldInput'
 import { useState } from 'react'
 import DropdownProfile from 'components/profile/DropdownProfile'
 import SearchDropdownProfile from 'components/profile/SearchDropdownProfile'
+import { Fade } from 'react-reveal'
 
 export default function GeneralInfo() {
   const router = useRouter()
-  const [input, setInput] = useState({
-    profession: '',
-    income: ''
-  })
-
-  const [condition, setCondition] = useState(_condition[0])
-  const [permanent_jilla, setPermanent_jilla] = useState(_address_jilla[0])
-  const [permanent_division, setPermanent_Division] = useState(
-    _address_division[0]
-  )
-  const [current_jilla, setCurrent_Jilla] = useState(_address_jilla[0])
-  const [current_division, setCurrent_Division] = useState(_address_division[0])
-  const [birth, setBirth] = useState(_birthYear[0])
-  const [complexion, setComplextion] = useState(_complexion[0])
-  const [height, setHeight] = useState(_height[0])
-  const [weight, setWeight] = useState(_weight[0])
-  const [blood, setBlood] = useState(_bloodGroup[0])
 
   const activeRoute = routename =>
     router.route.split('/edit')[1] === routename ? true : false
 
-  const handlechange = e =>
-    setInput({ ...input, [e.target.name]: e.target.value })
-  const warning = () => (input.profession.toString().length < 1 ? true : false)
-
+  const {
+    register,
+    formState: { errors },
+    handleSubmit
+  } = useForm({
+    mode: 'onChange'
+  })
+  const onSubmit = data => {
+    console.log(JSON.stringify(data))
+  }
   return (
     <>
-      <ProfileLayout
-        body={{
-          ...input,
-          condition,
-          permanent_jilla,
-          permanent_division,
-          current_jilla,
-          current_division,
-          birth,
-          complexion,
-          height,
-          weight,
-          blood
-        }}
-        warning={warning()}
-      >
+      <ProfileLayout>
         <ProfileRoutes activeRoute={activeRoute} />
-        <DropdownProfile
-          selected={condition}
-          setSelected={setCondition}
-          legend='বৈবাহিক অবস্থা'
-          data={_condition}
-        />
-        <SearchDropdownProfile
-          selected={permanent_jilla}
-          setSelected={setPermanent_jilla}
-          legend='স্থায়ী ঠিকানা'
-          data={_address_jilla}
-        />
-        <DropdownProfile
-          selected={permanent_division}
-          setSelected={setPermanent_Division}
-          legend='বিভাগ'
-          data={_address_division}
-        />
-        <DropdownProfile
-          selected={current_jilla}
-          setSelected={setCurrent_Jilla}
-          legend='বর্তমান ঠিকানা'
-          data={_address_jilla}
-        />
-        <DropdownProfile
-          selected={current_division}
-          setSelected={setCurrent_Division}
-          legend='বিভাগ'
-          data={_address_division}
-        />
-        <DropdownProfile
-          selected={birth}
-          setSelected={setBirth}
-          legend='জন্মসন (আসল)'
-          data={_birthYear}
-        />
-        <DropdownProfile
-          selected={complexion}
-          setSelected={setComplextion}
-          legend='গাত্রবর্ণ'
-          data={_complexion}
-        />
-        <DropdownProfile
-          selected={height}
-          setSelected={setHeight}
-          legend='উচ্চতা'
-          data={_height}
-        />
-        <DropdownProfile
-          selected={weight}
-          setSelected={setWeight}
-          legend='ওজন'
-          data={_weight}
-        />
-        <DropdownProfile
-          selected={blood}
-          setSelected={setBlood}
-          legend='রক্তের গ্রুপ'
-          data={_bloodGroup}
-        />
-        <FieldInput
-          legend='পেশা'
-          handlechange={handlechange}
-          description='সর্বোচ্চ ৩ শব্দে শুধু পদবী লিখবেন। পেশা সম্পর্কে বিস্তারিত লিখার জন্য সামনে প্রশ্ন আসছে।'
-          placeholder='সফটওয়্যার ইঞ্জিনিয়ার'
-          required={true}
-          name='profession'
-        />
-        <FieldInput
-          legend='মাসিক আয়'
-          handlechange={handlechange}
-          description='জানাতে অনিচ্ছুক হলে ঘরটি ফাঁকা রাখুন।'
-          placeholder='৩০ হাজার'
-          name='income'
-        />
+
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <fieldset
+            className={`my-6 rounded-md border-2 ${
+              errors.condition ? 'border-red-500' : 'border-blue-300'
+            } p-4`}
+          >
+            <legend
+              className={`ml-4 font-bold ${
+                errors.condition ? 'text-red-500' : 'text-blue-500'
+              }`}
+            >
+              বৈবাহিক অবস্থা *
+            </legend>
+            <select
+              className={`w-full border-2 focus:outline-none ${
+                errors.condition ? 'border-red-500' : 'border-blue-300'
+              } p-2 rounded-md`}
+              {...register('condition', { required: 'condition is required' })}
+            >
+              <option value=''>---</option>
+              {_condition.map((item, i) => (
+                <option key={i} value={item}>
+                  {item}
+                </option>
+              ))}
+            </select>
+            <Fade right when={errors.condition ? true : false}>
+              {errors.condition && (
+                <p className='text-red-500 py-2 pl-2'>
+                  {errors.condition.message}
+                </p>
+              )}
+            </Fade>
+          </fieldset>
+
+          <fieldset
+            className={`my-6 rounded-md border-2 ${
+              errors.permanent_jilla ? 'border-red-500' : 'border-blue-300'
+            } p-4`}
+          >
+            <legend
+              className={`ml-4 font-bold ${
+                errors.permanent_jilla ? 'text-red-500' : 'text-blue-500'
+              }`}
+            >
+              স্থায়ী ঠিকানা *
+            </legend>
+            <select
+              className={`w-full focus:outline-none border-2 ${
+                errors.permanent_jilla ? 'border-red-500' : 'border-blue-300'
+              } p-2 rounded-md`}
+              {...register('permanent_jilla', {
+                required: 'address is required'
+              })}
+            >
+              <option value=''>---</option>
+              {_address_jilla.map((item, i) => (
+                <option key={i} value={item}>
+                  {item}
+                </option>
+              ))}
+            </select>
+            <Fade right when={errors.permanent_jilla ? true : false}>
+              {errors.permanent_jilla && (
+                <p className='text-red-500 py-2 pl-2'>
+                  {errors.permanent_jilla.message}
+                </p>
+              )}
+            </Fade>
+          </fieldset>
+
+          <fieldset
+            className={`my-6 rounded-md border-2 ${
+              errors.permanent_division ? 'border-red-500' : 'border-blue-300'
+            } p-4`}
+          >
+            <legend
+              className={`ml-4 font-bold ${
+                errors.permanent_division ? 'text-red-500' : 'text-blue-500'
+              }`}
+            >
+              বিভাগ *
+            </legend>
+            <select
+              className={`w-full focus:outline-none border-2 ${
+                errors.permanent_division ? 'border-red-500' : 'border-blue-300'
+              } p-2 rounded-md`}
+              {...register('permanent_division', {
+                required: 'address is required'
+              })}
+            >
+              <option value=''>---</option>
+              {_address_division.map((item, i) => (
+                <option key={i} value={item}>
+                  {item}
+                </option>
+              ))}
+            </select>
+            <Fade right when={errors.permanent_division ? true : false}>
+              {errors.permanent_division && (
+                <p className='text-red-500 py-2 pl-2'>
+                  {errors.permanent_division.message}
+                </p>
+              )}
+            </Fade>
+          </fieldset>
+
+          <fieldset
+            className={`my-6 rounded-md border-2 ${
+              errors.current_jilla ? 'border-red-500' : 'border-blue-300'
+            } p-4`}
+          >
+            <legend
+              className={`ml-4 font-bold ${
+                errors.current_jilla ? 'text-red-500' : 'text-blue-500'
+              }`}
+            >
+              বর্তমান ঠিকানা *
+            </legend>
+            <select
+              className={`w-full focus:outline-none border-2 ${
+                errors.current_jilla ? 'border-red-500' : 'border-blue-300'
+              } p-2 rounded-md`}
+              {...register('current_jilla', {
+                required: 'address is required'
+              })}
+            >
+              <option value=''>---</option>
+              {_address_jilla.map((item, i) => (
+                <option key={i} value={item}>
+                  {item}
+                </option>
+              ))}
+            </select>
+            <Fade right when={errors.current_jilla ? true : false}>
+              {errors.current_jilla && (
+                <p className='text-red-500 py-2 pl-2'>
+                  {errors.current_jilla.message}
+                </p>
+              )}
+            </Fade>
+          </fieldset>
+
+          <fieldset
+            className={`my-6 rounded-md border-2 ${
+              errors.current_division ? 'border-red-500' : 'border-blue-300'
+            } p-4`}
+          >
+            <legend
+              className={`ml-4 font-bold ${
+                errors.current_division ? 'text-red-500' : 'text-blue-500'
+              }`}
+            >
+              বিভাগ *
+            </legend>
+            <select
+              className={`w-full focus:outline-none border-2 ${
+                errors.current_division ? 'border-red-500' : 'border-blue-300'
+              } p-2 rounded-md`}
+              {...register('current_division', {
+                required: 'address is required'
+              })}
+            >
+              <option value=''>---</option>
+              {_address_division.map((item, i) => (
+                <option key={i} value={item}>
+                  {item}
+                </option>
+              ))}
+            </select>
+            <Fade right when={errors.current_division ? true : false}>
+              {errors.current_division && (
+                <p className='text-red-500 py-2 pl-2'>
+                  {errors.current_division.message}
+                </p>
+              )}
+            </Fade>
+          </fieldset>
+
+          <fieldset
+            className={`my-6 rounded-md border-2 ${
+              errors.birth ? 'border-red-500' : 'border-blue-300'
+            } p-4`}
+          >
+            <legend
+              className={`ml-4 font-bold ${
+                errors.birth ? 'text-red-500' : 'text-blue-500'
+              }`}
+            >
+              জন্মসন (আসল) *
+            </legend>
+            <select
+              className={`w-full focus:outline-none border-2 ${
+                errors.birth ? 'border-red-500' : 'border-blue-300'
+              } p-2 rounded-md`}
+              {...register('birth', { required: 'birth date is required' })}
+            >
+              <option value=''>---</option>
+              {_birthYear.map((item, i) => (
+                <option key={i} value={item}>
+                  {item}
+                </option>
+              ))}
+            </select>
+            <Fade right when={errors.birth ? true : false}>
+              {errors.birth && (
+                <p className='text-red-500 py-2 pl-2'>{errors.birth.message}</p>
+              )}
+            </Fade>
+          </fieldset>
+
+          <fieldset className='my-6 rounded-md border-2 border-blue-300 p-4'>
+            <legend className='ml-4 text-lg font-bold text-blue-500'>
+              গাত্রবর্ণ
+            </legend>
+            <select
+              className='w-full focus:outline-none  border-2 border-blue-300 p-2 rounded-md'
+              {...register('complexion')}
+            >
+              <option value=''>---</option>
+              {_complexion.map((item, i) => (
+                <option key={i} value={item}>
+                  {item}
+                </option>
+              ))}
+            </select>
+          </fieldset>
+
+          <fieldset className='my-6 rounded-md border-2 border-blue-300 p-4'>
+            <legend className='ml-4 text-lg font-bold text-blue-500'>
+              উচ্চতা
+            </legend>
+            <select
+              className='w-full  focus:outline-none border-2 border-blue-300 p-2 rounded-md'
+              {...register('height')}
+            >
+              <option value=''>---</option>
+              {_height.map((item, i) => (
+                <option key={i} value={item}>
+                  {item}
+                </option>
+              ))}
+            </select>
+          </fieldset>
+
+          <fieldset className='my-6 rounded-md border-2 border-blue-300 p-4'>
+            <legend className='ml-4 text-lg font-bold text-blue-500'>
+              ওজন
+            </legend>
+            <select
+              className='w-full  focus:outline-none border-2 border-blue-300 p-2 rounded-md'
+              {...register('weight')}
+            >
+              <option value=''>---</option>
+              {_weight.map((item, i) => (
+                <option key={i} value={item}>
+                  {item}
+                </option>
+              ))}
+            </select>
+          </fieldset>
+
+          <fieldset className='my-6 rounded-md border-2 border-blue-300 p-4'>
+            <legend className='ml-4 text-lg font-bold text-blue-500'>
+              ওজন
+            </legend>
+            <select
+              className='w-full  focus:outline-none border-2 border-blue-300 p-2 rounded-md'
+              {...register('blood')}
+            >
+              <option value=''>---</option>
+              {_bloodGroup.map((item, i) => (
+                <option key={i} value={item}>
+                  {item}
+                </option>
+              ))}
+            </select>
+          </fieldset>
+
+          <fieldset
+            className={`my-6 rounded-md border-2 ${
+              errors.profession ? 'border-red-500' : 'border-blue-300'
+            } p-4`}
+          >
+            <legend
+              className={`ml-4 font-bold ${
+                errors.profession ? 'text-red-500' : 'text-blue-500'
+              }`}
+            >
+              পেশা *
+            </legend>
+            <input
+              placeholder='সফটওয়্যার ইঞ্জিনিয়ার'
+              {...register('profession', {
+                required: 'profession is required'
+              })}
+              className={`w-full rounded ${
+                errors.profession ? 'bg-red-100' : 'bg-blue-100'
+              } px-4 py-2 font-medium text-blue-400 shadow-md ${
+                errors.profession
+                  ? 'focus:outline-red-500'
+                  : 'focus:outline-blue-500'
+              }`}
+            />
+            <Fade right when={errors.profession ? true : false}>
+              {errors.profession && (
+                <p className='text-red-500 py-2 pl-2'>
+                  {errors.profession.message}
+                </p>
+              )}
+            </Fade>
+            <p className='pl-2 pt-4 text-blue-400'>
+              সর্বোচ্চ ৩ শব্দে শুধু পদবী লিখবেন। পেশা সম্পর্কে বিস্তারিত লিখার
+              জন্য সামনে প্রশ্ন আসছে।
+            </p>
+          </fieldset>
+
+          <fieldset
+            className={`my-6 rounded-md border-2 ${
+              errors.name ? 'border-red-500' : 'border-blue-300'
+            } p-4`}
+          >
+            <legend
+              className={`ml-4 font-bold ${
+                errors.name ? 'text-red-500' : 'text-blue-500'
+              }`}
+            >
+              মাসিক আয়
+            </legend>
+            <input
+              placeholder='৩০ হাজার'
+              {...register('income')}
+              className={`w-full rounded ${
+                errors.income ? 'bg-red-100' : 'bg-blue-100'
+              } px-4 py-2 font-medium text-blue-400 shadow-md ${
+                errors.income
+                  ? 'focus:outline-red-500'
+                  : 'focus:outline-blue-500'
+              }`}
+            />
+            <Fade right when={errors.income ? true : false}>
+              {errors.income && (
+                <p className='text-red-500 py-2 pl-2'>
+                  {errors.income.message}
+                </p>
+              )}
+            </Fade>
+            <p className='pl-2 pt-4 text-blue-400'>
+              জানাতে অনিচ্ছুক হলে ঘরটি ফাঁকা রাখুন।
+            </p>
+          </fieldset>
+          <input
+            type='submit'
+            value='Save Changes'
+            className='rounded-md bg-red-500 px-6 py-3 text-xl font-medium text-white shadow-md hover:bg-red-600 focus:ring-2 focus:ring-red-800'
+          />
+        </form>
       </ProfileLayout>
     </>
   )

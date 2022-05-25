@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import ProfileRoutes from 'components/profile/ProfileRoutes'
 import { useForm } from 'react-hook-form'
 import { _type } from 'assets/profileinfo'
+import { Fade } from 'react-reveal'
 
 export default function Name() {
   const router = useRouter()
@@ -48,22 +49,34 @@ export default function Name() {
               errors.name ? 'focus:outline-red-500' : 'focus:outline-blue-500'
             }`}
           />
-          {errors.name && (
-            <p className='text-red-500 py-2 pl-2'>{errors.name.message}</p>
-          )}
+          <Fade right when={errors.name ? true : false}>
+            {errors.name && (
+              <p className='text-red-500 py-2 pl-2'>{errors.name.message}</p>
+            )}
+          </Fade>
           <p className='pl-2 pt-4 text-blue-400'>
             নাম নেয়া হচ্ছে ভেরিফিকেশনের জন্য, পূর্ণ নাম লিখবেন। আপনার নাম কারো
             সাথে শেয়ার করা হবে না।
           </p>
         </fieldset>
 
-        <fieldset className='my-6 rounded-md border-2 border-red-300 p-4'>
-          <legend className='ml-4 text-lg font-bold text-red-700'>
+        <fieldset
+          className={`my-6 rounded-md border-2 ${
+            errors.category ? 'border-red-500' : 'border-blue-300'
+          } p-4`}
+        >
+          <legend
+            className={`ml-4 font-bold ${
+              errors.category ? 'text-red-500' : 'text-blue-500'
+            }`}
+          >
             বায়োডাটার ধরন *
           </legend>
           <select
             onClick={e => console.log(e.target.value)}
-            className='w-full border-2 border-red-300 p-2 rounded-md'
+            className={`w-full border-2 ${
+              errors.category ? 'border-red-500' : 'border-blue-300'
+            } p-2 rounded-md`}
             {...register('category', { required: 'required' })}
           >
             <option value=''>select</option>
@@ -73,7 +86,13 @@ export default function Name() {
               </option>
             ))}
           </select>
-          {errors.category && <p>{errors.category.message}</p>}
+          <Fade right when={errors.category ? true : false}>
+            {errors.category && (
+              <p className='text-red-500 py-2 pl-2'>
+                {errors.category.message}
+              </p>
+            )}
+          </Fade>
         </fieldset>
 
         <input
