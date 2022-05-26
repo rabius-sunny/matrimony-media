@@ -33,7 +33,7 @@ export default function GeneralInfo() {
     mode: 'onChange'
   })
   const onSubmit = data => {
-    console.log(JSON.stringify(data))
+    console.log(data)
   }
   return (
     <>
@@ -357,40 +357,18 @@ export default function GeneralInfo() {
             </p>
           </fieldset>
 
-          <fieldset
-            className={`my-6 rounded-md border-2 ${
-              errors.name ? 'border-red-500' : 'border-blue-300'
-            } p-4`}
-          >
-            <legend
-              className={`ml-4 font-bold ${
-                errors.name ? 'text-red-500' : 'text-blue-500'
-              }`}
-            >
-              মাসিক আয়
-            </legend>
+          <fieldset className='my-6 rounded-md border-2 border-blue-300 p-4'>
+            <legend className='ml-4 font-bold text-blue-500'>মাসিক আয়</legend>
             <input
               placeholder='৩০ হাজার'
               {...register('income')}
-              className={`w-full rounded ${
-                errors.income ? 'bg-red-100' : 'bg-blue-100'
-              } px-4 py-2 font-medium text-blue-400 shadow-md ${
-                errors.income
-                  ? 'focus:outline-red-500'
-                  : 'focus:outline-blue-500'
-              }`}
+              className='w-full rounded bg-blue-100 px-4 py-2 font-medium text-blue-400 shadow-md focus:outline-blue-500'
             />
-            <Fade right when={errors.income ? true : false}>
-              {errors.income && (
-                <p className='text-red-500 py-2 pl-2'>
-                  {errors.income.message}
-                </p>
-              )}
-            </Fade>
             <p className='pl-2 pt-4 text-blue-400'>
               জানাতে অনিচ্ছুক হলে ঘরটি ফাঁকা রাখুন।
             </p>
           </fieldset>
+
           <input
             type='submit'
             value='Save Changes'

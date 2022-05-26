@@ -4,6 +4,9 @@ import { useState } from 'react'
 import ProfileRoutes from 'components/profile/ProfileRoutes'
 import FieldInput from 'components/profile/FieldInput'
 import DropdownProfile from 'components/profile/DropdownProfile'
+import { useForm } from 'react-hook-form'
+import OptionMap from 'components/profile/OptionMap'
+import { Fade } from 'react-reveal'
 
 export default function Education() {
   const router = useRouter()
@@ -14,199 +17,326 @@ export default function Education() {
     console.log(e.target.value)
   }
 
-  const [education, setEducation] = useState(educationType[0])
-  const [secondary, setSecondary] = useState(yesno[0])
-  const [classes, setClasses] = useState(_classes[0])
-  const [secondary_details, setSecondary_details] = useState('')
-  const [heigher_details, setHigher_details] = useState('')
+  const [education, setEducation] = useState('')
+  const [secondary, setSecondary] = useState('')
+  const [classes, setClasses] = useState('')
+  const [higher, setHigher] = useState('')
   const [higher_year, setHigher_year] = useState(higherType[0])
-  const [honors_details, setHonors_details] = useState('')
-  const [diploma_details, setDiploma_details] = useState('')
-  const [higher, setHigher] = useState(yesno_heigher[0])
 
-  const [hafej, setHafej] = useState(yesno[1])
-  const [dawra, setDawra] = useState(yesno_dawra[0])
-  const [dawra_details, setdawra_details] = useState('')
-  const [dawra_year, setdawra_year] = useState('')
+  const [hafej, setHafej] = useState('')
+  const [dawra, setDawra] = useState('')
   const [takhassus, setTakhassus] = useState(yesno[1])
-  const [takhassus_details, setTakhassus_details] = useState('')
+
+  const {
+    register,
+    formState: { errors },
+    handleSubmit
+  } = useForm({
+    mode: 'onChange'
+  })
+  const onSubmit = data => {
+    console.log(data)
+  }
 
   return (
-    <ProfileLayout
-      body={{
-        education,
-        secondary,
-        classes,
-        secondary_details,
-        heigher_details,
-        higher_year,
-        honors_details,
-        diploma_details,
-        higher,
-        hafej,
-        dawra,
-        dawra_details,
-        dawra_year,
-        takhassus,
-        takhassus_details
-      }}
-    >
+    <ProfileLayout>
       <ProfileRoutes activeRoute={activeRoute} />
-      <DropdownProfile
-        selected={education}
-        setSelected={setEducation}
-        legend='কোন মাধ্যমে পড়াশোনা করেছেন?'
-        data={educationType}
-        required
-      />
-      {/* General Education */}
-      {education === educationType[0] && (
-        <div>
-          <DropdownProfile
-            legend='মাধ্যমিক (SSC) / সমমান পাশ করেছেন?'
-            data={yesno}
-            selected={secondary}
-            setSelected={setSecondary}
-          />
-          {secondary === yesno[0] && (
-            <div>
-              <FieldInput
-                legend='মাধ্যমিক (SSC) / সমমান এর বিস্তারিত'
-                handlechange={setSecondary_details}
-                textarea
-                placeholder='ফলাফলঃ A+, বিভাগঃ বিজ্ঞান, পাশের সনঃ 2016'
-                description='আপনার মাধ্যমিক/সমমান এর ফলাফল, বিভাগ ও পাশের সন লিখুন'
-              />
-              <DropdownProfile
-                legend='উচ্চমাধ্যমিক (HSC) / সমমান পাশ করেছেন?'
-                data={yesno_heigher}
-                selected={higher}
-                setSelected={setHigher}
-              />
-              {higher === yesno_heigher[1] && (
-                <div>
-                  <FieldInput
-                    legend='উচ্চমাধ্যমিক (HSC) / সমমান এর বিস্তারিত'
-                    description='আপনার উচ্চমাধ্যমিক/সমমান এর ফলাফল, বিভাগ ও পাশের সন লিখুন'
-                    handlechange={setHigher_details}
-                    textarea
-                  />
-                  <FieldInput
-                    legend='স্নাতক/স্নাতক(সম্মান)/সমমান শিক্ষাগত যোগ্যতা'
-                    handlechange={setHonors_details}
-                    textarea
-                    placeholder='ফলাফলঃ A+, বিভাগঃ বিজ্ঞান, পাশের সনঃ 2018'
-                    description='এভাবে লিখতে পারেনঃ BA in English Language & Literature, running year/passed year, CGPA...'
-                  />
-                </div>
-              )}
-              {higher === yesno_heigher[2] && (
-                <div>
-                  <DropdownProfile
-                    legend='উচ্চমাধ্যমিক (HSC) / সমমান কোন বর্ষে পড়ছেন?'
-                    data={higherType}
-                    selected={higher_year}
-                    setSelected={setHigher_year}
-                  />
-                </div>
-              )}
-              {higher === yesno_heigher[3] && (
-                <div>
-                  <FieldInput
-                    legend='ডিপ্লোমা এর বিষয়ে বিস্তারিত'
-                    handlechange={setDiploma_details}
-                    textarea
-                    placeholder='প্রতিষ্ঠানের নাম, বিভাগ, ফলাফল, পাসের সন'
-                    description='ছাত্র হলে বর্ষ লিখবেন'
-                  />
-                </div>
-              )}
-            </div>
-          )}
-          {secondary === yesno[1] && (
-            <div>
-              <DropdownProfile
-                legend='কোন ক্লাস পর্যন্ত পড়েছেন?'
-                data={_classes.reverse()}
-                selected={classes}
-                setSelected={setClasses}
-              />
-            </div>
-          )}
-        </div>
-      )}
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <fieldset
+          className={`my-6 rounded-md border-2 ${
+            errors.education ? 'border-red-500' : 'border-blue-300'
+          } p-4`}
+        >
+          <legend
+            className={`ml-4 font-bold ${
+              errors.education ? 'text-red-500' : 'text-blue-500'
+            }`}
+          >
+            কোন মাধ্যমে পড়াশোনা করেছেন? *
+          </legend>
+          <select
+            onClick={e => setEducation(e.target.value)}
+            className={`w-full focus:outline-none border-2 ${
+              errors.education ? 'border-red-500' : 'border-blue-300'
+            } p-2 rounded-md`}
+            {...register('education', { required: 'education is required' })}
+          >
+            <option value=''>select</option>
+            <OptionMap data={educationType} />
+          </select>
+          <Fade right when={errors.education ? true : false}>
+            {errors.education && (
+              <p className='text-red-500 py-2 pl-2'>
+                {errors.education.message}
+              </p>
+            )}
+          </Fade>
+        </fieldset>
+        {/* General Education */}
+        {education === educationType[0] && (
+          <div>
+            <fieldset className='my-6 rounded-md border-2 border-blue-300 p-4'>
+              <legend className='ml-4 text-lg font-bold text-blue-500'>
+                মাধ্যমিক (SSC) / সমমান পাশ করেছেন?
+              </legend>
+              <select
+                onClick={e => setSecondary(e.target.value)}
+                className='w-full focus:outline-none  border-2 border-blue-300 p-2 rounded-md'
+                {...register('secondary')}
+              >
+                <option value=''>---</option>
+                <OptionMap data={yesno} />
+              </select>
+            </fieldset>
 
-      {education === educationType[1] && (
-        <div>
-          <DropdownProfile
-            selected={hafej}
-            setSelected={setHafej}
-            legend='আপনি কি হাফেজ?'
-            data={yesno}
-          />
-          <DropdownProfile
-            selected={dawra}
-            setSelected={setDawra}
-            legend='দাওরায়ে হাদীস পাশ করেছেন?'
-            data={yesno_dawra}
-          />
-          {dawra === yesno_dawra[1] && (
-            <div>
-              <FieldInput
-                legend='দাওরায়ে হাদীস এর বিস্তারিত'
-                handlechange={setdawra_details}
-                textarea
-                placeholder='নতিজা, পাসের সন লিখুন'
-              />
-              <DropdownProfile
-                selected={takhassus}
-                setSelected={setTakhassus}
-                legend='আপনি কি তাখাসসুস পড়েছেন?'
-                data={yesno}
-              />
-              {takhassus === yesno[0] && (
-                <div>
-                  <FieldInput
-                    legend='তাখাসসুস এর বিস্তারিত'
-                    handlechange={setTakhassus_details}
-                    textarea
-                    placeholder='তাখাসসুসের বিষয়, পাসের সন লিখুন'
+            {secondary === yesno[0] && (
+              <div>
+                <fieldset className='my-6 rounded-md border-2 border-blue-300 p-4'>
+                  <legend className='ml-4 font-bold text-blue-500'>
+                    মাধ্যমিক (SSC) / সমমান এর বিস্তারিত
+                  </legend>
+                  <textarea
+                    rows={5}
+                    placeholder='ফলাফলঃ A+, বিভাগঃ বিজ্ঞান, পাশের সনঃ 2016'
+                    {...register('secondary_details')}
+                    className='w-full rounded bg-blue-100 px-4 py-2 font-medium text-blue-400 shadow-md focus:outline-blue-500'
                   />
-                </div>
-              )}
-            </div>
-          )}
-          {dawra === yesno_dawra[3] && (
-            <FieldInput
-              legend='দাওরায়ে হাদীস কোন বর্ষে পড়ছেন?'
-              handlechange={setdawra_year}
-            />
-          )}
+                  <p className='pl-2 pt-4 text-blue-400'>
+                    'আপনার মাধ্যমিক/সমমান এর ফলাফল, বিভাগ ও পাশের সন লিখুন'
+                  </p>
+                </fieldset>
 
-          <FieldInput
-            legend='সর্বোচ্চ শিক্ষাগত যোগ্যতা'
-            handlechange={handlechange}
-            description='শিক্ষার বিষয়, প্রতিষ্ঠানের নাম, পাসের সন ইত্যাদি বিস্তারিত লিখবেন।'
-            name='profession'
-            textarea={true}
+                <fieldset className='my-6 rounded-md border-2 border-blue-300 p-4'>
+                  <legend className='ml-4 text-lg font-bold text-blue-500'>
+                    উচ্চমাধ্যমিক (HSC) / সমমান পাশ করেছেন?
+                  </legend>
+                  <select
+                    onClick={e => setHigher(e.target.value)}
+                    className='w-full focus:outline-none  border-2 border-blue-300 p-2 rounded-md'
+                    {...register('higher')}
+                  >
+                    <option value=''>---</option>
+                    <OptionMap data={yesno_heigher} />
+                  </select>
+                </fieldset>
+                {higher === yesno_heigher[0] && (
+                  <div>
+                    <fieldset className='my-6 rounded-md border-2 border-blue-300 p-4'>
+                      <legend className='ml-4 font-bold text-blue-500'>
+                        উচ্চমাধ্যমিক (HSC) / সমমান এর বিস্তারিত
+                      </legend>
+                      <textarea
+                        rows={5}
+                        placeholder='আপনার উচ্চমাধ্যমিক/সমমান এর ফলাফল, বিভাগ ও পাশের সন লিখুন'
+                        {...register('heigher_details')}
+                        className='w-full rounded bg-blue-100 px-4 py-2 font-medium text-blue-400 shadow-md focus:outline-blue-500'
+                      />
+                      <p className='pl-2 pt-4 text-blue-400'>
+                        'আপনার মাধ্যমিক/সমমান এর ফলাফল, বিভাগ ও পাশের সন লিখুন'
+                      </p>
+                    </fieldset>
+
+                    <fieldset className='my-6 rounded-md border-2 border-blue-300 p-4'>
+                      <legend className='ml-4 font-bold text-blue-500'>
+                        স্নাতক/স্নাতক(সম্মান)/সমমান শিক্ষাগত যোগ্যতা
+                      </legend>
+                      <textarea
+                        rows={5}
+                        {...register('honors_details')}
+                        className='w-full rounded bg-blue-100 px-4 py-2 font-medium text-blue-400 shadow-md focus:outline-blue-500'
+                      />
+                      <p className='pl-2 pt-4 text-blue-400'>
+                        এভাবে লিখতে পারেনঃ BA in English Language & Literature,
+                        running year/passed year, CGPA...
+                      </p>
+                    </fieldset>
+                  </div>
+                )}
+                {higher === yesno_heigher[1] && (
+                  <div>
+                    <fieldset className='my-6 rounded-md border-2 border-blue-300 p-4'>
+                      <legend className='ml-4 text-lg font-bold text-blue-500'>
+                        উচ্চমাধ্যমিক (HSC) / সমমান কোন বর্ষে পড়ছেন?
+                      </legend>
+                      <select
+                        onClick={e => setHigher_year(e.target.value)}
+                        className='w-full focus:outline-none  border-2 border-blue-300 p-2 rounded-md'
+                        {...register('higher_year')}
+                      >
+                        <OptionMap data={higherType} />
+                      </select>
+                    </fieldset>
+                  </div>
+                )}
+                {higher === yesno_heigher[2] && (
+                  <div>
+                    <fieldset className='my-6 rounded-md border-2 border-blue-300 p-4'>
+                      <legend className='ml-4 font-bold text-blue-500'>
+                        ডিপ্লোমা এর বিষয়ে বিস্তারিত
+                      </legend>
+                      <textarea
+                        rows={5}
+                        placeholder='প্রতিষ্ঠানের নাম, বিভাগ, ফলাফল, পাসের সন'
+                        {...register('diploma_details')}
+                        className='w-full rounded bg-blue-100 px-4 py-2 font-medium text-blue-400 shadow-md focus:outline-blue-500'
+                      />
+                      <p className='pl-2 pt-4 text-blue-400'>
+                        ছাত্র হলে বর্ষ লিখবেন
+                      </p>
+                    </fieldset>
+                  </div>
+                )}
+              </div>
+            )}
+            {secondary === yesno[1] && (
+              <div>
+                <fieldset className='my-6 rounded-md border-2 border-blue-300 p-4'>
+                  <legend className='ml-4 text-lg font-bold text-blue-500'>
+                    কোন ক্লাস পর্যন্ত পড়েছেন?
+                  </legend>
+                  <select
+                    onClick={e => setClasses(e.target.value)}
+                    className='w-full focus:outline-none  border-2 border-blue-300 p-2 rounded-md'
+                    {...register('classes')}
+                  >
+                    <option value=''>---</option>
+                    <OptionMap data={_classes} />
+                  </select>
+                </fieldset>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Madrasha Education */}
+        {education === educationType[1] && (
+          <div>
+            <fieldset className='my-6 rounded-md border-2 border-blue-300 p-4'>
+              <legend className='ml-4 text-lg font-bold text-blue-500'>
+                আপনি কি হাফেজ?
+              </legend>
+              <select
+                onClick={e => setHafej(e.target.value)}
+                className='w-full focus:outline-none  border-2 border-blue-300 p-2 rounded-md'
+                {...register('hafej')}
+              >
+                <option value=''>---</option>
+                <OptionMap data={yesno} />
+              </select>
+            </fieldset>
+
+            <fieldset className='my-6 rounded-md border-2 border-blue-300 p-4'>
+              <legend className='ml-4 text-lg font-bold text-blue-500'>
+                দাওরায়ে হাদীস পাশ করেছেন?
+              </legend>
+              <select
+                onClick={e => setDawra(e.target.value)}
+                className='w-full focus:outline-none  border-2 border-blue-300 p-2 rounded-md'
+                {...register('dawra')}
+              >
+                <option value=''>---</option>
+                <OptionMap data={yesno_dawra} />
+              </select>
+            </fieldset>
+            {dawra === yesno_dawra[0] && (
+              <div>
+                <fieldset className='my-6 rounded-md border-2 border-blue-300 p-4'>
+                  <legend className='ml-4 font-bold text-blue-500'>
+                    দাওরায়ে হাদীস এর বিস্তারিত
+                  </legend>
+                  <textarea
+                    rows={5}
+                    placeholder='নতিজা, পাসের সন লিখুন'
+                    {...register('dawra_details')}
+                    className='w-full rounded bg-blue-100 px-4 py-2 font-medium text-blue-400 shadow-md focus:outline-blue-500'
+                  />
+                </fieldset>
+
+                <fieldset className='my-6 rounded-md border-2 border-blue-300 p-4'>
+                  <legend className='ml-4 text-lg font-bold text-blue-500'>
+                    আপনি কি তাখাসসুস পড়েছেন?
+                  </legend>
+                  <select
+                    onClick={e => setTakhassus(e.target.value)}
+                    className='w-full focus:outline-none  border-2 border-blue-300 p-2 rounded-md'
+                    {...register('takhassus')}
+                  >
+                    <option value=''>---</option>
+                    <OptionMap data={yesno} />
+                  </select>
+                </fieldset>
+                {takhassus === yesno[0] && (
+                  <div>
+                    <fieldset className='my-6 rounded-md border-2 border-blue-300 p-4'>
+                      <legend className='ml-4 font-bold text-blue-500'>
+                        তাখাসসুস এর বিস্তারিত
+                      </legend>
+                      <textarea
+                        rows={5}
+                        placeholder='তাখাসসুসের বিষয়, পাসের সন লিখুন'
+                        {...register('takhassus_details')}
+                        className='w-full rounded bg-blue-100 px-4 py-2 font-medium text-blue-400 shadow-md focus:outline-blue-500'
+                      />
+                    </fieldset>
+                  </div>
+                )}
+              </div>
+            )}
+            {dawra === yesno_dawra[2] && (
+              <fieldset className='my-6 rounded-md border-2 border-blue-300 p-4'>
+                <legend className='ml-4 font-bold text-blue-500'>
+                  দাওরায়ে হাদীস কোন বর্ষে পড়ছেন?
+                </legend>
+                <input
+                  {...register('dawra_year')}
+                  className='w-full rounded bg-blue-100 px-4 py-2 font-medium text-blue-400 shadow-md focus:outline-blue-500'
+                />
+              </fieldset>
+            )}
+
+            <fieldset className='my-6 rounded-md border-2 border-blue-300 p-4'>
+              <legend className='ml-4 font-bold text-blue-500'>
+                সর্বোচ্চ শিক্ষাগত যোগ্যতা
+              </legend>
+              <textarea
+                rows={5}
+                {...register('profession')}
+                className='w-full rounded bg-blue-100 px-4 py-2 font-medium text-blue-400 shadow-md focus:outline-blue-500'
+              />
+              <p className='pl-2 pt-4 text-blue-400'>
+                শিক্ষার বিষয়, প্রতিষ্ঠানের নাম, পাসের সন ইত্যাদি বিস্তারিত
+                লিখবেন।
+              </p>
+            </fieldset>
+          </div>
+        )}
+
+        <fieldset className='my-6 rounded-md border-2 border-blue-300 p-4'>
+          <legend className='ml-4 font-bold text-blue-500'>
+            অন্যান্য শিক্ষাগত যোগ্যতা
+          </legend>
+          <textarea
+            rows={5}
+            {...register('another_education')}
+            className='w-full rounded bg-blue-100 px-4 py-2 font-medium text-blue-400 shadow-md focus:outline-blue-500'
           />
-        </div>
-      )}
-
-      <FieldInput
-        legend='অন্যান্য শিক্ষাগত যোগ্যতা'
-        handlechange={handlechange}
-        description='শিক্ষার বিষয়, প্রতিষ্ঠানের নাম, পাসের সন ইত্যাদি বিস্তারিত লিখবেন। কিছু না থাকলে ফাঁকা রাখবেন।'
-        name='profession'
-        textarea={true}
-      />
+          <p className='pl-2 pt-4 text-blue-400'>
+            শিক্ষার বিষয়, প্রতিষ্ঠানের নাম, পাসের সন ইত্যাদি বিস্তারিত লিখবেন।
+          </p>
+        </fieldset>
+        <input
+          type='submit'
+          value='Save Changes'
+          className='rounded-md bg-red-500 px-6 py-3 text-xl font-medium text-white shadow-md hover:bg-red-600 focus:ring-2 focus:ring-red-800'
+        />
+      </form>
     </ProfileLayout>
   )
 }
 
 const yesno = ['হ্যা', 'না']
-const yesno_heigher = ['---', 'হ্যা', 'না', 'ডিপ্লোমা পড়েছি']
-const yesno_dawra = ['---', 'হ্যা', 'না', 'এখনো পড়েছি']
+const yesno_heigher = ['হ্যা', 'না', 'ডিপ্লোমা পড়েছি']
+const yesno_dawra = ['হ্যা', 'না', 'এখনো পড়েছি']
 const educationType = ['জেনারেল', 'মাদ্রাসা']
 const _classes = [
   '১ম',

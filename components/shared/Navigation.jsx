@@ -4,6 +4,7 @@ import { MenuIcon, XIcon } from '@heroicons/react/outline'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import useAuth from 'hooks/useAuth'
+import { LogoutIcon } from '@heroicons/react/outline'
 
 const solutions = [
   {
@@ -27,6 +28,13 @@ const solutions = [
 export default function Navigation() {
   const router = useRouter()
   const auth = useAuth()
+
+  const handleLogOut = _ => {
+    localStorage.removeItem('token')
+    window.location.reload()
+    router.push('/sign-in')
+    return true
+  }
 
   return (
     <Popover className='relative z-20 bg-white'>
@@ -70,6 +78,11 @@ export default function Navigation() {
                   সিভি পাঠান
                 </a>
               </Link>
+              {auth && (
+                <button onClick={() => handleLogOut()}>
+                  <LogoutIcon className='h-12 ml-4 text-red-500 hover:text-red-400' />
+                </button>
+              )}
             </div>
           </div>
         </div>

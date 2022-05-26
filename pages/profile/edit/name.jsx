@@ -4,6 +4,7 @@ import ProfileRoutes from 'components/profile/ProfileRoutes'
 import { useForm } from 'react-hook-form'
 import { _type } from 'assets/profileinfo'
 import { Fade } from 'react-reveal'
+import OptionMap from 'components/profile/OptionMap'
 
 export default function Name() {
   const router = useRouter()
@@ -18,7 +19,7 @@ export default function Name() {
     mode: 'onChange'
   })
   const onSubmit = data => {
-    console.log(JSON.stringify(data))
+    console.log(data)
   }
 
   return (
@@ -74,17 +75,13 @@ export default function Name() {
           </legend>
           <select
             onClick={e => console.log(e.target.value)}
-            className={`w-full border-2 ${
+            className={`w-full focus:outline-none border-2 ${
               errors.category ? 'border-red-500' : 'border-blue-300'
             } p-2 rounded-md`}
             {...register('category', { required: 'required' })}
           >
             <option value=''>select</option>
-            {_type.map((item, i) => (
-              <option key={i} value={item}>
-                {item}
-              </option>
-            ))}
+            <OptionMap data={_type} />
           </select>
           <Fade right when={errors.category ? true : false}>
             {errors.category && (
