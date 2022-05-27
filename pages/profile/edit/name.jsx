@@ -5,28 +5,45 @@ import { useForm } from 'react-hook-form'
 import { _type } from 'assets/profileinfo'
 import { Fade } from 'react-reveal'
 import OptionMap from 'components/profile/OptionMap'
+import biodataRequests from 'services/biodataRequests'
+import { CInput } from 'components/profile/CInputs'
+import CForm from 'components/profile/CFroms'
 
 export default function Name() {
   const router = useRouter()
   const activeRoute = routename =>
     router.route.split('/edit')[1] === routename ? true : false
+  let req = false
 
-  const {
-    register,
-    formState: { errors },
-    handleSubmit
-  } = useForm({
-    mode: 'onChange'
-  })
+  // const {
+  //   register,
+  //   formState: { errors },
+  //   handleSubmit
+  // } = useForm({
+  //   mode: 'onChange'
+  // })
   const onSubmit = data => {
     console.log(data)
+    // biodataRequests
+    //   .updateBio(data)
+    //   .then(info => console.log(info))
+    //   .catch(err => console.log(err.message))
   }
+
+  // const onReset = data => {
+  //   const _reset = {}
+  //   const dataArray = Object.keys(data)
+  //   for (const key of dataArray) {
+  //     _reset[key] = ''
+  //   }
+  //   reset(_reset)
+  // }
 
   return (
     <ProfileLayout>
       <ProfileRoutes activeRoute={activeRoute} />
 
-      <form onSubmit={handleSubmit(onSubmit)}>
+      {/* <form onSubmit={handleSubmit(onSubmit)}>
         <fieldset
           className={`my-6 rounded-md border-2 ${
             errors.name ? 'border-red-500' : 'border-blue-300'
@@ -42,7 +59,7 @@ export default function Name() {
           <input
             placeholder='মোঃ রবিউস সানী'
             {...register('name', {
-              required: 'please fill the form'
+              required: req && 'please fill the form'
             })}
             className={`w-full rounded ${
               errors.name ? 'bg-red-100' : 'bg-blue-100'
@@ -63,12 +80,12 @@ export default function Name() {
 
         <fieldset
           className={`my-6 rounded-md border-2 ${
-            errors.category ? 'border-red-500' : 'border-blue-300'
+            errors.type ? 'border-red-500' : 'border-blue-300'
           } p-4`}
         >
           <legend
             className={`ml-4 font-bold ${
-              errors.category ? 'text-red-500' : 'text-blue-500'
+              errors.type ? 'text-red-500' : 'text-blue-500'
             }`}
           >
             বায়োডাটার ধরন *
@@ -76,18 +93,16 @@ export default function Name() {
           <select
             onClick={e => console.log(e.target.value)}
             className={`w-full focus:outline-none border-2 ${
-              errors.category ? 'border-red-500' : 'border-blue-300'
+              errors.type ? 'border-red-500' : 'border-blue-300'
             } p-2 rounded-md`}
-            {...register('category', { required: 'required' })}
+            {...register('type', { required: 'required' })}
           >
             <option value=''>select</option>
             <OptionMap data={_type} />
           </select>
-          <Fade right when={errors.category ? true : false}>
-            {errors.category && (
-              <p className='text-red-500 py-2 pl-2'>
-                {errors.category.message}
-              </p>
+          <Fade right when={errors.type ? true : false}>
+            {errors.type && (
+              <p className='text-red-500 py-2 pl-2'>{errors.type.message}</p>
             )}
           </Fade>
         </fieldset>
@@ -95,9 +110,19 @@ export default function Name() {
         <input
           type='submit'
           value='Save Changes'
-          className='rounded-md bg-red-500 px-6 py-3 text-xl font-medium text-white shadow-md hover:bg-red-600 focus:ring-2 focus:ring-red-800'
+          className='rounded-md bg-white px-6 py-3 text-xl border-2 cursor-pointer border-red-500 font-medium text-red-500 hover:bg-red-500 hover:text-white shadow-md focus:ring-2 focus:ring-red-800'
         />
-      </form>
+      </form> */}
+
+      <CForm onSubmit={onSubmit}>
+        <CInput
+          name='name2'
+          legend='সম্পূর্ণ নাম *'
+          description='this is description'
+          message='name is required'
+        />
+        <input type='submit' className='bg-red-500 p-2' value='Submit' />
+      </CForm>
     </ProfileLayout>
   )
 }
