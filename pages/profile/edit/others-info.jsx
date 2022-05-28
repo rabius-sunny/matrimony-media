@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import ProfileRoutes from 'components/profile/ProfileRoutes'
 import userRequest from 'services/userRequest'
 import { useForm } from 'react-hook-form'
+import biodataRequests from 'services/biodataRequests'
 
 export default function OthersInfo() {
   const router = useRouter()
@@ -13,9 +14,11 @@ export default function OthersInfo() {
   const { register, handleSubmit } = useForm({
     mode: 'onChange'
   })
-  const onSubmit = data => {
-    console.log(data)
-  }
+  const onSubmit = data =>
+    biodataRequests
+      .updateBio(data)
+      .then(info => console.log(info))
+      .catch(err => console.log(err.message))
   const [type, setType] = useState('')
   useEffect(() => {
     userRequest

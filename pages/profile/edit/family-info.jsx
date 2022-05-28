@@ -6,6 +6,7 @@ import { _brothers } from 'assets/profileinfo'
 import { useForm } from 'react-hook-form'
 import { Fade } from 'react-reveal'
 import OptionMap from 'components/profile/OptionMap'
+import biodataRequests from 'services/biodataRequests'
 
 export default function Family() {
   const router = useRouter()
@@ -22,9 +23,11 @@ export default function Family() {
   } = useForm({
     mode: 'onChange'
   })
-  const onSubmit = data => {
-    console.log(data)
-  }
+  const onSubmit = data =>
+    biodataRequests
+      .updateBio(data)
+      .then(info => console.log(info))
+      .catch(err => console.log(err.message))
 
   return (
     <ProfileLayout>

@@ -2,9 +2,8 @@ import { useRouter } from 'next/router'
 import ProfileLayout from 'components/profile/ProfileLayout'
 import ProfileRoutes from 'components/profile/ProfileRoutes'
 import { useForm } from 'react-hook-form'
-import FieldInput from 'components/profile/FieldInput'
-import { useState } from 'react'
 import { Fade } from 'react-reveal'
+import biodataRequests from 'services/biodataRequests'
 
 export default function Address() {
   const router = useRouter()
@@ -18,9 +17,11 @@ export default function Address() {
   } = useForm({
     mode: 'onChange'
   })
-  const onSubmit = data => {
-    console.log(data)
-  }
+  const onSubmit = data =>
+    biodataRequests
+      .updateBio(data)
+      .then(info => console.log(info))
+      .catch(err => console.log(err.message))
 
   return (
     <ProfileLayout>

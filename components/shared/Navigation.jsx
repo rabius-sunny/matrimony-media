@@ -31,6 +31,7 @@ export default function Navigation() {
 
   const handleLogOut = _ => {
     localStorage.removeItem('token')
+    localStorage.removeItem('id')
     window.location.reload()
     router.push('/sign-in')
     return true

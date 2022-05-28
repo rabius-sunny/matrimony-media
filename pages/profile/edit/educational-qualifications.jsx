@@ -2,28 +2,20 @@ import ProfileLayout from 'components/profile/ProfileLayout'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import ProfileRoutes from 'components/profile/ProfileRoutes'
-import FieldInput from 'components/profile/FieldInput'
-import DropdownProfile from 'components/profile/DropdownProfile'
 import { useForm } from 'react-hook-form'
 import OptionMap from 'components/profile/OptionMap'
 import { Fade } from 'react-reveal'
+import biodataRequests from 'services/biodataRequests'
 
 export default function Education() {
   const router = useRouter()
   const activeRoute = routename =>
     router.route.split('/edit')[1] === routename ? true : false
 
-  const handlechange = e => {
-    console.log(e.target.value)
-  }
-
   const [education, setEducation] = useState('')
   const [secondary, setSecondary] = useState('')
-  const [classes, setClasses] = useState('')
   const [higher, setHigher] = useState('')
-  const [higher_year, setHigher_year] = useState(higherType[0])
 
-  const [hafej, setHafej] = useState('')
   const [dawra, setDawra] = useState('')
   const [takhassus, setTakhassus] = useState(yesno[1])
 
@@ -34,9 +26,11 @@ export default function Education() {
   } = useForm({
     mode: 'onChange'
   })
-  const onSubmit = data => {
-    console.log(data)
-  }
+  const onSubmit = data =>
+    biodataRequests
+      .updateBio(data)
+      .then(info => console.log(info))
+      .catch(err => console.log(err.message))
 
   return (
     <ProfileLayout>
@@ -159,7 +153,6 @@ export default function Education() {
                         উচ্চমাধ্যমিক (HSC) / সমমান কোন বর্ষে পড়ছেন?
                       </legend>
                       <select
-                        onClick={e => setHigher_year(e.target.value)}
                         className='w-full focus:outline-none  border-2 border-blue-300 p-2 rounded-md'
                         {...register('higher_year')}
                       >
@@ -195,7 +188,6 @@ export default function Education() {
                     কোন ক্লাস পর্যন্ত পড়েছেন?
                   </legend>
                   <select
-                    onClick={e => setClasses(e.target.value)}
                     className='w-full focus:outline-none  border-2 border-blue-300 p-2 rounded-md'
                     {...register('classes')}
                   >
@@ -216,7 +208,6 @@ export default function Education() {
                 আপনি কি হাফেজ?
               </legend>
               <select
-                onClick={e => setHafej(e.target.value)}
                 className='w-full focus:outline-none  border-2 border-blue-300 p-2 rounded-md'
                 {...register('hafej')}
               >

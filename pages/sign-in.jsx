@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router'
 import { useState } from 'react'
 import userRequest from 'services/userRequest'
 
@@ -6,6 +7,7 @@ export default function Signin() {
     username: '',
     phone: ''
   })
+  const router = useRouter()
 
   const onSubmit = e => {
     e.preventDefault()
@@ -20,7 +22,8 @@ export default function Signin() {
         .signIn(data)
         .then(data => {
           localStorage.setItem('token', data.token)
-          console.log(data.message)
+          localStorage.setItem('id', data.id)
+          router.push('/')
           window.location.reload()
         })
         .catch(err => alert(err.response.data.message))

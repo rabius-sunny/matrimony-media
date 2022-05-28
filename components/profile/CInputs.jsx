@@ -40,14 +40,49 @@ export function CInput({
     </fieldset>
   )
 }
-export function Select({ register, options, name, ...rest }) {
+export function CSelect({
+  legend,
+  message,
+  register,
+  options,
+  name,
+  errors,
+  ...rest
+}) {
   return (
-    <select {...register(name)} {...rest}>
-      {options.map(value => (
-        <option key={value} value={value}>
-          {value}
-        </option>
-      ))}
-    </select>
+    <>
+      <fieldset
+        className={`my-6 rounded-md border-2 ${
+          errors[name] ? 'border-red-500' : 'border-blue-300'
+        } p-4`}
+      >
+        <legend
+          className={`ml-4 font-bold ${
+            errors[name] ? 'text-red-500' : 'text-blue-500'
+          }`}
+        >
+          {legend}
+        </legend>
+        <select
+          className={`w-full focus:outline-none border-2 ${
+            errors[name] ? 'border-red-500' : 'border-blue-300'
+          } p-2 rounded-md`}
+          {...register(name, { required: message && message })}
+          {...rest}
+        >
+          <option value=''>---</option>
+          {options.map(value => (
+            <option key={value} value={value}>
+              {value}
+            </option>
+          ))}
+        </select>
+        <Fade right when={errors[name] ? true : false}>
+          {errors[name] && (
+            <p className='text-red-500 py-2 pl-2'>{errors[name].message}</p>
+          )}
+        </Fade>
+      </fieldset>
+    </>
   )
 }

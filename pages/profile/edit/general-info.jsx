@@ -13,11 +13,9 @@ import {
   _weight,
   _bloodGroup
 } from 'assets/profileinfo'
-import FieldInput from 'components/profile/FieldInput'
-import { useState } from 'react'
-import DropdownProfile from 'components/profile/DropdownProfile'
-import SearchDropdownProfile from 'components/profile/SearchDropdownProfile'
+
 import { Fade } from 'react-reveal'
+import biodataRequests from 'services/biodataRequests'
 
 export default function GeneralInfo() {
   const router = useRouter()
@@ -33,7 +31,10 @@ export default function GeneralInfo() {
     mode: 'onChange'
   })
   const onSubmit = data => {
-    console.log(data)
+    biodataRequests
+      .updateBio(data)
+      .then(info => console.log(info))
+      .catch(err => console.log(err.message))
   }
   return (
     <>
@@ -304,7 +305,7 @@ export default function GeneralInfo() {
 
           <fieldset className='my-6 rounded-md border-2 border-blue-300 p-4'>
             <legend className='ml-4 text-lg font-bold text-blue-500'>
-              ওজন
+              Blood Group
             </legend>
             <select
               className='w-full  focus:outline-none border-2 border-blue-300 p-2 rounded-md'
