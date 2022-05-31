@@ -7,6 +7,7 @@ export function CInput({
   name,
   errors,
   message,
+  textarea,
   ...rest
 }) {
   return (
@@ -22,15 +23,28 @@ export function CInput({
       >
         {legend}
       </legend>
-      <input
-        {...register(name, { required: message && message })}
-        {...rest}
-        className={`w-full rounded ${
-          errors[name] ? 'bg-red-100' : 'bg-blue-100'
-        } px-4 py-2 font-medium text-blue-400 shadow-md ${
-          errors[name] ? 'focus:outline-red-500' : 'focus:outline-blue-500'
-        }`}
-      />
+      {textarea ? (
+        <textarea
+          rows={5}
+          {...register(name, { required: message && message })}
+          {...rest}
+          className={`w-full rounded ${
+            errors[name] ? 'bg-red-100' : 'bg-blue-100'
+          } px-4 py-2 font-medium text-blue-400 shadow-md ${
+            errors[name] ? 'focus:outline-red-500' : 'focus:outline-blue-500'
+          }`}
+        />
+      ) : (
+        <input
+          {...register(name, { required: message && message })}
+          {...rest}
+          className={`w-full rounded ${
+            errors[name] ? 'bg-red-100' : 'bg-blue-100'
+          } px-4 py-2 font-medium text-blue-400 shadow-md ${
+            errors[name] ? 'focus:outline-red-500' : 'focus:outline-blue-500'
+          }`}
+        />
+      )}
       <Fade right when={errors[name] ? true : false}>
         {errors[name] && (
           <p className='text-red-500 py-2 pl-2'>{errors[name].message}</p>
@@ -47,6 +61,7 @@ export function CSelect({
   options,
   name,
   errors,
+  onClick,
   ...rest
 }) {
   return (
@@ -68,6 +83,7 @@ export function CSelect({
             errors[name] ? 'border-red-500' : 'border-blue-300'
           } p-2 rounded-md`}
           {...register(name, { required: message && message })}
+          onClick={onClick ? e => onClick(e.target.value) : null}
           {...rest}
         >
           <option value=''>---</option>

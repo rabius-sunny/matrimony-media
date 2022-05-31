@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import requests from 'services/http'
 
-export default function useAsync() {
+export default function getData() {
   const [data, setData] = useState(null)
   const [loading, isLoading] = useState(false)
   const [error, setError] = useState(null)

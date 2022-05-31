@@ -17,7 +17,7 @@ export default function Name() {
       .then(info => console.log(info))
       .catch(err => console.log(err.message))
   }
-  const { data, error, loading } = getData()
+  const { data, loading } = getData()
 
   // const onReset = data => {
   //   const _reset = {}
