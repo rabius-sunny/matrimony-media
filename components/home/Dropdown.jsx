@@ -1,72 +1,98 @@
-import { Fragment, useState } from 'react'
-import { Listbox, Transition } from '@headlessui/react'
-import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
+import { useState } from 'react'
+import { _address_jilla, _type } from 'assets/profileinfo'
+import { useRouter } from 'next/router'
 
-const people = [
-  { name: 'সকল' },
-  { name: 'সকল' },
-  { name: 'সকল' },
-  { name: 'সকল' },
-  { name: 'সকল' }
-]
-export default function Dropdown({ legend }) {
-  const [selected, setSelected] = useState(people[0])
+export default function Dropdown() {
+  const router = useRouter()
+  const [type, setType] = useState('')
+  const [jilla, setJilla] = useState('')
+  const [id, setId] = useState('')
+  const [isReset, setIsReset] = useState(false)
+  const _reset = () => {
+    setIsReset(true)
+    setType('')
+    setJilla('')
+  }
 
   return (
-    <div className='my-2'>
-      <Listbox value={selected} onChange={setSelected}>
-        <Listbox.Label className='block text-sm font-medium text-white'>
-          {legend}
-        </Listbox.Label>
-        <div className='relative mt-1'>
-          <Listbox.Button className='relative w-full cursor-default rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:border-red-800 focus:outline-none focus:ring-1 focus:ring-red-800 sm:text-sm'>
-            <span className='block truncate'>{selected.name}</span>
-            <span className='pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2'>
-              <SelectorIcon
-                className='h-5 w-5 text-gray-400'
-                aria-hidden='true'
-              />
-            </span>
-          </Listbox.Button>
-          <Transition
-            as={Fragment}
-            leave='transition ease-in duration-100'
-            leaveFrom='opacity-100'
-            leaveTo='opacity-0'
-          >
-            <Listbox.Options className='absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm'>
-              {people.map((item, id) => (
-                <Listbox.Option
-                  key={id}
-                  className={({ active }) =>
-                    `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                      active ? 'bg-red-100 text-red-600' : 'text-gray-900'
-                    }`
-                  }
-                  value={item}
-                >
-                  {({ selected }) => (
-                    <>
-                      <span
-                        className={`block truncate ${
-                          selected ? 'font-medium' : 'font-normal'
-                        }`}
-                      >
-                        {item.name}
-                      </span>
-                      {selected ? (
-                        <span className='absolute inset-y-0 left-0 flex items-center pl-3 text-red-600'>
-                          <CheckIcon className='h-5 w-5' aria-hidden='true' />
-                        </span>
-                      ) : null}
-                    </>
-                  )}
-                </Listbox.Option>
-              ))}
-            </Listbox.Options>
-          </Transition>
-        </div>
-      </Listbox>
+    <div className='my-4'>
+      <div className='mb-4'>
+        <label
+          className='mb-1 block text-sm font-medium text-white'
+          htmlFor='biono'
+        >
+          আমি খুঁজছি
+        </label>
+        <select
+          onClick={e => {
+            setType(e.target.value)
+            setIsReset(false)
+          }}
+          className='w-full py-1 rounded px-1 focus:outline-red-800'
+          name='type'
+          id='type'
+        >
+          <option selected={isReset} value=''>
+            সকল
+          </option>
+          {_type.map(item => (
+            <option value={item} key={item}>
+              {item}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <div className='my-4'>
+        <label
+          className='mb-1 block text-sm font-medium text-white'
+          htmlFor='biono'
+        >
+          জেলা
+        </label>
+        <select
+          onClick={e => {
+            setJilla(e.target.value)
+            setIsReset(false)
+          }}
+          className='w-full py-1 rounded px-1 focus:outline-red-800'
+          name='jilla'
+          id='jilla'
+        >
+          <option selected={isReset} value=''>
+            সকল
+          </option>
+          {_address_jilla.map(item => (
+            <option value={item} key={item}>
+              {item}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <div>
+        <label
+          className='mb-1 block text-sm font-medium text-white'
+          htmlFor='biono'
+        >
+          বায়োডাটা আইডি
+        </label>
+        <input
+          onClick={_reset}
+          onChange={e => setId(e.target.value)}
+          className='mb-4 w-full rounded px-3 py-1 shadow-md focus:outline-red-800'
+        />
+      </div>
+      <div className='submit text-right'>
+        <button
+          onClick={() =>
+            router.push(`/bios/search/${type || 'all'}/${jilla || 'all'}/${id}`)
+          }
+          className='rounded bg-white px-4 py-2 text-red-600 shadow-md hover:bg-red-100'
+        >
+          সার্চ করুন
+        </button>
+      </div>
     </div>
   )
 }

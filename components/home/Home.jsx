@@ -11,25 +11,7 @@ export default function Home() {
         <div className='container grid grid-cols-12 gap-6'>
           <div className='order-last col-span-12 md:order-1 md:col-span-5'>
             <div className='hidden rounded-lg border-4 border-red-600 bg-red-600 px-8 py-2 md:block '>
-              <Dropdown legend='আমি খুঁজছি' />
-              <Dropdown legend='জেলা' />
-              <div>
-                <label
-                  className='mb-1 block text-sm font-medium text-white'
-                  htmlFor='biono'
-                >
-                  বায়োডাটা নং.
-                </label>
-                <input
-                  type='number'
-                  className='mb-4 w-full rounded px-3 py-1 shadow-md focus:outline-red-800'
-                />
-              </div>
-              <div className='submit text-right'>
-                <button className='rounded bg-white px-4 py-2 text-red-600 shadow-md hover:bg-red-100'>
-                  সার্চ করুন
-                </button>
-              </div>
+              <Dropdown />
             </div>
           </div>
           <div className='col-span-12 md:order-2 md:col-span-7'>
@@ -45,26 +27,7 @@ export default function Home() {
       <div className='pt-10 md:pt-0'>
         <div className='container'>
           <div className='block rounded-lg border-4 border-red-600 bg-red-600 px-8 py-2 md:hidden '>
-            <Dropdown legend='আমি খুঁজছি' />
-            <Dropdown legend='বৈবাহিক অবস্থা' />
-            <Dropdown legend='জেলা' />
-            <div>
-              <label
-                className='mb-1 block text-sm font-medium text-white'
-                htmlFor='biono'
-              >
-                বায়োডাটা নং.
-              </label>
-              <input
-                type='number'
-                className='mb-4 w-full rounded px-3 py-1 shadow-md focus:outline-red-800'
-              />
-            </div>
-            <div className='submit text-right'>
-              <button className='rounded bg-white px-4 py-2 text-red-600 shadow-md hover:bg-red-100'>
-                সার্চ করুন
-              </button>
-            </div>
+            <Dropdown />
           </div>
         </div>
         <hr className='mt-10 md:mt-0 md:hidden' />

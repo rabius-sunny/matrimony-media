@@ -1,8 +1,7 @@
 import requests from './http'
-
 class BiodataRequests {
-  getBios(page) {
-    return requests.get(`/home/${page}`)
+  getBios(type, jilla) {
+    return requests.get(`/home/${type}/${jilla}`)
   }
   getBioByID(id) {
     return requests.get(`/bio/${id}`)
