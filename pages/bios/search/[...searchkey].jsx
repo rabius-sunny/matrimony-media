@@ -17,8 +17,6 @@ export default function SearchResult() {
     }
   }, [searchkey])
 
-  console.log(bios)
-
   return (
     <div>
       <h1 className='text-3xl text-center'>Search Result</h1>

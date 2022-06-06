@@ -22,6 +22,10 @@ const solutions = [
   {
     name: 'যোগাযোগ',
     href: '/contact-us'
+  },
+  {
+    name: 'BIO',
+    href: '/bios/bio/anisul-islam'
   }
 ]
 

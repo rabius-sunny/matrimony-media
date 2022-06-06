@@ -4,7 +4,7 @@ class BiodataRequests {
     return requests.get(`/home/${type}/${jilla}`)
   }
   getBioByID(id) {
-    return requests.get(`/bio/${id}`)
+    return requests.get(`/bio-username/${id}`)
   }
   updateBio(body) {
     return requests.post('/createorupdate-biodata', body)

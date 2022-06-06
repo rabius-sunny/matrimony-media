@@ -1,0 +1,25 @@
+.item__holder {
+  .item {
+    padding: 4px 10px;
+    border-left: 1px solid #c7c7c72f;
+    border-right: 1px solid #c7c7c72f;
+    display: flex;
+
+    &:last-child {
+      border-bottom: 4px solid #c7c7c72f;
+    }
+
+    span:first-child {
+      width: 50%;
+      border-right: 1px solid red;
+    }
+
+    span:last-child {
+      padding-left: 10px;
+    }
+  }
+
+  .item:nth-child(odd) {
+    background-color: #c7c7c72f;
+  }
+}
