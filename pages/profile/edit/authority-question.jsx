@@ -6,6 +6,8 @@ import { Fade } from 'react-reveal'
 import OptionMap from 'components/profile/OptionMap'
 import biodataRequests from 'services/biodataRequests'
 import getData from 'hooks/getData'
+import FormSkeleton from 'components/shared/FormSkeleton'
+import Head from 'next/head'
 
 export default function AuthorityQuestion() {
   const router = useRouter()
@@ -29,8 +31,11 @@ export default function AuthorityQuestion() {
 
   return (
     <ProfileLayout>
+      <Head>
+        <title>কর্তৃপক্ষের জিজ্ঞাসা</title>
+      </Head>
       <ProfileRoutes activeRoute={activeRoute} />
-      {!loading && data ? (
+      {!loading ? (
         <form onSubmit={handleSubmit(onSubmit)}>
           <fieldset
             className={`my-6 rounded-md border-2 ${
@@ -45,7 +50,7 @@ export default function AuthorityQuestion() {
               এই ওয়েবসাইটে বায়োডাটা জমা দিচ্ছেন তা অভিভাবক জানেন? *
             </legend>
             <select
-              defaultValue={data.family_about_bio}
+              defaultValue={data?.family_about_bio}
               className={`w-full focus:outline-none border-2 ${
                 errors.family_about_bio ? 'border-red-500' : 'border-blue-300'
               } p-2 rounded-md`}
@@ -78,7 +83,7 @@ export default function AuthorityQuestion() {
               আল্লাহ'র শপথ করে সাক্ষ্য দিন, যে তথ্যগুলো দিচ্ছেন সব সত্য? *
             </legend>
             <select
-              defaultValue={data.is_correct_info}
+              defaultValue={data?.is_correct_info}
               className={`w-full focus:outline-none border-2 ${
                 errors.is_correct_info ? 'border-red-500' : 'border-blue-300'
               } p-2 rounded-md`}
@@ -112,7 +117,7 @@ export default function AuthorityQuestion() {
               ওয়েবসাইট কর্তৃপক্ষ নিবে না। আপনি কি রাজি? *
             </legend>
             <select
-              defaultValue={data.liability}
+              defaultValue={data?.liability}
               className={`w-full focus:outline-none border-2 ${
                 errors.liability ? 'border-red-500' : 'border-blue-300'
               } p-2 rounded-md`}
@@ -136,7 +141,7 @@ export default function AuthorityQuestion() {
           />
         </form>
       ) : (
-        <div>Loading...</div>
+        <FormSkeleton />
       )}
     </ProfileLayout>
   )

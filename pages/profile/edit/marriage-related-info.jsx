@@ -5,6 +5,8 @@ import ProfileRoutes from 'components/profile/ProfileRoutes'
 import { useForm } from 'react-hook-form'
 import { Fade } from 'react-reveal'
 import biodataRequests from 'services/biodataRequests'
+import FormSkeleton from 'components/shared/FormSkeleton'
+import Head from 'next/head'
 
 export default function MarriageRelated() {
   const router = useRouter()
@@ -28,8 +30,11 @@ export default function MarriageRelated() {
 
   return (
     <ProfileLayout>
+      <Head>
+        <title>বিয়েসম্পর্কিত তথ্য</title>
+      </Head>
       <ProfileRoutes activeRoute={activeRoute} />
-      {!loading && data ? (
+      {!loading ? (
         <form onSubmit={handleSubmit(onSubmit)}>
           <fieldset
             className={`my-6 rounded-md border-2 ${
@@ -44,7 +49,7 @@ export default function MarriageRelated() {
               অভিভাবক আপনার বিয়েতে রাজি কি না? *
             </legend>
             <input
-              defaultValue={data.guardians_permission}
+              defaultValue={data?.guardians_permission}
               {...register('guardians_permission', {
                 required: 'please fill the field'
               })}
@@ -78,7 +83,7 @@ export default function MarriageRelated() {
               বিয়ে কেন করছেন? বিয়ে সম্পর্কে আপনার ধারণা কি? *
             </legend>
             <textarea
-              defaultValue={data.marry_reason}
+              defaultValue={data?.marry_reason}
               rows={5}
               {...register('marry_reason', {
                 required: 'please fill the field'
@@ -101,7 +106,7 @@ export default function MarriageRelated() {
             <p className='pl-2 pt-4 text-blue-400'>সংক্ষেপে বর্ণনা করুন।</p>
           </fieldset>
 
-          {data.type === 'পাত্রের বায়োডাটা' && (
+          {data?.type === 'পাত্রের বায়োডাটা' && (
             <div>
               <fieldset
                 className={`my-6 rounded-md border-2 ${
@@ -116,7 +121,7 @@ export default function MarriageRelated() {
                   বিয়ের পর স্ত্রীকে নিয়ে আপনার পরিকল্পনা বিস্তারিত লিখুন *
                 </legend>
                 <textarea
-                  defaultValue={data.family_planning}
+                  defaultValue={data?.family_planning}
                   rows={5}
                   {...register('family_planning', {
                     required: 'please fill the field'
@@ -156,7 +161,7 @@ export default function MarriageRelated() {
                   করবেন কিনা? *
                 </legend>
                 <textarea
-                  defaultValue={data.demand}
+                  defaultValue={data?.demand}
                   rows={5}
                   {...register('demand', {
                     required: 'please fill the field'
@@ -180,14 +185,14 @@ export default function MarriageRelated() {
             </div>
           )}
 
-          {data.type === 'পাত্রীর বায়োডাটা' && (
+          {data?.type === 'পাত্রীর বায়োডাটা' && (
             <div>
               <fieldset className='my-6 rounded-md border-2 border-blue-300 p-4'>
                 <legend className='ml-4 font-bold text-blue-500'>
                   আপনি কি বিয়ের পর পড়াশোনা করতে ইচ্ছুক?
                 </legend>
                 <input
-                  defaultValue={data.education_after_marriage}
+                  defaultValue={data?.education_after_marriage}
                   {...register('education_after_marriage')}
                   className='w-full rounded bg-blue-100 px-4 py-2 font-medium text-blue-400 shadow-md focus:outline-blue-500'
                 />
@@ -201,7 +206,7 @@ export default function MarriageRelated() {
                   আপনি কি বিয়ের পর চাকরি করতে ইচ্ছুক?
                 </legend>
                 <input
-                  defaultValue={data.job_after_marriage}
+                  defaultValue={data?.job_after_marriage}
                   {...register('job_after_marriage')}
                   className='w-full rounded bg-blue-100 px-4 py-2 font-medium text-blue-400 shadow-md focus:outline-blue-500'
                 />
@@ -219,7 +224,7 @@ export default function MarriageRelated() {
           />
         </form>
       ) : (
-        <div>Loading ...</div>
+        <FormSkeleton />
       )}
     </ProfileLayout>
   )

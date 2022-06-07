@@ -15,6 +15,8 @@ import {
   _weight,
   _bloodGroup
 } from 'assets/profileinfo'
+import FormSkeleton from 'components/shared/FormSkeleton'
+import Head from 'next/head'
 
 export default function GeneralInfo() {
   const router = useRouter()
@@ -23,19 +25,21 @@ export default function GeneralInfo() {
     router.route.split('/edit')[1] === routename ? true : false
 
   const onSubmit = data => {
-    console.log(data)
-    // biodataRequests
-    //   .updateBio(data)
-    //   .then(info => console.log(info))
-    //   .catch(err => console.log(err.message))
+    biodataRequests
+      .updateBio(data)
+      .then(info => console.log(info))
+      .catch(err => console.log(err.message))
   }
   const { data, loading } = getData()
   return (
     <>
       <ProfileLayout>
+        <Head>
+          <title>সাধারণ তথ্য</title>
+        </Head>
         <ProfileRoutes activeRoute={activeRoute} />
 
-        {!loading && data ? (
+        {!loading ? (
           <CForm onSubmit={onSubmit}>
             <CSelect
               legend='বৈবাহিক অবস্থা *'
@@ -138,7 +142,7 @@ export default function GeneralInfo() {
             />
           </CForm>
         ) : (
-          <div>Loading...</div>
+          <FormSkeleton />
         )}
       </ProfileLayout>
     </>

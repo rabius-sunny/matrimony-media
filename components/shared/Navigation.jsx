@@ -22,10 +22,6 @@ const solutions = [
   {
     name: 'যোগাযোগ',
     href: '/contact-us'
-  },
-  {
-    name: 'BIO',
-    href: '/bios/bio/anisul-islam'
   }
 ]
 
@@ -33,12 +29,13 @@ export default function Navigation() {
   const router = useRouter()
   const auth = useAuth()
 
+  const _reload = _ => window.location.reload()
+
   const handleLogOut = _ => {
+    if (router.pathname === '/') _reload()
     localStorage.removeItem('token')
     localStorage.removeItem('id')
-    window.location.reload()
-    router.push('/sign-in')
-    return true
+    router.push('/')
   }
 
   return (
@@ -84,7 +81,7 @@ export default function Navigation() {
                 </a>
               </Link>
               {auth && (
-                <button onClick={() => handleLogOut()}>
+                <button onClick={handleLogOut}>
                   <LogoutIcon className='h-12 ml-4 text-red-500 hover:text-red-400' />
                 </button>
               )}

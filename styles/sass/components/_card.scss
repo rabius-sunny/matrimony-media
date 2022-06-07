@@ -1,0 +1,40 @@
+.search-body {
+  height: auto;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 20px;
+  background-color: white;
+}
+
+.search-body span,
+.search-body p {
+  max-width: 50%;
+  flex: 0 0 50%;
+  text-align: center;
+  margin: 0;
+  padding: 5px 0;
+  border-style: solid;
+  border-color: #ff000038;
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: red;
+}
+
+.search-body span {
+  border-width: 0px 0px 1px 0px;
+}
+
+.search-body p {
+  border-width: 0px 0px 1px 1px;
+}
+
+.search-body p:last-child {
+  border-bottom: 0;
+}
+
+#lastspan {
+  border: 0px !important;
+}

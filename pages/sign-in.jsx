@@ -1,5 +1,7 @@
+import useAuth from 'hooks/useAuth'
+import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import userRequest from 'services/userRequest'
 
 export default function Signin() {
@@ -8,6 +10,10 @@ export default function Signin() {
     phone: ''
   })
   const router = useRouter()
+  const auth = useAuth()
+  useEffect(() => {
+    auth && router.push('/')
+  }, [auth])
 
   const onSubmit = e => {
     e.preventDefault()
@@ -23,7 +29,6 @@ export default function Signin() {
         .then(data => {
           localStorage.setItem('token', data.token)
           localStorage.setItem('id', data.id)
-          router.push('/')
           window.location.reload()
         })
         .catch(err => alert(err.response.data.message))
@@ -33,6 +38,9 @@ export default function Signin() {
 
   return (
     <div className='bg-gradient-to-l from-rose-600 to-pink-600'>
+      <Head>
+        <title>সাইন ইন</title>
+      </Head>
       <div className='flex h-screen justify-center'>
         <div
           className='hidden bg-cover lg:block lg:w-2/3'
@@ -80,7 +88,7 @@ export default function Signin() {
                     id='username'
                     required
                     onChange={onChange}
-                    placeholder='Rabius Sunny'
+                    placeholder='your username'
                     className='mt-2 block w-full rounded-md border border-gray-200 bg-white px-4 py-2 text-gray-700 placeholder-gray-400 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-400 focus:ring-opacity-40 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:placeholder-gray-600 dark:focus:border-blue-400'
                   />
                 </div>

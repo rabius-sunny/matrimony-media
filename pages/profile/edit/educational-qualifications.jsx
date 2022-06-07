@@ -8,6 +8,8 @@ import getData from 'hooks/getData'
 import { Fade } from 'react-reveal'
 import biodataRequests from 'services/biodataRequests'
 import { useEffect } from 'react'
+import FormSkeleton from 'components/shared/FormSkeleton'
+import Head from 'next/head'
 
 export default function Education() {
   const router = useRouter()
@@ -47,8 +49,11 @@ export default function Education() {
 
   return (
     <ProfileLayout>
+      <Head>
+        <title>শিক্ষাগত যোগ্যতা</title>
+      </Head>
       <ProfileRoutes activeRoute={activeRoute} />
-      {!loading && data ? (
+      {!loading ? (
         <form onSubmit={handleSubmit(onSubmit)}>
           <fieldset
             className={`my-6 rounded-md border-2 ${
@@ -64,7 +69,7 @@ export default function Education() {
             </legend>
             <select
               onClick={e => setEducation(e.target.value)}
-              defaultValue={data.education}
+              defaultValue={data?.education}
               className={`w-full focus:outline-none border-2 ${
                 errors.education ? 'border-red-500' : 'border-blue-300'
               } p-2 rounded-md`}
@@ -90,7 +95,7 @@ export default function Education() {
                 </legend>
                 <select
                   onClick={e => setSecondary(e.target.value)}
-                  defaultValue={data.secondary}
+                  defaultValue={data?.secondary}
                   className='w-full focus:outline-none  border-2 border-blue-300 p-2 rounded-md'
                   {...register('secondary')}
                 >
@@ -107,7 +112,7 @@ export default function Education() {
                     </legend>
                     <textarea
                       rows={5}
-                      defaultValue={data.secondary_details}
+                      defaultValue={data?.secondary_details}
                       placeholder='ফলাফলঃ A+, বিভাগঃ বিজ্ঞান, পাশের সনঃ 2016'
                       {...register('secondary_details')}
                       className='w-full rounded bg-blue-100 px-4 py-2 font-medium text-blue-400 shadow-md focus:outline-blue-500'
@@ -123,7 +128,7 @@ export default function Education() {
                     </legend>
                     <select
                       onClick={e => setHigher(e.target.value)}
-                      defaultValue={data.higher}
+                      defaultValue={data?.higher}
                       className='w-full focus:outline-none  border-2 border-blue-300 p-2 rounded-md'
                       {...register('higher')}
                     >
@@ -139,7 +144,7 @@ export default function Education() {
                         </legend>
                         <textarea
                           rows={5}
-                          defaultValue={data.higher_details}
+                          defaultValue={data?.higher_details}
                           placeholder='আপনার উচ্চমাধ্যমিক/সমমান এর ফলাফল, বিভাগ ও পাশের সন লিখুন'
                           {...register('higher_details')}
                           className='w-full rounded bg-blue-100 px-4 py-2 font-medium text-blue-400 shadow-md focus:outline-blue-500'
@@ -156,7 +161,7 @@ export default function Education() {
                         </legend>
                         <textarea
                           rows={5}
-                          defaultValue={data.honors_details}
+                          defaultValue={data?.honors_details}
                           {...register('honors_details')}
                           className='w-full rounded bg-blue-100 px-4 py-2 font-medium text-blue-400 shadow-md focus:outline-blue-500'
                         />
@@ -174,7 +179,7 @@ export default function Education() {
                           উচ্চমাধ্যমিক (HSC) / সমমান কোন বর্ষে পড়ছেন?
                         </legend>
                         <select
-                          defaultValue={data.higher_year}
+                          defaultValue={data?.higher_year}
                           className='w-full focus:outline-none  border-2 border-blue-300 p-2 rounded-md'
                           {...register('higher_year')}
                         >
@@ -191,7 +196,7 @@ export default function Education() {
                         </legend>
                         <textarea
                           rows={5}
-                          defaultValue={data.diploma_details}
+                          defaultValue={data?.diploma_details}
                           placeholder='প্রতিষ্ঠানের নাম, বিভাগ, ফলাফল, পাসের সন'
                           {...register('diploma_details')}
                           className='w-full rounded bg-blue-100 px-4 py-2 font-medium text-blue-400 shadow-md focus:outline-blue-500'
@@ -211,7 +216,7 @@ export default function Education() {
                       কোন ক্লাস পর্যন্ত পড়েছেন?
                     </legend>
                     <select
-                      defaultValue={data.classes}
+                      defaultValue={data?.classes}
                       className='w-full focus:outline-none  border-2 border-blue-300 p-2 rounded-md'
                       {...register('classes')}
                     >
@@ -232,7 +237,7 @@ export default function Education() {
                   আপনি কি হাফেজ?
                 </legend>
                 <select
-                  defaultValue={data.hafej}
+                  defaultValue={data?.hafej}
                   className='w-full focus:outline-none  border-2 border-blue-300 p-2 rounded-md'
                   {...register('hafej')}
                 >
@@ -246,7 +251,7 @@ export default function Education() {
                   দাওরায়ে হাদীস পাশ করেছেন?
                 </legend>
                 <select
-                  defaultValue={data.dawra}
+                  defaultValue={data?.dawra}
                   onClick={e => setDawra(e.target.value)}
                   className='w-full focus:outline-none  border-2 border-blue-300 p-2 rounded-md'
                   {...register('dawra')}
@@ -263,7 +268,7 @@ export default function Education() {
                     </legend>
                     <textarea
                       rows={5}
-                      defaultValue={data.dawra_details}
+                      defaultValue={data?.dawra_details}
                       placeholder='নতিজা, পাসের সন লিখুন'
                       {...register('dawra_details')}
                       className='w-full rounded bg-blue-100 px-4 py-2 font-medium text-blue-400 shadow-md focus:outline-blue-500'
@@ -276,7 +281,7 @@ export default function Education() {
                     </legend>
                     <select
                       onClick={e => setTakhassus(e.target.value)}
-                      defaultValue={data.takhassus}
+                      defaultValue={data?.takhassus}
                       className='w-full focus:outline-none  border-2 border-blue-300 p-2 rounded-md'
                       {...register('takhassus')}
                     >
@@ -292,7 +297,7 @@ export default function Education() {
                         </legend>
                         <textarea
                           rows={5}
-                          defaultValue={data.takhassus_details}
+                          defaultValue={data?.takhassus_details}
                           placeholder='তাখাসসুসের বিষয়, পাসের সন লিখুন'
                           {...register('takhassus_details')}
                           className='w-full rounded bg-blue-100 px-4 py-2 font-medium text-blue-400 shadow-md focus:outline-blue-500'
@@ -308,7 +313,7 @@ export default function Education() {
                     দাওরায়ে হাদীস কোন বর্ষে পড়ছেন?
                   </legend>
                   <input
-                    defaultValue={data.dawra_year}
+                    defaultValue={data?.dawra_year}
                     {...register('dawra_year')}
                     className='w-full rounded bg-blue-100 px-4 py-2 font-medium text-blue-400 shadow-md focus:outline-blue-500'
                   />
@@ -321,7 +326,7 @@ export default function Education() {
                 </legend>
                 <textarea
                   rows={5}
-                  defaultValue={data.profession}
+                  defaultValue={data?.profession}
                   {...register('profession')}
                   className='w-full rounded bg-blue-100 px-4 py-2 font-medium text-blue-400 shadow-md focus:outline-blue-500'
                 />
@@ -339,7 +344,7 @@ export default function Education() {
             </legend>
             <textarea
               rows={5}
-              defaultValue={data.another_education}
+              defaultValue={data?.another_education}
               {...register('another_education')}
               className='w-full rounded bg-blue-100 px-4 py-2 font-medium text-blue-400 shadow-md focus:outline-blue-500'
             />
@@ -354,7 +359,7 @@ export default function Education() {
           />
         </form>
       ) : (
-        <div>Loading...</div>
+        <FormSkeleton />
       )}
     </ProfileLayout>
   )

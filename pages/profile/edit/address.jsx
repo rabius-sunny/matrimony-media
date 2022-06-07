@@ -5,6 +5,8 @@ import biodataRequests from 'services/biodataRequests'
 import getData from 'hooks/getData'
 import { CInput } from 'components/profile/CInputs'
 import CForm from 'components/profile/CFroms'
+import FormSkeleton from 'components/shared/FormSkeleton'
+import Head from 'next/head'
 
 export default function Address() {
   const router = useRouter()
@@ -18,12 +20,14 @@ export default function Address() {
       .catch(err => console.log(err.message))
 
   const { data, loading } = getData()
-  console.log(data)
 
   return (
     <ProfileLayout>
+      <Head>
+        <title>ঠিকানা</title>
+      </Head>
       <ProfileRoutes activeRoute={activeRoute} />
-      {!loading && data ? (
+      {!loading ? (
         <CForm onSubmit={onSubmit}>
           <CInput
             legend='স্থায়ী ঠিকানা *'
@@ -55,7 +59,7 @@ export default function Address() {
           />
         </CForm>
       ) : (
-        <div>Loading...</div>
+        <FormSkeleton />
       )}
     </ProfileLayout>
   )

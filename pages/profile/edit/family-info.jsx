@@ -8,6 +8,8 @@ import { Fade } from 'react-reveal'
 import OptionMap from 'components/profile/OptionMap'
 import biodataRequests from 'services/biodataRequests'
 import getData from 'hooks/getData'
+import FormSkeleton from 'components/shared/FormSkeleton'
+import Head from 'next/head'
 
 export default function Family() {
   const router = useRouter()
@@ -34,15 +36,18 @@ export default function Family() {
 
   useEffect(() => {
     if (data) {
-      setBrothers(data.brothers)
-      setSisters(data.sisters)
+      setBrothers(data?.brothers)
+      setSisters(data?.sisters)
     }
   }, [data])
 
   return (
     <ProfileLayout>
+      <Head>
+        <title>পারিবারিক তথ্য</title>
+      </Head>
       <ProfileRoutes activeRoute={activeRoute} />
-      {!loading && data ? (
+      {!loading ? (
         <form onSubmit={handleSubmit(onSubmit)}>
           <fieldset
             className={`my-6 rounded-md border-2 ${
@@ -57,7 +62,7 @@ export default function Family() {
               পিতার নাম (শেয়ার করা হবে না) *
             </legend>
             <input
-              defaultValue={data.father_name}
+              defaultValue={data?.father_name}
               {...register('father_name', {
                 required: 'Father name is required'
               })}
@@ -96,7 +101,7 @@ export default function Family() {
               মাতার নাম (শেয়ার করা হবে না) *
             </legend>
             <input
-              defaultValue={data.mother_name}
+              defaultValue={data?.mother_name}
               {...register('mother_name', {
                 required: 'Mother name is required'
               })}
@@ -135,7 +140,7 @@ export default function Family() {
               পিতার পেশা *
             </legend>
             <input
-              defaultValue={data.father_profession}
+              defaultValue={data?.father_profession}
               {...register('father_profession', {
                 required: "Father's profession is required"
               })}
@@ -173,7 +178,7 @@ export default function Family() {
               মাতার পেশা *
             </legend>
             <input
-              defaultValue={data.mother_profession}
+              defaultValue={data?.mother_profession}
               {...register('mother_profession', {
                 required: "Mother's profession is required"
               })}
@@ -212,7 +217,7 @@ export default function Family() {
             </legend>
             <select
               onClick={e => setBrothers(e.target.value)}
-              defaultValue={data.brothers}
+              defaultValue={data?.brothers}
               className={`w-full focus:outline-none border-2 ${
                 errors.brothers ? 'border-red-500' : 'border-blue-300'
               } p-2 rounded-md`}
@@ -244,7 +249,7 @@ export default function Family() {
                 ভাইদের সম্পর্কে তথ্য
               </legend>
               <textarea
-                defaultValue={data.brothers_info}
+                defaultValue={data?.brothers_info}
                 rows={5}
                 {...register('brothers_info')}
                 className={`w-full rounded ${
@@ -276,7 +281,7 @@ export default function Family() {
             </legend>
             <select
               onClick={e => setSisters(e.target.value)}
-              defaultValue={data.sisters}
+              defaultValue={data?.sisters}
               className={`w-full focus:outline-none border-2 ${
                 errors.sisters ? 'border-red-500' : 'border-blue-300'
               } p-2 rounded-md`}
@@ -307,7 +312,7 @@ export default function Family() {
                 বোনদের সম্পর্কে তথ্য
               </legend>
               <textarea
-                defaultValue={data.sisters_info}
+                defaultValue={data?.sisters_info}
                 rows={5}
                 {...register('sisters_info')}
                 className={`w-full rounded ${
@@ -331,7 +336,7 @@ export default function Family() {
               চাচা-মামাদের পেশা
             </legend>
             <textarea
-              defaultValue={data.uncles_profession}
+              defaultValue={data?.uncles_profession}
               rows={5}
               {...register('uncles_profession')}
               className='w-full rounded bg-blue-100 px-4 py-2 font-medium text-blue-400 shadow-md focus:outline-blue-500'
@@ -354,7 +359,7 @@ export default function Family() {
               পরিবারের অর্থনৈতিক ও সামাজিক অবস্থা
             </legend>
             <textarea
-              defaultValue={data.family_status}
+              defaultValue={data?.family_status}
               rows={5}
               {...register('family_status', { required: 'field is required' })}
               className={`w-full rounded ${
@@ -382,7 +387,7 @@ export default function Family() {
           />
         </form>
       ) : (
-        <div>Loading...</div>
+        <FormSkeleton />
       )}
     </ProfileLayout>
   )

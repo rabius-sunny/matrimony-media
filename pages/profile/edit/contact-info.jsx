@@ -5,6 +5,8 @@ import { Fade } from 'react-reveal'
 import { useForm } from 'react-hook-form'
 import biodataRequests from 'services/biodataRequests'
 import getData from 'hooks/getData'
+import FormSkeleton from 'components/shared/FormSkeleton'
+import Head from 'next/head'
 
 export default function Name() {
   const router = useRouter()
@@ -28,8 +30,11 @@ export default function Name() {
 
   return (
     <ProfileLayout>
+      <Head>
+        <title>যোগাযোগ</title>
+      </Head>
       <ProfileRoutes activeRoute={activeRoute} />
-      {!loading && data ? (
+      {!loading ? (
         <form onSubmit={handleSubmit(onSubmit)}>
           <fieldset
             className={`my-6 rounded-md border-2 ${
@@ -44,7 +49,7 @@ export default function Name() {
               অভিভাবকের নাম্বার *
             </legend>
             <input
-              defaultValue={data.guandian_number}
+              defaultValue={data?.guandian_number}
               placeholder='01700000000'
               {...register('guandian_number', {
                 required: 'please fill the form'
@@ -85,7 +90,7 @@ export default function Name() {
               যার নাম্বার লিখেছেন *
             </legend>
             <input
-              defaultValue={data.number_relation}
+              defaultValue={data?.number_relation}
               {...register('number_relation', {
                 required: 'please fill the form'
               })}
@@ -123,7 +128,7 @@ export default function Name() {
               বায়োডাটা গ্রহণের ই-মেইল এড্রেস *
             </legend>
             <input
-              defaultValue={data.receiving_email}
+              defaultValue={data?.receiving_email}
               {...register('receiving_email', {
                 required: 'enter a valid receiving_email address',
                 pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/i
@@ -156,7 +161,7 @@ export default function Name() {
           />
         </form>
       ) : (
-        <div>Loading...</div>
+        <FormSkeleton />
       )}
     </ProfileLayout>
   )

@@ -6,6 +6,8 @@ import ProfileRoutes from 'components/profile/ProfileRoutes'
 import { Fade } from 'react-reveal'
 import getData from 'hooks/getData'
 import biodataRequests from 'services/biodataRequests'
+import FormSkeleton from 'components/shared/FormSkeleton'
+import Head from 'next/head'
 
 export default function PersonalInfo() {
   const router = useRouter()
@@ -29,8 +31,11 @@ export default function PersonalInfo() {
 
   return (
     <ProfileLayout>
+      <Head>
+        <title>ব্যক্তিগত তথ্য</title>
+      </Head>
       <ProfileRoutes activeRoute={activeRoute} />
-      {!loading && data ? (
+      {!loading ? (
         <form onSubmit={handleSubmit(onSubmit)}>
           {data?.type === 'পাত্রের বায়োডাটা' ? (
             <div>
@@ -689,7 +694,7 @@ export default function PersonalInfo() {
           />
         </form>
       ) : (
-        <div>Loading...</div>
+        <FormSkeleton />
       )}
     </ProfileLayout>
   )

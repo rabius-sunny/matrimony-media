@@ -6,6 +6,8 @@ import { CInput, CSelect } from 'components/profile/CInputs'
 import CForm from 'components/profile/CFroms'
 import biodataRequests from 'services/biodataRequests'
 import getData from 'hooks/getData'
+import FormSkeleton from 'components/shared/FormSkeleton'
+import Head from 'next/head'
 export default function Name() {
   const router = useRouter()
   const activeRoute = routename =>
@@ -30,13 +32,16 @@ export default function Name() {
 
   return (
     <ProfileLayout>
+      <Head>
+        <title>প্রাথমিক তথ্য</title>
+      </Head>
       <ProfileRoutes activeRoute={activeRoute} />
 
       {!loading ? (
         <CForm onSubmit={onSubmit}>
           <CInput
             name='name'
-            placeholder='মোঃ রবিউস সানী'
+            placeholder='My name'
             legend='সম্পূর্ণ নাম *'
             defaultValue={data?.name}
             description='নাম নেয়া হচ্ছে ভেরিফিকেশনের জন্য, পূর্ণ নাম লিখবেন। আপনার নাম কারো
@@ -52,12 +57,12 @@ export default function Name() {
           />
           <input
             type='submit'
-            value='save changes and go next'
-            className='rounded-md bg-white px-6 py-3 text-xl border-2 cursor-pointer border-red-500 font-medium text-red-500 hover:bg-red-500 hover:text-white shadow-md focus:ring-2 focus:ring-red-800'
+            value='save changes'
+            className='rounded-md bg-red-500 px-6 py-3 text-xl font-medium text-white shadow-md hover:bg-red-600 focus:ring-2 focus:ring-red-800'
           />
         </CForm>
       ) : (
-        <div>Loading...</div>
+        <FormSkeleton />
       )}
     </ProfileLayout>
   )

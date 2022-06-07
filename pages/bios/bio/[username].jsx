@@ -9,6 +9,8 @@ import DMarital from 'components/bio/DMarital'
 import DAnother from 'components/bio/DAnother'
 import DExpect from 'components/bio/DExpect'
 import DAuthorityqs from 'components/bio/DAuthorityqs'
+import CSkeleton from 'components/shared/CSkeleton'
+import Head from 'next/head'
 
 export default function DetailBio() {
   const {
@@ -22,7 +24,7 @@ export default function DetailBio() {
       biodataRequests
         .getBioByID(username)
         .then(data => {
-          setBio(data.response)
+          setBio(data.response[0])
           setLoading(false)
         })
         .catch(err => {
@@ -31,7 +33,7 @@ export default function DetailBio() {
         })
     }
   }, [username])
-  console.log(bio)
+
   const {
     type,
     condition,
@@ -123,6 +125,9 @@ export default function DetailBio() {
 
   return !loading && bio ? (
     <div className='container'>
+      <Head>
+        <title>বায়োডাটা | {username}</title>
+      </Head>
       <div className='mt-4'>
         <div className='my-4'>
           <DAddress
@@ -242,6 +247,22 @@ export default function DetailBio() {
       </div>
     </div>
   ) : (
-    <div>Loading</div>
+    <div className='container'>
+      <Head>
+        <title>বায়োডাটা</title>
+      </Head>
+      <div className='my-4'>
+        <CSkeleton duration={1} height={200} width={'100%'} />
+      </div>
+      <div className='my-4'>
+        <CSkeleton duration={1} height={100} width={'100%'} />
+      </div>
+      <div className='my-4'>
+        <CSkeleton duration={1} height={400} width={'100%'} />
+      </div>
+      <div className='my-4'>
+        <CSkeleton duration={1} height={300} width={'100%'} />
+      </div>
+    </div>
   )
 }

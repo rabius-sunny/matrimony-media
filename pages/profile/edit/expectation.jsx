@@ -5,6 +5,8 @@ import { useForm } from 'react-hook-form'
 import { Fade } from 'react-reveal'
 import biodataRequests from 'services/biodataRequests'
 import getData from 'hooks/getData'
+import FormSkeleton from 'components/shared/FormSkeleton'
+import Head from 'next/head'
 
 export default function OthersInfo() {
   const router = useRouter()
@@ -28,8 +30,11 @@ export default function OthersInfo() {
 
   return (
     <ProfileLayout>
+      <Head>
+        <title>যেমন জীবনসঙ্গী আশা করেন</title>
+      </Head>
       <ProfileRoutes activeRoute={activeRoute} />
-      {!loading && data ? (
+      {!loading ? (
         <form onSubmit={handleSubmit(onSubmit)}>
           <fieldset
             className={`my-6 rounded-md border-2 ${
@@ -44,7 +49,7 @@ export default function OthersInfo() {
               বয়স *
             </legend>
             <input
-              defaultValue={data.ex_year}
+              defaultValue={data?.ex_year}
               {...register('ex_year', {
                 required: 'please fill the field'
               })}
@@ -78,7 +83,7 @@ export default function OthersInfo() {
               গাত্রবর্ণ *
             </legend>
             <input
-              defaultValue={data.ex_complexion}
+              defaultValue={data?.ex_complexion}
               {...register('ex_complexion', {
                 required: 'please fill the field'
               })}
@@ -112,7 +117,7 @@ export default function OthersInfo() {
               নূন্যতম উচ্চতা *
             </legend>
             <input
-              defaultValue={data.ex_height}
+              defaultValue={data?.ex_height}
               {...register('ex_height', {
                 required: 'please fill the field'
               })}
@@ -146,7 +151,7 @@ export default function OthersInfo() {
               নূন্যতম শিক্ষাগত যোগ্যতা *
             </legend>
             <input
-              defaultValue={data.ex_education}
+              defaultValue={data?.ex_education}
               {...register('ex_education', {
                 required: 'please fill the field'
               })}
@@ -180,7 +185,7 @@ export default function OthersInfo() {
               জেলা *
             </legend>
             <input
-              defaultValue={data.ex_jilla}
+              defaultValue={data?.ex_jilla}
               {...register('ex_jilla', {
                 required: 'please fill the field'
               })}
@@ -216,7 +221,7 @@ export default function OthersInfo() {
               বৈবাহিক অবস্থা *
             </legend>
             <input
-              defaultValue={data.ex_marrital_condition}
+              defaultValue={data?.ex_marrital_condition}
               {...register('ex_marrital_condition', {
                 required: 'please fill the field'
               })}
@@ -250,7 +255,7 @@ export default function OthersInfo() {
               পেশা *
             </legend>
             <input
-              defaultValue={data.ex_profession}
+              defaultValue={data?.ex_profession}
               {...register('ex_profession', {
                 required: 'please fill the field'
               })}
@@ -286,7 +291,7 @@ export default function OthersInfo() {
               অর্থনৈতিক অবস্থা *
             </legend>
             <input
-              defaultValue={data.ex_financial_condition}
+              defaultValue={data?.ex_financial_condition}
               {...register('ex_financial_condition', {
                 required: 'please fill the field'
               })}
@@ -312,7 +317,7 @@ export default function OthersInfo() {
               পারিবারিক অবস্থা
             </legend>
             <input
-              defaultValue={data.ex_family_condition}
+              defaultValue={data?.ex_family_condition}
               {...register('ex_family_condition')}
               className='w-full rounded bg-blue-100 px-4 py-2 font-medium text-blue-400 shadow-md focus:outline-blue-500'
             />
@@ -331,7 +336,7 @@ export default function OthersInfo() {
               জীবনসঙ্গীর যে বৈশিষ্ট্য বা গুণাবলি আশা করেন *
             </legend>
             <textarea
-              defaultValue={data.ex_features}
+              defaultValue={data?.ex_features}
               rows={5}
               {...register('ex_features', {
                 required: 'this field is required'
@@ -363,7 +368,7 @@ export default function OthersInfo() {
           />
         </form>
       ) : (
-        <div>Loading...</div>
+        <FormSkeleton />
       )}
     </ProfileLayout>
   )
