@@ -11,6 +11,7 @@ import DExpect from 'components/bio/DExpect'
 import DAuthorityqs from 'components/bio/DAuthorityqs'
 import CSkeleton from 'components/shared/CSkeleton'
 import Head from 'next/head'
+import userRequest from 'services/userRequest'
 
 export default function DetailBio() {
   const {
@@ -18,6 +19,8 @@ export default function DetailBio() {
   } = useRouter()
   const [bio, setBio] = useState({})
   const [loading, setLoading] = useState(false)
+  const [isBookmarked, setIsBookmarked] = useState(false)
+
   useEffect(() => {
     setLoading(true)
     if (username) {
@@ -33,6 +36,40 @@ export default function DetailBio() {
         })
     }
   }, [username])
+  useEffect(() => {
+    if (bio._id) {
+      userRequest
+        .checkFavorite(bio._id)
+        .then(res => {
+          if (res.message === 'exists') {
+            setIsBookmarked(true)
+          }
+        })
+        .catch(err => console.log('err', err))
+    }
+  }, [username, bio])
+
+  const handleBookmark = bioId => {
+    if (isBookmarked) {
+      userRequest
+        .removeBookmark(bioId)
+        .then(res => {
+          if (res.message === 'ok') {
+            setIsBookmarked(false)
+          }
+        })
+        .catch(err => console.log('err', err))
+    } else {
+      userRequest
+        .addToBookmark(bioId)
+        .then(res => {
+          if (res.message === 'ok') {
+            setIsBookmarked(true)
+          }
+        })
+        .catch(err => console.log('err', err))
+    }
+  }
 
   const {
     type,
@@ -239,10 +276,20 @@ export default function DetailBio() {
             data={{ family_about_bio, is_correct_info, liability }}
           />
         </div>
-        <div className='my-8'>
-          <button className='text-center w-full py-3 rounded-md hover:bg-white hover:border-2 hover:text-red-500 text-white hover:border-red-500 bg-red-500 shadow'>
-            অভিভাবকের সাথে যোগাযোগ করুন
-          </button>
+        <div className='h-40'>
+          <div className='my-8'>
+            <button className='text-center w-full py-3 rounded-md hover:bg-white hover:border-2 hover:text-red-500 text-white hover:border-red-500 bg-red-500 shadow'>
+              অভিভাবকের সাথে যোগাযোগ করুন
+            </button>
+          </div>
+          <div className='my-8'>
+            <button
+              onClick={() => handleBookmark(bio._id)}
+              className={`text-center w-full py-3 rounded-md hover:bg-white hover:border-2 hover:text-red-500 text-white hover:border-red-500 bg-red-500 shadow`}
+            >
+              {isBookmarked ? 'Remove from favorite' : 'Add to favorite'}
+            </button>
+          </div>
         </div>
       </div>
     </div>

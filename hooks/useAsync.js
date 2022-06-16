@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 
 export default function useAsync(asyncFunction) {
   const [data, setData] = useState(null)
-  const [status, setStatus] = useState('idle')
+  const [status, setStatus] = useState('pending')
   const [error, setError] = useState(null)
 
   useEffect(() => {

@@ -10,6 +10,18 @@ class UserRequests {
   getType() {
     return requests.get('/get-type')
   }
+  getFavorites() {
+    return requests.get('/favorites')
+  }
+  checkFavorite(bioid) {
+    return requests.get(`/is-favorite/${bioid}`)
+  }
+  addToBookmark(id) {
+    return requests.get(`/post-favorites/${id}`)
+  }
+  removeBookmark(id) {
+    return requests.delete(`/delete-favorites/${id}`)
+  }
 }
 
 export default new UserRequests()
