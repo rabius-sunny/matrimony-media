@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
+import { useAppContext } from 'utils/context'
 
 export default function CForm({ defaultValues, children, onSubmit }) {
   const methods = useForm({ defaultValues })
@@ -7,6 +8,11 @@ export default function CForm({ defaultValues, children, onSubmit }) {
     handleSubmit,
     formState: { errors }
   } = methods
+
+  const { setErrorState } = useAppContext()
+  useEffect(() => {
+    setErrorState(errors)
+  }, [errors])
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

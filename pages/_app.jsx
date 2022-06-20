@@ -2,6 +2,7 @@ import '../styles/globals.scss'
 import Head from 'next/head'
 
 import Layout from '../components/shared/Layout'
+import { AppWrapper } from 'utils/context'
 
 export default function MyApp({ Component, pageProps }) {
   return (
@@ -13,7 +14,9 @@ export default function MyApp({ Component, pageProps }) {
         />
       </Head>
       <Layout>
-        <Component {...pageProps} />
+        <AppWrapper>
+          <Component {...pageProps} />
+        </AppWrapper>
       </Layout>
     </>
   )
