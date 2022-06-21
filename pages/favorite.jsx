@@ -9,7 +9,7 @@ import ColoredHeader from '../components/shared/ColoredHeader'
 
 export default function Favorite() {
   const auth = useAuth()
-  const { data, isLoading } = useAsync(userRequest.getFavorites)
+  const { data, isLoading, error } = useAsync(userRequest.getFavorites)
 
   return (
     <div className='container'>
@@ -21,10 +21,11 @@ export default function Favorite() {
         <div className='container my-4'>
           <CardSkeleton />
         </div>
-      ) : !isLoading && data?.bios.length === 0 ? (
+      ) : (!isLoading && data?.bios.length === 0) || (auth && data === null) ? (
         <div className='mt-12' style={{ minHeight: '70vh' }}>
           <h1 className='text-3xl text-center text-red-500 font-bold'>
-            কোনো বায়োডাটা নেই।
+            কোনো পছন্দের বায়োডাটা নেই। <br />
+            {error && `Error: ${error.message}`}
           </h1>
         </div>
       ) : !auth && data === null ? (
@@ -39,7 +40,11 @@ export default function Favorite() {
         </div>
       ) : (
         <div className='container my-8'>
-          <BioCard bios={data.bios} />
+          <div className='grid grid-cols-12 gap-8'>
+            {data.bios.map(bio => (
+              <BioCard bio={bio} type='id' />
+            ))}
+          </div>
         </div>
       )}
     </div>

@@ -22,6 +22,9 @@ class UserRequests {
   removeBookmark(id) {
     return requests.delete(`/delete-favorites/${id}`)
   }
+  getFeatureds() {
+    return requests.get('/get-featureds')
+  }
 }
 
 export default new UserRequests()

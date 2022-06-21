@@ -1,18 +1,39 @@
+import BioCard from 'components/shared/BioCard'
+import CardSkeleton from 'components/shared/CardSkeleton'
+import useAsync from 'hooks/useAsync'
+import userRequest from 'services/userRequest'
 
 export default function Featured() {
-    return <section className="bg-red-100">
-        <div className="container">
-            <h1 className="text-4xl mb-8 text-red-500">ফিচার্ড বায়োডাটা</h1>
+  const { data, error, isLoading } = useAsync(userRequest.getFeatureds)
 
-            <div className="p-12 rounded-md">
-                <div className="grid grid-cols-12 gap-8">
-                    {
-                        [1, 2, 3, 4, 5, 6].map(item => <div key={item} className="col-span-12 sm:col-span-6 lg:col-span-4">
-                            <div className="h-60 rounded-md bg-red-600"></div>
-                        </div>)
-                    }
-                </div>
-            </div>
+  if (isLoading) {
+    return (
+      <div className='container my-4'>
+        <CardSkeleton />
+      </div>
+    )
+  } else if (
+    (!isLoading && data !== null && !data.bios.length) ||
+    data === null
+  ) {
+    return (
+      <div className='mt-8 container'>
+        <h1 className='text-3xl text-center text-red-500 font-bold'>
+          No featured biodata yet. {error?.message}
+        </h1>
+      </div>
+    )
+  } else if (data.bios && data.bios.length >= 1) {
+    return (
+      <div className='container my-4'>
+        <div className='my-4'>
+          <div className='grid grid-cols-12 gap-8'>
+            {data.bios.map(bio => (
+              <BioCard bio={bio} />
+            ))}
+          </div>
         </div>
-    </section>
+      </div>
+    )
+  }
 }

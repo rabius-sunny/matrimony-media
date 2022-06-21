@@ -2,9 +2,8 @@ import male from 'public/images/male.svg'
 import female from 'public/images/female.svg'
 import Image from 'next/image'
 import Link from 'next/link'
-import Head from 'next/head'
 
-export default function BioCard({ bio }) {
+export default function BioCard({ bio, type }) {
   return (
     <div
       key={bio._id}
@@ -27,7 +26,11 @@ export default function BioCard({ bio }) {
         <p>{bio.profession}</p>
       </div>
       <div className='py-8 text-center bg-white'>
-        <Link href={`/bios/bio/${bio.user.username || bio._id}`}>
+        <Link
+          href={`/bios/bio/${bio.user.username || bio._id}+${
+            type ?? 'username'
+          }`}
+        >
           <a className='bg-red-500 py-3 px-6 rounded shadow text-white'>
             বায়োডাটা দেখুন
           </a>

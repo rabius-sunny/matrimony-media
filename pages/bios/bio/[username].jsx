@@ -21,13 +21,15 @@ export default function DetailBio() {
   const [loading, setLoading] = useState(false)
   const [isBookmarked, setIsBookmarked] = useState(false)
 
+  console.log('bio', bio)
+
   useEffect(() => {
     setLoading(true)
     if (username) {
       biodataRequests
         .getBioByID(username)
         .then(data => {
-          setBio(data.response[0])
+          setBio(data.response)
           setLoading(false)
         })
         .catch(err => {

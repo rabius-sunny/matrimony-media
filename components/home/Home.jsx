@@ -49,7 +49,14 @@ export default function Home() {
       </section>
 
       {/* Featured Biodata */}
-      <Featured />
+      <section className='bg-red-100'>
+        <div className='container'>
+          <h1 className='text-4xl mb-8 text-red-500'>ফিচার্ড বায়োডাটা</h1>
+          <div className='p-12 rounded-md'>
+            <Featured />
+          </div>
+        </div>
+      </section>
 
       {/* Tutorial */}
       <div className='home__options bg-red-500 pb-28'>

@@ -1,8 +1,5 @@
-import CSkeleton from 'components/shared/CSkeleton'
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
-import { HeartIcon as HeartF } from '@heroicons/react/solid'
-import { HeartIcon as HeartO } from '@heroicons/react/outline'
 import biodataRequests from 'services/biodataRequests'
 import Head from 'next/head'
 import BioCard from 'components/shared/BioCard'
@@ -14,6 +11,8 @@ export default function SearchResult() {
   } = useRouter()
   const [loading, setLoading] = useState(true)
   const [bios, setBios] = useState(null)
+
+  console.log('bios', bios)
 
   useEffect(() => {
     if (searchkey && searchkey.length > 2) {
