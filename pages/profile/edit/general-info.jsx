@@ -17,6 +17,8 @@ import {
 } from 'assets/profileinfo'
 import FormSkeleton from 'components/shared/FormSkeleton'
 import Head from 'next/head'
+import { useEffect } from 'react'
+import { useAppContext } from 'utils/context'
 
 export default function GeneralInfo() {
   const router = useRouter()
@@ -27,10 +29,43 @@ export default function GeneralInfo() {
   const onSubmit = data => {
     biodataRequests
       .updateBio(data)
-      .then(info => console.log(info))
+      .then(info => {
+        if (info.message === 'ok') {
+          biodataRequests.setField(1).then(info => {
+            if (info.message === 'ok') {
+              router.push('/profile/edit/address')
+            }
+          })
+        }
+      })
       .catch(err => console.log(err.message))
   }
   const { data, loading } = getData()
+
+  const { routes, setRoutes } = useAppContext()
+  useEffect(() => {
+    if (data) {
+      if (
+        !data.condition ||
+        !data.permanent_jilla ||
+        !data.permanent_division ||
+        !data.current_jilla ||
+        !data.current_division ||
+        !data.birth ||
+        !data.profession ||
+        !data.income
+      ) {
+        setRoutes({
+          ...routes,
+          general: {
+            name: 'সাধারণ তথ্য',
+            link: '/general-info',
+            error: true
+          }
+        })
+      }
+    }
+  }, [data, loading])
   return (
     <>
       <ProfileLayout>

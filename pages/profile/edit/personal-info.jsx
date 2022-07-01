@@ -1,6 +1,6 @@
 import ProfileLayout from 'components/profile/ProfileLayout'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import ProfileRoutes from 'components/profile/ProfileRoutes'
 import { Fade } from 'react-reveal'
@@ -8,6 +8,7 @@ import getData from 'hooks/getData'
 import biodataRequests from 'services/biodataRequests'
 import FormSkeleton from 'components/shared/FormSkeleton'
 import Head from 'next/head'
+import { useAppContext } from 'utils/context'
 
 export default function PersonalInfo() {
   const router = useRouter()
@@ -24,10 +25,49 @@ export default function PersonalInfo() {
   const onSubmit = data =>
     biodataRequests
       .updateBio(data)
-      .then(info => console.log(info))
+      .then(info => {
+        if (info.message === 'ok') {
+          biodataRequests.setField(5).then(info => {
+            if (info.message === 'ok') {
+              router.push('/profile/edit/marriage-related-info')
+            }
+          })
+        }
+      })
       .catch(err => console.log(err.message))
 
   const { data, loading } = getData()
+
+  const { routes, setRoutes } = useAppContext()
+  useEffect(() => {
+    if (data) {
+      if (
+        !data.dress ||
+        !data.salat ||
+        !data.salat_duration ||
+        !data.maintain_mahram ||
+        !data.can_tilawat ||
+        !data.mazhab ||
+        !data.political_view ||
+        !data.drama_cinnema ||
+        !data.deeni_effort ||
+        !data.murid_of_peer ||
+        !data.majar_view ||
+        !data.favorite_books ||
+        !data.favorite_scholars ||
+        !data.about_me
+      ) {
+        setRoutes({
+          ...routes,
+          personal: {
+            name: 'ব্যক্তিগত তথ্য',
+            link: '/personal-info',
+            error: true
+          }
+        })
+      }
+    }
+  }, [data, loading])
 
   return (
     <ProfileLayout>

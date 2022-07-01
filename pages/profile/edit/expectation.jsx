@@ -7,6 +7,8 @@ import biodataRequests from 'services/biodataRequests'
 import getData from 'hooks/getData'
 import FormSkeleton from 'components/shared/FormSkeleton'
 import Head from 'next/head'
+import { useAppContext } from 'utils/context'
+import { useEffect } from 'react'
 
 export default function OthersInfo() {
   const router = useRouter()
@@ -23,10 +25,44 @@ export default function OthersInfo() {
   const onSubmit = data =>
     biodataRequests
       .updateBio(data)
-      .then(info => console.log(info))
+      .then(info => {
+        if (info.message === 'ok') {
+          biodataRequests.setField(8).then(info => {
+            if (info.message === 'ok') {
+              router.push('/profile/edit/authority-question')
+            }
+          })
+        }
+      })
       .catch(err => console.log(err.message))
 
   const { data, loading } = getData()
+
+  const { routes, setRoutes } = useAppContext()
+  useEffect(() => {
+    if (data) {
+      if (
+        !data.ex_year ||
+        !data.ex_complexion ||
+        !data.ex_height ||
+        !data.ex_education ||
+        !data.ex_jilla ||
+        !data.ex_marrital_condition ||
+        !data.ex_profession ||
+        !data.ex_financial_condition ||
+        !data.ex_features
+      ) {
+        setRoutes({
+          ...routes,
+          expectation: {
+            name: 'যেমন জীবনসঙ্গী আশা করেন',
+            link: '/expectation',
+            error: true
+          }
+        })
+      }
+    }
+  }, [data, loading])
 
   return (
     <ProfileLayout>

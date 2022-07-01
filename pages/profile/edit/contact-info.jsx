@@ -7,6 +7,8 @@ import biodataRequests from 'services/biodataRequests'
 import getData from 'hooks/getData'
 import FormSkeleton from 'components/shared/FormSkeleton'
 import Head from 'next/head'
+import { useAppContext } from 'utils/context'
+import { useEffect } from 'react'
 
 export default function Name() {
   const router = useRouter()
@@ -22,11 +24,44 @@ export default function Name() {
   })
   const onSubmit = data =>
     biodataRequests
-      .updateBio(data)
-      .then(info => console.log(info))
+      .updateBio({ ...data })
+      .then(info => {
+        if (info.message === 'ok') {
+          biodataRequests.setField(10).then(info => {
+            if (info.message === 'ok') {
+              biodataRequests.checkField().then(data => {
+                if (data.fields && data.fields.length < 1) {
+                  alert('done')
+                  router.push('/profile/preview')
+                } else alert('you have not filled all the forms')
+              })
+            }
+          })
+        } else alert('try again')
+      })
       .catch(err => console.log(err.message))
 
   const { data, loading } = getData()
+
+  const { routes, setRoutes } = useAppContext()
+  useEffect(() => {
+    if (data) {
+      if (
+        !data.guandian_number ||
+        !data.number_relation ||
+        !data.receiving_email
+      ) {
+        setRoutes({
+          ...routes,
+          contact: {
+            name: 'যোগাযোগ',
+            link: '/contact-info',
+            error: true
+          }
+        })
+      }
+    }
+  }, [data, loading])
 
   return (
     <ProfileLayout>
@@ -156,7 +191,7 @@ export default function Name() {
           </fieldset>
           <input
             type='submit'
-            value='Save Changes'
+            value='Save Changes and review'
             className='rounded-md bg-red-500 px-6 py-3 text-xl font-medium text-white shadow-md hover:bg-red-600 focus:ring-2 focus:ring-red-800'
           />
         </form>

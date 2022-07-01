@@ -7,6 +7,8 @@ import { CInput } from 'components/profile/CInputs'
 import CForm from 'components/profile/CFroms'
 import FormSkeleton from 'components/shared/FormSkeleton'
 import Head from 'next/head'
+import { useAppContext } from 'utils/context'
+import { useEffect } from 'react'
 
 export default function Address() {
   const router = useRouter()
@@ -16,10 +18,38 @@ export default function Address() {
   const onSubmit = data =>
     biodataRequests
       .updateBio(data)
-      .then(info => console.log(info))
+      .then(info => {
+        if (info.message === 'ok') {
+          biodataRequests.setField(2).then(info => {
+            if (info.message === 'ok') {
+              router.push('/profile/edit/educational-qualifications')
+            }
+          })
+        }
+      })
       .catch(err => console.log(err.message))
 
   const { data, loading } = getData()
+
+  const { routes, setRoutes } = useAppContext()
+  useEffect(() => {
+    if (data) {
+      if (
+        !data.permanent_address ||
+        !data.current_address ||
+        !data.where_lived
+      ) {
+        setRoutes({
+          ...routes,
+          address: {
+            name: 'ঠিকানা',
+            link: '/address',
+            error: true
+          }
+        })
+      }
+    }
+  }, [data, loading])
 
   return (
     <ProfileLayout>

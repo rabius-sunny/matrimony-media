@@ -7,6 +7,8 @@ import { Fade } from 'react-reveal'
 import biodataRequests from 'services/biodataRequests'
 import FormSkeleton from 'components/shared/FormSkeleton'
 import Head from 'next/head'
+import { useEffect } from 'react'
+import { useAppContext } from 'utils/context'
 
 export default function MarriageRelated() {
   const router = useRouter()
@@ -25,8 +27,32 @@ export default function MarriageRelated() {
   const onSubmit = data =>
     biodataRequests
       .updateBio(data)
-      .then(info => console.log(info))
+      .then(info => {
+        if (info.message === 'ok') {
+          biodataRequests.setField(6).then(info => {
+            if (info.message === 'ok') {
+              router.push('/profile/edit/others-info')
+            }
+          })
+        }
+      })
       .catch(err => console.log(err.message))
+
+  const { routes, setRoutes } = useAppContext()
+  useEffect(() => {
+    if (data) {
+      if (!data.marry_reason || !data.guardians_permission) {
+        setRoutes({
+          ...routes,
+          marriage: {
+            name: 'বিয়ে সংক্রান্ত তথ্য',
+            link: '/marriage-related-info',
+            error: true
+          }
+        })
+      }
+    }
+  }, [data, loading])
 
   return (
     <ProfileLayout>

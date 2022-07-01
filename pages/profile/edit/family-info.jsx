@@ -10,6 +10,7 @@ import biodataRequests from 'services/biodataRequests'
 import getData from 'hooks/getData'
 import FormSkeleton from 'components/shared/FormSkeleton'
 import Head from 'next/head'
+import { useAppContext } from 'utils/context'
 
 export default function Family() {
   const router = useRouter()
@@ -31,7 +32,15 @@ export default function Family() {
   const onSubmit = data =>
     biodataRequests
       .updateBio(data)
-      .then(info => console.log(info))
+      .then(info => {
+        if (info.message === 'ok') {
+          biodataRequests.setField(4).then(info => {
+            if (info.message === 'ok') {
+              router.push('/profile/edit/personal-info')
+            }
+          })
+        }
+      })
       .catch(err => console.log(err.message))
 
   useEffect(() => {
@@ -40,6 +49,28 @@ export default function Family() {
       setSisters(data?.sisters)
     }
   }, [data])
+  const { routes, setRoutes } = useAppContext()
+  useEffect(() => {
+    if (data) {
+      if (
+        !data.father_name ||
+        !data.mother_name ||
+        !data.father_profession ||
+        !data.mother_profession ||
+        !data.brothers ||
+        !data.sisters
+      ) {
+        setRoutes({
+          ...routes,
+          family: {
+            name: 'পারিবারিক তথ্য',
+            link: '/family-info',
+            error: true
+          }
+        })
+      }
+    }
+  }, [data, loading])
 
   return (
     <ProfileLayout>

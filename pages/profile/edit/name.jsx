@@ -8,23 +8,45 @@ import biodataRequests from 'services/biodataRequests'
 import getData from 'hooks/getData'
 import FormSkeleton from 'components/shared/FormSkeleton'
 import Head from 'next/head'
+import { useAppContext } from 'utils/context'
+import { useEffect } from 'react'
 
 export default function Name() {
   const router = useRouter()
   const activeRoute = routename =>
     router.route.split('/edit')[1] === routename ? true : false
 
-  const onSubmit = data => {
+  const onSubmit = infos => {
     biodataRequests
-      .updateBio(data)
+      .updateBio(infos)
       .then(info => {
         if (info.message === 'ok') {
-          router.push('/profile/edit/general-info')
+          biodataRequests.setField(0).then(info => {
+            if (info.message === 'ok') {
+              router.push('/profile/edit/general-info')
+            }
+          })
         }
       })
       .catch(err => console.log(err.message))
   }
   const { data, loading } = getData()
+
+  const { routes, setRoutes } = useAppContext()
+  useEffect(() => {
+    if (data) {
+      if (!data.name || !data.type) {
+        setRoutes({
+          ...routes,
+          primary: {
+            name: 'প্রাথমিক',
+            link: '/name',
+            error: true
+          }
+        })
+      }
+    }
+  }, [data, loading])
 
   // const onReset = data => {
   //   const _reset = {}
