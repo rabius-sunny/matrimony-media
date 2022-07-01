@@ -18,7 +18,15 @@ export default function OthersInfo() {
   const onSubmit = data =>
     biodataRequests
       .updateBio(data)
-      .then(info => console.log(info))
+      .then(info => {
+        if (info.message === 'ok') {
+          biodataRequests.setField(7).then(info => {
+            if (info.message === 'ok') {
+              router.push('/profile/edit/expectation')
+            }
+          })
+        }
+      })
       .catch(err => console.log(err.message))
 
   const { data, loading } = getData()

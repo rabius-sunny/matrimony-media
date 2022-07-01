@@ -78,6 +78,7 @@ export default function Signin() {
       })
       localStorage.setItem('token', data.token)
       localStorage.setItem('id', data.id)
+      localStorage.setItem('username', data.username)
       window.location.reload()
     } catch (error) {
       alert(error.response.data.message)
@@ -125,7 +126,7 @@ export default function Signin() {
 
             <div className='mt-8'>
               {!isOtp && (
-                <form onSubmit={onPhoneSubmit}>
+                <form onSubmit={handleSubmit}>
                   <div>
                     <label
                       htmlFor='username'

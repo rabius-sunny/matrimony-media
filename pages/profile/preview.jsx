@@ -11,21 +11,18 @@ import DExpect from 'components/bio/DExpect'
 import DAuthorityqs from 'components/bio/DAuthorityqs'
 import CSkeleton from 'components/shared/CSkeleton'
 import Head from 'next/head'
-import userRequest from 'services/userRequest'
 
-export default function DetailBio() {
-  const {
-    query: { username }
-  } = useRouter()
+export default function Preview() {
   const [bio, setBio] = useState({})
   const [loading, setLoading] = useState(false)
-  const [isBookmarked, setIsBookmarked] = useState(false)
+  const router = useRouter()
 
   useEffect(() => {
+    let username = localStorage.getItem('username')
     setLoading(true)
     if (username) {
       biodataRequests
-        .getBioByID(username)
+        .getBioByID(username + '+username')
         .then(data => {
           setBio(data.response)
           setLoading(false)
@@ -35,41 +32,7 @@ export default function DetailBio() {
           alert(err.message)
         })
     }
-  }, [username])
-  useEffect(() => {
-    if (bio._id) {
-      userRequest
-        .checkFavorite(bio._id)
-        .then(res => {
-          if (res.message === 'exists') {
-            setIsBookmarked(true)
-          }
-        })
-        .catch(err => console.log('err', err))
-    }
-  }, [username, bio])
-
-  const handleBookmark = bioId => {
-    if (isBookmarked) {
-      userRequest
-        .removeBookmark(bioId)
-        .then(res => {
-          if (res.message === 'ok') {
-            setIsBookmarked(false)
-          }
-        })
-        .catch(err => console.log('err', err))
-    } else {
-      userRequest
-        .addToBookmark(bioId)
-        .then(res => {
-          if (res.message === 'ok') {
-            setIsBookmarked(true)
-          }
-        })
-        .catch(err => console.log('err', err))
-    }
-  }
+  }, [])
 
   const {
     type,
@@ -160,10 +123,27 @@ export default function DetailBio() {
     liability
   } = bio
 
+  useEffect(() => {
+    if (
+      !(type,
+      condition,
+      permanent_address,
+      education,
+      father_profession,
+      salat,
+      marry_reason,
+      ex_year,
+      is_correct_info,
+      liability)
+    ) {
+      router.push('/profile/edit/name')
+    }
+  }, [])
+
   return !loading && bio ? (
     <div className='container'>
       <Head>
-        <title>বায়োডাটা | {username}</title>
+        <title>বায়োডাটা | Preview</title>
       </Head>
       <div className='mt-4'>
         <div className='my-4'>
@@ -275,21 +255,6 @@ export default function DetailBio() {
           <DAuthorityqs
             data={{ family_about_bio, is_correct_info, liability }}
           />
-        </div>
-        <div className='h-40'>
-          <div className='my-8'>
-            <button className='text-center w-full py-3 rounded-md hover:bg-white hover:border-2 hover:text-red-500 text-white hover:border-red-500 bg-red-500 shadow'>
-              অভিভাবকের সাথে যোগাযোগ করুন
-            </button>
-          </div>
-          <div className='my-8'>
-            <button
-              onClick={() => handleBookmark(bio._id)}
-              className={`text-center w-full py-3 rounded-md hover:bg-white hover:border-2 hover:text-red-500 text-white hover:border-red-500 bg-red-500 shadow`}
-            >
-              {isBookmarked ? 'Remove from favorite' : 'Add to favorite'}
-            </button>
-          </div>
         </div>
       </div>
     </div>

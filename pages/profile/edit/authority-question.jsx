@@ -8,6 +8,8 @@ import biodataRequests from 'services/biodataRequests'
 import getData from 'hooks/getData'
 import FormSkeleton from 'components/shared/FormSkeleton'
 import Head from 'next/head'
+import { useAppContext } from 'utils/context'
+import { useEffect } from 'react'
 
 export default function AuthorityQuestion() {
   const router = useRouter()
@@ -24,10 +26,34 @@ export default function AuthorityQuestion() {
   const onSubmit = data =>
     biodataRequests
       .updateBio(data)
-      .then(info => console.log(info))
+      .then(info => {
+        if (info.message === 'ok') {
+          biodataRequests.setField(9).then(info => {
+            if (info.message === 'ok') {
+              router.push('/profile/edit/contact-info')
+            }
+          })
+        }
+      })
       .catch(err => console.log(err.message))
 
   const { data, loading } = getData()
+
+  const { routes, setRoutes } = useAppContext()
+  useEffect(() => {
+    if (data) {
+      if (!data.family_about_bio || !data.is_correct_info || !data.liability) {
+        setRoutes({
+          ...routes,
+          authority: {
+            name: 'কর্তৃপক্ষের জিজ্ঞাসা',
+            link: '/authority-question',
+            error: true
+          }
+        })
+      }
+    }
+  }, [data, loading])
 
   return (
     <ProfileLayout>

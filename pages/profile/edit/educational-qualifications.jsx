@@ -10,6 +10,7 @@ import biodataRequests from 'services/biodataRequests'
 import { useEffect } from 'react'
 import FormSkeleton from 'components/shared/FormSkeleton'
 import Head from 'next/head'
+import { useAppContext } from 'utils/context'
 
 export default function Education() {
   const router = useRouter()
@@ -34,7 +35,15 @@ export default function Education() {
   const onSubmit = data =>
     biodataRequests
       .updateBio(data)
-      .then(info => console.log(info))
+      .then(info => {
+        if (info.message === 'ok') {
+          biodataRequests.setField(3).then(info => {
+            if (info.message === 'ok') {
+              router.push('/profile/edit/family-info')
+            }
+          })
+        }
+      })
       .catch(err => console.log(err.message))
 
   useEffect(() => {
@@ -46,6 +55,22 @@ export default function Education() {
       setTakhassus(data.takhassus)
     }
   }, [data])
+
+  const { routes, setRoutes } = useAppContext()
+  useEffect(() => {
+    if (data) {
+      if (!data.education) {
+        setRoutes({
+          ...routes,
+          education: {
+            name: 'শিক্ষাগত যোগ্যতা',
+            link: '/educational-qualifications',
+            error: true
+          }
+        })
+      }
+    }
+  }, [data, loading])
 
   return (
     <ProfileLayout>
