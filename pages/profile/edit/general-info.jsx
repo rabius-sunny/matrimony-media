@@ -19,6 +19,7 @@ import FormSkeleton from 'components/shared/FormSkeleton'
 import Head from 'next/head'
 import { useEffect } from 'react'
 import { useAppContext } from 'utils/context'
+import biodataRequests from 'services/biodataRequests'
 
 export default function GeneralInfo() {
   const router = useRouter()
@@ -74,7 +75,7 @@ export default function GeneralInfo() {
         </Head>
         <ProfileRoutes activeRoute={activeRoute} />
 
-        {!loading ? (
+        {!loading && data ? (
           <CForm onSubmit={onSubmit}>
             <CSelect
               legend='বৈবাহিক অবস্থা *'

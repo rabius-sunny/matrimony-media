@@ -64,7 +64,7 @@ export default function Name() {
       </Head>
       <ProfileRoutes activeRoute={activeRoute} />
 
-      {!loading ? (
+      {!loading && data ? (
         <CForm onSubmit={onSubmit}>
           <CInput
             name='name'

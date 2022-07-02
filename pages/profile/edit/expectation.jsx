@@ -70,7 +70,7 @@ export default function OthersInfo() {
         <title>যেমন জীবনসঙ্গী আশা করেন</title>
       </Head>
       <ProfileRoutes activeRoute={activeRoute} />
-      {!loading ? (
+      {!loading && data ? (
         <form onSubmit={handleSubmit(onSubmit)}>
           <fieldset
             className={`my-6 rounded-md border-2 ${

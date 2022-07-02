@@ -75,7 +75,7 @@ export default function PersonalInfo() {
         <title>ব্যক্তিগত তথ্য</title>
       </Head>
       <ProfileRoutes activeRoute={activeRoute} />
-      {!loading ? (
+      {!loading && data ? (
         <form onSubmit={handleSubmit(onSubmit)}>
           {data?.type === 'পাত্রের বায়োডাটা' ? (
             <div>

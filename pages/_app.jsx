@@ -1,5 +1,6 @@
 import '../styles/globals.scss'
 import Head from 'next/head'
+import { NextUIProvider } from '@nextui-org/react'
 
 import Layout from '../components/shared/Layout'
 import { AppWrapper } from 'utils/context'
@@ -15,7 +16,9 @@ export default function MyApp({ Component, pageProps }) {
       </Head>
       <Layout>
         <AppWrapper>
-          <Component {...pageProps} />
+          <NextUIProvider>
+            <Component {...pageProps} />
+          </NextUIProvider>
         </AppWrapper>
       </Layout>
     </>

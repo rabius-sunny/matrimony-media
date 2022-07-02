@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import DAddress from 'components/bio/DAddress'
-import { useRouter } from 'next/router'
 import biodataRequests from 'services/biodataRequests'
 import DEducation from 'components/bio/DEducaiton'
 import DFamily from 'components/bio/DFamily'
@@ -11,6 +10,7 @@ import DExpect from 'components/bio/DExpect'
 import DAuthorityqs from 'components/bio/DAuthorityqs'
 import CSkeleton from 'components/shared/CSkeleton'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 
 export default function Preview() {
   const [bio, setBio] = useState({})
@@ -18,20 +18,28 @@ export default function Preview() {
   const router = useRouter()
 
   useEffect(() => {
-    let username = localStorage.getItem('username')
     setLoading(true)
-    if (username) {
-      biodataRequests
-        .getBioByID(username + '+username')
-        .then(data => {
-          setBio(data.response)
-          setLoading(false)
-        })
-        .catch(err => {
-          setLoading(false)
-          alert(err.message)
-        })
-    }
+
+    biodataRequests
+      .checkField()
+      .then(data => {
+        if (data.fields && data.fields.length < 1) {
+          biodataRequests
+            .getBioByToken()
+            .then(data => {
+              setBio(data.bio)
+              setLoading(false)
+            })
+            .catch(err => {
+              setLoading(false)
+              alert(err.message)
+            })
+        } else alert('you have not filled all the forms')
+      })
+      .catch(err => {
+        alert('Network error or you do not have permission to access this')
+        router.push('/')
+      })
   }, [])
 
   const {
@@ -122,23 +130,6 @@ export default function Preview() {
     is_correct_info,
     liability
   } = bio
-
-  useEffect(() => {
-    if (
-      !(type,
-      condition,
-      permanent_address,
-      education,
-      father_profession,
-      salat,
-      marry_reason,
-      ex_year,
-      is_correct_info,
-      liability)
-    ) {
-      router.push('/profile/edit/name')
-    }
-  }, [])
 
   return !loading && bio ? (
     <div className='container'>

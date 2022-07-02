@@ -37,7 +37,7 @@ export default function OthersInfo() {
         <title>অন্যান্য তথ্য</title>
       </Head>
       <ProfileRoutes activeRoute={activeRoute} />
-      {!loading ? (
+      {!loading && data ? (
         <form onSubmit={handleSubmit(onSubmit)}>
           <fieldset className='my-6 rounded-md border-2 border-blue-300 p-4'>
             <legend className='ml-4 font-bold text-blue-500'>

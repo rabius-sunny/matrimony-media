@@ -61,7 +61,7 @@ export default function AuthorityQuestion() {
         <title>কর্তৃপক্ষের জিজ্ঞাসা</title>
       </Head>
       <ProfileRoutes activeRoute={activeRoute} />
-      {!loading ? (
+      {!loading && data ? (
         <form onSubmit={handleSubmit(onSubmit)}>
           <fieldset
             className={`my-6 rounded-md border-2 ${

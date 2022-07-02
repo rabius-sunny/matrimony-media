@@ -5,10 +5,7 @@ import Link from 'next/link'
 
 export default function BioCard({ bio, type }) {
   return (
-    <div
-      key={bio._id}
-      className='col-span-12 sm:col-span-6 lg:col-span-4 bg-red-600 pt-8 border-2 border-red-500 duration-500 hover:scale-105 hover:shadow-lg'
-    >
+    <div className='col-span-12 sm:col-span-6 lg:col-span-4 bg-red-600 pt-8 border-2 border-red-500 duration-500 hover:scale-105 hover:shadow-lg'>
       <div className='text-center'>
         <Image
           width='150px'
@@ -17,7 +14,7 @@ export default function BioCard({ bio, type }) {
           alt='avatar'
         />
       </div>
-      <div class='search-body'>
+      <div className='search-body'>
         <span>বৈবাহিক অবস্থা </span>
         <p>{bio.condition}</p>
         <span>জন্মসন </span>

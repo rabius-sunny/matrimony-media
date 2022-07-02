@@ -78,7 +78,7 @@ export default function Family() {
         <title>পারিবারিক তথ্য</title>
       </Head>
       <ProfileRoutes activeRoute={activeRoute} />
-      {!loading ? (
+      {!loading && data ? (
         <form onSubmit={handleSubmit(onSubmit)}>
           <fieldset
             className={`my-6 rounded-md border-2 ${

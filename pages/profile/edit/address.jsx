@@ -57,7 +57,7 @@ export default function Address() {
         <title>ঠিকানা</title>
       </Head>
       <ProfileRoutes activeRoute={activeRoute} />
-      {!loading ? (
+      {!loading && data ? (
         <CForm onSubmit={onSubmit}>
           <CInput
             legend='স্থায়ী ঠিকানা *'
