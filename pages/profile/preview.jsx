@@ -11,10 +11,13 @@ import DAuthorityqs from 'components/bio/DAuthorityqs'
 import CSkeleton from 'components/shared/CSkeleton'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
+import LongModal from 'components/shared/Modals/LongModal'
 
 export default function Preview() {
   const [bio, setBio] = useState({})
   const [loading, setLoading] = useState(false)
+  const [visible, setVisible] = useState(false)
+  const [visible2, setVisible2] = useState(false)
   const router = useRouter()
 
   useEffect(() => {
@@ -41,6 +44,17 @@ export default function Preview() {
         router.push('/')
       })
   }, [])
+
+  const handlePublish = _ => {
+    biodataRequests
+      .updateBio({ requested: true })
+      .then(info => {
+        if (info.message === 'ok') {
+          setVisible(true)
+        }
+      })
+      .catch(err => setVisible2(true))
+  }
 
   const {
     type,
@@ -136,6 +150,29 @@ export default function Preview() {
       <Head>
         <title>বায়োডাটা | Preview</title>
       </Head>
+      <LongModal
+        blur
+        scroll={false}
+        visible={visible}
+        onClose={() => router.push('/')}
+        header='Publishing report'
+        body='আপনার রিকুয়েস্টটি প্যানেলের এ্যাপ্রুভাল পেন্ডিংয়ে রয়েছে। পাবলিশ হলে জানিয়ে দেয়া হবে।'
+        btn='OK'
+        color='success'
+        bodyColor='success'
+        preventClose={false}
+      />
+      <LongModal
+        blur
+        scroll={false}
+        visible={visible2}
+        onClose={() => setVisible2(false)}
+        header='Publishing report'
+        body='ইরর হয়েছে, আবার চেষ্টা করুন।'
+        btn='OK'
+        color='success'
+        bodyColor='error'
+      />
       <div className='mt-4'>
         <div className='my-4'>
           <DAddress
@@ -221,6 +258,7 @@ export default function Preview() {
             }}
           />
         </div>
+
         {(profession_info || special_acknowledgement) && (
           <div className='my-4'>
             <DAnother data={{ profession_info, special_acknowledgement }} />
@@ -247,6 +285,14 @@ export default function Preview() {
             data={{ family_about_bio, is_correct_info, liability }}
           />
         </div>
+      </div>
+      <div className='my-4'>
+        <button
+          onClick={handlePublish}
+          className='text-white font-bold text-xl cursor-pointer rounded-md bg-red-500 py-2 w-full'
+        >
+          Publish biodata
+        </button>
       </div>
     </div>
   ) : (

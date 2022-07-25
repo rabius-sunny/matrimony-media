@@ -9,16 +9,20 @@ import getData from 'hooks/getData'
 import FormSkeleton from 'components/shared/FormSkeleton'
 import Head from 'next/head'
 import { useAppContext } from 'utils/context'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import LongModal from 'components/shared/Modals/LongModal'
 
 export default function Name() {
   const router = useRouter()
   const activeRoute = routename =>
     router.route.split('/edit')[1] === routename ? true : false
 
+  const onCLose = _ => router.push('/profile/edit/general-info')
+  const [visible, setVisible] = useState(false)
+
   const onSubmit = infos => {
     biodataRequests
-      .updateBio(infos)
+      .updateBio({ ...infos, requested: true })
       .then(info => {
         if (info.message === 'ok') {
           biodataRequests.setField(0).then(info => {
@@ -58,13 +62,23 @@ export default function Name() {
   // }
 
   return (
-    <ProfileLayout>
+    <ProfileLayout data={data} loading={loading}>
       <Head>
         <title>প্রাথমিক তথ্য</title>
       </Head>
       <ProfileRoutes activeRoute={activeRoute} />
+      <LongModal
+        visible={visible}
+        onClose={onCLose}
+        header='এডিট কনফারমেশন'
+        body='আপনার বায়োডাটাটি এডিট হয়েছে এবং এডমিন প্যানেলের এ্যাপ্রুভালের অপেক্ষায় রয়েছে'
+        btn='পরবর্তী ধাপে যান'
+        color='primary'
+      />
 
-      {!loading && data ? (
+      {loading ? (
+        <FormSkeleton />
+      ) : data ? (
         <CForm onSubmit={onSubmit}>
           <CInput
             name='name'
@@ -89,7 +103,27 @@ export default function Name() {
           />
         </CForm>
       ) : (
-        <FormSkeleton />
+        <CForm onSubmit={onSubmit}>
+          <CInput
+            name='name'
+            placeholder='My name'
+            legend='সম্পূর্ণ নাম *'
+            description='নাম নেয়া হচ্ছে ভেরিফিকেশনের জন্য, পূর্ণ নাম লিখবেন। আপনার নাম কারো
+          সাথে শেয়ার করা হবে না।'
+            message='name is required'
+          />
+          <CSelect
+            legend='বায়োডাটার ধরন *'
+            message='Field is required'
+            options={_type}
+            name='type'
+          />
+          <input
+            type='submit'
+            value='save changes'
+            className='rounded-md bg-red-500 px-6 py-3 text-xl font-medium text-white shadow-md hover:bg-red-600 focus:ring-2 focus:ring-red-800'
+          />
+        </CForm>
       )}
     </ProfileLayout>
   )

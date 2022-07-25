@@ -56,7 +56,7 @@ export default function AuthorityQuestion() {
   }, [data, loading])
 
   return (
-    <ProfileLayout>
+    <ProfileLayout data={data} loading={loading}>
       <Head>
         <title>কর্তৃপক্ষের জিজ্ঞাসা</title>
       </Head>

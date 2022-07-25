@@ -32,7 +32,7 @@ export default function OthersInfo() {
   const { data, loading } = getData()
 
   return (
-    <ProfileLayout>
+    <ProfileLayout data={data} loading={loading}>
       <Head>
         <title>অন্যান্য তথ্য</title>
       </Head>

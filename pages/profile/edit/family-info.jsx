@@ -73,7 +73,7 @@ export default function Family() {
   }, [data, loading])
 
   return (
-    <ProfileLayout>
+    <ProfileLayout data={data} loading={loading}>
       <Head>
         <title>পারিবারিক তথ্য</title>
       </Head>

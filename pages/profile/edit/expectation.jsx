@@ -65,7 +65,7 @@ export default function OthersInfo() {
   }, [data, loading])
 
   return (
-    <ProfileLayout>
+    <ProfileLayout data={data} loading={loading}>
       <Head>
         <title>যেমন জীবনসঙ্গী আশা করেন</title>
       </Head>

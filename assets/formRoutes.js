@@ -42,6 +42,10 @@ const formRoutes = [
   {
     name: 'যোগাযোগ',
     link: '/contact-info'
+  },
+  {
+    name: 'হাইড/ডিলিট',
+    link: '/hide-delete'
   }
 ]
 

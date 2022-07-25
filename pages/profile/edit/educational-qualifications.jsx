@@ -73,7 +73,7 @@ export default function Education() {
   }, [data, loading])
 
   return (
-    <ProfileLayout>
+    <ProfileLayout data={data} loading={loading}>
       <Head>
         <title>শিক্ষাগত যোগ্যতা</title>
       </Head>

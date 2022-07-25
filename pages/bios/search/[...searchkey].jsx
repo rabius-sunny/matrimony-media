@@ -11,15 +11,12 @@ export default function SearchResult() {
   } = useRouter()
   const [loading, setLoading] = useState(true)
   const [bios, setBios] = useState(null)
-
-  console.log('bios', bios)
-
   useEffect(() => {
     if (searchkey && searchkey.length > 2) {
       biodataRequests
-        .getBioByID(searchkey[2])
+        .getBioByID(searchkey[2] + '+username')
         .then(data => {
-          data.response.length > 0 ? setBios(data.response) : setBios(null)
+          data ? setBios([data.response]) : setBios(null)
           setLoading(false)
         })
         .catch(err => {
@@ -71,8 +68,8 @@ export default function SearchResult() {
           </Head>
           <h1 className='text-3xl my-8 text-center'>Search Results</h1>
           <div className='grid grid-cols-12 gap-8'>
-            {bios.map(bio => (
-              <BioCard bio={bio} />
+            {bios.map((bio, idx) => (
+              <BioCard bio={bio} key={idx} />
             ))}
           </div>
         </div>

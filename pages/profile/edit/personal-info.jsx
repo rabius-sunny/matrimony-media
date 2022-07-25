@@ -70,7 +70,7 @@ export default function PersonalInfo() {
   }, [data, loading])
 
   return (
-    <ProfileLayout>
+    <ProfileLayout data={data} loading={loading}>
       <Head>
         <title>ব্যক্তিগত তথ্য</title>
       </Head>

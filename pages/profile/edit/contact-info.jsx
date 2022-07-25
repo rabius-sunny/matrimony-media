@@ -38,7 +38,8 @@ export default function Name() {
               biodataRequests.checkField().then(data => {
                 setFields(data.fields)
                 if (data.fields && data.fields.length < 1) {
-                  router.push('/profile/preview')
+                  // router.push('/profile/preview')
+                  console.log('data fields', data.fields)
                 } else setVisible(true)
               })
             }
@@ -70,7 +71,7 @@ export default function Name() {
   }, [data, loading])
 
   return (
-    <ProfileLayout>
+    <ProfileLayout data={data} loading={loading}>
       <Head>
         <title>যোগাযোগ</title>
       </Head>

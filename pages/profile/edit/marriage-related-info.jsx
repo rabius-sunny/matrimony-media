@@ -55,7 +55,7 @@ export default function MarriageRelated() {
   }, [data, loading])
 
   return (
-    <ProfileLayout>
+    <ProfileLayout data={data} loading={loading}>
       <Head>
         <title>বিয়েসম্পর্কিত তথ্য</title>
       </Head>
