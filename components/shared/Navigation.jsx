@@ -35,6 +35,7 @@ export default function Navigation() {
     if (router.pathname === '/') _reload()
     localStorage.removeItem('token')
     localStorage.removeItem('id')
+    localStorage.removeItem('username')
     router.push('/')
   }
 

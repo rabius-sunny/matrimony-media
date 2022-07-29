@@ -17,7 +17,7 @@ export default function Address() {
 
   const onSubmit = data =>
     biodataRequests
-      .updateBio(data)
+      .updateBio({ ...data, published: false })
       .then(info => {
         if (info.message === 'ok') {
           biodataRequests.setField(2).then(info => {
@@ -52,12 +52,14 @@ export default function Address() {
   }, [data, loading])
 
   return (
-    <ProfileLayout>
+    <ProfileLayout data={data} loading={loading}>
       <Head>
         <title>ঠিকানা</title>
       </Head>
       <ProfileRoutes activeRoute={activeRoute} />
-      {!loading ? (
+      {loading ? (
+        <FormSkeleton />
+      ) : data ? (
         <CForm onSubmit={onSubmit}>
           <CInput
             legend='স্থায়ী ঠিকানা *'
@@ -89,7 +91,33 @@ export default function Address() {
           />
         </CForm>
       ) : (
-        <FormSkeleton />
+        <CForm onSubmit={onSubmit}>
+          <CInput
+            legend='স্থায়ী ঠিকানা *'
+            name='permanent_address'
+            placeholder='গুলশান-২, ঢাকা'
+            message='field is required'
+          />
+
+          <CInput
+            legend='বর্তমান ঠিকানা *'
+            name='current_address'
+            placeholder='ভাটারা, গুলশান-২, ঢাকা'
+            message='field is required'
+          />
+
+          <CInput
+            legend='কোথায় বড় হয়েছেন? *'
+            name='where_lived'
+            message='field is required'
+          />
+
+          <input
+            type='submit'
+            value='Save Changes'
+            className='rounded-md bg-red-500 px-6 py-3 text-xl font-medium text-white shadow-md hover:bg-red-600 focus:ring-2 focus:ring-red-800'
+          />
+        </CForm>
       )}
     </ProfileLayout>
   )

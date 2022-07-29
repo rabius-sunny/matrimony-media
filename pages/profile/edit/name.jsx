@@ -18,7 +18,7 @@ export default function Name() {
 
   const onSubmit = infos => {
     biodataRequests
-      .updateBio(infos)
+      .updateBio({ ...infos, published: false })
       .then(info => {
         if (info.message === 'ok') {
           biodataRequests.setField(0).then(info => {
@@ -49,8 +49,12 @@ export default function Name() {
   }, [data, loading])
 
   // const onReset = data => {
-  //   const _reset = {}
+  //   let _reset = {}
   //   const dataArray = Object.keys(data)
+  // dataArray.map(item => {
+  //   _reset[item] = ''
+  // })
+  // Unneccessary
   //   for (const key of dataArray) {
   //     _reset[key] = ''
   //   }
@@ -58,13 +62,14 @@ export default function Name() {
   // }
 
   return (
-    <ProfileLayout>
+    <ProfileLayout data={data} loading={loading}>
       <Head>
         <title>প্রাথমিক তথ্য</title>
       </Head>
       <ProfileRoutes activeRoute={activeRoute} />
-
-      {!loading ? (
+      {loading ? (
+        <FormSkeleton />
+      ) : data ? (
         <CForm onSubmit={onSubmit}>
           <CInput
             name='name'
@@ -89,7 +94,27 @@ export default function Name() {
           />
         </CForm>
       ) : (
-        <FormSkeleton />
+        <CForm onSubmit={onSubmit}>
+          <CInput
+            name='name'
+            placeholder='My name'
+            legend='সম্পূর্ণ নাম *'
+            description='নাম নেয়া হচ্ছে ভেরিফিকেশনের জন্য, পূর্ণ নাম লিখবেন। আপনার নাম কারো
+          সাথে শেয়ার করা হবে না।'
+            message='name is required'
+          />
+          <CSelect
+            legend='বায়োডাটার ধরন *'
+            message='Field is required'
+            options={_type}
+            name='type'
+          />
+          <input
+            type='submit'
+            value='save changes'
+            className='rounded-md bg-red-500 px-6 py-3 text-xl font-medium text-white shadow-md hover:bg-red-600 focus:ring-2 focus:ring-red-800'
+          />
+        </CForm>
       )}
     </ProfileLayout>
   )

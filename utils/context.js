@@ -59,6 +59,11 @@ export function AppWrapper({ children }) {
       name: 'যোগাযোগ',
       link: '/contact-info',
       error: false
+    },
+    contact: {
+      name: 'যোগাযোগ',
+      link: '/contact-info',
+      error: false
     }
   })
 

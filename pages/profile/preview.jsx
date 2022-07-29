@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import DAddress from 'components/bio/DAddress'
-import { useRouter } from 'next/router'
 import biodataRequests from 'services/biodataRequests'
 import DEducation from 'components/bio/DEducaiton'
 import DFamily from 'components/bio/DFamily'
@@ -11,28 +10,51 @@ import DExpect from 'components/bio/DExpect'
 import DAuthorityqs from 'components/bio/DAuthorityqs'
 import CSkeleton from 'components/shared/CSkeleton'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
+import LongModal from 'components/shared/Modals/LongModal'
 
 export default function Preview() {
   const [bio, setBio] = useState({})
   const [loading, setLoading] = useState(false)
+  const [visible, setVisible] = useState(false)
+  const [visible2, setVisible2] = useState(false)
   const router = useRouter()
 
   useEffect(() => {
-    let username = localStorage.getItem('username')
     setLoading(true)
-    if (username) {
-      biodataRequests
-        .getBioByID(username + '+username')
-        .then(data => {
-          setBio(data.response)
-          setLoading(false)
-        })
-        .catch(err => {
-          setLoading(false)
-          alert(err.message)
-        })
-    }
+
+    biodataRequests
+      .checkField()
+      .then(data => {
+        if (data.fields && data.fields.length < 1) {
+          biodataRequests
+            .getBioByToken()
+            .then(data => {
+              setBio(data.bio)
+              setLoading(false)
+            })
+            .catch(err => {
+              setLoading(false)
+              alert(err.message)
+            })
+        } else alert('you have not filled all the forms')
+      })
+      .catch(err => {
+        alert('Network error or you do not have permission to access this')
+        router.push('/')
+      })
   }, [])
+
+  const handlePublish = _ => {
+    biodataRequests
+      .updateBio({ requested: true })
+      .then(info => {
+        if (info.message === 'ok') {
+          setVisible(true)
+        }
+      })
+      .catch(err => setVisible2(true))
+  }
 
   const {
     type,
@@ -123,28 +145,34 @@ export default function Preview() {
     liability
   } = bio
 
-  useEffect(() => {
-    if (
-      !(type,
-      condition,
-      permanent_address,
-      education,
-      father_profession,
-      salat,
-      marry_reason,
-      ex_year,
-      is_correct_info,
-      liability)
-    ) {
-      router.push('/profile/edit/name')
-    }
-  }, [])
-
   return !loading && bio ? (
     <div className='container'>
       <Head>
         <title>বায়োডাটা | Preview</title>
       </Head>
+      <LongModal
+        blur
+        scroll={false}
+        visible={visible}
+        onClose={() => router.push('/')}
+        header='Publishing report'
+        body='আপনার রিকুয়েস্টটি প্যানেলের এ্যাপ্রুভাল পেন্ডিংয়ে রয়েছে। পাবলিশ হলে জানিয়ে দেয়া হবে।'
+        btn='OK'
+        color='success'
+        bodyColor='success'
+        preventClose={false}
+      />
+      <LongModal
+        blur
+        scroll={false}
+        visible={visible2}
+        onClose={() => setVisible2(false)}
+        header='Publishing report'
+        body='ইরর হয়েছে, আবার চেষ্টা করুন।'
+        btn='OK'
+        color='success'
+        bodyColor='error'
+      />
       <div className='mt-4'>
         <div className='my-4'>
           <DAddress
@@ -230,6 +258,7 @@ export default function Preview() {
             }}
           />
         </div>
+
         {(profession_info || special_acknowledgement) && (
           <div className='my-4'>
             <DAnother data={{ profession_info, special_acknowledgement }} />
@@ -256,6 +285,14 @@ export default function Preview() {
             data={{ family_about_bio, is_correct_info, liability }}
           />
         </div>
+      </div>
+      <div className='my-4'>
+        <button
+          onClick={handlePublish}
+          className='text-white font-bold text-xl cursor-pointer rounded-md bg-red-500 py-2 w-full'
+        >
+          Publish biodata
+        </button>
       </div>
     </div>
   ) : (

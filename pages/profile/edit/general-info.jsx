@@ -19,6 +19,7 @@ import FormSkeleton from 'components/shared/FormSkeleton'
 import Head from 'next/head'
 import { useEffect } from 'react'
 import { useAppContext } from 'utils/context'
+import biodataRequests from 'services/biodataRequests'
 
 export default function GeneralInfo() {
   const router = useRouter()
@@ -28,7 +29,7 @@ export default function GeneralInfo() {
 
   const onSubmit = data => {
     biodataRequests
-      .updateBio(data)
+      .updateBio({ ...data, published: false })
       .then(info => {
         if (info.message === 'ok') {
           biodataRequests.setField(1).then(info => {
@@ -68,13 +69,15 @@ export default function GeneralInfo() {
   }, [data, loading])
   return (
     <>
-      <ProfileLayout>
+      <ProfileLayout data={data} loading={loading}>
         <Head>
           <title>সাধারণ তথ্য</title>
         </Head>
         <ProfileRoutes activeRoute={activeRoute} />
 
-        {!loading ? (
+        {loading ? (
+          <FormSkeleton />
+        ) : data ? (
           <CForm onSubmit={onSubmit}>
             <CSelect
               legend='বৈবাহিক অবস্থা *'
@@ -177,7 +180,83 @@ export default function GeneralInfo() {
             />
           </CForm>
         ) : (
-          <FormSkeleton />
+          <CForm onSubmit={onSubmit}>
+            <CSelect
+              legend='বৈবাহিক অবস্থা *'
+              message='Field is required'
+              options={_condition}
+              name='condition'
+            />
+
+            <CSelect
+              legend='স্থায়ী ঠিকানা *'
+              message='Field is required'
+              options={_address_jilla}
+              name='permanent_jilla'
+            />
+
+            <CSelect
+              legend='বিভাগ *'
+              message='Field is required'
+              options={_address_division}
+              name='permanent_division'
+            />
+
+            <CSelect
+              legend='বর্তমান ঠিকানা *'
+              message='Field is required'
+              options={_address_jilla}
+              name='current_jilla'
+            />
+
+            <CSelect
+              legend='বিভাগ *'
+              message='Field is required'
+              options={_address_division}
+              name='current_division'
+            />
+
+            <CSelect
+              legend='জন্মসন (আসল) *'
+              message='Field is required'
+              options={_birthYear}
+              name='birth'
+            />
+
+            <CSelect
+              legend='গাত্রবর্ণ'
+              options={_complexion}
+              name='complexion'
+            />
+
+            <CSelect legend='উচ্চতা' options={_height} name='height' />
+
+            <CSelect legend='ওজন' options={_weight} name='weight' />
+
+            <CSelect legend='Blood Group' options={_bloodGroup} name='blood' />
+
+            <CInput
+              name='profession'
+              placeholder='সফটওয়্যার ইঞ্জিনিয়ার'
+              legend='পেশা *'
+              description='সর্বোচ্চ ৩ শব্দে শুধু পদবী লিখবেন। পেশা সম্পর্কে বিস্তারিত লিখার
+            জন্য সামনে প্রশ্ন আসছে।'
+              message='profession is required'
+            />
+
+            <CInput
+              name='income'
+              placeholder='৩০ হাজার'
+              legend='মাসিক আয় *'
+              description='জানাতে অনিচ্ছুক হলে ঘরটি ফাঁকা রাখুন।'
+            />
+
+            <input
+              type='submit'
+              value='Save Changes'
+              className='rounded-md bg-red-500 px-6 py-3 text-xl font-medium text-white shadow-md hover:bg-red-600 focus:ring-2 focus:ring-red-800'
+            />
+          </CForm>
         )}
       </ProfileLayout>
     </>

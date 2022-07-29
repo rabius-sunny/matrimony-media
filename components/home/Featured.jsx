@@ -28,8 +28,8 @@ export default function Featured() {
       <div className='container my-4'>
         <div className='my-4'>
           <div className='grid grid-cols-12 gap-8'>
-            {data.bios.map(bio => (
-              <BioCard bio={bio} />
+            {data.bios.map((bio, i) => (
+              <BioCard key={i} bio={bio} />
             ))}
           </div>
         </div>

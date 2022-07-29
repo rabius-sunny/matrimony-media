@@ -24,7 +24,7 @@ export default function OthersInfo() {
   })
   const onSubmit = data =>
     biodataRequests
-      .updateBio(data)
+      .updateBio({ ...data, published: false })
       .then(info => {
         if (info.message === 'ok') {
           biodataRequests.setField(8).then(info => {
@@ -65,12 +65,12 @@ export default function OthersInfo() {
   }, [data, loading])
 
   return (
-    <ProfileLayout>
+    <ProfileLayout data={data} loading={loading}>
       <Head>
         <title>যেমন জীবনসঙ্গী আশা করেন</title>
       </Head>
       <ProfileRoutes activeRoute={activeRoute} />
-      {!loading ? (
+      {!loading && data ? (
         <form onSubmit={handleSubmit(onSubmit)}>
           <fieldset
             className={`my-6 rounded-md border-2 ${

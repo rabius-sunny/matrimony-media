@@ -31,7 +31,7 @@ export default function Family() {
   })
   const onSubmit = data =>
     biodataRequests
-      .updateBio(data)
+      .updateBio({ ...data, published: false })
       .then(info => {
         if (info.message === 'ok') {
           biodataRequests.setField(4).then(info => {
@@ -73,12 +73,12 @@ export default function Family() {
   }, [data, loading])
 
   return (
-    <ProfileLayout>
+    <ProfileLayout data={data} loading={loading}>
       <Head>
         <title>পারিবারিক তথ্য</title>
       </Head>
       <ProfileRoutes activeRoute={activeRoute} />
-      {!loading ? (
+      {!loading && data ? (
         <form onSubmit={handleSubmit(onSubmit)}>
           <fieldset
             className={`my-6 rounded-md border-2 ${

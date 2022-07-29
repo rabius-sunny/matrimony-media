@@ -64,13 +64,15 @@ export default function Signin() {
 
     try {
       const confirmation = await confirm.confirm(cred.otp)
-      handleSubmit()
+      handleSubmit(e)
     } catch (error) {
       console.log('errorss', error)
       alert('wrong otp')
+      if (typeof window !== 'undefined') window.location.reload()
     }
   }
-  const handleSubmit = async _ => {
+  const handleSubmit = async e => {
+    e.preventDefault()
     try {
       const data = await userRequest.signIn({
         username: cred.username,
@@ -79,7 +81,8 @@ export default function Signin() {
       localStorage.setItem('token', data.token)
       localStorage.setItem('id', data.id)
       localStorage.setItem('username', data.username)
-      window.location.reload()
+      router.push('/profile/edit/name')
+      // window.location.reload()
     } catch (error) {
       alert(error.response.data.message)
       window.location.reload()
@@ -126,7 +129,7 @@ export default function Signin() {
 
             <div className='mt-8'>
               {!isOtp && (
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={/* onPhoneSubmit */ handleSubmit}>
                   <div>
                     <label
                       htmlFor='username'
@@ -153,7 +156,8 @@ export default function Signin() {
                       Phone
                     </label>
                     <input
-                      type='phone'
+                      type='tel'
+                      placeholder='01XXXXXXXXX'
                       name='phone'
                       id='phone'
                       onChange={onChange}

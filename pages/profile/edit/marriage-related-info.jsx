@@ -26,7 +26,7 @@ export default function MarriageRelated() {
   })
   const onSubmit = data =>
     biodataRequests
-      .updateBio(data)
+      .updateBio({ ...data, published: false })
       .then(info => {
         if (info.message === 'ok') {
           biodataRequests.setField(6).then(info => {
@@ -55,12 +55,12 @@ export default function MarriageRelated() {
   }, [data, loading])
 
   return (
-    <ProfileLayout>
+    <ProfileLayout data={data} loading={loading}>
       <Head>
         <title>বিয়েসম্পর্কিত তথ্য</title>
       </Head>
       <ProfileRoutes activeRoute={activeRoute} />
-      {!loading ? (
+      {!loading && data ? (
         <form onSubmit={handleSubmit(onSubmit)}>
           <fieldset
             className={`my-6 rounded-md border-2 ${

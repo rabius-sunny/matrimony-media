@@ -25,7 +25,7 @@ export default function AuthorityQuestion() {
   })
   const onSubmit = data =>
     biodataRequests
-      .updateBio(data)
+      .updateBio({ ...data, published: false })
       .then(info => {
         if (info.message === 'ok') {
           biodataRequests.setField(9).then(info => {
@@ -56,12 +56,12 @@ export default function AuthorityQuestion() {
   }, [data, loading])
 
   return (
-    <ProfileLayout>
+    <ProfileLayout data={data} loading={loading}>
       <Head>
         <title>কর্তৃপক্ষের জিজ্ঞাসা</title>
       </Head>
       <ProfileRoutes activeRoute={activeRoute} />
-      {!loading ? (
+      {!loading && data ? (
         <form onSubmit={handleSubmit(onSubmit)}>
           <fieldset
             className={`my-6 rounded-md border-2 ${

@@ -6,6 +6,12 @@ class BiodataRequests {
   getBioByID(id) {
     return requests.get(`/bio-user/${id}`)
   }
+  getUsername(id) {
+    return requests.get(`/getusername/${id}`)
+  }
+  getBioByToken() {
+    return requests.get('/getbio-by-token')
+  }
   updateBio(body) {
     return requests.post('/createorupdate-biodata', body)
   }

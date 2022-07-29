@@ -25,6 +25,12 @@ class UserRequests {
   getFeatureds() {
     return requests.get('/get-featureds')
   }
+  makeRequest(body) {
+    return requests.post('/request-info', body)
+  }
+  deleteHideRequest(reason) {
+    return requests.post('/delete-hide-request', reason)
+  }
 }
 
 export default new UserRequests()

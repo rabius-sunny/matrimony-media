@@ -24,7 +24,7 @@ export default function PersonalInfo() {
   })
   const onSubmit = data =>
     biodataRequests
-      .updateBio(data)
+      .updateBio({ ...data, published: false })
       .then(info => {
         if (info.message === 'ok') {
           biodataRequests.setField(5).then(info => {
@@ -70,12 +70,12 @@ export default function PersonalInfo() {
   }, [data, loading])
 
   return (
-    <ProfileLayout>
+    <ProfileLayout data={data} loading={loading}>
       <Head>
         <title>ব্যক্তিগত তথ্য</title>
       </Head>
       <ProfileRoutes activeRoute={activeRoute} />
-      {!loading ? (
+      {!loading && data ? (
         <form onSubmit={handleSubmit(onSubmit)}>
           {data?.type === 'পাত্রের বায়োডাটা' ? (
             <div>

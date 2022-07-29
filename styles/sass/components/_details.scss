@@ -1,4 +1,5 @@
-.item__holder {
+.item__holder,
+.item__holder2 {
   .item {
     padding: 6px 10px;
     border-left: 1px solid #c7c7c72f;
@@ -14,6 +15,39 @@
       padding-right: 5px;
       border-right: 1px solid red;
       font-weight: 600;
+    }
+
+    span:last-child {
+      padding-left: 10px;
+      max-width: 50%;
+    }
+  }
+
+  .items>div:first-child {
+    border-bottom: 1px solid #80808057;
+  }
+
+  .item:nth-child(odd) {
+    background-color: #c7c7c72f;
+  }
+
+  .items:nth-child(odd) {
+    background-color: #c7c7c72f;
+  }
+}
+
+.item__holder2 {
+  .item {
+    border-left: 1px solid #ffffff6c;
+    border-right: 1px solid #ffffff6c;
+    color: white;
+
+    &:last-child {
+      border-bottom: 4px solid #ffffff;
+    }
+
+    span:first-child {
+      border-right: 2px solid white;
     }
 
     span:last-child {

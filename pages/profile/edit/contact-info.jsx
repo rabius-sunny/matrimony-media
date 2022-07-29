@@ -8,9 +8,15 @@ import getData from 'hooks/getData'
 import FormSkeleton from 'components/shared/FormSkeleton'
 import Head from 'next/head'
 import { useAppContext } from 'utils/context'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import LongModal from 'components/shared/Modals/LongModal'
+import Link from 'next/link'
+import { ArrowRightIcon } from '@heroicons/react/outline'
 
 export default function Name() {
+  const [visible, setVisible] = useState(false)
+  const [fields, setFields] = useState([])
+  const onClose = _ => setVisible(false)
   const router = useRouter()
   const activeRoute = routename =>
     router.route.split('/edit')[1] === routename ? true : false
@@ -24,16 +30,16 @@ export default function Name() {
   })
   const onSubmit = data =>
     biodataRequests
-      .updateBio({ ...data })
+      .updateBio({ ...data, published: false })
       .then(info => {
         if (info.message === 'ok') {
           biodataRequests.setField(10).then(info => {
             if (info.message === 'ok') {
               biodataRequests.checkField().then(data => {
+                setFields(data.fields)
                 if (data.fields && data.fields.length < 1) {
-                  alert('done')
                   router.push('/profile/preview')
-                } else alert('you have not filled all the forms')
+                } else setVisible(true)
               })
             }
           })
@@ -47,7 +53,7 @@ export default function Name() {
   useEffect(() => {
     if (data) {
       if (
-        !data.guandian_number ||
+        !data.guardian_number ||
         !data.number_relation ||
         !data.receiving_email
       ) {
@@ -64,43 +70,65 @@ export default function Name() {
   }, [data, loading])
 
   return (
-    <ProfileLayout>
+    <ProfileLayout data={data} loading={loading}>
       <Head>
         <title>যোগাযোগ</title>
       </Head>
+      <LongModal
+        visible={visible}
+        onClose={onClose}
+        header='নিম্নোক্ত ফিল্ডগুলো ঠিকভাবে পূরণ করা হয় নি'
+        body={fields.map((item, i) => (
+          <div key={i}>
+            <p style={{ color: 'red', fontSize: '.9rem' }}>{item.name}</p>
+            <Link href={item.slug}>
+              <a
+                className='text-blue-400 underline flex items-center'
+                style={{ fontSize: '.9rem' }}
+              >
+                পূরণ করুন ক্লিক করুন
+                <ArrowRightIcon className='text-blue-400 h-4 pl-1' />
+              </a>
+            </Link>
+          </div>
+        ))}
+        scroll={true}
+        btn='ফিরে যান'
+        color='primary'
+      />
       <ProfileRoutes activeRoute={activeRoute} />
-      {!loading ? (
+      {!loading && data ? (
         <form onSubmit={handleSubmit(onSubmit)}>
           <fieldset
             className={`my-6 rounded-md border-2 ${
-              errors.guandian_number ? 'border-red-500' : 'border-blue-300'
+              errors.guardian_number ? 'border-red-500' : 'border-blue-300'
             } p-4`}
           >
             <legend
               className={`ml-4 font-bold ${
-                errors.guandian_number ? 'text-red-500' : 'text-blue-500'
+                errors.guardian_number ? 'text-red-500' : 'text-blue-500'
               }`}
             >
               অভিভাবকের নাম্বার *
             </legend>
             <input
-              defaultValue={data?.guandian_number}
+              defaultValue={data?.guardian_number}
               placeholder='01700000000'
-              {...register('guandian_number', {
+              {...register('guardian_number', {
                 required: 'please fill the form'
               })}
               className={`w-full rounded ${
-                errors.guandian_number ? 'bg-red-100' : 'bg-blue-100'
+                errors.guardian_number ? 'bg-red-100' : 'bg-blue-100'
               } px-4 py-2 font-medium text-blue-400 shadow-md ${
-                errors.guandian_number
+                errors.guardian_number
                   ? 'focus:outline-red-500'
                   : 'focus:outline-blue-500'
               }`}
             />
-            <Fade right when={errors.guandian_number ? true : false}>
-              {errors.guandian_number && (
+            <Fade right when={errors.guardian_number ? true : false}>
+              {errors.guardian_number && (
                 <p className='text-red-500 py-2 pl-2'>
-                  {errors.guandian_number.message}
+                  {errors.guardian_number.message}
                 </p>
               )}
             </Fade>

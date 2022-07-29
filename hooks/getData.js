@@ -3,7 +3,7 @@ import requests from 'services/http'
 
 export default function getData() {
   const [data, setData] = useState(null)
-  const [loading, isLoading] = useState(false)
+  const [loading, isLoading] = useState(true)
   const [error, setError] = useState(null)
 
   useEffect(() => {
