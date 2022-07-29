@@ -29,7 +29,7 @@ export default function GeneralInfo() {
 
   const onSubmit = data => {
     biodataRequests
-      .updateBio(data)
+      .updateBio({ ...data, published: false })
       .then(info => {
         if (info.message === 'ok') {
           biodataRequests.setField(1).then(info => {

@@ -9,20 +9,16 @@ import getData from 'hooks/getData'
 import FormSkeleton from 'components/shared/FormSkeleton'
 import Head from 'next/head'
 import { useAppContext } from 'utils/context'
-import { useEffect, useState } from 'react'
-import LongModal from 'components/shared/Modals/LongModal'
+import { useEffect } from 'react'
 
 export default function Name() {
   const router = useRouter()
   const activeRoute = routename =>
     router.route.split('/edit')[1] === routename ? true : false
 
-  const onCLose = _ => router.push('/profile/edit/general-info')
-  const [visible, setVisible] = useState(false)
-
   const onSubmit = infos => {
     biodataRequests
-      .updateBio({ ...infos, requested: true })
+      .updateBio({ ...infos, published: false })
       .then(info => {
         if (info.message === 'ok') {
           biodataRequests.setField(0).then(info => {
@@ -53,8 +49,12 @@ export default function Name() {
   }, [data, loading])
 
   // const onReset = data => {
-  //   const _reset = {}
+  //   let _reset = {}
   //   const dataArray = Object.keys(data)
+  // dataArray.map(item => {
+  //   _reset[item] = ''
+  // })
+  // Unneccessary
   //   for (const key of dataArray) {
   //     _reset[key] = ''
   //   }
@@ -67,15 +67,6 @@ export default function Name() {
         <title>প্রাথমিক তথ্য</title>
       </Head>
       <ProfileRoutes activeRoute={activeRoute} />
-      <LongModal
-        visible={visible}
-        onClose={onCLose}
-        header='এডিট কনফারমেশন'
-        body='আপনার বায়োডাটাটি এডিট হয়েছে এবং এডমিন প্যানেলের এ্যাপ্রুভালের অপেক্ষায় রয়েছে'
-        btn='পরবর্তী ধাপে যান'
-        color='primary'
-      />
-
       {loading ? (
         <FormSkeleton />
       ) : data ? (

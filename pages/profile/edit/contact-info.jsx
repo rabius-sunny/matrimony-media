@@ -30,7 +30,7 @@ export default function Name() {
   })
   const onSubmit = data =>
     biodataRequests
-      .updateBio({ ...data })
+      .updateBio({ ...data, published: false })
       .then(info => {
         if (info.message === 'ok') {
           biodataRequests.setField(10).then(info => {
@@ -38,8 +38,7 @@ export default function Name() {
               biodataRequests.checkField().then(data => {
                 setFields(data.fields)
                 if (data.fields && data.fields.length < 1) {
-                  // router.push('/profile/preview')
-                  console.log('data fields', data.fields)
+                  router.push('/profile/preview')
                 } else setVisible(true)
               })
             }

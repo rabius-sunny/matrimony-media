@@ -15,8 +15,10 @@ export default function ProfileRoutes({ activeRoute }) {
             <div
               key={index}
               className={`border-2 shadow-sm rounded-md ${
-                activeRoute(route.link) ? 'bg-orange-500' : 'bg-blue-500'
-              } m-2 p-2 text-white `}
+                activeRoute(route.link)
+                  ? 'bg-[#f9731657] text-orange-500'
+                  : 'bg-[#3b82f638] text-blue-500'
+              } m-2 p-2`}
             >
               <div className='flex items-center'>
                 <div>{route.name}</div>
