@@ -14,7 +14,7 @@ export default function SearchResult() {
   useEffect(() => {
     if (searchkey && searchkey.length > 2) {
       biodataRequests
-        .getBioByID(searchkey[2] + '+username')
+        .getBioByUID(searchkey[2])
         .then(data => {
           data ? setBios([data.response]) : setBios(null)
           setLoading(false)

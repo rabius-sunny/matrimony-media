@@ -14,35 +14,26 @@ import Head from 'next/head'
 import userRequest from 'services/userRequest'
 import BioInfoCard from 'components/bio/BioInfoCard'
 import LongModal from 'components/shared/Modals/LongModal'
+import useAuth from 'hooks/useAuth'
 
 export default function DetailBio() {
   const {
-    query: { username }
+    query: { uId }
   } = useRouter()
   const [bio, setBio] = useState({})
   const [loading, setLoading] = useState(false)
   const [isBookmarked, setIsBookmarked] = useState(false)
+  const [isBookmarkedLocal, setIsBookmarkedLocal] = useState(false)
   const [contact, setContact] = useState(false)
-  const [report, setReport] = useState(false)
-  const [name, setName] = useState(null)
 
   const router = useRouter()
-
-  useEffect(() => {
-    if (username && username.includes('id')) {
-      console.log('done check')
-      biodataRequests
-        .getUsername(username?.split('+')[0])
-        .then(data => setName(data.username))
-        .catch(err => console.log('err', err))
-    }
-  }, [])
+  const auth = useAuth()
 
   useEffect(() => {
     setLoading(true)
-    if (username) {
+    if (uId) {
       biodataRequests
-        .getBioByID(username)
+        .getBioByUID(uId)
         .then(data => {
           setBio(data.response)
           setLoading(false)
@@ -52,46 +43,73 @@ export default function DetailBio() {
           alert(err.message)
         })
     }
-  }, [username])
+  }, [uId])
+
+  // check favorite for signed up user and public user
   useEffect(() => {
     if (bio._id) {
-      userRequest
-        .checkFavorite(bio._id)
-        .then(res => {
-          if (res.message === 'exists') {
-            setIsBookmarked(true)
+      if (!auth) {
+        // check for public
+        const bookmarks = localStorage.getItem('bookmarks')
+        if (bookmarks) {
+          const result = JSON.parse(bookmarks)
+          if (result.hasOwnProperty(bio._id)) {
+            setIsBookmarkedLocal(true)
           }
-        })
-        .catch(err => console.log('err', err))
+        }
+      } else {
+        // check for user
+        userRequest
+          .checkFavorite(bio._id)
+          .then(res => {
+            if (res.message === 'exists') {
+              setIsBookmarked(true)
+            }
+          })
+          .catch(err => err)
+      }
     }
-  }, [username, bio])
+  }, [uId, bio, auth])
 
-  const handleBookmark = bioId => {
-    if (isBookmarked) {
-      userRequest
-        .removeBookmark(bioId)
-        .then(res => {
-          if (res.message === 'ok') {
-            setIsBookmarked(false)
-          }
-        })
-        .catch(err => console.log('err', err))
+  const handleBookmark = _ => {
+    if (auth) {
+      if (isBookmarked) {
+        userRequest
+          .removeBookmark(uId)
+          .then(res => {
+            if (res.message === 'ok') {
+              setIsBookmarked(false)
+            }
+          })
+          .catch(err => err)
+      } else {
+        userRequest
+          .addToBookmark(uId)
+          .then(res => {
+            if (res.message === 'ok') {
+              setIsBookmarked(true)
+            }
+          })
+          .catch(err => console.log('err', err))
+      }
     } else {
-      userRequest
-        .addToBookmark(bioId)
-        .then(res => {
-          if (res.message === 'ok') {
-            setIsBookmarked(true)
-          }
-        })
-        .catch(err => console.log('err', err))
+      const bookmarks = localStorage.getItem('bookmarks')
+      if (bookmarks) {
+        const result = JSON.parse(bookmarks)
+        if (result.hasOwnProperty(uId)) {
+          delete result[uId]
+          setIsBookmarkedLocal(false)
+        } else {
+          result[uId] = uId
+          setIsBookmarkedLocal(true)
+        }
+        localStorage.setItem('bookmarks', JSON.stringify(result))
+      } else {
+        const bookmarkObj = { [uId]: uId }
+        localStorage.setItem('bookmarks', JSON.stringify(bookmarkObj))
+        setIsBookmarkedLocal(true)
+      }
     }
-  }
-  const handleContact = _ => {
-    userRequest
-      .makeRequest({ target: username.split('+')[0] })
-      .then(res => console.log('res', res))
-      .catch(err => console.log('err', err))
   }
 
   const {
@@ -175,14 +193,12 @@ export default function DetailBio() {
     <div className='container my-8'>
       <div className='grid grid-cols-12 gap-4'>
         <Head>
-          <title>বায়োডাটা | {name || username?.split('+')[0]}</title>
+          <title>বায়োডাটা | {uId}</title>
         </Head>
         <LongModal
           visible={contact}
           onClose={() => setContact(false)}
-          onTask={() =>
-            router.push(`/checkout/${name || username?.split('+')[0]}`)
-          }
+          onTask={() => router.push(`/checkout/${uId}`)}
           header='আপনি কি এই বায়োডাটার সমস্ত শর্ত পূরণে সক্ষম?'
           body='আপনি যদি এই বায়োডাটাতে উল্লেখিত শর্তসমূহ মেনে থাকেন শুধু তাহলেই
               যোগাযোগ করুন'
@@ -191,20 +207,8 @@ export default function DetailBio() {
           preventClose={false}
           bodyColor='success'
         />
-        <LongModal
-          visible={report}
-          onClose={() => setContact(false)}
-          header='এই বায়োডাটাতে রিপোর্ট করুন'
-          body='যদি এই বায়োডাটা বা সংশ্লিষ্ট ব্যক্তি সম্পর্কে আপনার কোনো অভিযোগ থাকে তাহলে আমাদেরকে জানাতে পারেন এই মেইল এ info@matrimonymedia.com'
-          preventClose={false}
-          bodyColor='error'
-        />
         <div className='col-span-12 md:col-span-4'>
-          <BioInfoCard
-            data={bio}
-            loading={loading}
-            username={name || username?.split('+')[0]}
-          />
+          <BioInfoCard data={bio} loading={loading} uId={uId} />
         </div>
         <div className='col-span-12 md:col-span-8'>
           <div className='mt-4'>
@@ -319,28 +323,20 @@ export default function DetailBio() {
               />
             </div>
             <div className='h-40'>
-              <div className='my-8'>
+              <div className='my-8 flex gap-4'>
                 <button
                   onClick={() => setContact(true)}
                   className='text-center w-full py-3 rounded-md hover:bg-white hover:border-2 hover:text-green-500 text-white hover:border-green-500 bg-green-500 shadow'
                 >
                   অভিভাবকের সাথে যোগাযোগ করুন
                 </button>
-              </div>
-              <div className='my-8 flex'>
                 <button
-                  onClick={() => handleBookmark(bio._id)}
-                  className={`text-center w-full mr-4 py-3 rounded-md hover:bg-white hover:border-2 hover:text-pink-500 text-white hover:border-pink-500 bg-pink-500 shadow`}
-                >
-                  {isBookmarked
-                    ? 'ফেভারিট থেকে মুছে ফেলুন'
-                    : 'ফেভারিট এ যোগ করুন'}
-                </button>
-                <button
-                  onClick={() => setReport(true)}
+                  onClick={handleBookmark}
                   className='text-center w-full py-3 rounded-md hover:bg-white hover:border-2 hover:text-red-500 text-white hover:border-red-500 bg-red-500 shadow'
                 >
-                  এই বায়োতে রিপোর্ট করুন
+                  {isBookmarked || isBookmarkedLocal
+                    ? 'ফেভারিট থেকে মুছে ফেলুন'
+                    : 'ফেভারিট এ যোগ করুন'}
                 </button>
               </div>
             </div>

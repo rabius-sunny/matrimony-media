@@ -19,7 +19,7 @@ export default function Dropdown() {
       <div className='mb-4'>
         <label
           className='mb-1 block text-sm font-medium text-white'
-          htmlFor='biono'
+          htmlFor='type'
         >
           আমি খুঁজছি
         </label>
@@ -27,8 +27,11 @@ export default function Dropdown() {
           onClick={e => {
             setType(e.target.value)
             setIsReset(false)
+            setId('')
           }}
-          className='w-full py-1 rounded px-1 focus:outline-red-800'
+          className={`w-full ${
+            isReset ? 'opacity-70' : 'opacity-100'
+          } py-1 rounded px-1 focus:outline-red-800`}
           name='type'
           id='type'
         >
@@ -46,7 +49,7 @@ export default function Dropdown() {
       <div className='my-4'>
         <label
           className='mb-1 block text-sm font-medium text-white'
-          htmlFor='biono'
+          htmlFor='jilla'
         >
           জেলা
         </label>
@@ -54,8 +57,11 @@ export default function Dropdown() {
           onClick={e => {
             setJilla(e.target.value)
             setIsReset(false)
+            setId('')
           }}
-          className='w-full py-1 rounded px-1 focus:outline-red-800'
+          className={`w-full ${
+            isReset ? 'opacity-70' : 'opacity-100'
+          } py-1 rounded px-1 focus:outline-red-800`}
           name='jilla'
           id='jilla'
         >
@@ -79,7 +85,9 @@ export default function Dropdown() {
         </label>
         <input
           onClick={_reset}
+          onBlur={() => setIsReset(false)}
           onChange={e => setId(e.target.value)}
+          value={id}
           className='mb-4 w-full rounded px-3 py-1 shadow-md focus:outline-red-800'
         />
       </div>

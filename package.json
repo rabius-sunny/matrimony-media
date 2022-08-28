@@ -2,7 +2,7 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "dev": "next dev",
+    "dev": "next -p 4000",
     "build": "next build",
     "start": "next start"
   },

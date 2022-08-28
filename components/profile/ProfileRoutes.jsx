@@ -24,11 +24,13 @@ export default function ProfileRoutes({ activeRoute }) {
                 <div>{route.name}</div>
 
                 <div>
-                  {route.error ? (
-                    <ExclamationCircleIcon className='w-5 text-red-500' />
-                  ) : (
+                  {
+                    route.error && (
+                      <ExclamationCircleIcon className='w-5 text-red-500' />
+                    ) /* : (
                     <CheckCircleIcon className='h-5 w-5 text-green-500' />
-                  )}
+                  ) */
+                  }
                 </div>
               </div>
             </div>

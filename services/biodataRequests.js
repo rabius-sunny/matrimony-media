@@ -3,11 +3,8 @@ class BiodataRequests {
   getBios(type, jilla) {
     return requests.get(`/home/${type}/${jilla}`)
   }
-  getBioByID(id) {
-    return requests.get(`/bio-user/${id}`)
-  }
-  getUsername(id) {
-    return requests.get(`/getusername/${id}`)
+  getBioByUID(uId) {
+    return requests.get(`/bio-id/${uId}`)
   }
   getBioByToken() {
     return requests.get('/getbio-by-token')

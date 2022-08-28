@@ -5,7 +5,7 @@ import CSkeleton from 'components/shared/CSkeleton'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 
-export default function BioInfoCard({ data, loading, username }) {
+export default function BioInfoCard({ data, loading, uId }) {
   const usernameLocal =
     typeof window !== 'undefined' ? localStorage.getItem('username') : ''
   const [info, setInfo] = useState({
@@ -73,7 +73,7 @@ export default function BioInfoCard({ data, loading, username }) {
           />
           <h2 className='mt-2 mb-8 text-3xl text-white'>
             Biodata ID:{' '}
-            <span className='underline'>{username || usernameLocal}</span>
+            <span className='underline'>{uId || usernameLocal}</span>
           </h2>
           <div className='item__holder2'>
             <div className='item'>

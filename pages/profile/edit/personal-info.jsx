@@ -22,19 +22,19 @@ export default function PersonalInfo() {
   } = useForm({
     mode: 'onChange'
   })
-  const onSubmit = data =>
-    biodataRequests
-      .updateBio({ ...data, published: false })
-      .then(info => {
-        if (info.message === 'ok') {
-          biodataRequests.setField(5).then(info => {
-            if (info.message === 'ok') {
-              router.push('/profile/edit/marriage-related-info')
-            }
-          })
-        }
-      })
-      .catch(err => console.log(err.message))
+  const onSubmit = data => console.log('data', data)
+  // biodataRequests
+  //   .updateBio({ ...data, published: false })
+  //   .then(info => {
+  //     if (info.message === 'ok') {
+  //       biodataRequests.setField(5).then(info => {
+  //         if (info.message === 'ok') {
+  //           router.push('/profile/edit/marriage-related-info')
+  //         }
+  //       })
+  //     }
+  //   })
+  //   .catch(err => console.log(err.message))
 
   const { data, loading } = getData()
 
@@ -47,6 +47,7 @@ export default function PersonalInfo() {
         !data.salat_duration ||
         !data.maintain_mahram ||
         !data.can_tilawat ||
+        !data.madhab ||
         !data.mazhab ||
         !data.political_view ||
         !data.drama_cinnema ||
@@ -366,6 +367,42 @@ export default function PersonalInfo() {
 
           <fieldset
             className={`my-6 rounded-md border-2 ${
+              errors.madhab ? 'border-red-500' : 'border-blue-300'
+            } p-4`}
+          >
+            <legend
+              className={`ml-4 font-bold ${
+                errors.madhab ? 'text-red-500' : 'text-blue-500'
+              }`}
+            >
+              কোন মাযহাব অনুসরণ করেন *
+            </legend>
+            <select
+              defaultValue={data?.madhab}
+              className={`w-full focus:outline-none border-2 ${
+                errors.madhab ? 'border-red-500' : 'border-blue-300'
+              } p-2 rounded-md`}
+              {...register('madhab', { required: 'madhab is required' })}
+            >
+              <option value=''>-------</option>
+              <option value='সালাফি/আহলেহাদীস'>সালাফি/আহলেহাদীস</option>
+              <option value='হানাফি'>হানাফি</option>
+              <option value='শাফেয়ী'>শাফেয়ী</option>
+              <option value='মালেকি'>মালেকি</option>
+              <option value='হাম্বালি'>হাম্বালি</option>
+              <option value='অন্যান্য'>অন্যান্য</option>
+            </select>
+            <Fade right when={errors.madhab ? true : false}>
+              {errors.madhab && (
+                <p className='text-red-500 py-2 pl-2'>
+                  {errors.madhab.message}
+                </p>
+              )}
+            </Fade>
+          </fieldset>
+
+          <fieldset
+            className={`my-6 rounded-md border-2 ${
               errors.mazhab ? 'border-red-500' : 'border-blue-300'
             } p-4`}
           >
@@ -374,7 +411,7 @@ export default function PersonalInfo() {
                 errors.mazhab ? 'text-red-500' : 'text-blue-500'
               }`}
             >
-              কোন মাযহাব অনুসরণ করেন? *
+              আপনার মাযহাব নিয়ে সংক্ষেপে লিখুন *
             </legend>
             <input
               defaultValue={data?.mazhab}

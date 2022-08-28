@@ -12,7 +12,6 @@ import userRequest from 'services/userRequest'
 
 export default function Signin() {
   const [cred, setCred] = useState({
-    username: '',
     phone: '',
     otp: ''
   })
@@ -75,12 +74,10 @@ export default function Signin() {
     e.preventDefault()
     try {
       const data = await userRequest.signIn({
-        username: cred.username,
         phone: cred.phone
       })
       localStorage.setItem('token', data.token)
       localStorage.setItem('id', data.id)
-      localStorage.setItem('username', data.username)
       router.push('/profile/edit/name')
       // window.location.reload()
     } catch (error) {
@@ -123,31 +120,13 @@ export default function Signin() {
               </h2>
 
               <p className='mt-3 text-white dark:text-gray-300'>
-                Enter with your username and phone
+                Enter with your phone no.
               </p>
             </div>
 
             <div className='mt-8'>
               {!isOtp && (
-                <form onSubmit={onPhoneSubmit /* handleSubmit */}>
-                  <div>
-                    <label
-                      htmlFor='username'
-                      className='mb-2 block text-sm text-white dark:text-gray-200'
-                    >
-                      Username
-                    </label>
-                    <input
-                      type='username'
-                      name='username'
-                      id='username'
-                      required
-                      onChange={onChange}
-                      placeholder='your username'
-                      className='mt-2 block w-full rounded-md border border-gray-200 bg-white px-4 py-2 text-gray-700 placeholder-gray-400 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-400 focus:ring-opacity-40 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:placeholder-gray-600 dark:focus:border-blue-400'
-                    />
-                  </div>
-
+                <form onSubmit={/* onPhoneSubmit */ handleSubmit}>
                   <div className='mt-6'>
                     <label
                       htmlFor='phone'
@@ -193,7 +172,7 @@ export default function Signin() {
                         type='submit'
                         className='w-full transform rounded-md bg-blue-500 px-4 py-2 tracking-wide text-white transition-colors duration-200 hover:bg-blue-400 focus:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50'
                       >
-                        ENTER OTP & SIGN IN
+                        TYPE OTP & ENTER
                       </button>
                     </div>
                   </form>

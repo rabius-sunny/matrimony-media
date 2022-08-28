@@ -50,11 +50,11 @@ export function AppWrapper({ children }) {
       link: '/expectation',
       error: false
     },
-    authority: {
-      name: 'কর্তৃপক্ষের জিজ্ঞাসা',
-      link: '/authority-question',
-      error: false
-    },
+    // authority: {
+    //   name: 'কর্তৃপক্ষের জিজ্ঞাসা',
+    //   link: '/authority-question',
+    //   error: false
+    // },
     contact: {
       name: 'যোগাযোগ',
       link: '/contact-info',
