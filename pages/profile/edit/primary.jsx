@@ -1,7 +1,7 @@
 import ProfileLayout from 'components/profile/ProfileLayout'
 import { useRouter } from 'next/router'
 import ProfileRoutes from 'components/profile/ProfileRoutes'
-import { _type } from 'assets/profileinfo'
+import { _femalecondition, _malecondition, _type } from 'assets/profileinfo'
 import { CInput, CSelect } from 'components/profile/CInputs'
 import CForm from 'components/profile/CFroms'
 import biodataRequests from 'services/biodataRequests'
@@ -9,10 +9,12 @@ import getData from 'hooks/getData'
 import FormSkeleton from 'components/shared/FormSkeleton'
 import Head from 'next/head'
 import { useAppContext } from 'utils/context'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 export default function Name() {
+  const { data, loading } = getData()
   const router = useRouter()
+  const [type, setType] = useState(null)
   const activeRoute = routename =>
     router.route.split('/edit')[1] === routename ? true : false
 
@@ -30,7 +32,6 @@ export default function Name() {
       })
       .catch(err => console.log(err.message))
   }
-  const { data, loading } = getData()
 
   const { routes, setRoutes } = useAppContext()
   useEffect(() => {
@@ -40,11 +41,12 @@ export default function Name() {
           ...routes,
           primary: {
             name: 'প্রাথমিক',
-            link: '/name',
+            link: '/primary',
             error: true
           }
         })
       }
+      setType(data?.type)
     }
   }, [data, loading])
 
@@ -84,8 +86,22 @@ export default function Name() {
             legend='বায়োডাটার ধরন *'
             message='Field is required'
             options={_type}
+            onChange={setType}
             name='type'
             defaultValue={data?.type}
+          />
+          <CSelect
+            legend='বৈবাহিক অবস্থা *'
+            message='Field is required'
+            options={
+              type === 'পাত্রের বায়োডাটা'
+                ? _malecondition
+                : type === 'পাত্রীর বায়োডাটা'
+                ? _femalecondition
+                : []
+            }
+            name='condition'
+            defaultValue={data?.condition}
           />
           <input
             type='submit'
@@ -107,7 +123,21 @@ export default function Name() {
             legend='বায়োডাটার ধরন *'
             message='Field is required'
             options={_type}
+            onChange={setType}
             name='type'
+          />
+          <CSelect
+            legend='বৈবাহিক অবস্থা *'
+            message='Field is required'
+            options={
+              type === 'পাত্রের বায়োডাটা'
+                ? _malecondition
+                : type === 'পাত্রীর বায়োডাটা'
+                ? _femalecondition
+                : []
+            }
+            name='condition'
+            defaultValue={data?.condition}
           />
           <input
             type='submit'

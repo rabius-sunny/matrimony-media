@@ -76,7 +76,7 @@ export default function Navigation() {
               ))}
             </div>
             <div className='hidden items-center justify-end md:flex md:flex-1 lg:w-0'>
-              <Link href={auth ? '/profile/edit/name' : '/sign-in'}>
+              <Link href={auth ? '/profile/edit/primary' : '/sign-in'}>
                 <a className='ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700'>
                   সিভি পাঠান
                 </a>

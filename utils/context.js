@@ -7,27 +7,7 @@ export function AppWrapper({ children }) {
   const [routes, setRoutes] = useState({
     primary: {
       name: 'প্রাথমিক',
-      link: '/name',
-      error: false
-    },
-    general: {
-      name: 'সাধারণ তথ্য',
-      link: '/general-info',
-      error: false
-    },
-    address: {
-      name: 'ঠিকানা',
-      link: '/address',
-      error: false
-    },
-    education: {
-      name: 'শিক্ষাগত যোগ্যতা',
-      link: '/educational-qualifications',
-      error: false
-    },
-    family: {
-      name: 'পারিবারিক তথ্য',
-      link: '/family-info',
+      link: '/primary',
       error: false
     },
     personal: {
@@ -38,6 +18,26 @@ export function AppWrapper({ children }) {
     marriage: {
       name: 'বিয়ে সংক্রান্ত তথ্য',
       link: '/marriage-related-info',
+      error: false
+    },
+    general: {
+      name: 'সাধারণ তথ্য',
+      link: '/general-info',
+      error: false
+    },
+    family: {
+      name: 'পারিবারিক তথ্য',
+      link: '/family-info',
+      error: false
+    },
+    address: {
+      name: 'ঠিকানা',
+      link: '/address',
+      error: false
+    },
+    education: {
+      name: 'শিক্ষাগত যোগ্যতা',
+      link: '/educational-qualifications',
       error: false
     },
     another: {

@@ -80,14 +80,6 @@ export default function GeneralInfo() {
         ) : data ? (
           <CForm onSubmit={onSubmit}>
             <CSelect
-              legend='বৈবাহিক অবস্থা *'
-              message='Field is required'
-              options={_condition}
-              name='condition'
-              defaultValue={data?.condition}
-            />
-
-            <CSelect
               legend='স্থায়ী ঠিকানা *'
               message='Field is required'
               options={_address_jilla}
@@ -181,13 +173,6 @@ export default function GeneralInfo() {
           </CForm>
         ) : (
           <CForm onSubmit={onSubmit}>
-            <CSelect
-              legend='বৈবাহিক অবস্থা *'
-              message='Field is required'
-              options={_condition}
-              name='condition'
-            />
-
             <CSelect
               legend='স্থায়ী ঠিকানা *'
               message='Field is required'

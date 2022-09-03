@@ -1,5 +1,14 @@
 const _type = ['পাত্রের বায়োডাটা', 'পাত্রীর বায়োডাটা']
-const _condition = ['অবিবাহিত', 'বিবাহিত', 'ডিভোর্সড', 'বিধবা', 'বিপত্মীক']
+const _malecondition = ['অবিবাহিত', 'বিবাহিত', 'ডিভোর্সড', 'বিপত্মীক']
+const _femalecondition = ['অবিবাহিত', 'ডিভোর্সড', 'বিধবা']
+const _madhabs = [
+  'সালাফি/আহলেহাদীস',
+  'হানাফি',
+  'শাফেয়ী',
+  'মালেকি',
+  'হাম্বালি',
+  'অন্যান্য'
+]
 const _address_jilla = [
   'বরগুনা',
   'বরিশাল',
@@ -281,7 +290,9 @@ const _bloodGroup = [
 const _brothers = ['১', '২', '৩', '৪', '৫', '৬']
 export {
   _type,
-  _condition,
+  _malecondition,
+  _femalecondition,
+  _madhabs,
   _address_jilla,
   _address_division,
   _birthYear,

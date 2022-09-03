@@ -191,10 +191,10 @@ export default function DetailBio() {
 
   return !loading && bio ? (
     <div className='container my-8'>
-      <div className='grid grid-cols-12 gap-4'>
-        <Head>
-          <title>বায়োডাটা | {uId}</title>
-        </Head>
+      <Head>
+        <title>বায়োডাটা | {uId}</title>
+      </Head>
+      <div className=''>
         <LongModal
           visible={contact}
           onClose={() => setContact(false)}
@@ -207,10 +207,10 @@ export default function DetailBio() {
           preventClose={false}
           bodyColor='success'
         />
-        <div className='col-span-12 md:col-span-4'>
+        <div className=''>
           <BioInfoCard data={bio} loading={loading} uId={uId} />
         </div>
-        <div className='col-span-12 md:col-span-8'>
+        <div className=''>
           <div className='mt-4'>
             <div className='my-4'>
               <DAddress

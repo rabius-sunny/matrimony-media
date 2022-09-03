@@ -9,12 +9,16 @@ import firebaseApp from 'services/firebaseInit'
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 import userRequest from 'services/userRequest'
+import getUIDs from 'hooks/getUIDs'
+import getRandomUID from 'hooks/getRandomUID'
 
 export default function Signin() {
+  const { uIds } = getUIDs()
   const [cred, setCred] = useState({
     phone: '',
     otp: ''
   })
+  const [uId, setUId] = useState(null)
   const [confirm, setConfirm] = useState(null)
   const [isOtp, setIsOtp] = useState(false)
 
@@ -23,6 +27,18 @@ export default function Signin() {
   useEffect(() => {
     auth && router.push('/')
   }, [auth])
+
+  useEffect(() => {
+    const randomUid = getRandomUID(10100, 99999)
+    setUId(randomUid)
+    if (uIds) {
+      while (uIds.includes(uId)) {
+        setUId(getRandomUID(10100, 99999))
+        console.log('exists, trying again!')
+      }
+    }
+  }, [uIds])
+  console.log('uid', uId)
 
   const recaptcha = async _ => {
     const fireAuth = getAuth(firebaseApp)
@@ -74,11 +90,12 @@ export default function Signin() {
     e.preventDefault()
     try {
       const data = await userRequest.signIn({
-        phone: cred.phone
+        phone: cred.phone,
+        uId
       })
       localStorage.setItem('token', data.token)
       localStorage.setItem('id', data.id)
-      router.push('/profile/edit/name')
+      router.push('/profile/edit/primary')
       // window.location.reload()
     } catch (error) {
       alert(error.response.data.message)

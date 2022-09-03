@@ -62,6 +62,7 @@ export function CSelect({
   name,
   errors,
   onClick,
+  onChange,
   ...rest
 }) {
   return (
@@ -84,6 +85,7 @@ export function CSelect({
           } p-2 rounded-md`}
           {...register(name, { required: message && message })}
           onClick={onClick ? e => onClick(e.target.value) : null}
+          onChange={onChange ? e => onChange(e.target.value) : null}
           {...rest}
         >
           <option value=''>---</option>

@@ -21,7 +21,7 @@ export default function ProfileRoutes({ activeRoute }) {
               } m-2 p-2`}
             >
               <div className='flex items-center'>
-                <div>{route.name}</div>
+                <Link href={'/profile/edit' + route.link}>{route.name}</Link>
 
                 <div>
                   {

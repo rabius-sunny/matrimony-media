@@ -9,6 +9,7 @@ import biodataRequests from 'services/biodataRequests'
 import FormSkeleton from 'components/shared/FormSkeleton'
 import Head from 'next/head'
 import { useAppContext } from 'utils/context'
+import { _madhabs } from 'assets/profileinfo'
 
 export default function PersonalInfo() {
   const router = useRouter()
@@ -22,19 +23,19 @@ export default function PersonalInfo() {
   } = useForm({
     mode: 'onChange'
   })
-  const onSubmit = data => console.log('data', data)
-  // biodataRequests
-  //   .updateBio({ ...data, published: false })
-  //   .then(info => {
-  //     if (info.message === 'ok') {
-  //       biodataRequests.setField(5).then(info => {
-  //         if (info.message === 'ok') {
-  //           router.push('/profile/edit/marriage-related-info')
-  //         }
-  //       })
-  //     }
-  //   })
-  //   .catch(err => console.log(err.message))
+  const onSubmit = data =>
+    biodataRequests
+      .updateBio({ ...data, published: false })
+      .then(info => {
+        if (info.message === 'ok') {
+          biodataRequests.setField(5).then(info => {
+            if (info.message === 'ok') {
+              router.push('/profile/edit/marriage-related-info')
+            }
+          })
+        }
+      })
+      .catch(err => console.log(err.message))
 
   const { data, loading } = getData()
 
@@ -66,6 +67,10 @@ export default function PersonalInfo() {
             error: true
           }
         })
+      }
+      if (!data.type) {
+        alert('fill primary first')
+        return router.push('/profile/edit/primary')
       }
     }
   }, [data, loading])
@@ -385,12 +390,9 @@ export default function PersonalInfo() {
               {...register('madhab', { required: 'madhab is required' })}
             >
               <option value=''>-------</option>
-              <option value='সালাফি/আহলেহাদীস'>সালাফি/আহলেহাদীস</option>
-              <option value='হানাফি'>হানাফি</option>
-              <option value='শাফেয়ী'>শাফেয়ী</option>
-              <option value='মালেকি'>মালেকি</option>
-              <option value='হাম্বালি'>হাম্বালি</option>
-              <option value='অন্যান্য'>অন্যান্য</option>
+              {_madhabs.map(item => (
+                <option value={item}>{item}</option>
+              ))}
             </select>
             <Fade right when={errors.madhab ? true : false}>
               {errors.madhab && (
