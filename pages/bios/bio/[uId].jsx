@@ -8,7 +8,6 @@ import DPersonal from 'components/bio/DPersonal'
 import DMarital from 'components/bio/DMarital'
 import DAnother from 'components/bio/DAnother'
 import DExpect from 'components/bio/DExpect'
-import DAuthorityqs from 'components/bio/DAuthorityqs'
 import CSkeleton from 'components/shared/CSkeleton'
 import Head from 'next/head'
 import userRequest from 'services/userRequest'
@@ -24,7 +23,6 @@ export default function DetailBio() {
   const [loading, setLoading] = useState(false)
   const [isBookmarked, setIsBookmarked] = useState(false)
   const [isBookmarkedLocal, setIsBookmarkedLocal] = useState(false)
-  const [contact, setContact] = useState(false)
 
   const router = useRouter()
   const auth = useAuth()
@@ -151,6 +149,7 @@ export default function DetailBio() {
     maintain_mahram,
     can_tilawat,
     mazhab,
+    madhab,
     political_view,
     drama_cinnema,
     disease,
@@ -161,8 +160,10 @@ export default function DetailBio() {
     favorite_scholars,
     special_qualifications,
     about_me,
-    when_died,
-    divorce_reason,
+    whenDiedWife,
+    whenDiedHusband,
+    divorceInfo,
+    reMarryReason,
     marry_reason,
     guardians_permission,
     family_planning,
@@ -195,18 +196,6 @@ export default function DetailBio() {
         <title>বায়োডাটা | {uId}</title>
       </Head>
       <div className=''>
-        <LongModal
-          visible={contact}
-          onClose={() => setContact(false)}
-          onTask={() => router.push(`/checkout/${uId}`)}
-          header='আপনি কি এই বায়োডাটার সমস্ত শর্ত পূরণে সক্ষম?'
-          body='আপনি যদি এই বায়োডাটাতে উল্লেখিত শর্তসমূহ মেনে থাকেন শুধু তাহলেই
-              যোগাযোগ করুন'
-          btn='হ্যা, যোগাযোগ করুন'
-          color='success'
-          preventClose={false}
-          bodyColor='success'
-        />
         <div className=''>
           <BioInfoCard data={bio} loading={loading} uId={uId} />
         </div>
@@ -267,6 +256,7 @@ export default function DetailBio() {
                   maintain_mahram,
                   can_tilawat,
                   mazhab,
+                  madhab,
                   political_view,
                   drama_cinnema,
                   disease,
@@ -284,6 +274,10 @@ export default function DetailBio() {
               <DMarital
                 data={{
                   type,
+                  whenDiedWife,
+                  whenDiedHusband,
+                  divorceInfo,
+                  reMarryReason,
                   marry_reason,
                   guardians_permission,
                   family_planning,
@@ -317,15 +311,15 @@ export default function DetailBio() {
                 }}
               />
             </div>
-            <div className='my-4'>
+            {/* <div className='my-4'>
               <DAuthorityqs
                 data={{ family_about_bio, is_correct_info, liability }}
               />
-            </div>
+            </div> */}
             <div className='h-40'>
               <div className='my-8 flex gap-4'>
                 <button
-                  onClick={() => setContact(true)}
+                  onClick={() => router.push(`/checkout/${uId}`)}
                   className='text-center w-full py-3 rounded-md hover:bg-white hover:border-2 hover:text-green-500 text-white hover:border-green-500 bg-green-500 shadow'
                 >
                   অভিভাবকের সাথে যোগাযোগ করুন

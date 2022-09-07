@@ -1,10 +1,12 @@
 import { useState } from 'react'
-import { _address_jilla, _type } from 'assets/profileinfo'
+import { _address_jilla } from 'assets/profileinfo'
 import { useRouter } from 'next/router'
+
+const _types = ['পাত্রের বায়োডাটা', 'পাত্রীর বায়োডাটা']
 
 export default function Dropdown() {
   const router = useRouter()
-  const [type, setType] = useState('')
+  const [type, setType] = useState(_types[0])
   const [jilla, setJilla] = useState('')
   const [id, setId] = useState('')
   const [isReset, setIsReset] = useState(false)
@@ -35,14 +37,8 @@ export default function Dropdown() {
           name='type'
           id='type'
         >
-          <option selected={isReset} value=''>
-            সকল
-          </option>
-          {_type.map(item => (
-            <option value={item} key={item}>
-              {item}
-            </option>
-          ))}
+          <option value='পাত্রের বায়োডাটা'>পাত্রের বায়োডাটা</option>
+          <option value='পাত্রীর বায়োডাটা'>পাত্রীর বায়োডাটা</option>
         </select>
       </div>
 

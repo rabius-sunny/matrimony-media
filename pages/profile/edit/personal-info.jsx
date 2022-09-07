@@ -25,7 +25,7 @@ export default function PersonalInfo() {
   })
   const onSubmit = data =>
     biodataRequests
-      .updateBio({ ...data, published: false })
+      .updateBio({ ...data, published: false, featured: false })
       .then(info => {
         if (info.message === 'ok') {
           biodataRequests.setField(5).then(info => {
@@ -68,12 +68,16 @@ export default function PersonalInfo() {
           }
         })
       }
+    }
+  }, [data, loading])
+  useEffect(() => {
+    if (data) {
       if (!data.type) {
-        alert('fill primary first')
+        alert('প্রাথমিক তথ্যের ফর্মটি ফিল করা হয়নি, সেটি আগে ফিল করুন')
         return router.push('/profile/edit/primary')
       }
     }
-  }, [data, loading])
+  }, [data])
 
   return (
     <ProfileLayout data={data} loading={loading}>
@@ -768,7 +772,7 @@ export default function PersonalInfo() {
           </fieldset>
           <input
             type='submit'
-            value='Save Changes'
+            value='সেভ করুন ও পরবর্তী পেজে যান'
             className='rounded-md bg-red-500 px-6 py-3 text-xl font-medium text-white shadow-md hover:bg-red-600 focus:ring-2 focus:ring-red-800'
           />
         </form>

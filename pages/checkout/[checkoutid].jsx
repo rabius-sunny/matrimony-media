@@ -106,6 +106,16 @@ export default function Checkout() {
           <div className='mt-8'>
             <CForm onSubmit={onSubmit}>
               <GInput
+                legend='আপনি কি এই বায়োডাটাতে উল্লেখিত শর্তসমূহ পূরণ করেন? '
+                name='fillrequired'
+                message='field is required'
+              />
+              <GInput
+                legend='আপনার মাঝে কি আকাঙ্ক্ষিত বৈশিষ্ট্যাবলী বিদ্যমান? '
+                name='hasfeature'
+                message='field is required'
+              />
+              <GInput
                 legend='আপনার নাম'
                 name='name'
                 message='name is required'

@@ -1,8 +1,13 @@
 import BioHeading from './BioHeading'
 
 export default function DMarital({
+  auth,
   data: {
     type,
+    whenDiedWife,
+    whenDiedHusband,
+    divorceInfo,
+    reMarryReason,
     guardians_permission,
     marry_reason,
     family_planning,
@@ -12,7 +17,41 @@ export default function DMarital({
   }
 }) {
   return (
-    <BioHeading heading='বিয়ে সংক্রান্ত তথ্য'>
+    <BioHeading
+      heading='বিয়ে সংক্রান্ত তথ্য'
+      link={auth && '/marriage-related-info'}
+    >
+      {whenDiedWife && (
+        <div className='pl-3 items py-2'>
+          <div className='pb-2 font-bold'>
+            আপনার স্ত্রী কবে, কিভাবে মারা গিয়েছিল ?
+          </div>
+          <div className='pt-1 whitespace-pre-wrap'>{whenDiedWife}</div>
+        </div>
+      )}
+      {divorceInfo && (
+        <div className='pl-3 items py-2'>
+          <div className='pb-2 font-bold'>আপনার ডিভোর্সের সময়কাল ও কারণ</div>
+          <div className='pt-1 whitespace-pre-wrap'>{divorceInfo}</div>
+        </div>
+      )}
+      {whenDiedHusband && (
+        <div className='pl-3 items py-2'>
+          <div className='pb-2 font-bold'>
+            আপনার স্বামী কবে, কিভাবে মারা গিয়েছিল?
+          </div>
+          <div className='pt-1 whitespace-pre-wrap'>{whenDiedHusband}</div>
+        </div>
+      )}
+      {reMarryReason && (
+        <div className='pl-3 items py-2'>
+          <div className='pb-2 font-bold'>
+            বিবাহিত অবস্থায় আবার কেন বিয়ে করতে চাচ্ছেন ?
+          </div>
+          <div className='pt-1 whitespace-pre-wrap'>{reMarryReason}</div>
+        </div>
+      )}
+
       <div className='item'>
         <span>অভিভাবক আপনার বিয়েতে রাজি কি না?</span>
         <span>{guardians_permission}</span>

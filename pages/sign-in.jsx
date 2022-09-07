@@ -38,7 +38,6 @@ export default function Signin() {
       }
     }
   }, [uIds])
-  console.log('uid', uId)
 
   const recaptcha = async _ => {
     const fireAuth = getAuth(firebaseApp)
@@ -50,7 +49,7 @@ export default function Signin() {
     recaptchaVerifier.render()
     return signInWithPhoneNumber(
       fireAuth,
-      '+88' + cred.phone,
+      '+88' + cred.phone.split(' ').join(''),
       recaptchaVerifier
     )
   }
@@ -90,11 +89,12 @@ export default function Signin() {
     e.preventDefault()
     try {
       const data = await userRequest.signIn({
-        phone: cred.phone,
+        phone: cred.phone.split(' ').join(''),
         uId
       })
       localStorage.setItem('token', data.token)
       localStorage.setItem('id', data.id)
+      localStorage.removeItem('bookmarks')
       router.push('/profile/edit/primary')
       // window.location.reload()
     } catch (error) {
@@ -143,7 +143,7 @@ export default function Signin() {
 
             <div className='mt-8'>
               {!isOtp && (
-                <form onSubmit={/* onPhoneSubmit */ handleSubmit}>
+                <form onSubmit={onPhoneSubmit /* handleSubmit */}>
                   <div className='mt-6'>
                     <label
                       htmlFor='phone'

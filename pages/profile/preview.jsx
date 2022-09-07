@@ -12,8 +12,10 @@ import CSkeleton from 'components/shared/CSkeleton'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import LongModal from 'components/shared/Modals/LongModal'
+import useAuth from 'hooks/useAuth'
 
 export default function Preview() {
+  const auth = useAuth()
   const [bio, setBio] = useState({})
   const [loading, setLoading] = useState(false)
   const [visible, setVisible] = useState(false)
@@ -176,11 +178,13 @@ export default function Preview() {
       <div className='mt-4'>
         <div className='my-4'>
           <DAddress
+            auth={auth}
             data={{ permanent_address, current_address, where_lived }}
           />
         </div>
         <div className='my-4'>
           <DEducation
+            auth={auth}
             data={{
               education,
               hafej,
@@ -203,6 +207,7 @@ export default function Preview() {
         </div>
         <div className='my-4'>
           <DFamily
+            auth={auth}
             data={{
               father_name,
               mother_name,
@@ -219,6 +224,7 @@ export default function Preview() {
         </div>
         <div className='my-4'>
           <DPersonal
+            auth={auth}
             data={{
               type,
               dress,
@@ -244,6 +250,7 @@ export default function Preview() {
         </div>
         <div className='my-4'>
           <DMarital
+            auth={auth}
             data={{
               type,
               marry_reason,
@@ -261,11 +268,15 @@ export default function Preview() {
 
         {(profession_info || special_acknowledgement) && (
           <div className='my-4'>
-            <DAnother data={{ profession_info, special_acknowledgement }} />
+            <DAnother
+              auth={auth}
+              data={{ profession_info, special_acknowledgement }}
+            />
           </div>
         )}
         <div className='my-4'>
           <DExpect
+            auth={auth}
             data={{
               ex_year,
               ex_complexion,
@@ -282,6 +293,7 @@ export default function Preview() {
         </div>
         <div className='my-4'>
           <DAuthorityqs
+            auth={auth}
             data={{ family_about_bio, is_correct_info, liability }}
           />
         </div>
@@ -289,9 +301,9 @@ export default function Preview() {
       <div className='my-4'>
         <button
           onClick={handlePublish}
-          className='text-white font-bold text-xl cursor-pointer rounded-md bg-red-500 py-2 w-full'
+          className='text-white font-bold text-xl cursor-pointer rounded-md bg-red-500 py-3 my-8 w-full'
         >
-          Publish biodata
+          পাবলিশ রিকুয়েস্ট করুন
         </button>
       </div>
     </div>

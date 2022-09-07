@@ -1,10 +1,14 @@
 import BioHeading from './BioHeading'
 
 export default function DAuthorityqs({
+  auth,
   data: { family_about_bio, is_correct_info, liability }
 }) {
   return (
-    <BioHeading heading='কর্তৃপক্ষের জিজ্ঞাসা'>
+    <BioHeading
+      heading='কর্তৃপক্ষের জিজ্ঞাসা'
+      link={auth && '/authority-question'}
+    >
       <div className='item'>
         <span>এই ওয়েবসাইটে বায়োডাটা জমা দিচ্ছেন তা অভিভাবক জানেন? </span>
         <span>{family_about_bio}</span>

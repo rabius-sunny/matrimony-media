@@ -1,6 +1,7 @@
 import BioHeading from './BioHeading'
 
 export default function DPersonal({
+  auth,
   data: {
     type,
     dress,
@@ -11,6 +12,7 @@ export default function DPersonal({
     maintain_mahram,
     can_tilawat,
     mazhab,
+    madhab,
     political_view,
     drama_cinnema,
     disease,
@@ -24,7 +26,7 @@ export default function DPersonal({
   }
 }) {
   return (
-    <BioHeading heading='ব্যক্তিগত তথ্য'>
+    <BioHeading heading='ব্যক্তিগত তথ্য' link={auth && '/personal-info'}>
       {type === 'পাত্রের বায়োডাটা' && (
         <>
           <div className='item'>
@@ -64,6 +66,10 @@ export default function DPersonal({
       </div>
       <div className='item'>
         <span>কোন মাযহাব অনুসরণ করেন?</span>
+        <span>{madhab}</span>
+      </div>
+      <div className='item'>
+        <span>আপনার মাযহাব সম্পর্কে সংক্ষেপে লিখুন</span>
         <span>{mazhab}</span>
       </div>
       <div className='item'>

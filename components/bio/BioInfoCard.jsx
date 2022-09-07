@@ -3,8 +3,10 @@ import male from 'public/images/male.svg'
 import female from 'public/images/female.svg'
 import CSkeleton from 'components/shared/CSkeleton'
 import { useEffect, useState } from 'react'
-import Link from 'next/link'
 import copyToClip from 'utils/copyToClip'
+import LongModal from 'components/shared/Modals/LongModal'
+import { Button } from '@nextui-org/react'
+import userRequest from 'services/userRequest'
 
 export default function BioInfoCard({ data, loading, uId }) {
   const [id, setId] = useState(null)
@@ -23,6 +25,91 @@ export default function BioInfoCard({ data, loading, uId }) {
     blood: '',
     profession: ''
   })
+  const [_delete, set_delete] = useState(false)
+  const [hide, setHide] = useState(false)
+
+  const ActionForm = ({ action }) => {
+    const [reason, setReason] = useState('')
+
+    const handleAction = type => {
+      if (reason !== '') {
+        if (action === 'ডিলিট') {
+          userRequest
+            .deleteHideRequest({ reason, type })
+            .then(info => {
+              if (info.message === 'ok') {
+                alert(
+                  'আপনার delete রিকুয়েস্টটি গৃহীত হয়েছে, শীঘ্রই SMS এর মাধ্যমে ফলাফল পেয়ে যাবেন ইনশা আল্লাহ!'
+                )
+                set_delete(false)
+              }
+            })
+            .catch(err => {
+              alert('ইরর হয়েছে, আবার চেষ্টা করুন')
+              set_delete(false)
+            })
+        } else if (action === 'হাইড') {
+          userRequest
+            .deleteHideRequest({ reason, type })
+            .then(info => {
+              if (info.message === 'ok') {
+                alert(
+                  'আপনার hide রিকুয়েস্টটি গৃহীত হয়েছে, শীঘ্রই SMS এর মাধ্যমে ফলাফল পেয়ে যাবেন ইনশা আল্লাহ!'
+                )
+                setHide(false)
+              }
+            })
+            .catch(err => {
+              alert('ইরর হয়েছে, আবার চেষ্টা করুন')
+              setHide(false)
+            })
+        }
+      } else alert('please enter reason')
+    }
+
+    return (
+      <div>
+        {action === 'ডিলিট' ? (
+          <p className='mb-4 font-semibold italic text-red-400'>
+            বায়োডাটা “ডিলিট” এর মাধ্যমে আপনার বায়োডাটা সম্পূর্ণভাবে ওয়েবসাইট
+            থেকে মুছে ফেলতে পারবেন। যা পরবর্তীতে ফিরিয়ে আনা সম্ভব না।
+          </p>
+        ) : (
+          <p className='mb-4 font-semibold italic text-yellow-300'>
+            বায়োডাটা “হাইড” এর মাধ্যমে আপনার বায়োডাটাটি সার্চ ফিল্টার থেকে গোপনে
+            রাখতে পারবেন। পরবর্তীতে যে যেকোন সময় পুনরায় পাব্লিশ করতে পারবেন ইন
+            শা আল্লাহ।
+          </p>
+        )}
+        <p className='my-4 text-sm'>
+          আপনার বায়োডাটা {action} করতে নিম্নোক্ত ফর্মটি পূরণের মাধ্যমে আবেদন
+          করুন।
+        </p>
+        <div className='my-2'>
+          <textarea
+            onChange={({ target: { value } }) => setReason(value)}
+            placeholder='সংক্ষেপে কারণ বর্ণনা করুন...'
+            className='border-gray-300 border-2 mb-2 w-full p-2 focus:border-blue-500 rounded-lg'
+            rows='4'
+          />
+          <div className='flex justify-end'>
+            <Button
+              type='submit'
+              bordered
+              auto
+              color={action === 'ডিলিট' ? 'error' : 'warning'}
+              onPress={() =>
+                handleAction(action === 'ডিলিট' ? 'delete' : 'hide')
+              }
+            >
+              {action} করুন
+            </Button>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   useEffect(() => {
     data &&
       setInfo({
@@ -52,6 +139,30 @@ export default function BioInfoCard({ data, loading, uId }) {
   }
   return (
     <div className='rounded-md bg-red-500 p-4 text-center'>
+      <LongModal
+        color='error'
+        bodyColor='error'
+        header='প্রোফাইলে ডিলিট করুন'
+        visible={_delete}
+        onClose={() => set_delete(false)}
+        onTask={() => handleAction('delete')}
+        preventClose={false}
+        body={<ActionForm action='ডিলিট' />}
+        // btn='ডিলিট রিকুয়েস্ট করুন'
+        blur={true}
+      />
+      <LongModal
+        header='প্রোফাইল হাইড করুন'
+        color='warning'
+        bodyColor='warning'
+        visible={hide}
+        onClose={() => setHide(false)}
+        onTask={() => handleAction('hide')}
+        preventClose={false}
+        body={<ActionForm action='হাইড' />}
+        // btn='হাইড রিকুয়েস্ট করুন'
+        blur={true}
+      />
       {loading && !data ? (
         <div>
           <CSkeleton height={150} width={150} circle />
@@ -183,12 +294,24 @@ export default function BioInfoCard({ data, loading, uId }) {
                   {copy ? 'Copied' : 'Copy BioID'}
                 </button>
               </div>
-              <div className='mt-4'>
-                <Link href='/profile/hide-delete'>
-                  <a className='block w-full rounded-md bg-white py-3 font-bold text-red-600 focus:ring-2 focus:ring-red-700'>
-                    Delete / Hide Biodata
-                  </a>
-                </Link>
+              <div className='btnHolder mt-4 flex rounded-md bg-white font-bold text-red-600'>
+                <button
+                  onClick={() => {
+                    set_delete(true)
+                  }}
+                  className='font-semibold hover:bg-red-200'
+                >
+                  Delete Biodata
+                </button>
+                <span></span>
+                <button
+                  onClick={() => {
+                    setHide(true)
+                  }}
+                  className='font-semibold hover:bg-red-200'
+                >
+                  Hide Biodata
+                </button>
               </div>
             </>
           )}

@@ -1,8 +1,11 @@
 import BioHeading from './BioHeading'
 
-export default function DEducation({ data }) {
+export default function DEducation({ data, auth }) {
   return (
-    <BioHeading heading='শিক্ষাগত যোগ্যতা'>
+    <BioHeading
+      heading='শিক্ষাগত যোগ্যতা'
+      link={auth && '/educational-qualifications'}
+    >
       {data.education === 'জেনারেল' ? (
         <General data={data} />
       ) : (

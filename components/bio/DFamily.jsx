@@ -1,6 +1,7 @@
 import BioHeading from './BioHeading'
 
 export default function DFamily({
+  auth,
   data: {
     father_profession,
     mother_profession,
@@ -13,7 +14,7 @@ export default function DFamily({
   }
 }) {
   return (
-    <BioHeading heading='পারিবারিক তথ্য'>
+    <BioHeading heading='পারিবারিক তথ্য' link={auth && '/family-info'}>
       <div className='item'>
         <span>পিতার পেশা</span>
         <span>{father_profession}</span>

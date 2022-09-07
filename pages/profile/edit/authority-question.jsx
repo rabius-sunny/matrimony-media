@@ -162,7 +162,7 @@ export default function AuthorityQuestion() {
           </fieldset>
           <input
             type='submit'
-            value='Save Changes'
+            value='সেভ করুন ও পরবর্তী পেজে যান'
             className='rounded-md bg-red-500 px-6 py-3 text-xl font-medium text-white shadow-md hover:bg-red-600 focus:ring-2 focus:ring-red-800'
           />
         </form>

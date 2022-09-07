@@ -1,8 +1,8 @@
 import BioHeading from './BioHeading'
 
-export default function DAddress({ data }) {
+export default function DAddress({ data, auth }) {
   return (
-    <BioHeading heading='ঠিকানা'>
+    <BioHeading link={auth && '/address'} heading='ঠিকানা'>
       <div className='item'>
         <span>স্থায়ী ঠিকানা</span>
         <span>{data.permanent_address}</span>

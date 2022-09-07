@@ -48,8 +48,8 @@ export default function Name() {
       .catch(err => console.log(err.message))
 
   const { data, loading } = getData()
-
   const { routes, setRoutes } = useAppContext()
+
   useEffect(() => {
     if (data) {
       if (
@@ -80,7 +80,7 @@ export default function Name() {
         header='নিম্নোক্ত ফিল্ডগুলো ঠিকভাবে পূরণ করা হয় নি'
         body={fields.map((item, i) => (
           <div key={i}>
-            <p style={{ color: 'red', fontSize: '.9rem' }}>{item.name}</p>
+            <p style={{ color: 'red', fontSize: '1.3rem' }}>{item.name}</p>
             <Link href={item.slug}>
               <a
                 className='text-blue-400 underline flex items-center'
@@ -219,7 +219,7 @@ export default function Name() {
           </fieldset>
           <input
             type='submit'
-            value='Save Changes and review'
+            value='সেভ করুন ও প্রিভিউ দেখুন'
             className='rounded-md bg-red-500 px-6 py-3 text-xl font-medium text-white shadow-md hover:bg-red-600 focus:ring-2 focus:ring-red-800'
           />
         </form>

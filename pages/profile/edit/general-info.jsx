@@ -29,12 +29,17 @@ export default function GeneralInfo() {
 
   const onSubmit = data => {
     biodataRequests
-      .updateBio({ ...data, published: false })
+      .updateBio({
+        ...data,
+        age: new Date().getFullYear() - data.birth,
+        published: false,
+        featured: false
+      })
       .then(info => {
         if (info.message === 'ok') {
           biodataRequests.setField(1).then(info => {
             if (info.message === 'ok') {
-              router.push('/profile/edit/address')
+              router.push('/profile/edit/family-info')
             }
           })
         }
@@ -160,14 +165,14 @@ export default function GeneralInfo() {
             <CInput
               name='income'
               placeholder='৩০ হাজার'
-              legend='মাসিক আয় *'
+              legend='মাসিক আয়'
               defaultValue={data?.income}
               description='জানাতে অনিচ্ছুক হলে ঘরটি ফাঁকা রাখুন।'
             />
 
             <input
               type='submit'
-              value='Save Changes'
+              value='সেভ করুন ও পরবর্তী পেজে যান'
               className='rounded-md bg-red-500 px-6 py-3 text-xl font-medium text-white shadow-md hover:bg-red-600 focus:ring-2 focus:ring-red-800'
             />
           </CForm>
@@ -238,7 +243,7 @@ export default function GeneralInfo() {
 
             <input
               type='submit'
-              value='Save Changes'
+              value='সেভ করুন ও পরবর্তী পেজে যান'
               className='rounded-md bg-red-500 px-6 py-3 text-xl font-medium text-white shadow-md hover:bg-red-600 focus:ring-2 focus:ring-red-800'
             />
           </CForm>

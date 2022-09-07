@@ -20,12 +20,12 @@ export default function Name() {
 
   const onSubmit = infos => {
     biodataRequests
-      .updateBio({ ...infos, published: false })
+      .updateBio({ ...infos, published: false, featured: false })
       .then(info => {
         if (info.message === 'ok') {
           biodataRequests.setField(0).then(info => {
             if (info.message === 'ok') {
-              router.push('/profile/edit/general-info')
+              router.push('/profile/edit/personal-info')
             }
           })
         }
@@ -34,9 +34,10 @@ export default function Name() {
   }
 
   const { routes, setRoutes } = useAppContext()
+
   useEffect(() => {
     if (data) {
-      if (!data.name || !data.type) {
+      if (!data.name || !data.type || !data.condition) {
         setRoutes({
           ...routes,
           primary: {
@@ -105,7 +106,7 @@ export default function Name() {
           />
           <input
             type='submit'
-            value='save changes'
+            value='সেভ করুন ও পরবর্তী পেজে যান'
             className='rounded-md bg-red-500 px-6 py-3 text-xl font-medium text-white shadow-md hover:bg-red-600 focus:ring-2 focus:ring-red-800'
           />
         </CForm>
@@ -141,7 +142,7 @@ export default function Name() {
           />
           <input
             type='submit'
-            value='save changes'
+            value='সেভ করুন ও পরবর্তী পেজে যান'
             className='rounded-md bg-red-500 px-6 py-3 text-xl font-medium text-white shadow-md hover:bg-red-600 focus:ring-2 focus:ring-red-800'
           />
         </CForm>

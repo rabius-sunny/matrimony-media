@@ -24,12 +24,12 @@ export default function OthersInfo() {
   })
   const onSubmit = data =>
     biodataRequests
-      .updateBio({ ...data, published: false })
+      .updateBio({ ...data, published: false, featured: false })
       .then(info => {
         if (info.message === 'ok') {
           biodataRequests.setField(8).then(info => {
             if (info.message === 'ok') {
-              router.push('/profile/edit/authority-question')
+              router.push('/profile/edit/contact-info')
             }
           })
         }
@@ -399,7 +399,7 @@ export default function OthersInfo() {
           </fieldset>
           <input
             type='submit'
-            value='Save Changes'
+            value='সেভ করুন ও পরবর্তী পেজে যান'
             className='rounded-md bg-red-500 px-6 py-3 text-xl font-medium text-white shadow-md hover:bg-red-600 focus:ring-2 focus:ring-red-800'
           />
         </form>

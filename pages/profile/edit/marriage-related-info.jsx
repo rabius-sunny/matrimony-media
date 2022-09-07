@@ -26,12 +26,12 @@ export default function MarriageRelated() {
   })
   const onSubmit = data =>
     biodataRequests
-      .updateBio({ ...data, published: false })
+      .updateBio({ ...data, published: false, featured: false })
       .then(info => {
         if (info.message === 'ok') {
           biodataRequests.setField(6).then(info => {
             if (info.message === 'ok') {
-              router.push('/profile/edit/others-info')
+              router.push('/profile/edit/general-info')
             }
           })
         }
@@ -53,6 +53,14 @@ export default function MarriageRelated() {
       }
     }
   }, [data, loading])
+  useEffect(() => {
+    if (data) {
+      if (!data.type) {
+        alert('প্রাথমিক তথ্যের ফর্মটি ফিল করা হয়নি, সেটি আগে ফিল করুন')
+        return router.push('/profile/edit/primary')
+      }
+    }
+  }, [data])
 
   return (
     <ProfileLayout data={data} loading={loading}>
@@ -62,6 +70,168 @@ export default function MarriageRelated() {
       <ProfileRoutes activeRoute={activeRoute} />
       {!loading && data ? (
         <form onSubmit={handleSubmit(onSubmit)}>
+          {data?.condition === 'বিপত্মীক' && (
+            <fieldset
+              className={`my-6 rounded-md border-2 ${
+                errors.whenDiedWife ? 'border-red-500' : 'border-blue-300'
+              } p-4`}
+            >
+              <legend
+                className={`ml-4 font-bold ${
+                  errors.whenDiedWife ? 'text-red-500' : 'text-blue-500'
+                }`}
+              >
+                আপনার স্ত্রী কবে, কিভাবে মারা গিয়েছিল ? *
+              </legend>
+              <textarea
+                defaultValue={data?.whenDiedWife}
+                rows={5}
+                {...register('whenDiedWife', {
+                  required: 'please fill the field'
+                })}
+                className={`w-full rounded ${
+                  errors.whenDiedWife ? 'bg-red-100' : 'bg-blue-100'
+                } px-4 py-2 font-medium text-blue-400 shadow-md ${
+                  errors.whenDiedWife
+                    ? 'focus:outline-red-500'
+                    : 'focus:outline-blue-500'
+                }`}
+              />
+              <Fade right when={errors.whenDiedWife ? true : false}>
+                {errors.whenDiedWife && (
+                  <p className='text-red-500 py-2 pl-2'>
+                    {errors.whenDiedWife.message}
+                  </p>
+                )}
+              </Fade>
+              <p className='pl-2 pt-4 text-blue-400'>
+                কয় বছরের সংসার ছিল উল্লেখ করতে পারেন। আপনার সন্তান আছে কি না,
+                থাকলে তাদের বয়স সহ বর্ণনা দিবেন সংক্ষেপে।
+              </p>
+            </fieldset>
+          )}
+          {data?.condition === 'ডিভোর্সড' && (
+            <fieldset
+              className={`my-6 rounded-md border-2 ${
+                errors.divorceInfo ? 'border-red-500' : 'border-blue-300'
+              } p-4`}
+            >
+              <legend
+                className={`ml-4 font-bold ${
+                  errors.divorceInfo ? 'text-red-500' : 'text-blue-500'
+                }`}
+              >
+                আপনার ডিভোর্সের সময়কাল ও কারণ *
+              </legend>
+              <textarea
+                defaultValue={data?.divorceInfo}
+                rows={5}
+                {...register('divorceInfo', {
+                  required: 'please fill the field'
+                })}
+                className={`w-full rounded ${
+                  errors.divorceInfo ? 'bg-red-100' : 'bg-blue-100'
+                } px-4 py-2 font-medium text-blue-400 shadow-md ${
+                  errors.divorceInfo
+                    ? 'focus:outline-red-500'
+                    : 'focus:outline-blue-500'
+                }`}
+              />
+              <Fade right when={errors.divorceInfo ? true : false}>
+                {errors.divorceInfo && (
+                  <p className='text-red-500 py-2 pl-2'>
+                    {errors.divorceInfo.message}
+                  </p>
+                )}
+              </Fade>
+              <p className='pl-2 pt-4 text-blue-400'>
+                সময়কাল অর্থাৎ কত মাস বা বছরের সংসার হয়েছিল আর ডিভোর্স কবে হয়েছে
+                তা লিখতে বলা হয়েছে। বাচ্চা থাকলে তাদের বয়স ও অন্যান্য বিষয়ে
+                লিখুন সংক্ষেপে।
+              </p>
+            </fieldset>
+          )}
+          {data?.condition === 'বিধবা' && (
+            <fieldset
+              className={`my-6 rounded-md border-2 ${
+                errors.whenDiedHusband ? 'border-red-500' : 'border-blue-300'
+              } p-4`}
+            >
+              <legend
+                className={`ml-4 font-bold ${
+                  errors.whenDiedHusband ? 'text-red-500' : 'text-blue-500'
+                }`}
+              >
+                আপনার স্বামী কবে, কিভাবে মারা গিয়েছিল? *
+              </legend>
+              <textarea
+                defaultValue={data?.whenDiedHusband}
+                rows={5}
+                {...register('whenDiedHusband', {
+                  required: 'please fill the field'
+                })}
+                className={`w-full rounded ${
+                  errors.whenDiedHusband ? 'bg-red-100' : 'bg-blue-100'
+                } px-4 py-2 font-medium text-blue-400 shadow-md ${
+                  errors.whenDiedHusband
+                    ? 'focus:outline-red-500'
+                    : 'focus:outline-blue-500'
+                }`}
+              />
+              <Fade right when={errors.whenDiedHusband ? true : false}>
+                {errors.whenDiedHusband && (
+                  <p className='text-red-500 py-2 pl-2'>
+                    {errors.whenDiedHusband.message}
+                  </p>
+                )}
+              </Fade>
+              <p className='pl-2 pt-4 text-blue-400'>
+                কয় বছরের সংসার ছিল উল্লেখ করতে পারেন। আপনার সন্তান আছে কি না,
+                থাকলে তাদের বয়স সহ বর্ণনা দিবেন সংক্ষেপে।
+              </p>
+            </fieldset>
+          )}
+          {data?.condition === 'বিবাহিত' && (
+            <fieldset
+              className={`my-6 rounded-md border-2 ${
+                errors.reMarryReason ? 'border-red-500' : 'border-blue-300'
+              } p-4`}
+            >
+              <legend
+                className={`ml-4 font-bold ${
+                  errors.reMarryReason ? 'text-red-500' : 'text-blue-500'
+                }`}
+              >
+                বিবাহিত অবস্থায় আবার কেন বিয়ে করতে চাচ্ছেন ? *
+              </legend>
+              <textarea
+                defaultValue={data?.reMarryReason}
+                rows={5}
+                {...register('reMarryReason', {
+                  required: 'please fill the field'
+                })}
+                className={`w-full rounded ${
+                  errors.reMarryReason ? 'bg-red-100' : 'bg-blue-100'
+                } px-4 py-2 font-medium text-blue-400 shadow-md ${
+                  errors.reMarryReason
+                    ? 'focus:outline-red-500'
+                    : 'focus:outline-blue-500'
+                }`}
+              />
+              <Fade right when={errors.reMarryReason ? true : false}>
+                {errors.reMarryReason && (
+                  <p className='text-red-500 py-2 pl-2'>
+                    {errors.reMarryReason.message}
+                  </p>
+                )}
+              </Fade>
+              <p className='pl-2 pt-4 text-blue-400'>
+                বর্তমানে কতজন স্ত্রী আছে, স্ত্রী আপনার নতুন বিয়েতে রাজি কি না,
+                নতুন স্ত্রীকে কোথায় রাখবেন এসব সংক্ষেপে লিখুন
+              </p>
+            </fieldset>
+          )}
+
           <fieldset
             className={`my-6 rounded-md border-2 ${
               errors.guardians_permission ? 'border-red-500' : 'border-blue-300'
@@ -96,41 +266,43 @@ export default function MarriageRelated() {
             </Fade>
           </fieldset>
 
-          <fieldset
-            className={`my-6 rounded-md border-2 ${
-              errors.marry_reason ? 'border-red-500' : 'border-blue-300'
-            } p-4`}
-          >
-            <legend
-              className={`ml-4 font-bold ${
-                errors.marry_reason ? 'text-red-500' : 'text-blue-500'
-              }`}
+          {data?.condition !== 'বিবাহিত' && (
+            <fieldset
+              className={`my-6 rounded-md border-2 ${
+                errors.marry_reason ? 'border-red-500' : 'border-blue-300'
+              } p-4`}
             >
-              বিয়ে কেন করছেন? বিয়ে সম্পর্কে আপনার ধারণা কি? *
-            </legend>
-            <textarea
-              defaultValue={data?.marry_reason}
-              rows={5}
-              {...register('marry_reason', {
-                required: 'please fill the field'
-              })}
-              className={`w-full rounded ${
-                errors.marry_reason ? 'bg-red-100' : 'bg-blue-100'
-              } px-4 py-2 font-medium text-blue-400 shadow-md ${
-                errors.marry_reason
-                  ? 'focus:outline-red-500'
-                  : 'focus:outline-blue-500'
-              }`}
-            />
-            <Fade right when={errors.marry_reason ? true : false}>
-              {errors.marry_reason && (
-                <p className='text-red-500 py-2 pl-2'>
-                  {errors.marry_reason.message}
-                </p>
-              )}
-            </Fade>
-            <p className='pl-2 pt-4 text-blue-400'>সংক্ষেপে বর্ণনা করুন।</p>
-          </fieldset>
+              <legend
+                className={`ml-4 font-bold ${
+                  errors.marry_reason ? 'text-red-500' : 'text-blue-500'
+                }`}
+              >
+                বিয়ে কেন করছেন? বিয়ে সম্পর্কে আপনার ধারণা কি? *
+              </legend>
+              <textarea
+                defaultValue={data?.marry_reason}
+                rows={5}
+                {...register('marry_reason', {
+                  required: 'please fill the field'
+                })}
+                className={`w-full rounded ${
+                  errors.marry_reason ? 'bg-red-100' : 'bg-blue-100'
+                } px-4 py-2 font-medium text-blue-400 shadow-md ${
+                  errors.marry_reason
+                    ? 'focus:outline-red-500'
+                    : 'focus:outline-blue-500'
+                }`}
+              />
+              <Fade right when={errors.marry_reason ? true : false}>
+                {errors.marry_reason && (
+                  <p className='text-red-500 py-2 pl-2'>
+                    {errors.marry_reason.message}
+                  </p>
+                )}
+              </Fade>
+              <p className='pl-2 pt-4 text-blue-400'>সংক্ষেপে বর্ণনা করুন।</p>
+            </fieldset>
+          )}
 
           {data?.type === 'পাত্রের বায়োডাটা' && (
             <div>
@@ -245,7 +417,7 @@ export default function MarriageRelated() {
 
           <input
             type='submit'
-            value='Save Changes'
+            value='সেভ করুন ও পরবর্তী পেজে যান'
             className='rounded-md bg-red-500 px-6 py-3 text-xl font-medium text-white shadow-md hover:bg-red-600 focus:ring-2 focus:ring-red-800'
           />
         </form>

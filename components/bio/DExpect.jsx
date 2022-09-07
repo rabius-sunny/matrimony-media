@@ -1,6 +1,7 @@
 import BioHeading from './BioHeading'
 
 export default function DExpect({
+  auth,
   data: {
     ex_year,
     ex_complexion,
@@ -15,7 +16,7 @@ export default function DExpect({
   }
 }) {
   return (
-    <BioHeading heading='যেমন জীবনসঙ্গী আশা করেন'>
+    <BioHeading heading='যেমন জীবনসঙ্গী আশা করেন' link={auth && '/expectation'}>
       <div className='item'>
         <span>বয়স</span>
         <span>{ex_year}</span>
