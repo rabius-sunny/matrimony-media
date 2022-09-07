@@ -15,7 +15,6 @@ export default function BioCard({ bio, type }) {
         .catch(err => err)
     }
   }, [bio.user, type])
-  console.log('uid', bio)
 
   return (
     <div className='col-span-12 sm:col-span-6 lg:col-span-4 bg-red-600 pt-8 border-2 border-red-500 duration-500 hover:scale-105 hover:shadow-lg'>
