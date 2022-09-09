@@ -12,11 +12,18 @@ import { useEffect, useState } from 'react'
 import LongModal from 'components/shared/Modals/LongModal'
 import Link from 'next/link'
 import { ArrowRightIcon } from '@heroicons/react/outline'
+import { Loading } from '@nextui-org/react'
 
 export default function Name() {
-  const [visible, setVisible] = useState(false)
+  const [visible, setVisible] = useState({
+    message: '',
+    status: false,
+    done: false
+  })
+  const [isLoading, setIsLoading] = useState(false)
+  const [visible2, setVisible2] = useState(false)
   const [fields, setFields] = useState([])
-  const onClose = _ => setVisible(false)
+  const onClose = _ => setVisible2(false)
   const router = useRouter()
   const activeRoute = routename =>
     router.route.split('/edit')[1] === routename ? true : false
@@ -28,24 +35,39 @@ export default function Name() {
   } = useForm({
     mode: 'onChange'
   })
-  const onSubmit = data =>
+  const onSubmit = data => {
+    setIsLoading(true)
     biodataRequests
-      .updateBio({ ...data, published: false })
+      .updateBio({
+        ...data,
+        published: false,
+        featured: false
+      })
       .then(info => {
         if (info.message === 'ok') {
           biodataRequests.setField(10).then(info => {
             if (info.message === 'ok') {
-              biodataRequests.checkField().then(data => {
-                setFields(data.fields)
-                if (data.fields && data.fields.length < 1) {
-                  router.push('/profile/preview')
-                } else setVisible(true)
+              setIsLoading(false)
+              setVisible({
+                message:
+                  'আপনার তথ্যগুলো সংরক্ষিত হয়েছে এবং আপনার বায়োডাটাটি এখন হাইড অবস্থায় রয়েছে। এটিকে পুনরায় পাবলিশ করার জন্য সবগুলো ফিল্ড পূরণ করে প্রিভিউ থেকে পাবলিশ করুন।',
+                status: true,
+                done: true
               })
+              setIsLoading(false)
             }
           })
-        } else alert('try again')
+        } else alert('error! try again')
       })
-      .catch(err => console.log(err.message))
+      .catch(err => {
+        setIsLoading(false)
+        setVisible({
+          message: 'ইরর হয়েছে, আবার চেষ্টা করুন',
+          status: true,
+          done: false
+        })
+      })
+  }
 
   const { data, loading } = getData()
   const { routes, setRoutes } = useAppContext()
@@ -53,21 +75,26 @@ export default function Name() {
   useEffect(() => {
     if (data) {
       if (
-        !data.guardian_number ||
-        !data.number_relation ||
-        !data.receiving_email
+        data.guardian_number &&
+        data.number_relation &&
+        data.receiving_email
       ) {
         setRoutes({
           ...routes,
           contact: {
             name: 'যোগাযোগ',
             link: '/contact-info',
-            error: true
+            status: 'done'
           }
         })
       }
     }
   }, [data, loading])
+  useEffect(() => {
+    biodataRequests.checkField().then(data => {
+      setFields(data.fields)
+    })
+  }, [])
 
   return (
     <ProfileLayout data={data} loading={loading}>
@@ -75,9 +102,29 @@ export default function Name() {
         <title>যোগাযোগ</title>
       </Head>
       <LongModal
-        visible={visible}
+        visible={visible.status}
+        onClose={() => setVisible({ message: '', status: false, done: false })}
+        onTask={() => {
+          setVisible({ message: '', status: false, done: false })
+          if (fields.length > 0) {
+            setVisible2(true)
+          } else {
+            router.push('/profile/preview')
+          }
+        }}
+        body={
+          <p className={`text-${visible.done ? 'green' : 'red'}-500 text-2xl`}>
+            {visible.message}
+          </p>
+        }
+        btn='ok'
+        preventClose={false}
+        color={visible.done ? 'success' : 'error'}
+      />
+      <LongModal
+        visible={visible2}
         onClose={onClose}
-        header='নিম্নোক্ত ফিল্ডগুলো ঠিকভাবে পূরণ করা হয় নি'
+        header='নিম্নোক্ত ফিল্ডগুলো ঠিকভাবে পূরণ করা হয় নি, প্রিভিউ দেখে পাবলিশ রিকুয়েস্ট করতে সবগুলো ফিল্ড ঠিকভাবে পুরণ করুন।'
         body={fields.map((item, i) => (
           <div key={i}>
             <p style={{ color: 'red', fontSize: '1.3rem' }}>{item.name}</p>
@@ -217,11 +264,20 @@ export default function Name() {
               লিখুন।
             </p>
           </fieldset>
-          <input
+          <button
             type='submit'
-            value='সেভ করুন ও প্রিভিউ দেখুন'
-            className='rounded-md bg-red-500 px-6 py-3 text-xl font-medium text-white shadow-md hover:bg-red-600 focus:ring-2 focus:ring-red-800'
-          />
+            className={`${
+              isLoading
+                ? 'pointer-events-none cursor-not-allowed'
+                : 'cursor-pointer'
+            } rounded-md bg-red-500 flex items-center font-medium text-white shadow-md hover:bg-red-600 px-6 py-3`}
+          >
+            {isLoading ? (
+              <Loading color='success' size='sm' />
+            ) : (
+              'সেভ করুন ও প্রিভিউ দেখুন'
+            )}
+          </button>
         </form>
       ) : (
         <FormSkeleton />

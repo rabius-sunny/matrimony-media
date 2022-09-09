@@ -12,7 +12,6 @@ import CSkeleton from 'components/shared/CSkeleton'
 import Head from 'next/head'
 import userRequest from 'services/userRequest'
 import BioInfoCard from 'components/bio/BioInfoCard'
-import LongModal from 'components/shared/Modals/LongModal'
 import useAuth from 'hooks/useAuth'
 
 export default function DetailBio() {

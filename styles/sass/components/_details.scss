@@ -1,7 +1,7 @@
 .item__holder,
 .item__holder2 {
   .item {
-    padding: 6px 10px;
+    padding: 15px 10px;
     border-left: 1px solid #c7c7c72f;
     border-right: 1px solid #c7c7c72f;
     display: flex;
@@ -52,7 +52,7 @@
 
     span:last-child {
       padding-left: 10px;
-      max-width: 50%;
+      width: 100%;
     }
   }
 
@@ -66,5 +66,39 @@
 
   .items:nth-child(odd) {
     background-color: #c7c7c72f;
+  }
+}
+
+@media (min-width: 576px) {
+
+  .item__holder,
+  .item__holder2 {
+    .item {
+      span {
+        font-size: 1.2rem;
+      }
+    }
+  }
+
+  .items>div {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 576px) {
+
+  .item__holder,
+  .item__holder2 {
+    .item {
+      padding: 8px 6px;
+
+      span {
+        font-size: 0.8rem;
+      }
+    }
+  }
+
+  .items>div {
+    font-size: 0.8rem;
   }
 }

@@ -10,8 +10,17 @@ import FormSkeleton from 'components/shared/FormSkeleton'
 import Head from 'next/head'
 import { useAppContext } from 'utils/context'
 import { useEffect, useState } from 'react'
+import LongModal from 'components/shared/Modals/LongModal'
+import { Loading } from '@nextui-org/react'
 
 export default function Name() {
+  const [visible, setVisible] = useState({
+    message: '',
+    status: false,
+    done: false
+  })
+  const [isLoading, setIsLoading] = useState(false)
+  const [fields, setFields] = useState([])
   const { data, loading } = getData()
   const router = useRouter()
   const [type, setType] = useState(null)
@@ -19,37 +28,61 @@ export default function Name() {
     router.route.split('/edit')[1] === routename ? true : false
 
   const onSubmit = infos => {
+    setIsLoading(true)
     biodataRequests
-      .updateBio({ ...infos, published: false, featured: false })
+      .updateBio({
+        ...infos,
+        published: false,
+        featured: false
+      })
       .then(info => {
         if (info.message === 'ok') {
           biodataRequests.setField(0).then(info => {
             if (info.message === 'ok') {
-              router.push('/profile/edit/personal-info')
+              setIsLoading(false)
+              setVisible({
+                message:
+                  'আপনার তথ্যগুলো সংরক্ষিত হয়েছে এবং আপনার বায়োডাটাটি এখন হাইড অবস্থায় রয়েছে। এটিকে পুনরায় পাবলিশ করার জন্য সবগুলো ফিল্ড পূরণ করে প্রিভিউ থেকে পাবলিশ করুন।',
+                status: true,
+                done: true
+              })
             }
           })
         }
       })
-      .catch(err => console.log(err.message))
+      .catch(err => {
+        setIsLoading(false)
+        setVisible({
+          message: 'ইরর হয়েছে, আবার চেষ্টা করুন',
+          status: true,
+          done: false
+        })
+      })
   }
 
   const { routes, setRoutes } = useAppContext()
 
   useEffect(() => {
     if (data) {
-      if (!data.name || !data.type || !data.condition) {
+      if (data.name && data.type && data.condition) {
         setRoutes({
           ...routes,
           primary: {
             name: 'প্রাথমিক',
             link: '/primary',
-            error: true
+            status: 'done'
           }
         })
       }
       setType(data?.type)
     }
   }, [data, loading])
+
+  useEffect(() => {
+    biodataRequests.checkField().then(data => {
+      setFields(data.fields)
+    })
+  }, [])
 
   // const onReset = data => {
   //   let _reset = {}
@@ -70,6 +103,18 @@ export default function Name() {
         <title>প্রাথমিক তথ্য</title>
       </Head>
       <ProfileRoutes activeRoute={activeRoute} />
+      <LongModal
+        visible={visible.status}
+        onClose={() => setVisible({ message: '', status: false, done: false })}
+        body={
+          <p className={`text-${visible.done ? 'green' : 'red'}-500 text-2xl`}>
+            {visible.message}
+          </p>
+        }
+        btn='ok'
+        preventClose={false}
+        color={visible.done ? 'success' : 'error'}
+      />
       {loading ? (
         <FormSkeleton />
       ) : data ? (
@@ -104,11 +149,30 @@ export default function Name() {
             name='condition'
             defaultValue={data?.condition}
           />
-          <input
-            type='submit'
-            value='সেভ করুন ও পরবর্তী পেজে যান'
-            className='rounded-md bg-red-500 px-6 py-3 text-xl font-medium text-white shadow-md hover:bg-red-600 focus:ring-2 focus:ring-red-800'
-          />
+
+          <div className='flex items-center'>
+            <button
+              type='submit'
+              className={`${
+                isLoading
+                  ? 'pointer-events-none cursor-not-allowed'
+                  : 'cursor-pointer'
+              } rounded-md bg-red-500 flex items-center font-medium text-white shadow-md hover:bg-red-600 px-6 py-3`}
+            >
+              {isLoading ? <Loading color='success' size='sm' /> : 'সেভ করুন'}
+            </button>
+            <button
+              type='button'
+              onClick={() => router.push('/profile/preview')}
+              className={`${
+                fields.length
+                  ? 'bg-gray-300 pointer-events-none'
+                  : 'bg-green-500 hover:bg-green-600'
+              } ml-2 rounded-md text-white px-6 py-3 shadow-md`}
+            >
+              প্রিভিউ দেখুন ও পাবলিশ করুন
+            </button>
+          </div>
         </CForm>
       ) : (
         <CForm onSubmit={onSubmit}>
@@ -138,11 +202,10 @@ export default function Name() {
                 : []
             }
             name='condition'
-            defaultValue={data?.condition}
           />
           <input
             type='submit'
-            value='সেভ করুন ও পরবর্তী পেজে যান'
+            value={isLoading ? <Loading color='success' /> : 'সেভ করুন'}
             className='rounded-md bg-red-500 px-6 py-3 text-xl font-medium text-white shadow-md hover:bg-red-600 focus:ring-2 focus:ring-red-800'
           />
         </CForm>

@@ -8,62 +8,62 @@ export function AppWrapper({ children }) {
     primary: {
       name: 'প্রাথমিক',
       link: '/primary',
-      error: false
+      status: ''
     },
     personal: {
       name: 'ব্যক্তিগত তথ্য',
       link: '/personal-info',
-      error: false
+      status: ''
     },
     marriage: {
       name: 'বিয়ে সংক্রান্ত তথ্য',
       link: '/marriage-related-info',
-      error: false
+      status: ''
     },
     general: {
       name: 'সাধারণ তথ্য',
       link: '/general-info',
-      error: false
+      status: ''
     },
     family: {
       name: 'পারিবারিক তথ্য',
       link: '/family-info',
-      error: false
+      status: ''
     },
     address: {
       name: 'ঠিকানা',
       link: '/address',
-      error: false
+      status: ''
     },
     education: {
       name: 'শিক্ষাগত যোগ্যতা',
       link: '/educational-qualifications',
-      error: false
+      status: ''
     },
     another: {
       name: 'অন্যান্য তথ্য',
       link: '/others-info',
-      error: false
+      status: ''
     },
     expectation: {
       name: 'যেমন জীবনসঙ্গী আশা করেন',
       link: '/expectation',
-      error: false
+      status: ''
     },
     // authority: {
     //   name: 'কর্তৃপক্ষের জিজ্ঞাসা',
     //   link: '/authority-question',
-    //   error: false
+    // status: ''
     // },
     contact: {
       name: 'যোগাযোগ',
       link: '/contact-info',
-      error: false
+      status: ''
     },
     contact: {
       name: 'যোগাযোগ',
       link: '/contact-info',
-      error: false
+      status: ''
     }
   })
 

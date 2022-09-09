@@ -3,7 +3,7 @@ import GInput from 'components/profile/GInput'
 import ColoredHeader from 'components/shared/ColoredHeader'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { Collapse } from '@nextui-org/react'
+import { Collapse, Loading } from '@nextui-org/react'
 import { useState } from 'react'
 import LongModal from 'components/shared/Modals/LongModal'
 import userRequest from 'services/userRequest'
@@ -13,6 +13,7 @@ export default function Checkout() {
     query: { checkoutid }
   } = useRouter()
   const router = useRouter()
+  const [loading, setLoading] = useState(false)
   const [visible, setVisible] = useState(false)
   const [visible2, setVisible2] = useState(false)
   const [method, setMethod] = useState(1)
@@ -36,6 +37,7 @@ export default function Checkout() {
     if (pement.pnumber === '' || pement.trx === '') {
       alert('Fill your pement info')
     } else {
+      setLoading(true)
       userRequest
         .makeRequest({
           ...data,
@@ -45,10 +47,14 @@ export default function Checkout() {
         })
         .then(info => {
           if (info.message === 'ok') {
+            setLoading(false)
             setVisible(true)
           }
         })
-        .catch(err => setVisible2(true))
+        .catch(err => {
+          setLoading(false)
+          setVisible2(true)
+        })
     }
   }
   const onChange = e =>
@@ -164,11 +170,22 @@ export default function Checkout() {
                   </Collapse>
                 ))}
               </Collapse.Group>
-              <input
-                type='submit'
-                value='Submit'
-                className='rounded-md bg-red-500 px-6 py-3 text-xl font-medium text-white shadow-md hover:bg-red-600 focus:ring-2 focus:ring-red-800'
-              />
+              <div className='flex items-center'>
+                <button
+                  type='submit'
+                  className={`${
+                    loading
+                      ? 'pointer-events-none cursor-not-allowed'
+                      : 'cursor-pointer'
+                  } rounded-md bg-red-500 flex items-center font-medium text-white shadow-md hover:bg-red-600 px-6 py-3`}
+                >
+                  {loading ? (
+                    <Loading color='success' size='sm' />
+                  ) : (
+                    'রিকুয়েস্ট পাঠান'
+                  )}
+                </button>
+              </div>
             </CForm>
           </div>
         </div>

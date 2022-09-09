@@ -42,13 +42,13 @@ export default function AuthorityQuestion() {
   const { routes, setRoutes } = useAppContext()
   useEffect(() => {
     if (data) {
-      if (!data.family_about_bio || !data.is_correct_info || !data.liability) {
+      if (data.family_about_bio && data.is_correct_info && data.liability) {
         setRoutes({
           ...routes,
           authority: {
             name: 'কর্তৃপক্ষের জিজ্ঞাসা',
             link: '/authority-question',
-            error: true
+            status: 'done'
           }
         })
       }

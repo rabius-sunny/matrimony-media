@@ -7,10 +7,22 @@ import { Fade } from 'react-reveal'
 import biodataRequests from 'services/biodataRequests'
 import FormSkeleton from 'components/shared/FormSkeleton'
 import Head from 'next/head'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useAppContext } from 'utils/context'
+import Link from 'next/link'
+import { ExclamationIcon } from '@heroicons/react/solid'
+import LongModal from 'components/shared/Modals/LongModal'
+import { Loading } from '@nextui-org/react'
 
 export default function MarriageRelated() {
+  const [visible, setVisible] = useState({
+    message: '',
+    status: false,
+    done: false
+  })
+  const [isLoading, setIsLoading] = useState(false)
+  const [fields, setFields] = useState([])
+  const [done, setDone] = useState(false)
   const router = useRouter()
   const activeRoute = routename =>
     router.route.split('/edit')[1] === routename ? true : false
@@ -24,43 +36,63 @@ export default function MarriageRelated() {
   } = useForm({
     mode: 'onChange'
   })
-  const onSubmit = data =>
+  const onSubmit = data => {
+    setIsLoading(true)
     biodataRequests
-      .updateBio({ ...data, published: false, featured: false })
+      .updateBio({
+        ...data,
+        published: false,
+        featured: false
+      })
       .then(info => {
         if (info.message === 'ok') {
           biodataRequests.setField(6).then(info => {
             if (info.message === 'ok') {
-              router.push('/profile/edit/general-info')
+              setIsLoading(false)
+              setVisible({
+                message:
+                  'আপনার তথ্যগুলো সংরক্ষিত হয়েছে এবং আপনার বায়োডাটাটি এখন হাইড অবস্থায় রয়েছে। এটিকে পুনরায় পাবলিশ করার জন্য সবগুলো ফিল্ড পূরণ করে প্রিভিউ থেকে পাবলিশ করুন।',
+                status: true,
+                done: true
+              })
             }
           })
         }
       })
-      .catch(err => console.log(err.message))
+      .catch(err => {
+        setIsLoading(false)
+        setVisible({
+          message: 'ইরর হয়েছে, আবার চেষ্টা করুন',
+          status: true,
+          done: false
+        })
+      })
+  }
 
   const { routes, setRoutes } = useAppContext()
+
   useEffect(() => {
     if (data) {
-      if (!data.marry_reason || !data.guardians_permission) {
+      if (data.marry_reason && data.guardians_permission) {
         setRoutes({
           ...routes,
           marriage: {
             name: 'বিয়ে সংক্রান্ত তথ্য',
             link: '/marriage-related-info',
-            error: true
+            status: 'done'
           }
         })
       }
+      if (!data.type) {
+        setDone(false)
+      } else setDone(true)
     }
   }, [data, loading])
   useEffect(() => {
-    if (data) {
-      if (!data.type) {
-        alert('প্রাথমিক তথ্যের ফর্মটি ফিল করা হয়নি, সেটি আগে ফিল করুন')
-        return router.push('/profile/edit/primary')
-      }
-    }
-  }, [data])
+    biodataRequests.checkField().then(data => {
+      setFields(data.fields)
+    })
+  }, [])
 
   return (
     <ProfileLayout data={data} loading={loading}>
@@ -68,7 +100,32 @@ export default function MarriageRelated() {
         <title>বিয়েসম্পর্কিত তথ্য</title>
       </Head>
       <ProfileRoutes activeRoute={activeRoute} />
-      {!loading && data ? (
+      <LongModal
+        visible={visible.status}
+        onClose={() => setVisible({ message: '', status: false, done: false })}
+        body={
+          <p className={`text-${visible.done ? 'green' : 'red'}-500 text-2xl`}>
+            {visible.message}
+          </p>
+        }
+        btn='ok'
+        preventClose={false}
+        color={visible.done ? 'success' : 'error'}
+      />
+      {!loading && !done && (
+        <p className='border-l-4 border-red-500 flex bg-red-50 py-8 rounded px-2 items-center md:text-2xl text-red-500 font-bold text-center my-8'>
+          <div className='mr-5'>
+            <ExclamationIcon className='text-red-500 h-10 w-10' />
+          </div>
+          <div>
+            <Link href='/profile/edit/primary'>
+              <a className=' underline text-indigo-500'>প্রাথমিক</a>
+            </Link>{' '}
+            ফিল্ডটি এখনো অপূর্ণাঙ্গ রয়েছে, আগে সেটি ফিল করুন
+          </div>
+        </p>
+      )}
+      {!loading && data && done ? (
         <form onSubmit={handleSubmit(onSubmit)}>
           {data?.condition === 'বিপত্মীক' && (
             <fieldset
@@ -415,11 +472,29 @@ export default function MarriageRelated() {
             </div>
           )}
 
-          <input
-            type='submit'
-            value='সেভ করুন ও পরবর্তী পেজে যান'
-            className='rounded-md bg-red-500 px-6 py-3 text-xl font-medium text-white shadow-md hover:bg-red-600 focus:ring-2 focus:ring-red-800'
-          />
+          <div className='flex items-center'>
+            <button
+              type='submit'
+              className={`${
+                isLoading
+                  ? 'pointer-events-none cursor-not-allowed'
+                  : 'cursor-pointer'
+              } rounded-md bg-red-500 flex items-center font-medium text-white shadow-md hover:bg-red-600 px-6 py-3`}
+            >
+              {isLoading ? <Loading color='success' size='sm' /> : 'সেভ করুন'}
+            </button>
+            <button
+              type='button'
+              onClick={() => router.push('/profile/preview')}
+              className={`${
+                fields.length
+                  ? 'bg-gray-300 pointer-events-none'
+                  : 'bg-green-500 hover:bg-green-600'
+              } ml-2 rounded-md text-white px-6 py-3 shadow-md`}
+            >
+              প্রিভিউ দেখুন ও পাবলিশ করুন
+            </button>
+          </div>
         </form>
       ) : (
         <FormSkeleton />

@@ -40,10 +40,47 @@ export default function FilterBio({ type, jilla, setLoading, setBios }) {
 
   const handleSubmit = () => {
     setLoading(true)
+    const { condition, education, madhab } = criterias
+    let data
+
+    if (condition && education && madhab) {
+      data = {
+        education,
+        madhab,
+        condition,
+        type
+      }
+      jilla !== 'all' ? (data.jilla = jilla) : true
+    } else if (!condition && !education && madhab) {
+      data = {
+        madhab,
+        type
+      }
+      jilla !== 'all' ? (data.jilla = jilla) : true
+    } else if (!madhab && condition && education) {
+      data = { condition, education, type }
+      jilla !== 'all' ? (data.jilla = jilla) : true
+    } else if (!condition && !madhab && education) {
+      data = { education, type }
+      jilla !== 'all' ? (data.jilla = jilla) : true
+    } else if (!education && condition && madhab) {
+      data = { condition, madhab, type }
+      jilla !== 'all' ? (data.jilla = jilla) : true
+    } else if (!condition && education && madhab) {
+      data = { education, madhab, type }
+      jilla !== 'all' ? (data.jilla = jilla) : true
+    } else if (!education && !madhab && condition) {
+      data = { condition, type }
+      jilla !== 'all' ? (data.jilla = jilla) : true
+    } else if (!condition && !education && !madhab) {
+      data = { type }
+      jilla !== 'all' ? (data.jilla = jilla) : true
+    }
+
     biodataRequests
-      .filterBios(criterias)
-      .then(data => {
-        setBios(filterAge(data.response))
+      .filterBios(data)
+      .then(info => {
+        setBios(filterAge(info.response))
         setLoading(false)
       })
       .catch(err => {
@@ -52,6 +89,7 @@ export default function FilterBio({ type, jilla, setLoading, setBios }) {
         setBios([])
       })
   }
+
   return (
     <div className='mb-8 bg-gradient-to-r from-rose-600 to-pink-600 p-6'>
       <div className='container block sm:flex items-center justify-evenly mt-4 flex-wrap'>
@@ -67,8 +105,8 @@ export default function FilterBio({ type, jilla, setLoading, setBios }) {
             id='s1'
             className='m-3 lg:m-0 rounded p-1 bg-gray-50 w-full md:w-auto'
           >
-            {_types.map(item => (
-              <option value={item}>{item}</option>
+            {['সকল', ..._types].map(item => (
+              <option value={item === 'সকল' ? '' : item}>{item}</option>
             ))}
           </select>
         </div>
@@ -101,7 +139,6 @@ export default function FilterBio({ type, jilla, setLoading, setBios }) {
             name='ageTo'
             value={criterias.ageTo}
             onChange={handleChange}
-            defaultValue={25}
             id='s3'
             className='m-3 lg:m-0 rounded py-1 px-3 bg-gray-50 w-full md:w-auto'
           >
@@ -126,8 +163,8 @@ export default function FilterBio({ type, jilla, setLoading, setBios }) {
             id='s4'
             className='m-3 lg:m-0 rounded p-1 bg-gray-50 w-full md:w-auto'
           >
-            {educationTypes.map(item => (
-              <option value={item}>{item}</option>
+            {['সকল', ...educationTypes].map(item => (
+              <option value={item === 'সকল' ? '' : item}>{item}</option>
             ))}
           </select>
         </div>
@@ -142,8 +179,8 @@ export default function FilterBio({ type, jilla, setLoading, setBios }) {
             id='s5'
             className='m-3 lg:m-0 rounded p-1 bg-gray-50 w-full md:w-auto'
           >
-            {_madhabs.map(item => (
-              <option value={item}>{item}</option>
+            {['সকল', ..._madhabs].map(item => (
+              <option value={item === 'সকল' ? '' : item}>{item}</option>
             ))}
           </select>
         </div>

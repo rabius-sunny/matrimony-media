@@ -42,7 +42,7 @@ export default function Preview() {
         } else alert('you have not filled all the forms')
       })
       .catch(err => {
-        alert('Network error or you do not have permission to access this')
+        alert('you do not have permission to access this')
         router.push('/')
       })
   }, [])

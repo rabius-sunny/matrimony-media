@@ -6,8 +6,18 @@ import biodataRequests from 'services/biodataRequests'
 import getData from 'hooks/getData'
 import FormSkeleton from 'components/shared/FormSkeleton'
 import Head from 'next/head'
+import { useEffect, useState } from 'react'
+import LongModal from 'components/shared/Modals/LongModal'
+import { Loading } from '@nextui-org/react'
 
 export default function OthersInfo() {
+  const [visible, setVisible] = useState({
+    message: '',
+    status: false,
+    done: false
+  })
+  const [isLoading, setIsLoading] = useState(false)
+  const [fields, setFields] = useState([])
   const router = useRouter()
   const activeRoute = routename =>
     router.route.split('/edit')[1] === routename ? true : false
@@ -15,21 +25,46 @@ export default function OthersInfo() {
   const { register, handleSubmit } = useForm({
     mode: 'onChange'
   })
-  const onSubmit = data =>
+  const onSubmit = data => {
+    setIsLoading(true)
     biodataRequests
-      .updateBio({ ...data, published: false, featured: false })
+      .updateBio({
+        ...data,
+        published: false,
+        featured: false
+      })
       .then(info => {
         if (info.message === 'ok') {
           biodataRequests.setField(7).then(info => {
             if (info.message === 'ok') {
-              router.push('/profile/edit/expectation')
+              setIsLoading(false)
+              setVisible({
+                message:
+                  'আপনার তথ্যগুলো সংরক্ষিত হয়েছে এবং আপনার বায়োডাটাটি এখন হাইড অবস্থায় রয়েছে। এটিকে পুনরায় পাবলিশ করার জন্য সবগুলো ফিল্ড পূরণ করে প্রিভিউ থেকে পাবলিশ করুন।',
+                status: true,
+                done: true
+              })
             }
           })
         }
       })
-      .catch(err => console.log(err.message))
+      .catch(err => {
+        setIsLoading(false)
+        setVisible({
+          message: 'ইরর হয়েছে, আবার চেষ্টা করুন',
+          status: true,
+          done: false
+        })
+      })
+  }
 
   const { data, loading } = getData()
+
+  useEffect(() => {
+    biodataRequests.checkField().then(data => {
+      setFields(data.fields)
+    })
+  }, [])
 
   return (
     <ProfileLayout data={data} loading={loading}>
@@ -37,6 +72,18 @@ export default function OthersInfo() {
         <title>অন্যান্য তথ্য</title>
       </Head>
       <ProfileRoutes activeRoute={activeRoute} />
+      <LongModal
+        visible={visible.status}
+        onClose={() => setVisible({ message: '', status: false, done: false })}
+        body={
+          <p className={`text-${visible.done ? 'green' : 'red'}-500 text-2xl`}>
+            {visible.message}
+          </p>
+        }
+        btn='ok'
+        preventClose={false}
+        color={visible.done ? 'success' : 'error'}
+      />
       {!loading && data ? (
         <form onSubmit={handleSubmit(onSubmit)}>
           <fieldset className='my-6 rounded-md border-2 border-blue-300 p-4'>
@@ -74,11 +121,29 @@ export default function OthersInfo() {
             </p>
           </fieldset>
 
-          <input
-            type='submit'
-            value='সেভ করুন ও পরবর্তী পেজে যান'
-            className='rounded-md bg-red-500 px-6 py-3 text-xl font-medium text-white shadow-md hover:bg-red-600 focus:ring-2 focus:ring-red-800'
-          />
+          <div className='flex items-center'>
+            <button
+              type='submit'
+              className={`${
+                isLoading
+                  ? 'pointer-events-none cursor-not-allowed'
+                  : 'cursor-pointer'
+              } rounded-md bg-red-500 flex items-center font-medium text-white shadow-md hover:bg-red-600 px-6 py-3`}
+            >
+              {isLoading ? <Loading color='success' size='sm' /> : 'সেভ করুন'}
+            </button>
+            <button
+              type='button'
+              onClick={() => router.push('/profile/preview')}
+              className={`${
+                fields.length
+                  ? 'bg-gray-300 pointer-events-none'
+                  : 'bg-green-500 hover:bg-green-600'
+              } ml-2 rounded-md text-white px-6 py-3 shadow-md`}
+            >
+              প্রিভিউ দেখুন ও পাবলিশ করুন
+            </button>
+          </div>
         </form>
       ) : (
         <FormSkeleton />

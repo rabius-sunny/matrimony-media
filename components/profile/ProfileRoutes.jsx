@@ -23,10 +23,11 @@ export default function ProfileRoutes({ activeRoute }) {
               <div className='flex items-center'>
                 <Link href={'/profile/edit' + route.link}>{route.name}</Link>
 
-                <div>
+                <div className=' ml-1'>
                   {
-                    route.error && (
-                      <ExclamationCircleIcon className='w-5 text-red-500' />
+                    route.status === 'done' && (
+                      // <ExclamationCircleIcon className='w-5 text-red-500' />
+                      <CheckCircleIcon className='h-5 w-5 text-green-500' />
                     ) /* : (
                     <CheckCircleIcon className='h-5 w-5 text-green-500' />
                   ) */

@@ -130,6 +130,7 @@ export default function BioInfoCard({ data, loading, uId }) {
     const localId = localStorage.getItem('id')
     localId && setId(localId)
   }, [data])
+
   const handleCopy = text => {
     copyToClip(text)
     setCopy(true)
@@ -148,7 +149,6 @@ export default function BioInfoCard({ data, loading, uId }) {
         onTask={() => handleAction('delete')}
         preventClose={false}
         body={<ActionForm action='ডিলিট' />}
-        // btn='ডিলিট রিকুয়েস্ট করুন'
         blur={true}
       />
       <LongModal
@@ -160,7 +160,6 @@ export default function BioInfoCard({ data, loading, uId }) {
         onTask={() => handleAction('hide')}
         preventClose={false}
         body={<ActionForm action='হাইড' />}
-        // btn='হাইড রিকুয়েস্ট করুন'
         blur={true}
       />
       {loading && !data ? (
@@ -200,25 +199,30 @@ export default function BioInfoCard({ data, loading, uId }) {
               </h2>
             </div>
           ) : (
-            <div className='flex justify-between md:px-12 mb-4'>
-              <div>
+            <div className='flex justify-between items-center md:px-8 mb-4'>
+              <div className='flex items-center'>
                 <Image
-                  height='80px'
-                  width='80px'
+                  height='60px'
+                  width='60px'
                   src={info.type === 'পাত্রীর বায়োডাটা' ? female : male}
                   alt='profile avatar'
                 />
+                <div className='pl-3 text-xl text-left md:text-3xl text-white'>
+                  <p className=' text-sm sm:text-2xl font-semibold '>
+                    Biodata ID
+                  </p>{' '}
+                  <p className=' text-sm sm:text-2xl font-semibold'>
+                    " {uId} "
+                  </p>
+                </div>
               </div>
               <div>
-                <h2 className='mb-3 text-xl md:text-3xl text-white'>
-                  Biodata ID: <span className='underline'>{uId}</span>
-                </h2>
-                <div className=''>
+                <div>
                   <button
                     onClick={() => handleCopy(uId)}
-                    className={`block w-full rounded-md border-2 ${
+                    className={`block text-sm sm:text-md px-1 sm:px-4 rounded-md border-2 ${
                       copy ? 'border-red-800' : 'border-white'
-                    } py-2 font-bold text-white`}
+                    } py-1 sm:py-2 font-bold text-white`}
                   >
                     {copy ? 'Copied' : 'Copy BioID'}
                   </button>
