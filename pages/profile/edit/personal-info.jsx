@@ -45,7 +45,7 @@ export default function PersonalInfo() {
       })
       .then(info => {
         if (info.message === 'ok') {
-          biodataRequests.setField(5).then(info => {
+          biodataRequests.setField(1).then(info => {
             if (info.message === 'ok') {
               setIsLoading(false)
               setVisible({
@@ -53,6 +53,11 @@ export default function PersonalInfo() {
                   'আপনার তথ্যগুলো সংরক্ষিত হয়েছে এবং আপনার বায়োডাটাটি এখন হাইড অবস্থায় রয়েছে। এটিকে পুনরায় পাবলিশ করার জন্য সবগুলো ফিল্ড পূরণ করে প্রিভিউ থেকে পাবলিশ করুন।',
                 status: true,
                 done: true
+              })
+              window.scroll({
+                top: 100,
+                left: 100,
+                behavior: 'smooth'
               })
             }
           })
@@ -68,7 +73,7 @@ export default function PersonalInfo() {
       })
   }
 
-  const { data, loading } = getData()
+  const { data, loading } = getData(visible.done)
 
   const { routes, setRoutes } = useAppContext()
 
@@ -110,7 +115,7 @@ export default function PersonalInfo() {
     biodataRequests.checkField().then(data => {
       setFields(data.fields)
     })
-  }, [])
+  }, [visible.done])
 
   return (
     <ProfileLayout data={data} loading={loading}>

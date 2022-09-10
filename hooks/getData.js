@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import requests from 'services/http'
 
-export default function getData() {
+export default function getData(dep) {
   const [data, setData] = useState(null)
   const [loading, isLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -27,7 +27,7 @@ export default function getData() {
         isLoading(false)
         setData(null)
       })
-  }, [])
+  }, [dep])
 
   return {
     data: data?.response,

@@ -26,7 +26,7 @@ export default function Family() {
   const activeRoute = routename =>
     router.route.split('/edit')[1] === routename ? true : false
 
-  const { data, loading } = getData()
+  const { data, loading } = getData(visible.done)
 
   const [brothers, setBrothers] = useState('')
   const [sisters, setSisters] = useState('')
@@ -56,6 +56,11 @@ export default function Family() {
                   'আপনার তথ্যগুলো সংরক্ষিত হয়েছে এবং আপনার বায়োডাটাটি এখন হাইড অবস্থায় রয়েছে। এটিকে পুনরায় পাবলিশ করার জন্য সবগুলো ফিল্ড পূরণ করে প্রিভিউ থেকে পাবলিশ করুন।',
                 status: true,
                 done: true
+              })
+              window.scroll({
+                top: 100,
+                left: 100,
+                behavior: 'smooth'
               })
             }
           })
@@ -103,7 +108,7 @@ export default function Family() {
     biodataRequests.checkField().then(data => {
       setFields(data.fields)
     })
-  }, [])
+  }, [visible.done])
 
   return (
     <ProfileLayout data={data} loading={loading}>
@@ -432,7 +437,7 @@ export default function Family() {
                 errors.family_status ? 'text-red-500' : 'text-blue-500'
               }`}
             >
-              পরিবারের অর্থনৈতিক ও সামাজিক অবস্থা
+              পরিবারের অর্থনৈতিক ও সামাজিক অবস্থা *
             </legend>
             <textarea
               defaultValue={data?.family_status}

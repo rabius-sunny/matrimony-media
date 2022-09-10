@@ -50,6 +50,11 @@ export default function OthersInfo() {
                 status: true,
                 done: true
               })
+              window.scroll({
+                top: 100,
+                left: 100,
+                behavior: 'smooth'
+              })
             }
           })
         }
@@ -64,7 +69,7 @@ export default function OthersInfo() {
       })
   }
 
-  const { data, loading } = getData()
+  const { data, loading } = getData(visible.done)
 
   const { routes, setRoutes } = useAppContext()
   useEffect(() => {
@@ -96,7 +101,7 @@ export default function OthersInfo() {
     biodataRequests.checkField().then(data => {
       setFields(data.fields)
     })
-  }, [])
+  }, [visible.done])
 
   return (
     <ProfileLayout data={data} loading={loading}>

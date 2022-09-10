@@ -21,7 +21,7 @@ export default function Name() {
   })
   const [isLoading, setIsLoading] = useState(false)
   const [fields, setFields] = useState([])
-  const { data, loading } = getData()
+  const { data, loading } = getData(visible.done)
   const router = useRouter()
   const [type, setType] = useState(null)
   const activeRoute = routename =>
@@ -45,6 +45,11 @@ export default function Name() {
                   'আপনার তথ্যগুলো সংরক্ষিত হয়েছে এবং আপনার বায়োডাটাটি এখন হাইড অবস্থায় রয়েছে। এটিকে পুনরায় পাবলিশ করার জন্য সবগুলো ফিল্ড পূরণ করে প্রিভিউ থেকে পাবলিশ করুন।',
                 status: true,
                 done: true
+              })
+              window.scroll({
+                top: 100,
+                left: 100,
+                behavior: 'smooth'
               })
             }
           })
@@ -82,7 +87,7 @@ export default function Name() {
     biodataRequests.checkField().then(data => {
       setFields(data.fields)
     })
-  }, [])
+  }, [visible.done])
 
   // const onReset = data => {
   //   let _reset = {}

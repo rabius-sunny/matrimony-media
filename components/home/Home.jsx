@@ -1,4 +1,4 @@
-import { achieves } from 'assets/fakedata'
+// import { achieves } from 'assets/fakedata'
 import Hometext from '../others/Hometext'
 import Dropdown from './Dropdown'
 import Featured from './Featured'
@@ -34,7 +34,7 @@ export default function Home() {
       </div>
 
       {/* Acheivements */}
-      <section className='home__achievements'>
+      {/* <section className='home__achievements'>
         <div className='container grid grid-cols-12 gap-4 text-center'>
           {achieves.map(acv => (
             <div key={acv.id} className='col-span-6 lg:col-span-3'>
@@ -46,7 +46,7 @@ export default function Home() {
             </div>
           ))}
         </div>
-      </section>
+      </section> */}
 
       {/* Featured Biodata */}
       <section className='bg-red-100'>

@@ -1,5 +1,6 @@
 .container,
-.container2 {
+.container2,
+.container3 {
     --bs-gutter-x: 1.5rem;
     --bs-gutter-y: 0;
     width: 100%;
@@ -10,13 +11,16 @@
 }
 
 @media (min-width: 576px) {
+
     .container {
         max-width: 540px;
     }
 }
 
 @media (min-width: 768px) {
-    .container {
+
+    .container,
+    .container3 {
         max-width: 750px;
     }
 
@@ -30,13 +34,16 @@
         max-width: 980px;
     }
 
-
+    .container3 {
+        max-width: 850px;
+    }
 }
 
 @media (min-width: 1200px) {
     .container {
         max-width: 1180px;
     }
+
 }
 
 @media (min-width: 1400px) {

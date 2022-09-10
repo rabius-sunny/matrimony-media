@@ -26,7 +26,7 @@ export default function Education() {
   const activeRoute = routename =>
     router.route.split('/edit')[1] === routename ? true : false
 
-  const { data, loading } = getData()
+  const { data, loading } = getData(visible.done)
   const [education, setEducation] = useState(data?.education)
   const [secondary, setSecondary] = useState('')
   const [higher, setHigher] = useState('')
@@ -51,7 +51,7 @@ export default function Education() {
       })
       .then(info => {
         if (info.message === 'ok') {
-          biodataRequests.setField(3).then(info => {
+          biodataRequests.setField(6).then(info => {
             if (info.message === 'ok') {
               setIsLoading(false)
               setVisible({
@@ -59,6 +59,11 @@ export default function Education() {
                   'আপনার তথ্যগুলো সংরক্ষিত হয়েছে এবং আপনার বায়োডাটাটি এখন হাইড অবস্থায় রয়েছে। এটিকে পুনরায় পাবলিশ করার জন্য সবগুলো ফিল্ড পূরণ করে প্রিভিউ থেকে পাবলিশ করুন।',
                 status: true,
                 done: true
+              })
+              window.scroll({
+                top: 100,
+                left: 100,
+                behavior: 'smooth'
               })
             }
           })
@@ -103,7 +108,7 @@ export default function Education() {
     biodataRequests.checkField().then(data => {
       setFields(data.fields)
     })
-  }, [])
+  }, [visible.done])
 
   return (
     <ProfileLayout data={data} loading={loading}>

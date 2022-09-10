@@ -44,6 +44,11 @@ export default function OthersInfo() {
                 status: true,
                 done: true
               })
+              window.scroll({
+                top: 100,
+                left: 100,
+                behavior: 'smooth'
+              })
             }
           })
         }
@@ -64,7 +69,7 @@ export default function OthersInfo() {
     biodataRequests.checkField().then(data => {
       setFields(data.fields)
     })
-  }, [])
+  }, [visible.done])
 
   return (
     <ProfileLayout data={data} loading={loading}>
