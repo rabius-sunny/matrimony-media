@@ -13,6 +13,7 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import LongModal from 'components/shared/Modals/LongModal'
 import useAuth from 'hooks/useAuth'
+import { PencilAltIcon } from '@heroicons/react/outline'
 
 export default function Preview() {
   const auth = useAuth()
@@ -20,6 +21,7 @@ export default function Preview() {
   const [loading, setLoading] = useState(false)
   const [visible, setVisible] = useState(false)
   const [visible2, setVisible2] = useState(false)
+  const [visible3, setVisible3] = useState(true)
   const router = useRouter()
 
   useEffect(() => {
@@ -152,6 +154,26 @@ export default function Preview() {
       <Head>
         <title>বায়োডাটা | Preview</title>
       </Head>
+      <LongModal
+        blur
+        scroll={false}
+        visible={visible3}
+        onClose={() => setVisible3(false)}
+        header='Editing Report'
+        body={
+          <div>
+            আপনার তথ্যসমূহ সংরক্ষিত হয়েছে। বায়োডাটাটি পাবলিশ করতে নিচে{' '}
+            <strong>পাবলিশ রিকুয়েস্ট করুন</strong> বাটনে ক্লিক করুন, প্রয়োজনীয়
+            পরিবর্তন থাকলে{' '}
+            <PencilAltIcon className='inline w-5 mr-1 text-blue-500' />
+            আইকনে ক্লিক করুন।
+          </div>
+        }
+        btn='OK'
+        color='success'
+        bodyColor='success'
+        preventClose={false}
+      />
       <LongModal
         blur
         scroll={false}

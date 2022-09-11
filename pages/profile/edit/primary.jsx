@@ -40,12 +40,8 @@ export default function Name() {
           biodataRequests.setField(0).then(info => {
             if (info.message === 'ok') {
               setIsLoading(false)
-              setVisible({
-                message:
-                  'আপনার তথ্যগুলো সংরক্ষিত হয়েছে এবং আপনার বায়োডাটাটি এখন হাইড অবস্থায় রয়েছে। এটিকে পুনরায় পাবলিশ করার জন্য সবগুলো ফিল্ড পূরণ করে প্রিভিউ থেকে পাবলিশ করুন।',
-                status: true,
-                done: true
-              })
+              setVisible({ message: '', status: false, done: true })
+
               window.scroll({
                 top: 100,
                 left: 100,

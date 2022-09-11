@@ -25,9 +25,9 @@ export default function Featured() {
     )
   } else if (data.bios && data.bios.length >= 1) {
     return (
-      <div className='container my-4'>
+      <div className='my-4'>
         <div className='my-4'>
-          <div className='grid grid-cols-12 gap-8'>
+          <div className='grid grid-cols-12 gap-2 md:gap-3 lg:gap-4 xl:gap-8'>
             {data.bios.map((bio, i) => (
               <BioCard key={i} bio={bio} />
             ))}

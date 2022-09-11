@@ -9,6 +9,8 @@ import Head from 'next/head'
 import { useEffect, useState } from 'react'
 import LongModal from 'components/shared/Modals/LongModal'
 import { Loading } from '@nextui-org/react'
+import { Fade } from 'react-reveal'
+import { useAppContext } from 'utils/context'
 
 export default function OthersInfo() {
   const [visible, setVisible] = useState({
@@ -22,7 +24,11 @@ export default function OthersInfo() {
   const activeRoute = routename =>
     router.route.split('/edit')[1] === routename ? true : false
 
-  const { register, handleSubmit } = useForm({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({
     mode: 'onChange'
   })
   const onSubmit = data => {
@@ -38,12 +44,7 @@ export default function OthersInfo() {
           biodataRequests.setField(7).then(info => {
             if (info.message === 'ok') {
               setIsLoading(false)
-              setVisible({
-                message:
-                  'আপনার তথ্যগুলো সংরক্ষিত হয়েছে এবং আপনার বায়োডাটাটি এখন হাইড অবস্থায় রয়েছে। এটিকে পুনরায় পাবলিশ করার জন্য সবগুলো ফিল্ড পূরণ করে প্রিভিউ থেকে পাবলিশ করুন।',
-                status: true,
-                done: true
-              })
+              setVisible({ message: '', status: false, done: true })
               window.scroll({
                 top: 100,
                 left: 100,
@@ -63,8 +64,23 @@ export default function OthersInfo() {
       })
   }
 
-  const { data, loading } = getData()
+  const { data, loading } = getData(visible.done)
+  const { routes, setRoutes } = useAppContext()
 
+  useEffect(() => {
+    if (data) {
+      if (data.special_acknowledgement) {
+        setRoutes({
+          ...routes,
+          another: {
+            name: 'অন্যান্য তথ্য',
+            link: '/others-info',
+            status: 'done'
+          }
+        })
+      }
+    }
+  }, [data, loading])
   useEffect(() => {
     biodataRequests.checkField().then(data => {
       setFields(data.fields)
@@ -108,20 +124,46 @@ export default function OthersInfo() {
             </p>
           </fieldset>
 
-          <fieldset className='my-6 rounded-md border-2 border-blue-300 p-4'>
-            <legend className='ml-4 font-bold text-blue-500'>
-              বিশেষ কিছু যদি জানাতে চান
+          <fieldset
+            className={`my-6 rounded-md border-2 ${
+              errors.special_acknowledgement
+                ? 'border-red-500'
+                : 'border-blue-300'
+            } p-4`}
+          >
+            <legend
+              className={`ml-4 font-bold ${
+                errors.special_acknowledgement
+                  ? 'text-red-500'
+                  : 'text-blue-500'
+              }`}
+            >
+              বিশেষ কিছু যদি জানাতে চান *
             </legend>
             <textarea
               defaultValue={data?.special_acknowledgement}
               rows={5}
-              {...register('special_acknowledgement')}
-              className='w-full rounded bg-blue-100 px-4 py-2 font-medium text-blue-400 shadow-md focus:outline-blue-500'
+              {...register('special_acknowledgement', {
+                required: 'field is required'
+              })}
+              className={`w-full rounded ${
+                errors.special_acknowledgement ? 'bg-red-100' : 'bg-blue-100'
+              } px-4 py-2 font-medium text-blue-400 shadow-md ${
+                errors.special_acknowledgement
+                  ? 'focus:outline-red-500'
+                  : 'focus:outline-blue-500'
+              }`}
             />
+            <Fade right when={errors.special_acknowledgement ? true : false}>
+              {errors.special_acknowledgement && (
+                <p className='text-red-500 py-2 pl-2'>
+                  {errors.special_acknowledgement.message}
+                </p>
+              )}
+            </Fade>
             <p className='pl-2 pt-4 text-blue-400'>
               আপনার কোনো শর্ত বা উপরে লিখার সুযোগ হয় নি এমন কিছু জানানোর থাকলে
-              এই ঘরে লিখতে পারেন। যেমনঃ ছাত্র অবস্থায় বিয়ে করলে কিভাবে ভরণপোষণ
-              করবেন বা সংসার চালাবেন, পারিবারিক বা ব্যক্তিগত কোনো সুবিধা বা
+              এই ঘরে লিখতে পারেন। যেমনঃ পারিবারিক বা ব্যক্তিগত কোনো সুবিধা বা
               অসুবিধা ইত্যাদি যে কোনো বিষয়ে যত ইচ্ছা লিখতে পারবেন। ।
             </p>
           </fieldset>

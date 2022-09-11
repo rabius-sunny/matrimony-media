@@ -9,7 +9,7 @@ export default function BioHeading({ heading, children, link }) {
           <span>{heading}</span>
           {link && (
             <Link href={`/profile/edit/${link}`}>
-              <PencilAltIcon className='h-10 w-10 cursor-pointer hover:text-blue-500' />
+              <PencilAltIcon className='h-7 w-7 sm:h-10 sm:w-10  cursor-pointer hover:text-blue-500' />
             </Link>
           )}
         </h1>

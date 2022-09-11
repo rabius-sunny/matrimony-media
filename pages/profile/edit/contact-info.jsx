@@ -48,21 +48,19 @@ export default function Name() {
           biodataRequests.setField(9).then(info => {
             if (info.message === 'ok') {
               setIsLoading(false)
-              setVisible({
-                message:
-                  'আপনার তথ্যগুলো সংরক্ষিত হয়েছে এবং আপনার বায়োডাটাটি এখন হাইড অবস্থায় রয়েছে। এটিকে পুনরায় পাবলিশ করার জন্য সবগুলো ফিল্ড পূরণ করে প্রিভিউ থেকে পাবলিশ করুন।',
-                status: true,
-                done: true
-              })
-              window.scroll({
-                top: 100,
-                left: 100,
-                behavior: 'smooth'
-              })
-              setIsLoading(false)
+              setVisible({ message: '', status: false, done: true })
+
+              router.push('/profile/preview')
             }
           })
-        } else alert('error! try again')
+        } else {
+          setIsLoading(false)
+          setVisible({
+            message: 'ইরর হয়েছে, আবার চেষ্টা করুন',
+            status: true,
+            done: false
+          })
+        }
       })
       .catch(err => {
         setIsLoading(false)
@@ -164,10 +162,13 @@ export default function Name() {
               অভিভাবকের নাম্বার *
             </legend>
             <input
+              type='number'
               defaultValue={data?.guardian_number}
               placeholder='01700000000'
               {...register('guardian_number', {
-                required: 'please fill the form'
+                required: 'field is required',
+                min: 10,
+                minLength: 10
               })}
               className={`w-full rounded ${
                 errors.guardian_number ? 'bg-red-100' : 'bg-blue-100'
@@ -207,7 +208,7 @@ export default function Name() {
             <input
               defaultValue={data?.number_relation}
               {...register('number_relation', {
-                required: 'please fill the form'
+                required: 'field is required'
               })}
               className={`w-full rounded ${
                 errors.number_relation ? 'bg-red-100' : 'bg-blue-100'
@@ -245,7 +246,7 @@ export default function Name() {
             <input
               defaultValue={data?.receiving_email}
               {...register('receiving_email', {
-                required: 'enter a valid receiving_email address',
+                required: 'enter a valid email address',
                 pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/i
               })}
               className={`w-full rounded ${
