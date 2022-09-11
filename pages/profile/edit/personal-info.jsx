@@ -192,7 +192,7 @@ export default function PersonalInfo() {
                     errors.dress_over_ankle ? 'text-red-500' : 'text-blue-500'
                   }`}
                 >
-                  কাপড় পায়ের টাখনুর পড়েন? *
+                  কাপড় পায়ের টাখনুর উপরে পড়েন? *
                 </legend>
                 <input
                   defaultValue={data?.dress_over_ankle}
