@@ -31,6 +31,9 @@ class UserRequests {
   deleteHideRequest(reason) {
     return requests.post('/delete-hide-request', reason)
   }
+  hideByUser() {
+    return requests.get('/hide-by-user')
+  }
 }
 
 export default new UserRequests()

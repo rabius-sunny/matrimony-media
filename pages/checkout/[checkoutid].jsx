@@ -35,7 +35,7 @@ export default function Checkout() {
   }
   const onSubmit = data => {
     if (pement.pnumber === '' || pement.trx === '') {
-      alert('Fill your pement info')
+      alert('Fill your payment info')
     } else {
       setLoading(true)
       userRequest
@@ -133,7 +133,7 @@ export default function Checkout() {
                 message='email is required'
               />
               <GInput
-                type='tel'
+                type='number'
                 legend='আপনার মোবাইল নম্বর'
                 name='phone'
                 message='phone is required'

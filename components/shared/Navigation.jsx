@@ -146,7 +146,7 @@ export default function Navigation() {
               </div>
               <div className='space-y-6 py-6 px-5'>
                 <div>
-                  <Link href={auth ? '/profile/edit/name' : '/sign-in'}>
+                  <Link href={auth ? '/profile/edit/primary' : '/sign-in'}>
                     <a className='flex w-full items-center justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700'>
                       সিভি পাঠান
                     </a>
