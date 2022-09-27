@@ -1,10 +1,16 @@
 {
   "private": true,
   "license": "MIT",
-  "scripts": {
+"homepage": "https://anabuk.com",
+  "commands": {
     "dev": "next -p 4000",
     "build": "next build",
     "start": "next start"
+  },
+  "scripts": {
+    "dev": "node server.js",
+    "build": "next build",
+    "start": "NODE_ENV=production node server.js"
   },
   "dependencies": {
     "@headlessui/react": "^1.5.0",
