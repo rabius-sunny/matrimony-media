@@ -42,7 +42,7 @@ export default function Favorite() {
   }, [datafromLocal.length])
 
   return (
-    <div className='container'>
+    <div>
       <Head>
         <title>পছন্দের বায়োডাটাসমূহ</title>
       </Head>
@@ -53,7 +53,7 @@ export default function Favorite() {
         </div>
       ) : (!isLoading && data?.bios.length === 0) || (auth && data === null) ? (
         <div className='mt-12' style={{ minHeight: '70vh' }}>
-          <h1 className='text-3xl text-center text-red-500 font-bold'>
+          <h1 className='text-3xl text-center text-primary font-bold'>
             কোনো পছন্দের বায়োডাটা নেই। <br />
             {error && `Error: ${error.message}`}
           </h1>
@@ -68,8 +68,8 @@ export default function Favorite() {
             </div>
           </div>
         ) : (
-          <div className='mt-12' style={{ minHeight: '70vh' }}>
-            <h1 className='text-3xl text-center text-red-500 font-bold'>
+          <div className=' container mt-12' style={{ minHeight: '70vh' }}>
+            <h1 className='text-3xl text-center text-primary font-bold'>
               কোনো পছন্দের বায়োডাটা নেই।
             </h1>
           </div>

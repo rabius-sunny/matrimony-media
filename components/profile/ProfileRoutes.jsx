@@ -26,10 +26,10 @@ export default function ProfileRoutes({ activeRoute }) {
                 <div className=' ml-1'>
                   {
                     route.status === 'done' && (
-                      // <ExclamationCircleIcon className='w-5 text-red-500' />
-                      <CheckCircleIcon className='h-5 w-5 text-green-500' />
+                      // <ExclamationCircleIcon className='w-5 text-primary' />
+                      <CheckCircleIcon className='h-5 w-5 text-secondary' />
                     ) /* : (
-                    <CheckCircleIcon className='h-5 w-5 text-green-500' />
+                    <CheckCircleIcon className='h-5 w-5 text-secondary' />
                   ) */
                   }
                 </div>
@@ -38,7 +38,7 @@ export default function ProfileRoutes({ activeRoute }) {
             // </Link>
           ))}
       </div>
-      <div className='h-1 bg-red-500'></div>
+      <div className='h-1 bg-primary '></div>
     </>
   )
 }

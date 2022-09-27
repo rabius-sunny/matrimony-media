@@ -105,7 +105,7 @@ export default function Signin() {
   const onChange = e => setCred({ ...cred, [e.target.name]: e.target.value })
 
   return (
-    <div className='bg-gradient-to-l from-rose-600 to-pink-600'>
+    <div className='bg-secondary'>
       <Head>
         <title>সাইন ইন</title>
       </Head>
@@ -118,26 +118,27 @@ export default function Signin() {
         >
           <div className='flex h-full items-center bg-gray-900 bg-opacity-40 px-20'>
             <div>
-              <h2 className='text-4xl font-bold text-white'>Matrimony Media</h2>
+              <h2 className='text-6xl font-bold text-white'>
+                <span className='text-primary'>জান্নাতি</span>{' '}
+                <span className='text-secondary'>জুটি</span>
+              </h2>
 
-              <p className='mt-3 max-w-xl text-gray-300'>
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. In
-                autem ipsa, nulla laboriosam dolores, repellendus perferendis
-                libero suscipit nam temporibus molestiae
+              <p className='mt-3 text-xl max-w-xl text-white'>
+                দ্বীনদার পাত্র-পাত্রী খোঁজার একটি বিশ্বস্ত প্রতিষ্ঠান
               </p>
             </div>
           </div>
         </div>
 
-        <div className='mx-auto flex w-full max-w-md items-center px-6 lg:w-2/6'>
+        <div className='mx-auto bg-secondary flex w-full max-w-md items-center px-6 lg:w-2/6'>
           <div className='flex-1'>
             <div className='text-center'>
-              <h2 className='text-center text-4xl font-bold text-white dark:text-white'>
-                Matrimony Media
+              <h2 className='text-center text-4xl md:text-6xl font-bold text-primary dark:text-white'>
+                জান্নাতি জুটি
               </h2>
 
-              <p className='mt-3 text-white dark:text-gray-300'>
-                Enter with your phone no.
+              <p className='mt-5 text-lg text-white dark:text-gray-300'>
+                আপনার ফোন নম্বর দিয়ে প্রবেশ করুন
               </p>
             </div>
 
@@ -152,13 +153,13 @@ export default function Signin() {
                       Phone
                     </label>
                     <input
-                      type='tel'
+                      type='number'
                       placeholder='01XXXXXXXXX'
                       name='phone'
                       id='phone'
                       onChange={onChange}
                       required
-                      className='mt-2 block w-full rounded-md border border-gray-200 bg-white px-4 py-2 text-gray-700 placeholder-gray-400 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-400 focus:ring-opacity-40 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:placeholder-gray-600 dark:focus:border-blue-400'
+                      className='mt-2 block w-full rounded-md border border-gray-200 bg-white px-4 py-2 text-secondary font-semibold placeholder-gray-400 focus:outline-none focus:ring focus:ring-dark  dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:placeholder-gray-600'
                     />
                   </div>
 
@@ -167,29 +168,31 @@ export default function Signin() {
                   </div>
 
                   <div className='mt-6'>
-                    <button className='w-full transform rounded-md bg-blue-500 px-4 py-2 tracking-wide text-white transition-colors duration-200 hover:bg-blue-400 focus:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50'>
-                      GET OTP
+                    <button className='w-full bg-primary hover:bg-dark transform rounded-md bg-blue-500 px-4 py-2 tracking-wide text-white transition-colors duration-200 focus:outline-none focus:ring focus:ring-dark'>
+                      OTP কোড নিন
                     </button>
                   </div>
                 </form>
               )}
               {isOtp && (
                 <div className='text-center'>
-                  <h1 className='text-3xl text-white'>Enter OTP</h1>
+                  <h1 className='text-3xl bg-primary hover:bg-dark text-white'>
+                    OTP কোড দিন
+                  </h1>
                   <form onSubmit={onOtpSubmit}>
                     <input
                       type='number'
                       name='otp'
                       onChange={onChange}
                       required
-                      className='mt-2 block w-full rounded-md border border-gray-200 bg-white px-4 py-2 text-gray-700 placeholder-gray-400 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-400 focus:ring-opacity-40 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:placeholder-gray-600 dark:focus:border-blue-400'
+                      className='mt-2 block w-full rounded-md border border-gray-200 bg-white px-4 py-2 text-gray-700 placeholder-gray-400 focus:border-blue-400 focus:outline-none focus:ring focus:ring-primary focus:ring-opacity-40 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:placeholder-gray-600 dark:focus:border-blue-400'
                     />
                     <div className='mt-6'>
                       <button
                         type='submit'
-                        className='w-full transform rounded-md bg-blue-500 px-4 py-2 tracking-wide text-white transition-colors duration-200 hover:bg-blue-400 focus:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50'
+                        className='w-full bg-primary hover:bg-dark transform rounded-md bg-blue-500 px-4 py-2 tracking-wide text-white transition-colors duration-200 hover:bg-blue-400 focus:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50'
                       >
-                        TYPE OTP & ENTER
+                        OTP দিয়ে প্রবেশ করুন
                       </button>
                     </div>
                   </form>

@@ -13,12 +13,12 @@ export function CInput({
   return (
     <fieldset
       className={`my-6 rounded-md border-2 ${
-        errors[name] ? 'border-red-500' : 'border-blue-300'
+        errors[name] ? 'border-red-500' : 'border-gray-300'
       } p-4`}
     >
       <legend
         className={`ml-4 font-bold ${
-          errors[name] ? 'text-red-500' : 'text-blue-500'
+          errors[name] ? 'text-red-500' : 'text-secondary'
         }`}
       >
         {legend}
@@ -29,9 +29,9 @@ export function CInput({
           {...register(name, { required: message && message })}
           {...rest}
           className={`w-full rounded ${
-            errors[name] ? 'bg-red-100' : 'bg-blue-100'
-          } px-4 py-2 font-medium text-blue-400 shadow-md ${
-            errors[name] ? 'focus:outline-red-500' : 'focus:outline-blue-500'
+            errors[name] ? 'bg-red-100' : 'bg-green-100'
+          } px-4 py-2 font-medium text-green-400 shadow-md ${
+            errors[name] ? 'focus:outline-red-500' : 'focus:outline-secondary'
           }`}
         />
       ) : (
@@ -39,18 +39,18 @@ export function CInput({
           {...register(name, { required: message && message })}
           {...rest}
           className={`w-full rounded ${
-            errors[name] ? 'bg-red-100' : 'bg-blue-100'
-          } px-4 py-2 font-medium text-blue-400 shadow-md ${
-            errors[name] ? 'focus:outline-red-500' : 'focus:outline-blue-500'
+            errors[name] ? 'bg-red-100' : 'bg-green-100'
+          } px-4 py-2 font-medium text-green-400 shadow-md ${
+            errors[name] ? 'focus:outline-red-500' : 'focus:outline-secondary'
           }`}
         />
       )}
       <Fade right when={errors[name] ? true : false}>
         {errors[name] && (
-          <p className='text-red-500 py-2 pl-2'>{errors[name].message}</p>
+          <p className='text-primary py-2 pl-2'>{errors[name].message}</p>
         )}
       </Fade>
-      {description && <p className='pl-2 pt-4 text-blue-400'>{description}</p>}
+      {description && <p className='pl-2 pt-4 text-secondary'>{description}</p>}
     </fieldset>
   )
 }
@@ -69,19 +69,19 @@ export function CSelect({
     <>
       <fieldset
         className={`my-6 rounded-md border-2 ${
-          errors[name] ? 'border-red-500' : 'border-blue-300'
+          errors[name] ? 'border-red-500' : 'border-gray-300'
         } p-4`}
       >
         <legend
           className={`ml-4 font-bold ${
-            errors[name] ? 'text-red-500' : 'text-blue-500'
+            errors[name] ? 'text-primary' : 'text-secondary'
           }`}
         >
           {legend}
         </legend>
         <select
           className={`w-full focus:outline-none border-2 ${
-            errors[name] ? 'border-red-500' : 'border-blue-300'
+            errors[name] ? 'border-red-500' : 'border-green-300'
           } p-2 rounded-md`}
           {...register(name, { required: message && message })}
           onClick={onClick ? e => onClick(e.target.value) : null}
@@ -97,7 +97,7 @@ export function CSelect({
         </select>
         <Fade right when={errors[name] ? true : false}>
           {errors[name] && (
-            <p className='text-red-500 py-2 pl-2'>{errors[name].message}</p>
+            <p className='text-primary py-2 pl-2'>{errors[name].message}</p>
           )}
         </Fade>
       </fieldset>

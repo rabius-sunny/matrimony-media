@@ -224,7 +224,7 @@ export default function GeneralInfo() {
                   isLoading
                     ? 'pointer-events-none cursor-not-allowed'
                     : 'cursor-pointer'
-                } rounded-md bg-red-500 flex items-center font-medium text-white shadow-md hover:bg-red-600 px-6 py-3`}
+                } rounded-md bg-primary  flex items-center font-medium text-white shadow-md hover:bg-primary  px-6 py-3`}
               >
                 {isLoading ? <Loading color='success' size='sm' /> : 'সেভ করুন'}
               </button>
@@ -309,7 +309,7 @@ export default function GeneralInfo() {
             <input
               type='submit'
               value='সেভ করুন ও পরবর্তী পেজে যান'
-              className='rounded-md bg-red-500 px-6 py-3 text-xl font-medium text-white shadow-md hover:bg-red-600 focus:ring-2 focus:ring-red-800'
+              className='rounded-md bg-primary  px-6 py-3 text-xl font-medium text-white shadow-md hover:bg-primary  focus:ring-2 focus:ring-red-800'
             />
           </CForm>
         )}

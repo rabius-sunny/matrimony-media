@@ -319,13 +319,13 @@ export default function DetailBio() {
               <div className='my-8 flex gap-4'>
                 <button
                   onClick={() => router.push(`/checkout/${uId}`)}
-                  className='text-center px-4 py-3 rounded-md hover:bg-white hover:border-2 hover:text-green-500 text-white hover:border-green-500 bg-green-500 shadow'
+                  className='text-center px-4 py-3 rounded-md hover:bg-white hover:border-2 hover:text-secondary text-white hover:border-green-500 bg-green-500 shadow'
                 >
                   অভিভাবকের সাথে যোগাযোগ করুন
                 </button>
                 <button
                   onClick={handleBookmark}
-                  className='text-center px-4 py-3 rounded-md hover:bg-white hover:border-2 hover:text-red-500 text-white hover:border-red-500 bg-red-500 shadow'
+                  className='text-center px-4 py-3 rounded-md hover:bg-white hover:border-2 hover:text-primary text-white hover:border-red-500 bg-primary  shadow'
                 >
                   {isBookmarked || isBookmarkedLocal
                     ? 'ফেভারিট থেকে মুছে ফেলুন'

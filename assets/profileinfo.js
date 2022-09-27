@@ -1,6 +1,7 @@
 const _type = ['পাত্রের বায়োডাটা', 'পাত্রীর বায়োডাটা']
 const _malecondition = ['অবিবাহিত', 'বিবাহিত', 'ডিভোর্সড', 'বিপত্মীক']
 const _femalecondition = ['অবিবাহিত', 'ডিভোর্সড', 'বিধবা']
+const _conditions = ['অবিবাহিত', 'বিবাহিত', 'ডিভোর্সড', 'বিপত্মীক', 'বিধবা']
 const _madhabs = [
   'সালাফি/আহলেহাদীস',
   'হানাফি',
@@ -300,5 +301,6 @@ export {
   _height,
   _weight,
   _bloodGroup,
-  _brothers
+  _brothers,
+  _conditions
 }

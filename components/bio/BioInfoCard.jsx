@@ -88,7 +88,7 @@ export default function BioInfoCard({ data, loading, uId }) {
 
     return (
       <div>
-        <p className='mb-4 font-semibold italic text-red-400'>
+        <p className='mb-4 font-semibold italic text-primary'>
           বায়োডাটা “ডিলিট” এর মাধ্যমে আপনার বায়োডাটা সম্পূর্ণভাবে ওয়েবসাইট থেকে
           মুছে ফেলতে পারবেন। যা পরবর্তীতে ফিরিয়ে আনা সম্ভব না।
         </p>
@@ -158,7 +158,7 @@ export default function BioInfoCard({ data, loading, uId }) {
   }
   return (
     <>
-      <div className='rounded-md bg-red-500 p-4 text-center'>
+      <div className='rounded-md bg-primary  p-4 text-center'>
         <LongModal
           color='error'
           bodyColor='error'
@@ -310,13 +310,13 @@ export default function BioInfoCard({ data, loading, uId }) {
                     className={`block w-full rounded-md ${
                       copy ? 'bg-red-800' : 'bg-white'
                     } py-3 font-bold ${
-                      copy ? 'text-white' : 'text-red-600'
+                      copy ? 'text-white' : 'text-primary'
                     } focus:ring-2 focus:ring-red-700`}
                   >
                     {copy ? 'Copied' : 'Copy BioID'}
                   </button>
                 </div>
-                <div className='btnHolder mt-4 flex rounded-md bg-white font-bold text-red-600'>
+                <div className='btnHolder mt-4 flex rounded-md bg-white font-bold text-primary'>
                   <button
                     onClick={() => {
                       set_delete(true)
@@ -342,20 +342,24 @@ export default function BioInfoCard({ data, loading, uId }) {
           </div>
         )}
       </div>
-      <div
-        className={`${data ? 'block' : 'hidden'} my-4 ${
-          data?.published ? 'bg-green-600' : 'bg-red-600'
-        } shadow-lg py-2 text-white rounded text-2xl text-center`}
-      >
-        {data?.published ? 'বায়োটি পাবলিশড রয়েছে' : 'বায়োটি হাইড রয়েছে'}
-      </div>
-      <div
-        className={`${
-          !data || data?.published ? 'hidden' : 'block'
-        } bg-red-200 text-red-600 p-2 shadow font-semibold`}
-      >
-        পাবলিশ করতে প্রিভিউ থেকে পাবলিশ রিকুয়েস্ট করুন
-      </div>
+      {id && id === data?.user?._id && (
+        <>
+          <div
+            className={`${data ? 'block' : 'hidden'} my-4 ${
+              data?.published ? 'bg-green-600' : 'bg-primary '
+            } shadow-lg py-2 text-white rounded text-2xl text-center`}
+          >
+            {data?.published ? 'বায়োটি পাবলিশড রয়েছে' : 'বায়োটি হাইড রয়েছে'}
+          </div>
+          <div
+            className={`${
+              !data || data?.published ? 'hidden' : 'block'
+            } bg-red-200 text-primary p-2 shadow font-semibold`}
+          >
+            পাবলিশ করতে প্রিভিউ থেকে পাবলিশ রিকুয়েস্ট করুন
+          </div>
+        </>
+      )}
     </>
   )
 }

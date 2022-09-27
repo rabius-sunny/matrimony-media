@@ -133,11 +133,11 @@ export default function Name() {
             <p style={{ color: 'red', fontSize: '1.3rem' }}>{item.name}</p>
             <Link href={item.slug}>
               <a
-                className='text-blue-400 underline flex items-center'
+                className='text-green-400 underline flex items-center'
                 style={{ fontSize: '.9rem' }}
               >
                 পূরণ করুন ক্লিক করুন
-                <ArrowRightIcon className='text-blue-400 h-4 pl-1' />
+                <ArrowRightIcon className='text-green-400 h-4 pl-1' />
               </a>
             </Link>
           </div>
@@ -151,12 +151,12 @@ export default function Name() {
         <form onSubmit={handleSubmit(onSubmit)}>
           <fieldset
             className={`my-6 rounded-md border-2 ${
-              errors.guardian_number ? 'border-red-500' : 'border-blue-300'
+              errors.guardian_number ? 'border-red-500' : 'border-gray-300'
             } p-4`}
           >
             <legend
               className={`ml-4 font-bold ${
-                errors.guardian_number ? 'text-red-500' : 'text-blue-500'
+                errors.guardian_number ? 'text-primary' : 'text-secondary'
               }`}
             >
               অভিভাবকের নাম্বার *
@@ -171,21 +171,21 @@ export default function Name() {
                 minLength: 10
               })}
               className={`w-full rounded ${
-                errors.guardian_number ? 'bg-red-100' : 'bg-blue-100'
-              } px-4 py-2 font-medium text-blue-400 shadow-md ${
+                errors.guardian_number ? 'bg-red-100' : 'bg-green-100'
+              } px-4 py-2 font-medium text-green-400 shadow-md ${
                 errors.guardian_number
                   ? 'focus:outline-red-500'
-                  : 'focus:outline-blue-500'
+                  : 'focus:outline-secondary'
               }`}
             />
             <Fade right when={errors.guardian_number ? true : false}>
               {errors.guardian_number && (
-                <p className='text-red-500 py-2 pl-2'>
+                <p className='text-primary py-2 pl-2'>
                   {errors.guardian_number.message}
                 </p>
               )}
             </Fade>
-            <p className='pl-2 pt-4 text-blue-400'>
+            <p className='pl-2 pt-4 text-green-400'>
               অবশ্যই ইংরেজীতে নাম্বার লিখবেন এভাবে 01700-000000। বিঃদ্রঃ নিজের
               নাম্বার দিলে ভেরিফিকেশনে এপ্রুভ হবে না। এই ব্যাপারে আমরা সর্বোচ্চ
               কঠোর। সব সময় খোলা থাকবে এমন নাম্বার লিখবেন। নাম্বার বন্ধ থাকার
@@ -195,12 +195,12 @@ export default function Name() {
 
           <fieldset
             className={`my-6 rounded-md border-2 ${
-              errors.number_relation ? 'border-red-500' : 'border-blue-300'
+              errors.number_relation ? 'border-red-500' : 'border-gray-300'
             } p-4`}
           >
             <legend
               className={`ml-4 font-bold ${
-                errors.number_relation ? 'text-red-500' : 'text-blue-500'
+                errors.number_relation ? 'text-primary' : 'text-secondary'
               }`}
             >
               যার নাম্বার লিখেছেন *
@@ -211,21 +211,21 @@ export default function Name() {
                 required: 'field is required'
               })}
               className={`w-full rounded ${
-                errors.number_relation ? 'bg-red-100' : 'bg-blue-100'
-              } px-4 py-2 font-medium text-blue-400 shadow-md ${
+                errors.number_relation ? 'bg-red-100' : 'bg-green-100'
+              } px-4 py-2 font-medium text-green-400 shadow-md ${
                 errors.number_relation
                   ? 'focus:outline-red-500'
-                  : 'focus:outline-blue-500'
+                  : 'focus:outline-secondary'
               }`}
             />
             <Fade right when={errors.number_relation ? true : false}>
               {errors.number_relation && (
-                <p className='text-red-500 py-2 pl-2'>
+                <p className='text-primary py-2 pl-2'>
                   {errors.number_relation.message}
                 </p>
               )}
             </Fade>
-            <p className='pl-2 pt-4 text-blue-400'>
+            <p className='pl-2 pt-4 text-green-400'>
               যে অভিভাবকের নাম্বার দিয়েছেন তার সাথে আপনার সম্পর্ক। এভাবে লিখবেনঃ
               বাবা
             </p>
@@ -233,12 +233,12 @@ export default function Name() {
 
           <fieldset
             className={`my-6 rounded-md border-2 ${
-              errors.receiving_email ? 'border-red-500' : 'border-blue-300'
+              errors.receiving_email ? 'border-red-500' : 'border-gray-300'
             } p-4`}
           >
             <legend
               className={`ml-4 font-bold ${
-                errors.receiving_email ? 'text-red-500' : 'text-blue-500'
+                errors.receiving_email ? 'text-primary' : 'text-secondary'
               }`}
             >
               বায়োডাটা গ্রহণের ই-মেইল এড্রেস *
@@ -250,22 +250,22 @@ export default function Name() {
                 pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/i
               })}
               className={`w-full rounded ${
-                errors.receiving_email ? 'bg-red-100' : 'bg-blue-100'
-              } px-4 py-2 font-medium text-blue-400 shadow-md ${
+                errors.receiving_email ? 'bg-red-100' : 'bg-green-100'
+              } px-4 py-2 font-medium text-green-400 shadow-md ${
                 errors.receiving_email
                   ? 'focus:outline-red-500'
-                  : 'focus:outline-blue-500'
+                  : 'focus:outline-secondary'
               }`}
             />
             <Fade right when={errors.receiving_email ? true : false}>
               {errors.receiving_email && (
-                <p className='text-red-500 py-2 pl-2'>
+                <p className='text-primary py-2 pl-2'>
                   {errors.receiving_email.message ||
                     'enter a valid email address'}
                 </p>
               )}
             </Fade>
-            <p className='pl-2 pt-4 text-blue-400'>
+            <p className='pl-2 pt-4 text-green-400'>
               এই ই-মেইলে অপরপক্ষ বায়োডাটার লিংক পাঠাতে পারে। তাই নির্ভুলভাবে
               লিখুন।
             </p>
@@ -276,7 +276,7 @@ export default function Name() {
               isLoading
                 ? 'pointer-events-none cursor-not-allowed'
                 : 'cursor-pointer'
-            } rounded-md bg-red-500 flex items-center font-medium text-white shadow-md hover:bg-red-600 px-6 py-3`}
+            } rounded-md bg-primary  flex items-center font-medium text-white shadow-md hover:bg-primary  px-6 py-3`}
           >
             {isLoading ? (
               <Loading color='success' size='sm' />

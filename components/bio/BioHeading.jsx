@@ -5,7 +5,7 @@ export default function BioHeading({ heading, children, link }) {
   return (
     <div className='rounded-t-md overflow-hidden'>
       <div className='border-x-4 border-b-4 border-red-500'>
-        <h1 className='flex justify-between bg-red-500 text-white text-xl sm:text-3xl p-4'>
+        <h1 className='flex justify-between bg-primary  text-white text-xl sm:text-3xl p-4'>
           <span>{heading}</span>
           {link && (
             <Link href={`/profile/edit/${link}`}>

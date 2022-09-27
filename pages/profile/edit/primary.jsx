@@ -1,7 +1,12 @@
 import ProfileLayout from 'components/profile/ProfileLayout'
 import { useRouter } from 'next/router'
 import ProfileRoutes from 'components/profile/ProfileRoutes'
-import { _femalecondition, _malecondition, _type } from 'assets/profileinfo'
+import {
+  _femalecondition,
+  _malecondition,
+  _conditions,
+  _type
+} from 'assets/profileinfo'
 import { CInput, CSelect } from 'components/profile/CInputs'
 import CForm from 'components/profile/CFroms'
 import biodataRequests from 'services/biodataRequests'
@@ -85,6 +90,8 @@ export default function Name() {
     })
   }, [visible.done])
 
+  console.log('data', data)
+
   // const onReset = data => {
   //   let _reset = {}
   //   const dataArray = Object.keys(data)
@@ -140,15 +147,15 @@ export default function Name() {
           <CSelect
             legend='বৈবাহিক অবস্থা *'
             message='Field is required'
+            defaultValue={data?.condition}
             options={
               type === 'পাত্রের বায়োডাটা'
                 ? _malecondition
                 : type === 'পাত্রীর বায়োডাটা'
                 ? _femalecondition
-                : []
+                : _conditions
             }
             name='condition'
-            defaultValue={data?.condition}
           />
 
           <div className='flex items-center'>
@@ -158,7 +165,7 @@ export default function Name() {
                 isLoading
                   ? 'pointer-events-none cursor-not-allowed'
                   : 'cursor-pointer'
-              } rounded-md bg-red-500 flex items-center font-medium text-white shadow-md hover:bg-red-600 px-6 py-3`}
+              } rounded-md bg-primary  flex items-center font-medium text-white shadow-md hover:bg-primary  px-6 py-3`}
             >
               {isLoading ? <Loading color='success' size='sm' /> : 'সেভ করুন'}
             </button>
@@ -168,7 +175,7 @@ export default function Name() {
               className={`${
                 fields.length
                   ? 'bg-gray-300 pointer-events-none'
-                  : 'bg-green-500 hover:bg-green-600'
+                  : 'bg-secondary hover:bg-green-600'
               } ml-2 rounded-md text-white px-6 py-3 shadow-md`}
             >
               প্রিভিউ দেখুন ও পাবলিশ করুন
@@ -207,7 +214,7 @@ export default function Name() {
           <input
             type='submit'
             value={isLoading ? <Loading color='success' /> : 'সেভ করুন'}
-            className='rounded-md bg-red-500 px-6 py-3 text-xl font-medium text-white shadow-md hover:bg-red-600 focus:ring-2 focus:ring-red-800'
+            className='rounded-md bg-primary  px-6 py-3 text-xl font-medium text-white shadow-md hover:bg-primary  focus:ring-2 focus:ring-red-800'
           />
         </CForm>
       )}

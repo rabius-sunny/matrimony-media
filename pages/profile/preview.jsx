@@ -162,10 +162,10 @@ export default function Preview() {
         header='Editing Report'
         body={
           <div>
-            আপনার তথ্যসমূহ সংরক্ষিত হয়েছে। বায়োডাটাটি পাবলিশ করতে নিচে{' '}
-            <strong>পাবলিশ রিকুয়েস্ট করুন</strong> বাটনে ক্লিক করুন, প্রয়োজনীয়
-            পরিবর্তন থাকলে{' '}
-            <PencilAltIcon className='inline w-5 mr-1 text-blue-500' />
+            আপনার তথ্যসমূহ সংরক্ষিত হয়েছে। বায়োডাটাটি পাবলিশ করতে নিচে
+            <span className='text-secondary'> পাবলিশ রিকুয়েস্ট করুন </span>
+            বাটনে ক্লিক করুন, প্রয়োজনীয় পরিবর্তন থাকলে{' '}
+            <PencilAltIcon className='inline w-5 mr-1 text-secondary' />
             আইকনে ক্লিক করুন।
           </div>
         }
@@ -323,7 +323,7 @@ export default function Preview() {
       <div className='my-4'>
         <button
           onClick={handlePublish}
-          className='text-white font-bold text-xl cursor-pointer rounded-md bg-red-500 py-3 my-8 w-full'
+          className='text-white font-bold text-xl cursor-pointer rounded-md bg-primary  py-3 my-8 w-full'
         >
           পাবলিশ রিকুয়েস্ট করুন
         </button>

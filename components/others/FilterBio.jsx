@@ -91,7 +91,7 @@ export default function FilterBio({ type, jilla, setLoading, setBios }) {
   }
 
   return (
-    <div className='mb-8 bg-gradient-to-r from-rose-600 to-pink-600 p-6'>
+    <div className='mb-8 bg-primary p-6'>
       <div className='container block sm:flex items-center justify-evenly mt-4 flex-wrap'>
         <div className='pr-4'>
           <label className='block text-white font-semibold' htmlFor='s1'>

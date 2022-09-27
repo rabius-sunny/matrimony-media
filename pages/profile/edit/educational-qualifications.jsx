@@ -128,12 +128,12 @@ export default function Education() {
         <form onSubmit={handleSubmit(onSubmit)}>
           <fieldset
             className={`my-6 rounded-md border-2 ${
-              errors.education ? 'border-red-500' : 'border-blue-300'
+              errors.education ? 'border-red-500' : 'border-gray-300'
             } p-4`}
           >
             <legend
               className={`ml-4 font-bold ${
-                errors.education ? 'text-red-500' : 'text-blue-500'
+                errors.education ? 'text-primary' : 'text-secondary'
               }`}
             >
               কোন মাধ্যমে পড়াশোনা করেছেন? *
@@ -142,7 +142,7 @@ export default function Education() {
               onClick={e => setEducation(e.target.value)}
               defaultValue={data?.education}
               className={`w-full focus:outline-none border-2 ${
-                errors.education ? 'border-red-500' : 'border-blue-300'
+                errors.education ? 'border-red-500' : 'border-gray-300'
               } p-2 rounded-md`}
               {...register('education', { required: 'education is required' })}
             >
@@ -151,7 +151,7 @@ export default function Education() {
             </select>
             <Fade right when={errors.education ? true : false}>
               {errors.education && (
-                <p className='text-red-500 py-2 pl-2'>
+                <p className='text-primary py-2 pl-2'>
                   {errors.education.message}
                 </p>
               )}
@@ -160,14 +160,14 @@ export default function Education() {
           {/* General Education */}
           {education === educationType[0] && (
             <div>
-              <fieldset className='my-6 rounded-md border-2 border-blue-300 p-4'>
-                <legend className='ml-4 text-lg font-bold text-blue-500'>
+              <fieldset className='my-6 rounded-md border-2 border-gray-300 p-4'>
+                <legend className='ml-4 text-lg font-bold text-secondary'>
                   মাধ্যমিক (SSC) / সমমান পাশ করেছেন?
                 </legend>
                 <select
                   onClick={e => setSecondary(e.target.value)}
                   defaultValue={data?.secondary}
-                  className='w-full focus:outline-none  border-2 border-blue-300 p-2 rounded-md'
+                  className='w-full focus:outline-none  border-2 border-gray-300 p-2 rounded-md'
                   {...register('secondary')}
                 >
                   <option value=''>---</option>
@@ -177,8 +177,8 @@ export default function Education() {
 
               {secondary === yesno[0] && (
                 <div>
-                  <fieldset className='my-6 rounded-md border-2 border-blue-300 p-4'>
-                    <legend className='ml-4 font-bold text-blue-500'>
+                  <fieldset className='my-6 rounded-md border-2 border-gray-300 p-4'>
+                    <legend className='ml-4 font-bold text-secondary'>
                       মাধ্যমিক (SSC) / সমমান এর বিস্তারিত
                     </legend>
                     <textarea
@@ -186,21 +186,21 @@ export default function Education() {
                       defaultValue={data?.secondary_details}
                       placeholder='ফলাফলঃ A+, বিভাগঃ বিজ্ঞান, পাশের সনঃ 2016'
                       {...register('secondary_details')}
-                      className='w-full rounded bg-blue-100 px-4 py-2 font-medium text-blue-400 shadow-md focus:outline-blue-500'
+                      className='w-full rounded bg-green-100 px-4 py-2 font-medium text-green-400 shadow-md focus:outline-green-500'
                     />
-                    <p className='pl-2 pt-4 text-blue-400'>
+                    <p className='pl-2 pt-4 text-green-400'>
                       'আপনার মাধ্যমিক/সমমান এর ফলাফল, বিভাগ ও পাশের সন লিখুন'
                     </p>
                   </fieldset>
 
-                  <fieldset className='my-6 rounded-md border-2 border-blue-300 p-4'>
-                    <legend className='ml-4 text-lg font-bold text-blue-500'>
+                  <fieldset className='my-6 rounded-md border-2 border-gray-300 p-4'>
+                    <legend className='ml-4 text-lg font-bold text-secondary'>
                       উচ্চমাধ্যমিক (HSC) / সমমান পাশ করেছেন?
                     </legend>
                     <select
                       onClick={e => setHigher(e.target.value)}
                       defaultValue={data?.higher}
-                      className='w-full focus:outline-none  border-2 border-blue-300 p-2 rounded-md'
+                      className='w-full focus:outline-none  border-2 border-gray-300 p-2 rounded-md'
                       {...register('higher')}
                     >
                       <option value=''>---</option>
@@ -209,8 +209,8 @@ export default function Education() {
                   </fieldset>
                   {higher === yesno_heigher[0] && (
                     <div>
-                      <fieldset className='my-6 rounded-md border-2 border-blue-300 p-4'>
-                        <legend className='ml-4 font-bold text-blue-500'>
+                      <fieldset className='my-6 rounded-md border-2 border-gray-300 p-4'>
+                        <legend className='ml-4 font-bold text-secondary'>
                           উচ্চমাধ্যমিক (HSC) / সমমান এর বিস্তারিত
                         </legend>
                         <textarea
@@ -218,25 +218,25 @@ export default function Education() {
                           defaultValue={data?.higher_details}
                           placeholder='আপনার উচ্চমাধ্যমিক/সমমান এর ফলাফল, বিভাগ ও পাশের সন লিখুন'
                           {...register('higher_details')}
-                          className='w-full rounded bg-blue-100 px-4 py-2 font-medium text-blue-400 shadow-md focus:outline-blue-500'
+                          className='w-full rounded bg-green-100 px-4 py-2 font-medium text-green-400 shadow-md focus:outline-green-500'
                         />
-                        <p className='pl-2 pt-4 text-blue-400'>
+                        <p className='pl-2 pt-4 text-green-400'>
                           'আপনার মাধ্যমিক/সমমান এর ফলাফল, বিভাগ ও পাশের সন
                           লিখুন'
                         </p>
                       </fieldset>
 
-                      <fieldset className='my-6 rounded-md border-2 border-blue-300 p-4'>
-                        <legend className='ml-4 font-bold text-blue-500'>
+                      <fieldset className='my-6 rounded-md border-2 border-gray-300 p-4'>
+                        <legend className='ml-4 font-bold text-secondary'>
                           স্নাতক/স্নাতক(সম্মান)/সমমান শিক্ষাগত যোগ্যতা
                         </legend>
                         <textarea
                           rows={5}
                           defaultValue={data?.honors_details}
                           {...register('honors_details')}
-                          className='w-full rounded bg-blue-100 px-4 py-2 font-medium text-blue-400 shadow-md focus:outline-blue-500'
+                          className='w-full rounded bg-green-100 px-4 py-2 font-medium text-green-400 shadow-md focus:outline-green-500'
                         />
-                        <p className='pl-2 pt-4 text-blue-400'>
+                        <p className='pl-2 pt-4 text-green-400'>
                           এভাবে লিখতে পারেনঃ BA in English Language &
                           Literature, running year/passed year, CGPA...
                         </p>
@@ -245,13 +245,13 @@ export default function Education() {
                   )}
                   {higher === yesno_heigher[1] && (
                     <div>
-                      <fieldset className='my-6 rounded-md border-2 border-blue-300 p-4'>
-                        <legend className='ml-4 text-lg font-bold text-blue-500'>
+                      <fieldset className='my-6 rounded-md border-2 border-gray-300 p-4'>
+                        <legend className='ml-4 text-lg font-bold text-secondary'>
                           উচ্চমাধ্যমিক (HSC) / সমমান কোন বর্ষে পড়ছেন?
                         </legend>
                         <select
                           defaultValue={data?.higher_year}
-                          className='w-full focus:outline-none  border-2 border-blue-300 p-2 rounded-md'
+                          className='w-full focus:outline-none  border-2 border-gray-300 p-2 rounded-md'
                           {...register('higher_year')}
                         >
                           <OptionMap data={higherType} />
@@ -261,8 +261,8 @@ export default function Education() {
                   )}
                   {higher === yesno_heigher[2] && (
                     <div>
-                      <fieldset className='my-6 rounded-md border-2 border-blue-300 p-4'>
-                        <legend className='ml-4 font-bold text-blue-500'>
+                      <fieldset className='my-6 rounded-md border-2 border-gray-300 p-4'>
+                        <legend className='ml-4 font-bold text-secondary'>
                           ডিপ্লোমা এর বিষয়ে বিস্তারিত
                         </legend>
                         <textarea
@@ -270,9 +270,9 @@ export default function Education() {
                           defaultValue={data?.diploma_details}
                           placeholder='প্রতিষ্ঠানের নাম, বিভাগ, ফলাফল, পাসের সন'
                           {...register('diploma_details')}
-                          className='w-full rounded bg-blue-100 px-4 py-2 font-medium text-blue-400 shadow-md focus:outline-blue-500'
+                          className='w-full rounded bg-green-100 px-4 py-2 font-medium text-green-400 shadow-md focus:outline-green-500'
                         />
-                        <p className='pl-2 pt-4 text-blue-400'>
+                        <p className='pl-2 pt-4 text-green-400'>
                           ছাত্র হলে বর্ষ লিখবেন
                         </p>
                       </fieldset>
@@ -282,13 +282,13 @@ export default function Education() {
               )}
               {secondary === yesno[1] && (
                 <div>
-                  <fieldset className='my-6 rounded-md border-2 border-blue-300 p-4'>
-                    <legend className='ml-4 text-lg font-bold text-blue-500'>
+                  <fieldset className='my-6 rounded-md border-2 border-gray-300 p-4'>
+                    <legend className='ml-4 text-lg font-bold text-secondary'>
                       কোন ক্লাস পর্যন্ত পড়েছেন?
                     </legend>
                     <select
                       defaultValue={data?.classes}
-                      className='w-full focus:outline-none  border-2 border-blue-300 p-2 rounded-md'
+                      className='w-full focus:outline-none  border-2 border-gray-300 p-2 rounded-md'
                       {...register('classes')}
                     >
                       <option value=''>---</option>
@@ -303,13 +303,13 @@ export default function Education() {
           {/* Madrasha Education */}
           {education === educationType[1] && (
             <div>
-              <fieldset className='my-6 rounded-md border-2 border-blue-300 p-4'>
-                <legend className='ml-4 text-lg font-bold text-blue-500'>
+              <fieldset className='my-6 rounded-md border-2 border-gray-300 p-4'>
+                <legend className='ml-4 text-lg font-bold text-secondary'>
                   আপনি কি হাফেজ?
                 </legend>
                 <select
                   defaultValue={data?.hafej}
-                  className='w-full focus:outline-none  border-2 border-blue-300 p-2 rounded-md'
+                  className='w-full focus:outline-none  border-2 border-gray-300 p-2 rounded-md'
                   {...register('hafej')}
                 >
                   <option value=''>---</option>
@@ -317,14 +317,14 @@ export default function Education() {
                 </select>
               </fieldset>
 
-              <fieldset className='my-6 rounded-md border-2 border-blue-300 p-4'>
-                <legend className='ml-4 text-lg font-bold text-blue-500'>
+              <fieldset className='my-6 rounded-md border-2 border-gray-300 p-4'>
+                <legend className='ml-4 text-lg font-bold text-secondary'>
                   দাওরায়ে হাদীস পাশ করেছেন?
                 </legend>
                 <select
                   defaultValue={data?.dawra}
                   onClick={e => setDawra(e.target.value)}
-                  className='w-full focus:outline-none  border-2 border-blue-300 p-2 rounded-md'
+                  className='w-full focus:outline-none  border-2 border-gray-300 p-2 rounded-md'
                   {...register('dawra')}
                 >
                   <option value=''>---</option>
@@ -333,8 +333,8 @@ export default function Education() {
               </fieldset>
               {dawra === yesno_dawra[0] && (
                 <div>
-                  <fieldset className='my-6 rounded-md border-2 border-blue-300 p-4'>
-                    <legend className='ml-4 font-bold text-blue-500'>
+                  <fieldset className='my-6 rounded-md border-2 border-gray-300 p-4'>
+                    <legend className='ml-4 font-bold text-secondary'>
                       দাওরায়ে হাদীস এর বিস্তারিত
                     </legend>
                     <textarea
@@ -342,18 +342,18 @@ export default function Education() {
                       defaultValue={data?.dawra_details}
                       placeholder='নতিজা, পাসের সন লিখুন'
                       {...register('dawra_details')}
-                      className='w-full rounded bg-blue-100 px-4 py-2 font-medium text-blue-400 shadow-md focus:outline-blue-500'
+                      className='w-full rounded bg-green-100 px-4 py-2 font-medium text-green-400 shadow-md focus:outline-green-500'
                     />
                   </fieldset>
 
-                  <fieldset className='my-6 rounded-md border-2 border-blue-300 p-4'>
-                    <legend className='ml-4 text-lg font-bold text-blue-500'>
+                  <fieldset className='my-6 rounded-md border-2 border-gray-300 p-4'>
+                    <legend className='ml-4 text-lg font-bold text-secondary'>
                       আপনি কি তাখাসসুস পড়েছেন?
                     </legend>
                     <select
                       onClick={e => setTakhassus(e.target.value)}
                       defaultValue={data?.takhassus}
-                      className='w-full focus:outline-none  border-2 border-blue-300 p-2 rounded-md'
+                      className='w-full focus:outline-none  border-2 border-gray-300 p-2 rounded-md'
                       {...register('takhassus')}
                     >
                       <option value=''>---</option>
@@ -362,8 +362,8 @@ export default function Education() {
                   </fieldset>
                   {takhassus === yesno[0] && (
                     <div>
-                      <fieldset className='my-6 rounded-md border-2 border-blue-300 p-4'>
-                        <legend className='ml-4 font-bold text-blue-500'>
+                      <fieldset className='my-6 rounded-md border-2 border-gray-300 p-4'>
+                        <legend className='ml-4 font-bold text-secondary'>
                           তাখাসসুস এর বিস্তারিত
                         </legend>
                         <textarea
@@ -371,7 +371,7 @@ export default function Education() {
                           defaultValue={data?.takhassus_details}
                           placeholder='তাখাসসুসের বিষয়, পাসের সন লিখুন'
                           {...register('takhassus_details')}
-                          className='w-full rounded bg-blue-100 px-4 py-2 font-medium text-blue-400 shadow-md focus:outline-blue-500'
+                          className='w-full rounded bg-green-100 px-4 py-2 font-medium text-green-400 shadow-md focus:outline-green-500'
                         />
                       </fieldset>
                     </div>
@@ -379,29 +379,29 @@ export default function Education() {
                 </div>
               )}
               {dawra === yesno_dawra[2] && (
-                <fieldset className='my-6 rounded-md border-2 border-blue-300 p-4'>
-                  <legend className='ml-4 font-bold text-blue-500'>
+                <fieldset className='my-6 rounded-md border-2 border-gray-300 p-4'>
+                  <legend className='ml-4 font-bold text-secondary'>
                     দাওরায়ে হাদীস কোন বর্ষে পড়ছেন?
                   </legend>
                   <input
                     defaultValue={data?.dawra_year}
                     {...register('dawra_year')}
-                    className='w-full rounded bg-blue-100 px-4 py-2 font-medium text-blue-400 shadow-md focus:outline-blue-500'
+                    className='w-full rounded bg-green-100 px-4 py-2 font-medium text-green-400 shadow-md focus:outline-green-500'
                   />
                 </fieldset>
               )}
 
-              <fieldset className='my-6 rounded-md border-2 border-blue-300 p-4'>
-                <legend className='ml-4 font-bold text-blue-500'>
+              <fieldset className='my-6 rounded-md border-2 border-gray-300 p-4'>
+                <legend className='ml-4 font-bold text-secondary'>
                   সর্বোচ্চ শিক্ষাগত যোগ্যতা
                 </legend>
                 <textarea
                   rows={5}
                   defaultValue={data?.profession}
                   {...register('profession')}
-                  className='w-full rounded bg-blue-100 px-4 py-2 font-medium text-blue-400 shadow-md focus:outline-blue-500'
+                  className='w-full rounded bg-green-100 px-4 py-2 font-medium text-green-400 shadow-md focus:outline-green-500'
                 />
-                <p className='pl-2 pt-4 text-blue-400'>
+                <p className='pl-2 pt-4 text-green-400'>
                   শিক্ষার বিষয়, প্রতিষ্ঠানের নাম, পাসের সন ইত্যাদি বিস্তারিত
                   লিখবেন।
                 </p>
@@ -409,17 +409,17 @@ export default function Education() {
             </div>
           )}
 
-          <fieldset className='my-6 rounded-md border-2 border-blue-300 p-4'>
-            <legend className='ml-4 font-bold text-blue-500'>
+          <fieldset className='my-6 rounded-md border-2 border-gray-300 p-4'>
+            <legend className='ml-4 font-bold text-secondary'>
               অন্যান্য শিক্ষাগত যোগ্যতা
             </legend>
             <textarea
               rows={5}
               defaultValue={data?.another_education}
               {...register('another_education')}
-              className='w-full rounded bg-blue-100 px-4 py-2 font-medium text-blue-400 shadow-md focus:outline-blue-500'
+              className='w-full rounded bg-green-100 px-4 py-2 font-medium text-green-400 shadow-md focus:outline-green-500'
             />
-            <p className='pl-2 pt-4 text-blue-400'>
+            <p className='pl-2 pt-4 text-green-400'>
               শিক্ষার বিষয়, প্রতিষ্ঠানের নাম, পাসের সন ইত্যাদি বিস্তারিত লিখবেন।
             </p>
           </fieldset>
@@ -430,7 +430,7 @@ export default function Education() {
                 isLoading
                   ? 'pointer-events-none cursor-not-allowed'
                   : 'cursor-pointer'
-              } rounded-md bg-red-500 flex items-center font-medium text-white shadow-md hover:bg-red-600 px-6 py-3`}
+              } rounded-md bg-primary  flex items-center font-medium text-white shadow-md hover:bg-primary  px-6 py-3`}
             >
               {isLoading ? <Loading color='success' size='sm' /> : 'সেভ করুন'}
             </button>

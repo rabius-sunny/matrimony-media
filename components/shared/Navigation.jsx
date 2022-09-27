@@ -52,7 +52,7 @@ export default function Navigation() {
                     src='/images/logo.jpg'
                     alt='logo'
                   />
-                  <span className='pl-3 text-2xl font-bold text-red-400'>
+                  <span className='pl-3 text-2xl font-bold text-primary'>
                     mysite.com
                   </span>
                 </a>
@@ -69,7 +69,7 @@ export default function Navigation() {
             <div className='hidden space-x-10 md:flex'>
               {solutions.map(item => (
                 <Link href={item.href} key={item.href}>
-                  <a className='text-base font-medium text-red-500 hover:text-red-400'>
+                  <a className='text-base font-medium text-primary hover:underline hover:text-dark'>
                     {item.name}
                   </a>
                 </Link>
@@ -77,13 +77,13 @@ export default function Navigation() {
             </div>
             <div className='hidden items-center justify-end md:flex md:flex-1 lg:w-0'>
               <Link href={auth ? '/profile/edit/primary' : '/sign-in'}>
-                <a className='ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700'>
+                <a className='ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-primary  px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-dark'>
                   সিভি পাঠান
                 </a>
               </Link>
               {auth && (
                 <button onClick={handleLogOut}>
-                  <LogoutIcon className='h-12 ml-4 text-red-500 hover:text-red-400' />
+                  <LogoutIcon className='h-12 ml-4 text-primary hover:text-dark' />
                 </button>
               )}
             </div>
@@ -114,7 +114,7 @@ export default function Navigation() {
                           src='/images/logo.jpg'
                           alt='Workflow'
                         />
-                        <span className='pl-3 text-xl font-bold text-red-400'>
+                        <span className='pl-3 text-xl font-bold text-primary'>
                           mysite.com
                         </span>
                       </a>
@@ -134,7 +134,7 @@ export default function Navigation() {
                         {({ active }) => (
                           <button
                             onClick={() => router.push(item.href)}
-                            className='text-left font-medium text-red-500 hover:text-red-400'
+                            className='text-left font-medium text-primary hover:text-dark'
                           >
                             {item.name}
                           </button>
@@ -147,7 +147,7 @@ export default function Navigation() {
               <div className='space-y-6 py-6 px-5'>
                 <div>
                   <Link href={auth ? '/profile/edit/primary' : '/sign-in'}>
-                    <a className='flex w-full items-center justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700'>
+                    <a className='flex w-full items-center justify-center rounded-md border border-transparent bg-primary  px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700'>
                       সিভি পাঠান
                     </a>
                   </Link>

@@ -1,13 +1,13 @@
 {
   "private": true,
   "license": "MIT",
-"homepage": "https://anabuk.com",
-  "commands": {
+  "homepage": "https://anabuk.com",
+  "scripts": {
     "dev": "next -p 4000",
     "build": "next build",
     "start": "next start"
   },
-  "scripts": {
+  "commands": {
     "dev": "node server.js",
     "build": "next build",
     "start": "NODE_ENV=production node server.js"
@@ -19,8 +19,8 @@
     "axios": "^0.27.2",
     "firebase": "^9.8.3",
     "next": "latest",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-hook-form": "^7.30.0",
     "react-loading-skeleton": "^3.1.0",
     "react-reveal": "^1.2.2",

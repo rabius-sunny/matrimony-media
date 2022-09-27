@@ -8,7 +8,7 @@ export default function Example() {
         <Disclosure as='div' className='mt-2'>
           {({ open }) => (
             <>
-              <Disclosure.Button className='flex w-full justify-between rounded-lg bg-red-100 px-4 py-2 text-left text-sm font-medium text-red-600 hover:bg-red-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75'>
+              <Disclosure.Button className='flex w-full justify-between rounded-lg bg-red-100 px-4 py-2 text-left text-sm font-medium text-primary hover:bg-red-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75'>
                 <span>এই ওয়েবসাইট কি সবার জন্য উন্মুক্ত?</span>
                 <ChevronUpIcon
                   className={`${
@@ -22,7 +22,8 @@ export default function Example() {
                 enterTo='transform scale-100 opacity-100'
                 leave='transition duration-75 ease-out'
                 leaveFrom='transform scale-100 opacity-100'
-                leaveTo='transform scale-95 opacity-0'>
+                leaveTo='transform scale-95 opacity-0'
+              >
                 <Disclosure.Panel className='px-4 pt-4 pb-2 text-sm text-gray-500'>
                   না, এই ওয়েবসাইট সবার জন্য নয়, এই ওয়েবসাইট শুধুমাত্র দ্বীনদার
                   মুসলিমদের জন্য।

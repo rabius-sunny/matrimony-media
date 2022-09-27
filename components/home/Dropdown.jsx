@@ -92,7 +92,7 @@ export default function Dropdown() {
           onClick={() =>
             router.push(`/bios/search/${type || 'all'}/${jilla || 'all'}/${id}`)
           }
-          className='rounded bg-white px-4 py-2 text-red-600 shadow-md hover:bg-red-100'
+          className='rounded bg-white px-4 py-2 text-primary shadow-md hover:bg-red-100'
         >
           সার্চ করুন
         </button>

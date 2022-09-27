@@ -58,7 +58,7 @@ export default function Delete() {
         onClose={() => setVisible2(false)}
         preventClose={false}
         body={
-          <div className='text-xl text-red-500 font-bold'>
+          <div className='text-xl text-primary font-bold'>
             ইরর হয়েছে, আবার চেষ্টা করুন
           </div>
         }
@@ -123,7 +123,7 @@ export default function Delete() {
             <div className='my-4'>
               <button
                 onClick={handleSubmit}
-                className='w-full rounded-md bg-red-500 px-6 py-3 text-xl font-medium text-white shadow-md hover:bg-red-600 focus:ring-2 focus:ring-red-800'
+                className='w-full rounded-md bg-primary  px-6 py-3 text-xl font-medium text-white shadow-md hover:bg-primary  focus:ring-2 focus:ring-red-800'
               >
                 Submit
               </button>

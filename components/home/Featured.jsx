@@ -8,7 +8,7 @@ export default function Featured() {
 
   if (isLoading) {
     return (
-      <div className='container my-4'>
+      <div className='my-4'>
         <CardSkeleton />
       </div>
     )
@@ -18,7 +18,7 @@ export default function Featured() {
   ) {
     return (
       <div className='mt-8 container'>
-        <h1 className='text-3xl text-center text-red-500 font-bold'>
+        <h1 className='text-3xl text-center text-primary font-bold'>
           No featured biodata yet. {error?.message}
         </h1>
       </div>

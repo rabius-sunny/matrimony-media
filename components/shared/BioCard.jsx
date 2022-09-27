@@ -17,7 +17,7 @@ export default function BioCard({ bio, type }) {
   }, [bio.user, type])
 
   return (
-    <div className='col-span-12 sm:col-span-6 lg:col-span-4 bg-red-600 pt-8 border-2 border-red-500 duration-500 hover:scale-105 hover:shadow-lg'>
+    <div className='col-span-12 sm:col-span-6 lg:col-span-4 bg-primary pt-8 border-2 border-dark rounded-md overflow-hidden duration-500 hover:scale-105 hover:shadow-lg'>
       <div className='text-center'>
         <Image
           width='150px'
@@ -36,7 +36,7 @@ export default function BioCard({ bio, type }) {
       </div>
       <div className='py-8 text-center bg-white'>
         <Link href={`/bios/bio/${type !== 'userid' ? bio?.user?.uId : uId}`}>
-          <a className='bg-red-500 py-3 px-6 rounded shadow text-white'>
+          <a className='bg-primary  py-3 px-6 rounded shadow text-white'>
             বায়োডাটা দেখুন
           </a>
         </Link>

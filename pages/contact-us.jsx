@@ -18,7 +18,7 @@ export default function ContactUs() {
             <div className='mb-4'>
               <label
                 htmlFor='name'
-                className='block text-md font-medium text-red-600'
+                className='block text-md font-medium text-primary'
               >
                 আপনার নাম
               </label>
@@ -28,13 +28,13 @@ export default function ContactUs() {
                 id='name'
                 placeholder='enter your name'
                 autoComplete='name'
-                className='shadow-md w-full bg-red-100 focus:outline-red-500 text-red-400 rounded px-4 py-2'
+                className='shadow-md w-full bg-red-100 focus:outline-red-500 text-primary rounded px-4 py-2'
               />
             </div>
             <div className='my-4'>
               <label
                 htmlFor='email'
-                className='block text-md font-medium text-red-600'
+                className='block text-md font-medium text-primary'
               >
                 আপনার ইমেইল
               </label>
@@ -44,13 +44,13 @@ export default function ContactUs() {
                 id='email'
                 placeholder='enter your email'
                 autoComplete='email'
-                className='shadow-md w-full bg-red-100 focus:outline-red-500 text-red-400 rounded px-4 py-2'
+                className='shadow-md w-full bg-red-100 focus:outline-red-500 text-primary rounded px-4 py-2'
               />
             </div>
             <div className='my-4'>
               <label
                 htmlFor='subject'
-                className='block text-md font-medium text-red-600'
+                className='block text-md font-medium text-primary'
               >
                 বিষয়
               </label>
@@ -59,13 +59,13 @@ export default function ContactUs() {
                 name='subject'
                 id='subject'
                 placeholder='enter your subject'
-                className='shadow-md w-full bg-red-100 focus:outline-red-500 text-red-400 rounded px-4 py-2'
+                className='shadow-md w-full bg-red-100 focus:outline-red-500 text-primary rounded px-4 py-2'
               />
             </div>
             <div>
               <label
                 htmlFor='message'
-                className='block text-sm font-medium text-red-600'
+                className='block text-sm font-medium text-primary'
               >
                 আপনার বার্তা
               </label>
@@ -73,7 +73,7 @@ export default function ContactUs() {
                 id='message'
                 name='message'
                 rows={3}
-                className='shadow-md bg-red-100 focus:outline-red-500 text-red-400 mt-1 block w-full sm:text-sm rounded-md px-4 py-2'
+                className='shadow-md bg-red-100 focus:outline-red-500 text-primary mt-1 block w-full sm:text-sm rounded-md px-4 py-2'
                 placeholder='your message'
               />
             </div>
@@ -81,7 +81,7 @@ export default function ContactUs() {
               <input
                 type='submit'
                 value='পাঠান'
-                className='shadow-md bg-red-600 text-center text-white px-10 py-2 rounded'
+                className='shadow-md bg-primary  text-center text-white px-10 py-2 rounded'
               />
             </div>
           </form>

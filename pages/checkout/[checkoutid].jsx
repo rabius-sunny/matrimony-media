@@ -83,7 +83,7 @@ export default function Checkout() {
         onClose={() => setVisible2(false)}
         preventClose={false}
         body={
-          <div className='text-xl text-red-500 font-bold'>
+          <div className='text-xl text-primary font-bold'>
             ইরর হয়েছে, আবার চেষ্টা করুন
           </div>
         }
@@ -103,7 +103,7 @@ export default function Checkout() {
               আল্লাহ।
             </p>
             <div className='mt-8'>
-              <button className='bg-red-600 p-4 text-xl text-white rounded-lg'>
+              <button className='bg-primary  p-4 text-xl text-white rounded-lg'>
                 যেভাবে আবেদন করবেন (ভিডিও)
               </button>
             </div>
@@ -177,7 +177,7 @@ export default function Checkout() {
                     loading
                       ? 'pointer-events-none cursor-not-allowed'
                       : 'cursor-pointer'
-                  } rounded-md bg-red-500 flex items-center font-medium text-white shadow-md hover:bg-red-600 px-6 py-3`}
+                  } rounded-md bg-primary  flex items-center font-medium text-white shadow-md hover:bg-primary  px-6 py-3`}
                 >
                   {loading ? (
                     <Loading color='success' size='sm' />

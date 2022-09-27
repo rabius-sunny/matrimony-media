@@ -11,7 +11,7 @@ export default function DropdownProfile({
 }) {
   return (
     <fieldset className='my-6 rounded-md border-2 border-red-300 p-4'>
-      <legend className='ml-4 text-lg font-bold text-red-700'>
+      <legend className='ml-4 text-lg font-bold text-primary'>
         {legend} {required && '*'}
       </legend>
       <Listbox value={selected} onChange={setSelected}>
@@ -37,7 +37,7 @@ export default function DropdownProfile({
                   key={id}
                   className={({ active }) =>
                     `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                      active ? 'bg-red-100 text-red-600' : 'text-gray-900'
+                      active ? 'bg-red-100 text-primary' : 'text-gray-900'
                     }`
                   }
                   value={item}
@@ -52,7 +52,7 @@ export default function DropdownProfile({
                         {item}
                       </span>
                       {selected ? (
-                        <span className='absolute inset-y-0 left-0 flex items-center pl-3 text-red-600'>
+                        <span className='absolute inset-y-0 left-0 flex items-center pl-3 text-primary'>
                           <CheckIcon className='h-5 w-5' aria-hidden='true' />
                         </span>
                       ) : null}

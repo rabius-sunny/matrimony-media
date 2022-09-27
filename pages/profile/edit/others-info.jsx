@@ -107,17 +107,17 @@ export default function OthersInfo() {
       />
       {!loading && data ? (
         <form onSubmit={handleSubmit(onSubmit)}>
-          <fieldset className='my-6 rounded-md border-2 border-blue-300 p-4'>
-            <legend className='ml-4 font-bold text-blue-500'>
+          <fieldset className='my-6 rounded-md border-2 border-green-300 p-4'>
+            <legend className='ml-4 font-bold text-secondary'>
               পেশা সম্পর্কিত তথ্য
             </legend>
             <textarea
               defaultValue={data?.profession_info}
               rows={5}
               {...register('profession_info')}
-              className='w-full rounded bg-blue-100 px-4 py-2 font-medium text-blue-400 shadow-md focus:outline-blue-500'
+              className='w-full rounded bg-green-100 px-4 py-2 font-medium text-green-400 shadow-md focus:outline-green-500'
             />
-            <p className='pl-2 pt-4 text-blue-400'>
+            <p className='pl-2 pt-4 text-green-400'>
               {data?.type === 'পাত্রের বায়োডাটা'
                 ? 'এখানে বিভিন্ন বিষয় লিখতে পারেন। যেমনঃ আপনার ইনকাম  হালাল কি না, অফিস কোথায়, আপনার পদবী ও কাজ সম্পর্কে একটু বিস্তারিত বর্ণনা দিতে পারেন, আপনার পেশাগত ভবিষ্যৎ পরিকল্পনাও লিখতে পারেন। আপনি ছাত্র বা বেকার হলে সে বিষয়েও কিছু জানাতে পারেন। মূল বিষয় হচ্ছে পাত্রীপক্ষ যেন আপনার পেশা সম্পর্কে ক্লিয়ার ধারণা পেয়ে যায়।'
                 : 'আপনি যদি চাকুরীজীবি হয়ে থাকেন তাহলে অফিসের অবস্থান, পেশাগত ভবিষ্যৎ পরিকল্পনা, বিয়ের পর চাকরী ও সংসার কিভাবে চালাতে চান ইত্যাদি বিষয় লিখতে পারেন। যদি চাকুরীজীবি না হয়ে থাকেন তাহলে ঘরটি ফাঁকা রাখুন।'}
@@ -128,14 +128,14 @@ export default function OthersInfo() {
             className={`my-6 rounded-md border-2 ${
               errors.special_acknowledgement
                 ? 'border-red-500'
-                : 'border-blue-300'
+                : 'border-green-300'
             } p-4`}
           >
             <legend
               className={`ml-4 font-bold ${
                 errors.special_acknowledgement
-                  ? 'text-red-500'
-                  : 'text-blue-500'
+                  ? 'text-primary'
+                  : 'text-secondary'
               }`}
             >
               বিশেষ কিছু যদি জানাতে চান *
@@ -147,21 +147,21 @@ export default function OthersInfo() {
                 required: 'field is required'
               })}
               className={`w-full rounded ${
-                errors.special_acknowledgement ? 'bg-red-100' : 'bg-blue-100'
-              } px-4 py-2 font-medium text-blue-400 shadow-md ${
+                errors.special_acknowledgement ? 'bg-red-100' : 'bg-green-100'
+              } px-4 py-2 font-medium text-green-400 shadow-md ${
                 errors.special_acknowledgement
                   ? 'focus:outline-red-500'
-                  : 'focus:outline-blue-500'
+                  : 'focus:outline-green-500'
               }`}
             />
             <Fade right when={errors.special_acknowledgement ? true : false}>
               {errors.special_acknowledgement && (
-                <p className='text-red-500 py-2 pl-2'>
+                <p className='text-primary py-2 pl-2'>
                   {errors.special_acknowledgement.message}
                 </p>
               )}
             </Fade>
-            <p className='pl-2 pt-4 text-blue-400'>
+            <p className='pl-2 pt-4 text-green-400'>
               আপনার কোনো শর্ত বা উপরে লিখার সুযোগ হয় নি এমন কিছু জানানোর থাকলে
               এই ঘরে লিখতে পারেন। যেমনঃ পারিবারিক বা ব্যক্তিগত কোনো সুবিধা বা
               অসুবিধা ইত্যাদি যে কোনো বিষয়ে যত ইচ্ছা লিখতে পারবেন। ।
@@ -175,7 +175,7 @@ export default function OthersInfo() {
                 isLoading
                   ? 'pointer-events-none cursor-not-allowed'
                   : 'cursor-pointer'
-              } rounded-md bg-red-500 flex items-center font-medium text-white shadow-md hover:bg-red-600 px-6 py-3`}
+              } rounded-md bg-primary  flex items-center font-medium text-white shadow-md hover:bg-primary  px-6 py-3`}
             >
               {isLoading ? <Loading color='success' size='sm' /> : 'সেভ করুন'}
             </button>

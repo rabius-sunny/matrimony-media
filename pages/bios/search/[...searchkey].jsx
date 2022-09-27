@@ -66,7 +66,7 @@ export default function SearchResult() {
             jilla={searchkey[1]}
           />
         )}
-        <h1 className='text-3xl pt-8 text-center text-red-500  font-bold'>
+        <h1 className='text-3xl pt-8 text-center text-primary  font-bold'>
           কোনো বায়োডাটা পাওয়া যায় নি। অন্যভাবে চেষ্টা করুন।
         </h1>
       </div>
