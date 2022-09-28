@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 export default function Footer() {
   return (
     <footer>
@@ -7,10 +9,18 @@ export default function Footer() {
             <div className='col-span-3 lg:col-span-2'>
               <h2 className='text-xl mb-4 text-white font-bold'>Pages</h2>
               <ul>
-                <li>ফেভারিট</li>
-                <li>প্রশ্নোত্তর</li>
-                <li>আমাদের সম্পর্কে</li>
-                <li>যোগাযোগ</li>
+                <li>
+                  <Link href='/favorite'>ফেভারিট</Link>
+                </li>
+                <li>
+                  <Link href='/qa'>প্রশ্নোত্তর</Link>
+                </li>
+                <li>
+                  <Link href='/about-us'>আমাদের সম্পর্কে</Link>
+                </li>
+                <li>
+                  <Link href='/contact-us'>যোগাযোগ</Link>
+                </li>
               </ul>
             </div>
             <div className='col-span-2'>

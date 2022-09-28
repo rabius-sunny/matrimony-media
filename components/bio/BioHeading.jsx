@@ -4,7 +4,7 @@ import Link from 'next/link'
 export default function BioHeading({ heading, children, link }) {
   return (
     <div className='rounded-t-md overflow-hidden'>
-      <div className='border-x-4 border-b-4 border-red-500'>
+      <div className='border-x-4 border-b-4 border-dark'>
         <h1 className='flex justify-between bg-primary  text-white text-xl sm:text-3xl p-4'>
           <span>{heading}</span>
           {link && (

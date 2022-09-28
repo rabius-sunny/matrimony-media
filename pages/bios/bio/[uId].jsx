@@ -338,7 +338,7 @@ export default function DetailBio() {
       </div>
     </div>
   ) : (
-    <div className='container'>
+    <div className='container3'>
       <Head>
         <title>বায়োডাটা</title>
       </Head>

@@ -313,12 +313,12 @@ export default function Preview() {
             }}
           />
         </div>
-        <div className='my-4'>
+        {/* <div className='my-4'>
           <DAuthorityqs
             auth={auth}
             data={{ family_about_bio, is_correct_info, liability }}
           />
-        </div>
+        </div> */}
       </div>
       <div className='my-4'>
         <button

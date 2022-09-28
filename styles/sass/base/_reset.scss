@@ -10,6 +10,28 @@ html {
   font-size: 18px;
 }
 
+/* width */
+::-webkit-scrollbar {
+  width: 20px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px rgba($color: #000000, $alpha: 0.6);
+  background: $primary;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: $secondary;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: darkcyan;
+}
+
 img {
   width: 100%;
 }
@@ -20,12 +42,7 @@ section {
 
 a {
   text-decoration: none;
-  // color: $primary;
 }
-
-// a:hover {
-//   color: $primary__hover !important;
-// }
 
 
 svg {

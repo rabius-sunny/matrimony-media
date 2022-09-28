@@ -54,7 +54,7 @@ export default function SearchResult() {
     )
   } else if ((!loading && bios !== null && !bios.length) || bios === null) {
     return (
-      <div className='mt-2' style={{ minHeight: '70vh' }}>
+      <div className='mt-2 container' style={{ minHeight: '70vh' }}>
         <Head>
           <title>সার্চ করুন</title>
         </Head>
@@ -91,7 +91,7 @@ export default function SearchResult() {
             সার্চ ফলাফল
           </div>
           <div className=' h-1 bg-rose-100 mb-8' />
-          <div className='grid grid-cols-12 gap-8'>
+          <div className='grid grid-cols-12 gap-2 md:gap-3 lg:gap-4 xl:gap-8'>
             {bios.map((bio, idx) => (
               <BioCard bio={bio} key={idx} />
             ))}
