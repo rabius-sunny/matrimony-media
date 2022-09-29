@@ -12,7 +12,7 @@ exports.modules = {
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2167);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 
-const baseURL = "http://localhost:5000";
+const baseURL = "https://matrimony-media.herokuapp.com";
 const instance = axios__WEBPACK_IMPORTED_MODULE_0___default().create({
     baseURL,
     timeout: 10000

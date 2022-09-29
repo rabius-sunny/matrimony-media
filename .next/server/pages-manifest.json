@@ -1,5 +1,6 @@
 {
   "/_app": "pages/_app.js",
+  "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
   "/about-us": "pages/about-us.html",
   "/bios/bio/[uId]": "pages/bios/bio/[uId].html",
@@ -23,6 +24,5 @@
   "/profile/preview": "pages/profile/preview.html",
   "/qa": "pages/qa.html",
   "/sign-in": "pages/sign-in.html",
-  "/_error": "pages/_error.js",
   "/404": "pages/404.html"
 }

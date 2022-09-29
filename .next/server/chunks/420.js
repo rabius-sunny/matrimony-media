@@ -171,7 +171,7 @@ function getData(dep) {
         isLoading(true);
         setData(null);
         setError(null);
-        services_http__WEBPACK_IMPORTED_MODULE_1__/* ["default"].get */ .Z.get(`${"http://localhost:5000"}/bio/${localStorage.getItem("id")}`).then((res)=>{
+        services_http__WEBPACK_IMPORTED_MODULE_1__/* ["default"].get */ .Z.get(`${"https://matrimony-media.herokuapp.com"}/bio/${localStorage.getItem("id")}`).then((res)=>{
             setData(res);
             isLoading(false);
             setError(null);
