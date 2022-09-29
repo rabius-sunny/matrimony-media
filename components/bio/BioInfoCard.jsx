@@ -347,7 +347,7 @@ export default function BioInfoCard({ data, loading, uId }) {
           <div
             className={`${data ? 'block' : 'hidden'} my-4 ${
               data?.published ? 'bg-green-600' : 'bg-primary '
-            } shadow-lg py-2 text-white rounded text-2xl text-center`}
+            } shadow-lg py-2 text-white rounded text-xl text-center`}
           >
             {data?.published ? 'বায়োটি পাবলিশড রয়েছে' : 'বায়োটি হাইড রয়েছে'}
           </div>

@@ -107,7 +107,7 @@ export default function Signin() {
   return (
     <div className='bg-secondary'>
       <Head>
-        <title>সাইন ইন</title>
+        <title>সাইন ইন | জান্নাতি জুটি.COM</title>
       </Head>
       <div className='flex h-screen justify-center'>
         <div
@@ -144,7 +144,7 @@ export default function Signin() {
 
             <div className='mt-8'>
               {!isOtp && (
-                <form onSubmit={/* onPhoneSubmit */ handleSubmit}>
+                <form onSubmit={onPhoneSubmit /* handleSubmit */}>
                   <div className='mt-6'>
                     <label
                       htmlFor='phone'
@@ -168,7 +168,7 @@ export default function Signin() {
                   </div>
 
                   <div className='mt-6'>
-                    <button className='w-full bg-primary hover:bg-dark transform rounded-md bg-blue-500 px-4 py-2 tracking-wide text-white transition-colors duration-200 focus:outline-none focus:ring focus:ring-dark'>
+                    <button className='w-full bg-primary text-white hover:bg-dark transform rounded-md px-4 py-2 tracking-wide transition-colors duration-200 focus:outline-none focus:ring focus:ring-dark'>
                       OTP কোড নিন
                     </button>
                   </div>
@@ -176,21 +176,19 @@ export default function Signin() {
               )}
               {isOtp && (
                 <div className='text-center'>
-                  <h1 className='text-3xl bg-primary hover:bg-dark text-white'>
-                    OTP কোড দিন
-                  </h1>
+                  <h1 className='text-3xl text-white'>OTP কোড দিন</h1>
                   <form onSubmit={onOtpSubmit}>
                     <input
                       type='number'
                       name='otp'
                       onChange={onChange}
                       required
-                      className='mt-2 block w-full rounded-md border border-gray-200 bg-white px-4 py-2 text-gray-700 placeholder-gray-400 focus:border-blue-400 focus:outline-none focus:ring focus:ring-primary focus:ring-opacity-40 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:placeholder-gray-600 dark:focus:border-blue-400'
+                      className='mt-2 block w-full rounded-md border border-gray-200 bg-white px-4 py-2 text-gray-700 placeholder-gray-400 focus:border-blue-400 focus:outline-none focus:ring focus:ring-primary dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:placeholder-gray-600 dark:focus:border-blue-400'
                     />
                     <div className='mt-6'>
                       <button
                         type='submit'
-                        className='w-full bg-primary hover:bg-dark transform rounded-md bg-blue-500 px-4 py-2 tracking-wide text-white transition-colors duration-200 hover:bg-blue-400 focus:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50'
+                        className='w-full bg-primary hover:bg-dark transform rounded-md bg-blue-500 px-4 py-2 tracking-wide text-white transition-colors duration-200 hover:bg-blue-400 focus:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 '
                       >
                         OTP দিয়ে প্রবেশ করুন
                       </button>

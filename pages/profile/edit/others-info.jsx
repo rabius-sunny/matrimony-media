@@ -73,7 +73,7 @@ export default function OthersInfo() {
         setRoutes({
           ...routes,
           another: {
-            name: 'অন্যান্য তথ্য',
+            name: 'অন্যান্য',
             link: '/others-info',
             status: 'done'
           }

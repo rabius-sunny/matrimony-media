@@ -86,7 +86,7 @@ export default function MarriageRelated() {
         setRoutes({
           ...routes,
           marriage: {
-            name: 'বিয়ে সংক্রান্ত তথ্য',
+            name: 'বিয়ে সংক্রান্ত',
             link: '/marriage-related-info',
             status: 'done'
           }

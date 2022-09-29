@@ -81,7 +81,7 @@ export default function Home() {
       <section className='bg-gray-200'>
         <div className='container'>
           <h1 className='pb-6 text-center text-3xl text-primary'>
-            জীবনসঙ্গী নির্বাচনে ইসলামের নির্দেশনা
+            জীবনসঙ্গী নির্বাচনে ইসলাম কী বলে
           </h1>
           <div className='flex justify-center'>
             <p style={{ maxWidth: '700px', textAlign: 'justify' }}>

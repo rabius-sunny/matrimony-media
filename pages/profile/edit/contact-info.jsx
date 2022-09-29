@@ -48,9 +48,9 @@ export default function Name() {
           biodataRequests.setField(9).then(info => {
             if (info.message === 'ok') {
               setIsLoading(false)
-              setVisible({ message: '', status: false, done: true })
-
-              router.push('/profile/preview')
+              if (fields.length > 0) {
+                setVisible2(true)
+              } else router.push('/profile/preview')
             }
           })
         } else {
@@ -107,16 +107,12 @@ export default function Name() {
       <LongModal
         visible={visible.status}
         onClose={() => setVisible({ message: '', status: false, done: false })}
-        onTask={() => {
-          setVisible({ message: '', status: false, done: false })
-          if (fields.length > 0) {
-            setVisible2(true)
-          } else {
-            router.push('/profile/preview')
-          }
-        }}
         body={
-          <p className={`text-${visible.done ? 'green' : 'red'}-500 text-2xl`}>
+          <p
+            className={`text-${
+              visible.done ? 'secondary' : 'red-500'
+            } text-2xl`}
+          >
             {visible.message}
           </p>
         }
@@ -133,10 +129,10 @@ export default function Name() {
             <p style={{ color: 'red', fontSize: '1.3rem' }}>{item.name}</p>
             <Link href={item.slug}>
               <a
-                className='text-green-400 underline flex items-center'
+                className='text-secondary underline flex items-center'
                 style={{ fontSize: '.9rem' }}
               >
-                পূরণ করুন ক্লিক করুন
+                পূরণ করুন
                 <ArrowRightIcon className='text-green-400 h-4 pl-1' />
               </a>
             </Link>

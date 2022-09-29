@@ -11,22 +11,22 @@ export function AppWrapper({ children }) {
       status: ''
     },
     personal: {
-      name: 'ব্যক্তিগত তথ্য',
+      name: 'ব্যক্তিগত',
       link: '/personal-info',
       status: ''
     },
     marriage: {
-      name: 'বিয়ে সংক্রান্ত তথ্য',
+      name: 'বিয়েসংক্রান্ত',
       link: '/marriage-related-info',
       status: ''
     },
     general: {
-      name: 'সাধারণ তথ্য',
+      name: 'সাধারণ',
       link: '/general-info',
       status: ''
     },
     family: {
-      name: 'পারিবারিক তথ্য',
+      name: 'পারিবারিক',
       link: '/family-info',
       status: ''
     },
@@ -36,17 +36,17 @@ export function AppWrapper({ children }) {
       status: ''
     },
     education: {
-      name: 'শিক্ষাগত যোগ্যতা',
+      name: 'শিক্ষাগত',
       link: '/educational-qualifications',
       status: ''
     },
     another: {
-      name: 'অন্যান্য তথ্য',
+      name: 'অন্যান্য',
       link: '/others-info',
       status: ''
     },
     expectation: {
-      name: 'যেমন জীবনসঙ্গী আশা করেন',
+      name: 'আকাঙ্ক্ষিত বৈশিষ্ট্যাবলী',
       link: '/expectation',
       status: ''
     },
@@ -55,11 +55,6 @@ export function AppWrapper({ children }) {
     //   link: '/authority-question',
     // status: ''
     // },
-    contact: {
-      name: 'যোগাযোগ',
-      link: '/contact-info',
-      status: ''
-    },
     contact: {
       name: 'যোগাযোগ',
       link: '/contact-info',

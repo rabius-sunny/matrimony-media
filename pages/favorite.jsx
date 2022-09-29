@@ -18,40 +18,44 @@ export default function Favorite() {
   useEffect(() => {
     const bookmarks = localStorage.getItem('bookmarks')
     if (bookmarks) {
+      setLocalLoading(true)
       const localBookmarkArray = Object.keys(JSON.parse(bookmarks))
       setLocalBookmark(localBookmarkArray)
     }
   }, [])
 
   useEffect(() => {
-    localBookmark &&
+    if (localBookmark) {
       localBookmark.map(item =>
         requests
           .get(`/bio-id/${item}`)
           .then(data => setDatafromLocal(prev => [...prev, data.response]))
           .catch(err => err)
       )
+      setLocalLoading(false)
+    }
   }, [localBookmark])
 
-  useEffect(() => {
-    const bookmarks = localStorage.getItem('bookmarks')
-    if (bookmarks && localBookmark) {
-      datafromLocal.length === 0 && setLocalLoading(true)
-    }
-    return () => setLocalLoading(false)
-  }, [datafromLocal.length])
+  // useEffect(() => {
+  //   const bookmarks = localStorage.getItem('bookmarks')
+  //   if (bookmarks && localBookmark) {
+  //     datafromLocal.length === 0 && setLocalLoading(true)
+  //   }
+  //   return () => setLocalLoading(false)
+  // }, [datafromLocal.length])
 
   return (
     <div>
       <Head>
-        <title>পছন্দের বায়োডাটাসমূহ</title>
+        <title>পছন্দের বায়োডাটাসমূহ | জান্নাতি জুটি.COM</title>
       </Head>
       <ColoredHeader heading='পছন্দের বায়োডাটাসমূহ' />
-      {isLoading || localLoading ? (
+      {localLoading || isLoading ? (
         <div className='container my-4'>
           <CardSkeleton />
         </div>
-      ) : (!isLoading && data?.bios.length === 0) || (auth && data === null) ? (
+      ) : ((!localLoading || !isLoading) && data?.bios.length === 0) ||
+        (auth && data === null) ? (
         <div className='mt-12' style={{ minHeight: '70vh' }}>
           <h1 className='text-3xl text-center text-primary font-bold'>
             কোনো পছন্দের বায়োডাটা নেই। <br />

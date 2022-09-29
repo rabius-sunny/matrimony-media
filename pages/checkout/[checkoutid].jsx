@@ -63,7 +63,7 @@ export default function Checkout() {
   return (
     <div>
       <Head>
-        <title>তথ্যের জন্য আবেদন || {checkoutid}</title>
+        <title>তথ্য আবেদন | জান্নাতি জুটি.COM</title>
       </Head>
       <ColoredHeader heading='তথ্যের জন্য আবেদন' />
 
@@ -151,20 +151,20 @@ export default function Checkout() {
                   >
                     <p className=''>{col.text}</p>
                     <p className=''>{col.number}</p>
-                    <div className='my-4'>
+                    <div className='my-4 mx-1'>
                       <label className='font-bold'>{col.legend}</label>
                       <input
                         name='pnumber'
                         onChange={onChange}
-                        className={`w-full rounded bg-blue-100 px-4 py-2 font-medium text-blue-400 shadow-md focus:outline-blue-500`}
+                        className={`w-full rounded bg-green-100 px-4 py-2 font-medium text-blue-400 shadow-md focus:ring-2 focus:ring-secondary`}
                       />
                     </div>
-                    <div className='my-4'>
+                    <div className='my-4 mx-1'>
                       <label className='font-bold'>Transaction ID</label>
                       <input
                         name='trx'
                         onChange={onChange}
-                        className={`w-full rounded bg-blue-100 px-4 py-2 font-medium text-blue-400 shadow-md focus:outline-blue-500`}
+                        className={`w-full rounded bg-green-100 px-4 py-2 font-medium text-blue-400 shadow-md focus:ring-2 focus:ring-secondary`}
                       />
                     </div>
                   </Collapse>

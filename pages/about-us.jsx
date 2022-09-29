@@ -6,7 +6,7 @@ export default function AboutUs() {
   return (
     <div className='aboutus'>
       <Head>
-        <title>আমাদের সম্পর্কে</title>
+        <title>আমাদের সম্পর্কে | জান্নাতি জুটি.COM</title>
         <meta property='og:title' content='আমাদের সম্পর্কে' />
         <meta
           property='description'

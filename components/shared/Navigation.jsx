@@ -43,30 +43,27 @@ export default function Navigation() {
     <Popover className='relative z-20 bg-white'>
       <Menu as='div' className='relative z-20 bg-white'>
         <div className='mx-auto max-w-7xl px-4 sm:px-6'>
-          <div className='flex items-center justify-between border-b-2 border-gray-100 py-6 md:justify-start md:space-x-10'>
-            <div className='flex justify-start lg:w-0 lg:flex-1'>
+          <div className='flex items-center justify-between border-b-2 border-gray-100 py-6'>
+            <div className='lg:w-0 lg:flex-1'>
               <Link href='/'>
-                <a className='flex'>
+                <a>
                   <img
                     className='h-8 w-auto sm:h-10'
-                    src='/images/logo.jpg'
+                    src='/images/logo.png'
                     alt='logo'
                   />
-                  <span className='pl-3 text-2xl font-bold text-primary'>
-                    mysite.com
-                  </span>
                 </a>
               </Link>
             </div>
-            <div className='-my-2 -mr-2 md:hidden'>
+            <div className='-my-2 -mr-2 lg:hidden'>
               {/* <Popover.Button className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"> */}
-              <Menu.Button className='inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-red-500'>
+              <Menu.Button className='inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary'>
                 <span className='sr-only'>Open menu</span>
                 <MenuIcon className='h-6 w-6' aria-hidden='true' />
               </Menu.Button>
               {/* </Popover.Button> */}
             </div>
-            <div className='hidden space-x-10 md:flex'>
+            <div className='hidden space-x-10 lg:flex'>
               {solutions.map(item => (
                 <Link href={item.href} key={item.href}>
                   <a className='text-base font-medium text-primary hover:underline hover:text-dark'>
@@ -75,7 +72,7 @@ export default function Navigation() {
                 </Link>
               ))}
             </div>
-            <div className='hidden items-center justify-end md:flex md:flex-1 lg:w-0'>
+            <div className='hidden items-center justify-end lg:flex lg:flex-1 lg:w-0'>
               <Link href={auth ? '/profile/edit/primary' : '/sign-in'}>
                 <a className='ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-primary  px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-dark'>
                   সিভি পাঠান
@@ -108,20 +105,17 @@ export default function Navigation() {
                 <div className='flex items-center justify-between'>
                   <div>
                     <Link href='/'>
-                      <a className='flex'>
+                      <a>
                         <img
                           className='h-8 w-auto'
-                          src='/images/logo.jpg'
+                          src='/images/logo.png'
                           alt='Workflow'
                         />
-                        <span className='pl-3 text-xl font-bold text-primary'>
-                          mysite.com
-                        </span>
                       </a>
                     </Link>
                   </div>
                   <div className='-mr-2'>
-                    <Popover.Button className='inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-red-500'>
+                    <Popover.Button className='inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary'>
                       <span className='sr-only'>Close menu</span>
                       <XIcon className='h-6 w-6' aria-hidden='true' />
                     </Popover.Button>
@@ -147,7 +141,7 @@ export default function Navigation() {
               <div className='space-y-6 py-6 px-5'>
                 <div>
                   <Link href={auth ? '/profile/edit/primary' : '/sign-in'}>
-                    <a className='flex w-full items-center justify-center rounded-md border border-transparent bg-primary  px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700'>
+                    <a className='flex w-full items-center justify-center rounded-md border border-transparent bg-primary  px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-dark'>
                       সিভি পাঠান
                     </a>
                   </Link>

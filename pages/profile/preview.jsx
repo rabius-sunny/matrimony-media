@@ -7,18 +7,19 @@ import DPersonal from 'components/bio/DPersonal'
 import DMarital from 'components/bio/DMarital'
 import DAnother from 'components/bio/DAnother'
 import DExpect from 'components/bio/DExpect'
-import DAuthorityqs from 'components/bio/DAuthorityqs'
 import CSkeleton from 'components/shared/CSkeleton'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import LongModal from 'components/shared/Modals/LongModal'
 import useAuth from 'hooks/useAuth'
 import { PencilAltIcon } from '@heroicons/react/outline'
+import { Loading } from '@nextui-org/react'
 
 export default function Preview() {
   const auth = useAuth()
   const [bio, setBio] = useState({})
   const [loading, setLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const [visible, setVisible] = useState(false)
   const [visible2, setVisible2] = useState(false)
   const [visible3, setVisible3] = useState(true)
@@ -41,23 +42,31 @@ export default function Preview() {
               setLoading(false)
               alert(err.message)
             })
-        } else alert('you have not filled all the forms')
+        } else {
+          alert('আপনি সব ফিল্ড পূরণ করেন নি')
+          router.push('/')
+        }
       })
       .catch(err => {
-        alert('you do not have permission to access this')
+        alert('আপনি সব ফিল্ড পূরণ করেন নি')
         router.push('/')
       })
   }, [])
 
   const handlePublish = _ => {
+    setIsLoading(true)
     biodataRequests
       .updateBio({ requested: true })
       .then(info => {
         if (info.message === 'ok') {
+          setIsLoading(false)
           setVisible(true)
         }
       })
-      .catch(err => setVisible2(true))
+      .catch(err => {
+        setIsLoading(false)
+        setVisible2(true)
+      })
   }
 
   const {
@@ -150,9 +159,9 @@ export default function Preview() {
   } = bio
 
   return !loading && bio ? (
-    <div className='container'>
+    <div className='container3'>
       <Head>
-        <title>বায়োডাটা | Preview</title>
+        <title>প্রিভিউ | জান্নাতি জুটি.COM</title>
       </Head>
       <LongModal
         blur
@@ -313,24 +322,22 @@ export default function Preview() {
             }}
           />
         </div>
-        {/* <div className='my-4'>
-          <DAuthorityqs
-            auth={auth}
-            data={{ family_about_bio, is_correct_info, liability }}
-          />
-        </div> */}
       </div>
       <div className='my-4'>
         <button
           onClick={handlePublish}
           className='text-white font-bold text-xl cursor-pointer rounded-md bg-primary  py-3 my-8 w-full'
         >
-          পাবলিশ রিকুয়েস্ট করুন
+          {isLoading ? (
+            <Loading color='success' size='sm' />
+          ) : (
+            'পাবলিশ রিকুয়েস্ট করুন'
+          )}
         </button>
       </div>
     </div>
   ) : (
-    <div className='container'>
+    <div className='container3'>
       <Head>
         <title>বায়োডাটা</title>
       </Head>

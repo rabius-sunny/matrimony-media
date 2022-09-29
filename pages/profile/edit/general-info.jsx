@@ -90,7 +90,7 @@ export default function GeneralInfo() {
         setRoutes({
           ...routes,
           general: {
-            name: 'সাধারণ তথ্য',
+            name: 'সাধারণ',
             link: '/general-info',
             status: 'done'
           }

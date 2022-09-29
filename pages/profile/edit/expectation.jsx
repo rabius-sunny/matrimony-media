@@ -84,7 +84,7 @@ export default function OthersInfo() {
         setRoutes({
           ...routes,
           expectation: {
-            name: 'যেমন জীবনসঙ্গী আশা করেন',
+            name: 'আকাঙ্ক্ষিত বৈশিষ্ট্যাবলী',
             link: '/expectation',
             status: 'done'
           }

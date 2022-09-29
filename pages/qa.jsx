@@ -6,7 +6,7 @@ export default function Qa() {
   return (
     <div className='qa'>
       <Head>
-        <title>প্রশ্নোত্তর</title>
+        <title>প্রশ্নোত্তর | জান্নাতি জুটি.COM</title>
       </Head>
       <ColoredHeader heading='প্রশ্নোত্তর' />
       <div className='mt-10'>

@@ -34,6 +34,9 @@ class UserRequests {
   hideByUser() {
     return requests.get('/hide-by-user')
   }
+  postMessage(body) {
+    return requests.post('/post-message', body)
+  }
 }
 
 export default new UserRequests()

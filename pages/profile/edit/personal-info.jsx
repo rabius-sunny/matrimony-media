@@ -95,7 +95,7 @@ export default function PersonalInfo() {
         setRoutes({
           ...routes,
           personal: {
-            name: 'ব্যক্তিগত তথ্য',
+            name: 'ব্যক্তিগত',
             link: '/personal-info',
             status: 'done'
           }

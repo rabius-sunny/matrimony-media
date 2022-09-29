@@ -13,7 +13,7 @@ export default function GInput({
   return (
     <div className='my-4'>
       <label
-        className={`font-bold ${
+        className={`font-bold mb-2 ${
           errors[name] ? 'text-primary' : 'text-gray-600'
         }`}
       >
@@ -23,9 +23,9 @@ export default function GInput({
         {...register(name, { required: message && message })}
         {...rest}
         className={`w-full rounded ${
-          errors[name] ? 'bg-red-100' : 'bg-blue-100'
-        } px-4 py-2 font-medium text-blue-400 shadow-md ${
-          errors[name] ? 'focus:outline-red-500' : 'focus:outline-blue-500'
+          errors[name] ? 'bg-red-100' : 'bg-green-100'
+        } px-4 py-2 font-medium text-secondary shadow-md focus:ring-2 ${
+          errors[name] ? 'focus:ring-red-500' : 'focus:ring-secondary'
         }`}
       />
       <Fade right when={errors[name] ? true : false}>
@@ -33,7 +33,7 @@ export default function GInput({
           <p className='text-primary py-2 pl-2'>{errors[name].message}</p>
         )}
       </Fade>
-      {description && <p className='pl-2 pt-4 text-blue-400'>{description}</p>}
+      {description && <p className='pl-2 pt-4 text-secondary'>{description}</p>}
     </div>
   )
 }

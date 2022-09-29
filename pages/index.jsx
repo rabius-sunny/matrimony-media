@@ -5,7 +5,7 @@ export default function index() {
   return (
     <>
       <Head>
-        <title>ম্যাট্রিমনি মিডিয়া</title>
+        <title>জান্নাতি জুটি</title>
       </Head>
       <main>
         <Home />

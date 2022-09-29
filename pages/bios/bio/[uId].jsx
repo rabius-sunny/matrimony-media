@@ -42,22 +42,22 @@ export default function DetailBio() {
     }
   }, [uId])
 
-  // check favorite for signed up user and public user
+  // check favorite for signed user and public user
   useEffect(() => {
-    if (bio._id) {
+    if (uId) {
       if (!auth) {
         // check for public
         const bookmarks = localStorage.getItem('bookmarks')
         if (bookmarks) {
           const result = JSON.parse(bookmarks)
-          if (result.hasOwnProperty(bio._id)) {
+          if (result.hasOwnProperty(uId)) {
             setIsBookmarkedLocal(true)
           }
         }
       } else {
         // check for user
         userRequest
-          .checkFavorite(bio._id)
+          .checkFavorite(uId)
           .then(res => {
             if (res.message === 'exists') {
               setIsBookmarked(true)
@@ -67,6 +67,8 @@ export default function DetailBio() {
       }
     }
   }, [uId, bio, auth])
+
+  console.log('bookmark', isBookmarked, isBookmarkedLocal)
 
   const handleBookmark = _ => {
     if (auth) {
@@ -327,7 +329,7 @@ export default function DetailBio() {
                   onClick={handleBookmark}
                   className='text-center px-4 py-3 rounded-md hover:bg-white hover:border-2 hover:text-primary text-white hover:border-red-500 bg-primary  shadow'
                 >
-                  {isBookmarked || isBookmarkedLocal
+                  {isBookmarkedLocal || isBookmarked
                     ? 'ফেভারিট থেকে মুছে ফেলুন'
                     : 'ফেভারিট এ যোগ করুন'}
                 </button>

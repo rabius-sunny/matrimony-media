@@ -1,7 +1,30 @@
 import Head from 'next/head'
+import { useRouter } from 'next/router'
+import { useState } from 'react'
+import userRequest from 'services/userRequest'
 import ColoredHeader from '../components/shared/ColoredHeader'
 
 export default function ContactUs() {
+  const router = useRouter()
+  const [input, setInput] = useState({
+    name: '',
+    email: '',
+    message: ''
+  })
+
+  const onChange = e => setInput({ ...input, [e.target.name]: e.target.value })
+  const handleSubmit = e => {
+    e.preventDefault()
+    userRequest
+      .postMessage(input)
+      .then(res => {
+        if (res.message === 'ok') {
+          router.push('/')
+        }
+      })
+      .catch(err => alert('error! try again.'))
+  }
+
   return (
     <div className='contactus'>
       <Head>
@@ -9,79 +32,67 @@ export default function ContactUs() {
       </Head>
       <ColoredHeader heading='যোগাযোগ' />
       <div className='container minHeight'>
-        <p className='my-20 text-center text-xl text-gray-600'>
+        <p className='my-16 text-center text-xl text-gray-600'>
           আপনার যে কোন জিজ্ঞাসা নিম্নোক্ত ফর্মে পূরণ করে আমাদের কাছে পাঠিয়ে দিন।{' '}
           <br /> আমরা শীঘ্রই আপনার সাথে যোগাযোগ করবো ইন শা আল্লাহ।
         </p>
         <div className='flex justify-center'>
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className='mb-4'>
               <label
                 htmlFor='name'
-                className='block text-md font-medium text-primary'
+                className='block font-semibold text-secondary'
               >
                 আপনার নাম
               </label>
               <input
                 type='text'
+                required
                 name='name'
-                id='name'
+                onChange={onChange}
                 placeholder='enter your name'
                 autoComplete='name'
-                className='shadow-md w-full bg-red-100 focus:outline-red-500 text-primary rounded px-4 py-2'
+                className='shadow-md w-full bg-green-100 focus:ring-2 focus:ring-secondary text-secondary rounded px-4 py-2'
               />
             </div>
-            <div className='my-4'>
+            <div className='mb-4'>
               <label
                 htmlFor='email'
-                className='block text-md font-medium text-primary'
+                className='block font-semibold text-secondary'
               >
                 আপনার ইমেইল
               </label>
               <input
                 type='email'
+                required
                 name='email'
-                id='email'
+                onChange={onChange}
                 placeholder='enter your email'
                 autoComplete='email'
-                className='shadow-md w-full bg-red-100 focus:outline-red-500 text-primary rounded px-4 py-2'
-              />
-            </div>
-            <div className='my-4'>
-              <label
-                htmlFor='subject'
-                className='block text-md font-medium text-primary'
-              >
-                বিষয়
-              </label>
-              <input
-                type='text'
-                name='subject'
-                id='subject'
-                placeholder='enter your subject'
-                className='shadow-md w-full bg-red-100 focus:outline-red-500 text-primary rounded px-4 py-2'
+                className='shadow-md w-full bg-green-100 focus:ring-2 focus:ring-secondary text-secondary rounded px-4 py-2'
               />
             </div>
             <div>
               <label
                 htmlFor='message'
-                className='block text-sm font-medium text-primary'
+                className='block font-semibold text-secondary'
               >
                 আপনার বার্তা
               </label>
               <textarea
-                id='message'
+                onChange={onChange}
+                required
                 name='message'
                 rows={3}
-                className='shadow-md bg-red-100 focus:outline-red-500 text-primary mt-1 block w-full sm:text-sm rounded-md px-4 py-2'
+                className='shadow-md bg-green-100 focus:ring-2 focus:ring-secondary text-secondary mt-1 block w-full rounded-md px-4 py-2'
                 placeholder='your message'
               />
             </div>
-            <div className='submit text-right my-4'>
+            <div className='text-right my-4'>
               <input
                 type='submit'
                 value='পাঠান'
-                className='shadow-md bg-primary  text-center text-white px-10 py-2 rounded'
+                className='shadow-lg bg-secondary  text-center text-white px-10 py-2 rounded'
               />
             </div>
           </form>

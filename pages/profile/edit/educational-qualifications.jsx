@@ -92,7 +92,7 @@ export default function Education() {
         setRoutes({
           ...routes,
           education: {
-            name: 'শিক্ষাগত যোগ্যতা',
+            name: 'শিক্ষাগত',
             link: '/educational-qualifications',
             status: 'done'
           }

@@ -92,7 +92,7 @@ export default function Family() {
         setRoutes({
           ...routes,
           family: {
-            name: 'পারিবারিক তথ্য',
+            name: 'পারিবারিক',
             link: '/family-info',
             status: 'done'
           }
