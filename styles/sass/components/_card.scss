@@ -40,3 +40,20 @@
 #lastspan {
   border: 0px !important;
 }
+
+@media (max-width: 767px) {
+  .search-body {
+    padding: 10px;
+  }
+
+  .search-body span,
+  .search-body p {
+    padding: 3px 0;
+  }
+}
+
+@media (max-width: 460px) and (min-width: 640px) {
+  #card {
+    grid-column: span 6 / span 12;
+  }
+}

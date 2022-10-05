@@ -8,25 +8,38 @@ export default function Home() {
     <div className='home'>
       {/* Hero Section */}
       <div className='home__top'>
-        <div className='container grid grid-cols-12 gap-6'>
+        <div className='container grid grid-cols-12 md:gap-8'>
           <div className='order-last col-span-12 md:order-1 md:col-span-5'>
-            <div className='hidden rounded-lg border-4 border-dark bg-primary  px-8 py-2 md:block '>
+            <div className='hidden rounded-lg border-4 border-white border-opacity-40 bg-secondary  px-8 py-2 md:block '>
               <Dropdown />
             </div>
           </div>
           <div className='col-span-12 md:order-2 md:col-span-7'>
-            <div className=''>
-              <h1>
+            <div className='flex lg:ml-12 flex-col items-center'>
+              <h1 className='text-white text-xl sm:text-3xl lg:text-3xl lg:leading-normal xl:text-5xl xl:leading-snug font-semibold'>
                 যে ব্যক্তি বিয়ে করলো সে তার অর্ধেক দ্বীন পূর্ণ করে ফেললো। বাকি
                 অর্ধেকের জন্য সে আল্লাহকে ভয় করুক।
               </h1>
+              <div className='flex items-center mt-2'>
+                <div className='h-[1px] md:h-[3px] bg-white w-16 md:w-28' />
+                {[1, 2, 3, 4, 5, 6, 7, 8].map(item => (
+                  <div className='flex items-center -mt-[5px]' key={item}>
+                    <div className='h-[1px] md:h-[2px] bg-white w-2 -mx-[2px] -rotate-45' />
+                    <div className='h-[1px] md:h-[2px] bg-white w-2 -mx-[2px] rotate-45' />
+                  </div>
+                ))}
+                <div className='h-[1px] md:h-[3px] bg-white w-16 md:w-28' />
+              </div>
+              <p className='text-white text-sm mt-2 sm:text-md lg:text-lg mb-20 '>
+                বায়হাক্বী, শু’আবুল ঈমান, ৫৪৮৬
+              </p>
             </div>
           </div>
         </div>
       </div>
-      <div className='pt-10 md:pt-0'>
+      <div className='pt-10 md:pt-0 bg-[#fcfcfc]'>
         <div className='container'>
-          <div className='block rounded-lg border-4 border-dark bg-primary  px-8 py-2 md:hidden '>
+          <div className='block rounded-lg border-4 border-dark bg-primary -mt-8 px-8 py-2 md:hidden '>
             <Dropdown />
           </div>
         </div>
@@ -49,8 +62,8 @@ export default function Home() {
       </section> */}
 
       {/* Featured Biodata */}
-      <section className='bg-[#ffc9e2]'>
-        <div className='container'>
+      <section className='bg-[#ffc9e2] md:bg-[#fcfcfc]'>
+        <div className='container px-2'>
           <h1 className='text-4xl mb-8 text-primary'>ফিচার্ড বায়োডাটা</h1>
           {/* <div className='p-12 rounded-md'> */}
           <Featured />
@@ -59,7 +72,7 @@ export default function Home() {
       </section>
 
       {/* Tutorial */}
-      <div className='home__options bg-primary  pb-28'>
+      <div className='home__options bg-primary pb-60'>
         <h1 className='pt-16 pb-20 text-center text-4xl text-white'>
           টিউটোরিয়াল
         </h1>
@@ -78,16 +91,14 @@ export default function Home() {
       </div>
 
       {/* Guide */}
-      <section className='bg-gray-200'>
-        <div className='container'>
-          <h1 className='pb-6 text-center text-3xl text-primary'>
-            জীবনসঙ্গী নির্বাচনে ইসলাম কী বলে
-          </h1>
-          <div className='flex justify-center'>
-            <p style={{ maxWidth: '700px', textAlign: 'justify' }}>
-              <Hometext />
-            </p>
-          </div>
+      <section className='container bg-gray-100 -mt-28 rounded-t-md'>
+        <h1 className='pb-6 text-center text-3xl text-primary'>
+          জীবনসঙ্গী নির্বাচনে ইসলাম কী বলে
+        </h1>
+        <div className='flex justify-center'>
+          <p style={{ maxWidth: '700px', textAlign: 'justify' }}>
+            <Hometext />
+          </p>
         </div>
       </section>
     </div>

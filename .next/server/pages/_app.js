@@ -5,133 +5,94 @@ exports.id = 888;
 exports.ids = [888];
 exports.modules = {
 
-/***/ 174:
+/***/ 8269:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, {
-  "Z": () => (/* binding */ Footer)
-});
-
-// EXTERNAL MODULE: external "react/jsx-runtime"
-var jsx_runtime_ = __webpack_require__(997);
-// EXTERNAL MODULE: ./node_modules/next/link.js
-var next_link = __webpack_require__(1664);
-var link_default = /*#__PURE__*/__webpack_require__.n(next_link);
-;// CONCATENATED MODULE: external "react-icons/hi"
-const hi_namespaceObject = require("react-icons/hi");
-;// CONCATENATED MODULE: external "react-icons/bs"
-const bs_namespaceObject = require("react-icons/bs");
-;// CONCATENATED MODULE: external "react-icons/ai"
-const ai_namespaceObject = require("react-icons/ai");
-// EXTERNAL MODULE: external "@nextui-org/react"
-var react_ = __webpack_require__(6735);
-;// CONCATENATED MODULE: ./components/shared/Footer.jsx
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Z": () => (/* binding */ Footer)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(997);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1664);
+/* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(next_link__WEBPACK_IMPORTED_MODULE_1__);
 
 
-
-
-
-
+// import { HiUserGroup } from 'react-icons/hi'
+// import { BsFacebook, BsYoutube } from 'react-icons/bs'
+// import { AiFillTwitterCircle } from 'react-icons/ai'
+// import { Tooltip } from '@nextui-org/react'
 function Footer() {
-    return /*#__PURE__*/ (0,jsx_runtime_.jsxs)("footer", {
+    return /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("footer", {
         children: [
-            /*#__PURE__*/ jsx_runtime_.jsx("section", {
+            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("section", {
                 className: "bg-primary",
-                children: /*#__PURE__*/ jsx_runtime_.jsx("div", {
+                children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
                     className: "container",
-                    children: /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
-                        className: "grid grid-cols-5",
+                    children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                        className: "grid grid-cols-6",
                         children: [
-                            /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
-                                className: "col-span-3 lg:col-span-2",
-                                children: [
-                                    /*#__PURE__*/ jsx_runtime_.jsx("h2", {
-                                        className: "text-xl mb-4 text-white font-bold",
-                                        children: "Pages"
-                                    }),
-                                    /*#__PURE__*/ (0,jsx_runtime_.jsxs)("ul", {
-                                        children: [
-                                            /*#__PURE__*/ jsx_runtime_.jsx("li", {
-                                                children: /*#__PURE__*/ jsx_runtime_.jsx((link_default()), {
-                                                    href: "/favorite",
-                                                    children: "ফেভারিট"
-                                                })
-                                            }),
-                                            /*#__PURE__*/ jsx_runtime_.jsx("li", {
-                                                children: /*#__PURE__*/ jsx_runtime_.jsx((link_default()), {
-                                                    href: "/qa",
-                                                    children: "প্রশ্নোত্তর"
-                                                })
-                                            }),
-                                            /*#__PURE__*/ jsx_runtime_.jsx("li", {
-                                                children: /*#__PURE__*/ jsx_runtime_.jsx((link_default()), {
-                                                    href: "/about-us",
-                                                    children: "আমাদের সম্পর্কে"
-                                                })
-                                            }),
-                                            /*#__PURE__*/ jsx_runtime_.jsx("li", {
-                                                children: /*#__PURE__*/ jsx_runtime_.jsx((link_default()), {
-                                                    href: "/contact-us",
-                                                    children: "যোগাযোগ"
-                                                })
-                                            })
-                                        ]
-                                    })
-                                ]
-                            }),
-                            /*#__PURE__*/ jsx_runtime_.jsx("div", {
-                                className: "col-span-2",
-                                children: /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
-                                    className: "",
+                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                                className: "col-span-3",
+                                children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                                    className: "text-start md:text-center",
                                     children: [
-                                        /*#__PURE__*/ jsx_runtime_.jsx("h2", {
+                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("h2", {
                                             className: "text-xl mb-4 text-white font-bold",
-                                            children: "Important Links"
+                                            children: "Pages"
                                         }),
-                                        /*#__PURE__*/ (0,jsx_runtime_.jsxs)("ul", {
+                                        /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("ul", {
                                             children: [
-                                                /*#__PURE__*/ jsx_runtime_.jsx("li", {
-                                                    children: "importantlink.com"
+                                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("li", {
+                                                    children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((next_link__WEBPACK_IMPORTED_MODULE_1___default()), {
+                                                        href: "/favorite",
+                                                        children: "ফেভারিট"
+                                                    })
                                                 }),
-                                                /*#__PURE__*/ jsx_runtime_.jsx("li", {
-                                                    children: "importantlink.com"
+                                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("li", {
+                                                    children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((next_link__WEBPACK_IMPORTED_MODULE_1___default()), {
+                                                        href: "/qa",
+                                                        children: "প্রশ্নোত্তর"
+                                                    })
                                                 }),
-                                                /*#__PURE__*/ jsx_runtime_.jsx("li", {
-                                                    children: "importantlink.com"
+                                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("li", {
+                                                    children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((next_link__WEBPACK_IMPORTED_MODULE_1___default()), {
+                                                        href: "/about-us",
+                                                        children: "আমাদের সম্পর্কে"
+                                                    })
                                                 }),
-                                                /*#__PURE__*/ jsx_runtime_.jsx("li", {
-                                                    children: "importantlink.com"
+                                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("li", {
+                                                    children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((next_link__WEBPACK_IMPORTED_MODULE_1___default()), {
+                                                        href: "/contact-us",
+                                                        children: "যোগাযোগ"
+                                                    })
                                                 })
                                             ]
                                         })
                                     ]
                                 })
                             }),
-                            /*#__PURE__*/ jsx_runtime_.jsx("div", {
-                                className: "col-span-5 mt-8 lg:mt-0 text-center lg:text-left lg:col-span-1",
-                                children: /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
-                                    className: "",
+                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                                className: "col-span-3 text-right",
+                                children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                                    className: "text-center",
                                     children: [
-                                        /*#__PURE__*/ jsx_runtime_.jsx("h2", {
+                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("h2", {
                                             className: "text-xl mb-4 text-white font-bold",
-                                            children: "Important Links"
+                                            children: "Connect us"
                                         }),
-                                        /*#__PURE__*/ (0,jsx_runtime_.jsxs)("ul", {
-                                            className: "underline",
+                                        /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("ul", {
                                             children: [
-                                                /*#__PURE__*/ jsx_runtime_.jsx("li", {
-                                                    children: "Blog title goes here, blog title goes here"
+                                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("li", {
+                                                    children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("a", {
+                                                        href: "https://www.facebook.com/profile.php?id=100081513904117",
+                                                        children: "ফেইসবুক পেইজ"
+                                                    })
                                                 }),
-                                                /*#__PURE__*/ jsx_runtime_.jsx("li", {
-                                                    children: "Blog title goes here, blog title goes here"
-                                                }),
-                                                /*#__PURE__*/ jsx_runtime_.jsx("li", {
-                                                    children: "Blog title goes here, blog title goes here"
-                                                }),
-                                                /*#__PURE__*/ jsx_runtime_.jsx("li", {
-                                                    children: "Blog title goes here, blog title goes here"
+                                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("li", {
+                                                    children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("a", {
+                                                        href: "https://www.facebook.com/groups/jannatijuti",
+                                                        children: "ফেইসবুক গ্রুপ"
+                                                    })
                                                 })
                                             ]
                                         })
@@ -142,68 +103,53 @@ function Footer() {
                     })
                 })
             }),
-            /*#__PURE__*/ jsx_runtime_.jsx("div", {
-                className: "text-white py-3 text-center bg-dark",
-                children: /*#__PURE__*/ jsx_runtime_.jsx("div", {
-                    className: "container3",
-                    children: /*#__PURE__*/ jsx_runtime_.jsx("div", {
-                        className: "flex items-center justify-center",
-                        children: links.map((item, index)=>/*#__PURE__*/ jsx_runtime_.jsx(react_.Tooltip, {
-                                color: "secondary",
-                                className: "px-3",
-                                content: item.name,
-                                children: /*#__PURE__*/ jsx_runtime_.jsx("a", {
-                                    href: item.link,
-                                    target: "_blank",
-                                    rel: "noopener noreferrer",
-                                    children: /*#__PURE__*/ jsx_runtime_.jsx(item.icon, {
-                                        className: index === 0 ? "h-7 w-7" : "h-8 w-8"
-                                    })
-                                })
-                            }, item.name))
-                    })
-                })
-            }),
-            /*#__PURE__*/ jsx_runtime_.jsx("div", {
+            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
                 className: "bg-secondary text-center",
-                children: /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
-                    className: "container3 text-sm text-white",
+                children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                    className: "container3 text-white flex flex-wrap justify-center items-baseline sm:gap-4",
                     children: [
-                        "jannatijuti.com | Created with \uD83D\uDC96 by",
-                        " ",
-                        /*#__PURE__*/ jsx_runtime_.jsx("a", {
-                            className: "text-primary font-semibold underline",
-                            href: "https://fb.com/rabibinsalam",
-                            children: "dev"
+                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                            children: "Copyright, 2022 | jannatijuti.com"
+                        }),
+                        /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                            className: "text-sm opacity-90 ml-4 sm:ml-0",
+                            children: [
+                                "Created with \uD83D\uDC96 by",
+                                " ",
+                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("a", {
+                                    className: "text-primary font-semibold underline",
+                                    href: "https://fb.com/rabibinsalam",
+                                    children: "dev"
+                                })
+                            ]
                         })
                     ]
                 })
             })
         ]
     });
-}
-const links = [
-    {
-        name: "Facebook Page",
-        icon: bs_namespaceObject.BsFacebook,
-        link: "https://www.facebook.com/profile.php?id=100081513904117"
-    },
-    {
-        name: "Facebook Group",
-        icon: hi_namespaceObject.HiUserGroup,
-        link: "https://www.facebook.com/groups/jannatijuti"
-    },
-    {
-        name: "Youtube Channel",
-        icon: bs_namespaceObject.BsYoutube,
-        link: "https://www.facebook.com/profile.php?id=100081513904117"
-    },
-    {
-        name: "Twitter",
-        icon: ai_namespaceObject.AiFillTwitterCircle,
-        link: "https://www.facebook.com/profile.php?id=100081513904117"
-    }
-];
+} // const links = [
+ //   {
+ //     name: 'Facebook Page',
+ //     icon: BsFacebook,
+ //     link: 'https://www.facebook.com/profile.php?id=100081513904117'
+ //   },
+ //   {
+ //     name: 'Facebook Group',
+ //     icon: HiUserGroup,
+ //     link: 'https://www.facebook.com/groups/jannatijuti'
+ //   },
+ //   {
+ //     name: 'Youtube Channel',
+ //     icon: BsYoutube,
+ //     link: 'https://www.facebook.com/profile.php?id=100081513904117'
+ //   },
+ //   {
+ //     name: 'Twitter',
+ //     icon: AiFillTwitterCircle,
+ //     link: 'https://www.facebook.com/profile.php?id=100081513904117'
+ //   }
+ // ]
 
 
 /***/ }),
@@ -220,7 +166,7 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6689);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Navigation__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(3505);
-/* harmony import */ var _Footer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(174);
+/* harmony import */ var _Footer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(8269);
 /* harmony import */ var _heroicons_react_solid__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1143);
 /* harmony import */ var _heroicons_react_solid__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_heroicons_react_solid__WEBPACK_IMPORTED_MODULE_4__);
 var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_Navigation__WEBPACK_IMPORTED_MODULE_2__]);
@@ -353,7 +299,7 @@ function Navigation() {
                                 children: solutions.map((item)=>/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((next_link__WEBPACK_IMPORTED_MODULE_4___default()), {
                                         href: item.href,
                                         children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("a", {
-                                            className: "text-base font-medium text-primary hover:underline hover:text-dark",
+                                            className: "text-base font-medium text-primary hover:underline hover:text-secondary",
                                             children: item.name
                                         })
                                     }, item.href))

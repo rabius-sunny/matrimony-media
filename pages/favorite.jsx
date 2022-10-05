@@ -65,7 +65,7 @@ export default function Favorite() {
       ) : !auth && data === null ? (
         localBookmark && datafromLocal.length > 0 ? (
           <div className='container my-8'>
-            <div className='grid grid-cols-12 gap-8'>
+            <div className='grid grid-cols-12 gap-2 md:gap-3 lg:gap-4 xl:gap-8'>
               {datafromLocal.map(bio => (
                 <BioCard bio={bio} />
               ))}
@@ -80,7 +80,7 @@ export default function Favorite() {
         )
       ) : (
         <div className='container my-8'>
-          <div className='grid grid-cols-12 gap-8'>
+          <div className='grid grid-cols-12 gap-2 md:gap-3 lg:gap-4 xl:gap-8'>
             {data.bios.map(bio => (
               <BioCard bio={bio} type='userid' />
             ))}

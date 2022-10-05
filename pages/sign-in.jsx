@@ -11,6 +11,7 @@ import { useState, useEffect } from 'react'
 import userRequest from 'services/userRequest'
 import getUIDs from 'hooks/getUIDs'
 import getRandomUID from 'hooks/getRandomUID'
+import { Loading } from '@nextui-org/react'
 
 export default function Signin() {
   const { uIds } = getUIDs()
@@ -19,6 +20,7 @@ export default function Signin() {
     otp: ''
   })
   const [uId, setUId] = useState(null)
+  const [loading, setLoading] = useState(false)
   const [confirm, setConfirm] = useState(null)
   const [isOtp, setIsOtp] = useState(false)
 
@@ -55,6 +57,7 @@ export default function Signin() {
   }
 
   const onPhoneSubmit = async e => {
+    setLoading(true)
     e.preventDefault()
     if (
       isNaN(Number(cred.phone)) ||
@@ -62,27 +65,31 @@ export default function Signin() {
       cred.phone.length > 14
     ) {
       alert('Please enter a valid phone number')
+      setLoading(false)
     } else {
       try {
         const response = await recaptcha()
         setConfirm(response)
         setIsOtp(true)
-        console.log('response', response)
+        setLoading(false)
       } catch (error) {
         console.log('otp error', error)
+        setLoading(false)
       }
     }
   }
   const onOtpSubmit = async e => {
+    setLoading(true)
     e.preventDefault()
 
     try {
       const confirmation = await confirm.confirm(cred.otp)
       handleSubmit(e)
     } catch (error) {
-      console.log('errorss', error)
       alert('wrong otp')
-      if (typeof window !== 'undefined') window.location.reload()
+      setLoading(false)
+
+      // if (typeof window !== 'undefined') window.location.reload()
     }
   }
   const handleSubmit = async e => {
@@ -168,8 +175,16 @@ export default function Signin() {
                   </div>
 
                   <div className='mt-6'>
-                    <button className='w-full bg-primary text-white hover:bg-dark transform rounded-md px-4 py-2 tracking-wide transition-colors duration-200 focus:outline-none focus:ring focus:ring-dark'>
-                      OTP কোড নিন
+                    <button
+                      className={`${
+                        loading && 'pointer-events-none'
+                      } w-full bg-primary text-white hover:bg-dark transform rounded-md px-4 py-2 tracking-wide transition-colors duration-200 focus:outline-none focus:ring focus:ring-dark`}
+                    >
+                      {loading ? (
+                        <Loading color='white' size='sm' />
+                      ) : (
+                        'OTP কোড নিন'
+                      )}
                     </button>
                   </div>
                 </form>
@@ -188,9 +203,15 @@ export default function Signin() {
                     <div className='mt-6'>
                       <button
                         type='submit'
-                        className='w-full bg-primary hover:bg-dark transform rounded-md bg-blue-500 px-4 py-2 tracking-wide text-white transition-colors duration-200 hover:bg-blue-400 focus:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 '
+                        className={`${
+                          loading && 'pointer-events-none'
+                        } w-full bg-primary hover:bg-dark transform rounded-md bg-blue-500 px-4 py-2 tracking-wide text-white transition-colors duration-200 hover:bg-blue-400 focus:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300`}
                       >
-                        OTP দিয়ে প্রবেশ করুন
+                        {loading ? (
+                          <Loading color='white' size='sm' />
+                        ) : (
+                          'OTP দিয়ে প্রবেশ করুন'
+                        )}
                       </button>
                     </div>
                   </form>

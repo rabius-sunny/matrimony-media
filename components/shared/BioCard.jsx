@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import requests from 'services/http'
+import getWidth from 'hooks/getWidth'
 
 export default function BioCard({ bio, type }) {
   const [uId, setUId] = useState(null)
@@ -15,13 +16,18 @@ export default function BioCard({ bio, type }) {
         .catch(err => err)
     }
   }, [bio.user, type])
+  const { xs, md, lg } = getWidth()
+  console.log('width', { xs, md, lg })
 
   return (
-    <div className='col-span-12 sm:col-span-6 lg:col-span-4 bg-primary pt-8 border-2 border-dark rounded-md overflow-hidden duration-500 hover:scale-105 hover:shadow-lg'>
+    <div
+      id='card'
+      className='col-span-12 sm:col-span-6 lg:col-span-4 bg-primary pt-4 md:pt-8 border-2 border-dark rounded-md overflow-hidden duration-500 hover:scale-105 hover:shadow-lg'
+    >
       <div className='text-center'>
         <Image
-          width='150px'
-          height='150px'
+          width={xs ? '90px' : md ? '120px' : lg ? '150px' : '100px'}
+          height={xs ? '90px' : md ? '120px' : lg ? '150px' : '100px'}
           src={bio.type === 'পাত্রের বায়োডাটা' ? male : female}
           alt='avatar'
         />
@@ -34,9 +40,9 @@ export default function BioCard({ bio, type }) {
         <span id='lastspan'>পেশা </span>
         <p>{bio.profession}</p>
       </div>
-      <div className='py-8 text-center bg-white'>
+      <div className='pt-2 pb-5 md:py-8 text-center bg-white'>
         <Link href={`/bios/bio/${type !== 'userid' ? bio?.user?.uId : uId}`}>
-          <a className='bg-primary  py-3 px-6 rounded shadow text-white'>
+          <a className='bg-primary py-1 md:py-3 px-3 text-sm md:text-md md:px-6 rounded shadow text-white'>
             বায়োডাটা দেখুন
           </a>
         </Link>

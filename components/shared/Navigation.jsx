@@ -66,7 +66,7 @@ export default function Navigation() {
             <div className='hidden space-x-10 lg:flex'>
               {solutions.map(item => (
                 <Link href={item.href} key={item.href}>
-                  <a className='text-base font-medium text-primary hover:underline hover:text-dark'>
+                  <a className='text-base font-medium text-primary hover:underline hover:text-secondary'>
                     {item.name}
                   </a>
                 </Link>
