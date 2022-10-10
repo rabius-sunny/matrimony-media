@@ -17,17 +17,16 @@ export default function BioCard({ bio, type }) {
     }
   }, [bio.user, type])
   const { xs, md, lg } = getWidth()
-  console.log('width', { xs, md, lg })
 
   return (
     <div
       id='card'
-      className='col-span-12 sm:col-span-6 lg:col-span-4 bg-primary pt-4 md:pt-8 border-2 border-dark rounded-md overflow-hidden duration-500 hover:scale-105 hover:shadow-lg'
+      className='col-span-6 lg:col-span-4 bg-primary pt-4 md:pt-8 border-2 border-dark rounded-md overflow-hidden duration-500 hover:scale-105 hover:shadow-lg'
     >
       <div className='text-center'>
         <Image
-          width={xs ? '90px' : md ? '120px' : lg ? '150px' : '100px'}
-          height={xs ? '90px' : md ? '120px' : lg ? '150px' : '100px'}
+          width={xs ? '80px' : md ? '120px' : lg ? '150px' : '100px'}
+          height={xs ? '80px' : md ? '120px' : lg ? '150px' : '100px'}
           src={bio.type === 'পাত্রের বায়োডাটা' ? male : female}
           alt='avatar'
         />

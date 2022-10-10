@@ -158,7 +158,7 @@ export default function BioInfoCard({ data, loading, uId }) {
   }
   return (
     <>
-      <div className='rounded-md bg-primary  p-4 text-center'>
+      <div className='rounded-md bg-primary p-1 sm:p-4 text-center'>
         <LongModal
           color='error'
           bodyColor='error'
@@ -204,7 +204,7 @@ export default function BioInfoCard({ data, loading, uId }) {
         ) : (
           <div>
             {id && data?.user?._id === id ? (
-              <div>
+              <div className=''>
                 <Image
                   height='150px'
                   width='150px'
@@ -217,7 +217,7 @@ export default function BioInfoCard({ data, loading, uId }) {
                 </h2>
               </div>
             ) : (
-              <div className='flex justify-between items-center md:px-8 mb-4'>
+              <div className='flex justify-between items-center px-2 pt-2 md:px-8 mb-4'>
                 <div className='flex items-center'>
                   <Image
                     height='60px'
@@ -321,7 +321,7 @@ export default function BioInfoCard({ data, loading, uId }) {
                     onClick={() => {
                       set_delete(true)
                     }}
-                    className='font-semibold hover:bg-red-200'
+                    className='font-semibold text-md md:text-sm lg:text-md hover:bg-red-200'
                   >
                     Delete Biodata
                   </button>
@@ -330,7 +330,7 @@ export default function BioInfoCard({ data, loading, uId }) {
                     onClick={() => {
                       setHide(true)
                     }}
-                    className={`font-semibold ${
+                    className={`font-semibold text-md md:text-sm lg:text-md ${
                       data?.published ? 'cursor-pointer' : 'pointer-events-none'
                     } hover:bg-red-200`}
                   >
@@ -354,7 +354,7 @@ export default function BioInfoCard({ data, loading, uId }) {
           <div
             className={`${
               !data || data?.published ? 'hidden' : 'block'
-            } bg-red-200 text-primary p-2 shadow font-semibold`}
+            } bg-red-200 text-primary text-sm sm:text-md text-center p-2 shadow font-semibold`}
           >
             পাবলিশ করতে প্রিভিউ থেকে পাবলিশ রিকুয়েস্ট করুন
           </div>

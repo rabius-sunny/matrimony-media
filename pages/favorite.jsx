@@ -36,14 +36,6 @@ export default function Favorite() {
     }
   }, [localBookmark])
 
-  // useEffect(() => {
-  //   const bookmarks = localStorage.getItem('bookmarks')
-  //   if (bookmarks && localBookmark) {
-  //     datafromLocal.length === 0 && setLocalLoading(true)
-  //   }
-  //   return () => setLocalLoading(false)
-  // }, [datafromLocal.length])
-
   return (
     <div>
       <Head>

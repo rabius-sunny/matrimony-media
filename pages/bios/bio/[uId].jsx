@@ -57,7 +57,7 @@ export default function DetailBio() {
       } else {
         // check for user
         userRequest
-          .checkFavorite(uId)
+          .checkFavorite(bio?._id)
           .then(res => {
             if (res.message === 'exists') {
               setIsBookmarked(true)
@@ -68,13 +68,11 @@ export default function DetailBio() {
     }
   }, [uId, bio, auth])
 
-  console.log('bookmark', isBookmarked, isBookmarkedLocal)
-
   const handleBookmark = _ => {
     if (auth) {
       if (isBookmarked) {
         userRequest
-          .removeBookmark(uId)
+          .removeBookmark(bio?._id)
           .then(res => {
             if (res.message === 'ok') {
               setIsBookmarked(false)
@@ -83,7 +81,7 @@ export default function DetailBio() {
           .catch(err => err)
       } else {
         userRequest
-          .addToBookmark(uId)
+          .addToBookmark(bio?._id)
           .then(res => {
             if (res.message === 'ok') {
               setIsBookmarked(true)
@@ -318,16 +316,16 @@ export default function DetailBio() {
               />
             </div> */}
             <div className='h-40'>
-              <div className='my-8 flex gap-4'>
+              <div className='my-8 flex flex-wrap gap-4'>
                 <button
                   onClick={() => router.push(`/checkout/${uId}`)}
-                  className='text-center px-4 py-3 rounded-md hover:bg-white hover:border-2 hover:text-secondary text-white hover:border-green-500 bg-green-500 shadow'
+                  className='text-center px-4 py-3 rounded-md hover:bg-white hover:border-2 hover:text-secondary text-white hover:border-green-500 bg-green-500 shadow w-full sm:w-auto'
                 >
                   অভিভাবকের সাথে যোগাযোগ করুন
                 </button>
                 <button
                   onClick={handleBookmark}
-                  className='text-center px-4 py-3 rounded-md hover:bg-white hover:border-2 hover:text-primary text-white hover:border-red-500 bg-primary  shadow'
+                  className='text-center px-4 py-3 rounded-md hover:bg-white hover:border-2 hover:text-primary text-white hover:border-red-500 bg-primary shadow w-full sm:w-auto'
                 >
                   {isBookmarkedLocal || isBookmarked
                     ? 'ফেভারিট থেকে মুছে ফেলুন'

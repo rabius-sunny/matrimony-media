@@ -57,3 +57,15 @@
     grid-column: span 6 / span 12;
   }
 }
+
+@media (max-width: 400px) {
+  .search-body {
+    padding: 3px;
+  }
+
+  .search-body span,
+  .search-body p {
+    padding: 2px 0;
+    font-size: 12px;
+  }
+}

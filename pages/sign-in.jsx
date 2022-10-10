@@ -88,8 +88,6 @@ export default function Signin() {
     } catch (error) {
       alert('wrong otp')
       setLoading(false)
-
-      // if (typeof window !== 'undefined') window.location.reload()
     }
   }
   const handleSubmit = async e => {

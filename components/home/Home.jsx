@@ -10,7 +10,7 @@ export default function Home() {
       <div className='home__top'>
         <div className='container grid grid-cols-12 md:gap-8'>
           <div className='order-last col-span-12 md:order-1 md:col-span-5'>
-            <div className='hidden rounded-lg border-4 border-white border-opacity-40 bg-secondary  px-8 py-2 md:block '>
+            <div className='hidden rounded-lg border-4 border-white border-opacity-40 bg-secondary px-4 lg:px-8 md:block '>
               <Dropdown />
             </div>
           </div>
@@ -37,9 +37,9 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className='pt-10 md:pt-0 bg-[#fcfcfc]'>
+      <div className='pt-2 md:pt-0 bg-[#fcfcfc]'>
         <div className='container'>
-          <div className='block rounded-lg border-4 border-dark bg-primary -mt-8 px-8 py-2 md:hidden '>
+          <div className='block rounded-lg border-4 border-dark bg-primary -mt-6 px-3 sm:px-5 md:hidden '>
             <Dropdown />
           </div>
         </div>
@@ -63,27 +63,29 @@ export default function Home() {
 
       {/* Featured Biodata */}
       <section className='bg-[#ffc9e2] md:bg-[#fcfcfc]'>
-        <div className='container px-2'>
-          <h1 className='text-4xl mb-8 text-primary'>ফিচার্ড বায়োডাটা</h1>
-          {/* <div className='p-12 rounded-md'> */}
-          <Featured />
-          {/* </div> */}
+        <div className=' px-2 sm:px-6 md:px-8 md:max-w-6xl mx-auto'>
+          <h1 className='text-3xl sm:text-4xl mb-8 text-primary'>
+            ফিচার্ড বায়োডাটা
+          </h1>
+          <div className='sm:pt-0 rounded-md'>
+            <Featured />
+          </div>
         </div>
       </section>
 
       {/* Tutorial */}
       <div className='home__options bg-primary pb-60'>
-        <h1 className='pt-16 pb-20 text-center text-4xl text-white'>
+        <h1 className='pt-16 pb-20 text-center text-3xl sm:text-4xl text-white'>
           টিউটোরিয়াল
         </h1>
         <div className='container text-center'>
           <h1 className='mb-24'>
-            <span className='rounded bg-white py-8 px-8 text-lg text-primary sm:px-28 sm:text-xl md:text-3xl'>
+            <span className='rounded bg-white font-semibold py-8 px-8 text-lg text-primary sm:px-28 sm:text-xl md:text-3xl'>
               আপনার বায়োডাটা তৈরি করুন
             </span>
           </h1>
           <h2>
-            <span className='rounded bg-slate-200 py-6 px-6 text-lg text-primary sm:px-20 sm:text-lg md:text-2xl'>
+            <span className='rounded bg-red-100 font-semibold py-6 px-6 text-lg text-primary sm:px-20 sm:text-lg md:text-2xl'>
               কীভাবে বায়োডাটা তৈরি করবেন
             </span>
           </h2>
@@ -92,7 +94,7 @@ export default function Home() {
 
       {/* Guide */}
       <section className='container bg-gray-100 -mt-28 rounded-t-md'>
-        <h1 className='pb-6 text-center text-3xl text-primary'>
+        <h1 className='pb-6 text-center text-xl font-semibold text-primary'>
           জীবনসঙ্গী নির্বাচনে ইসলাম কী বলে
         </h1>
         <div className='flex justify-center'>

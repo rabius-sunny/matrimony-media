@@ -72,10 +72,7 @@ export default function DMarital({
             <div className='pt-1 whitespace-pre-wrap'>{family_planning}</div>
           </div>
           <div className='item'>
-            <span>
-              আপনি বা আপনার পরিবার পাত্রীপক্ষের কাছে যৌতুক/উপহার/অর্থ আশা করবেন
-              কিনা?
-            </span>
+            <span>পাত্রীপক্ষের কাছে যৌতুক/উপহার/অর্থ আশা করবেন কিনা?</span>
             <span>{demand}</span>
           </div>
         </>

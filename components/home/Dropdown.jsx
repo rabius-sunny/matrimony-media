@@ -17,8 +17,8 @@ export default function Dropdown() {
   }
 
   return (
-    <div className='my-4'>
-      <div className='mb-4'>
+    <div className='my-3 lg:my-4'>
+      <div className='mb-2 lg:mb-4'>
         <label
           className='mb-1 block text-sm font-medium text-white'
           htmlFor='type'
@@ -42,7 +42,7 @@ export default function Dropdown() {
         </select>
       </div>
 
-      <div className='my-4'>
+      <div className='my-2 lg:my-4'>
         <label
           className='mb-1 block text-sm font-medium text-white'
           htmlFor='jilla'
@@ -84,7 +84,9 @@ export default function Dropdown() {
           onBlur={() => setIsReset(false)}
           onChange={e => setId(e.target.value)}
           value={id}
-          className='mb-4 w-full rounded px-3 py-1 shadow-md focus:outline-red-800'
+          type='tel'
+          placeholder='.....'
+          className='mb-4 w-full rounded px-3 py-1 shadow-md focus:ring-secondary focus:ring-2'
         />
       </div>
       <div className='submit text-right'>

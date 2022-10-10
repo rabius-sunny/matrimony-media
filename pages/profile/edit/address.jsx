@@ -9,8 +9,8 @@ import FormSkeleton from 'components/shared/FormSkeleton'
 import Head from 'next/head'
 import { useAppContext } from 'utils/context'
 import { useEffect, useState } from 'react'
-import { Loading } from '@nextui-org/react'
 import LongModal from 'components/shared/Modals/LongModal'
+import SaveButton from 'components/bio/SaveButton'
 
 export default function Address() {
   const [visible, setVisible] = useState({
@@ -127,29 +127,7 @@ export default function Address() {
             message='field is required'
           />
 
-          <div className='flex items-center'>
-            <button
-              type='submit'
-              className={`${
-                isLoading
-                  ? 'pointer-events-none cursor-not-allowed'
-                  : 'cursor-pointer'
-              } rounded-md bg-primary  flex items-center font-medium text-white shadow-md hover:bg-primary  px-6 py-3`}
-            >
-              {isLoading ? <Loading color='success' size='sm' /> : 'সেভ করুন'}
-            </button>
-            <button
-              type='button'
-              onClick={() => router.push('/profile/preview')}
-              className={`${
-                fields.length
-                  ? 'bg-gray-300 pointer-events-none'
-                  : 'bg-green-500 hover:bg-green-600'
-              } ml-2 rounded-md text-white px-6 py-3 shadow-md`}
-            >
-              প্রিভিউ দেখুন ও পাবলিশ করুন
-            </button>
-          </div>
+          <SaveButton isLoading={isLoading} fields={fields} />
         </CForm>
       ) : (
         <CForm onSubmit={onSubmit}>

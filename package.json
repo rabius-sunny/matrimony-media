@@ -3,9 +3,9 @@
   "license": "MIT",
   "homepage": "https://anabuk.com",
   "scripts": {
-    "dev": "next -p 4000",
+    "dev": "next dev",
     "build": "next build",
-    "start": "next start -H 192.168.37.222"
+    "start": "next start -H 192.168.172.222"
   },
   "commands": {
     "dev": "node server.js",

@@ -11,7 +11,6 @@ import { useEffect } from 'react'
 import FormSkeleton from 'components/shared/FormSkeleton'
 import Head from 'next/head'
 import { useAppContext } from 'utils/context'
-import { Loading } from '@nextui-org/react'
 import LongModal from 'components/shared/Modals/LongModal'
 
 export default function Education() {
@@ -423,29 +422,7 @@ export default function Education() {
               শিক্ষার বিষয়, প্রতিষ্ঠানের নাম, পাসের সন ইত্যাদি বিস্তারিত লিখবেন।
             </p>
           </fieldset>
-          <div className='flex items-center'>
-            <button
-              type='submit'
-              className={`${
-                isLoading
-                  ? 'pointer-events-none cursor-not-allowed'
-                  : 'cursor-pointer'
-              } rounded-md bg-primary  flex items-center font-medium text-white shadow-md hover:bg-primary  px-6 py-3`}
-            >
-              {isLoading ? <Loading color='success' size='sm' /> : 'সেভ করুন'}
-            </button>
-            <button
-              type='button'
-              onClick={() => router.push('/profile/preview')}
-              className={`${
-                fields.length
-                  ? 'bg-gray-300 pointer-events-none'
-                  : 'bg-green-500 hover:bg-green-600'
-              } ml-2 rounded-md text-white px-6 py-3 shadow-md`}
-            >
-              প্রিভিউ দেখুন ও পাবলিশ করুন
-            </button>
-          </div>
+          <SaveButton isLoading={isLoading} fields={fields} />
         </form>
       ) : (
         <FormSkeleton />

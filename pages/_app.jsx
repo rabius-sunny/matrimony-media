@@ -6,6 +6,11 @@ import Layout from '../components/shared/Layout'
 import { AppWrapper } from 'utils/context'
 
 export default function MyApp({ Component, pageProps }) {
+  console.log(`
+  developer: Rabius Sunny \n
+  facebook: fb.com/rabibinsalam \n
+  linkedin: linkedin.com/in/rabius-sunny
+  `)
   return (
     <>
       <Head>

@@ -6,7 +6,7 @@ import { useRouter } from 'next/router'
 import useAuth from 'hooks/useAuth'
 import { LogoutIcon } from '@heroicons/react/outline'
 
-const solutions = [
+const links = [
   {
     name: 'ফেভারিট',
     href: '/favorite'
@@ -35,7 +35,6 @@ export default function Navigation() {
     if (router.pathname === '/') _reload()
     localStorage.removeItem('token')
     localStorage.removeItem('id')
-    localStorage.removeItem('username')
     router.push('/')
   }
 
@@ -56,15 +55,13 @@ export default function Navigation() {
               </Link>
             </div>
             <div className='-my-2 -mr-2 lg:hidden'>
-              {/* <Popover.Button className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"> */}
               <Menu.Button className='inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary'>
                 <span className='sr-only'>Open menu</span>
                 <MenuIcon className='h-6 w-6' aria-hidden='true' />
               </Menu.Button>
-              {/* </Popover.Button> */}
             </div>
             <div className='hidden space-x-10 lg:flex'>
-              {solutions.map(item => (
+              {links.map(item => (
                 <Link href={item.href} key={item.href}>
                   <a className='text-base font-medium text-primary hover:underline hover:text-secondary'>
                     {item.name}
@@ -123,7 +120,7 @@ export default function Navigation() {
                 </div>
                 <div className='mt-6'>
                   <Menu.Items className='grid gap-y-8'>
-                    {solutions.map(item => (
+                    {links.map(item => (
                       <Menu.Item key={item.href}>
                         {({ active }) => (
                           <button
@@ -135,6 +132,17 @@ export default function Navigation() {
                         )}
                       </Menu.Item>
                     ))}
+                    <Menu.Item>
+                      {({ active }) =>
+                        auth ? (
+                          <button onClick={handleLogOut}>
+                            <LogoutIcon className='h-8 text-primary text-center hover:text-dark' />
+                          </button>
+                        ) : (
+                          <div></div>
+                        )
+                      }
+                    </Menu.Item>
                   </Menu.Items>
                 </div>
               </div>
