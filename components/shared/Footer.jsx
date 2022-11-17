@@ -50,9 +50,8 @@ export default function Footer() {
       </section>
 
       <div className='bg-secondary text-center'>
-        <div className='container3 text-white'>
-          Copyright, 2022 | jannati<span className='text-primary'>juti</span>
-          .com
+        <div className='container3 text-white tracking-wider'>
+          Copyright, 2022 | jannatijuti.com
         </div>
       </div>
     </footer>

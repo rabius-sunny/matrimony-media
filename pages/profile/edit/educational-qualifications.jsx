@@ -12,6 +12,7 @@ import FormSkeleton from 'components/shared/FormSkeleton'
 import Head from 'next/head'
 import { useAppContext } from 'utils/context'
 import LongModal from 'components/shared/Modals/LongModal'
+import SaveButton from 'components/bio/SaveButton'
 
 export default function Education() {
   const [visible, setVisible] = useState({

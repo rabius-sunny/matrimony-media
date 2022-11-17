@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start -H 192.168.172.222"
+    "start": "next start"
   },
   "commands": {
     "dev": "node server.js",

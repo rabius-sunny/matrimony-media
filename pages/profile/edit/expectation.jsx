@@ -10,6 +10,7 @@ import Head from 'next/head'
 import { useAppContext } from 'utils/context'
 import { useEffect, useState } from 'react'
 import LongModal from 'components/shared/Modals/LongModal'
+import SaveButton from 'components/bio/SaveButton'
 
 export default function OthersInfo() {
   const [visible, setVisible] = useState({
