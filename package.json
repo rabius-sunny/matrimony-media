@@ -2,12 +2,12 @@
   "private": true,
   "license": "MIT",
   "homepage": "https://anabuk.com",
-  "scripts": {
+  "commands": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start"
   },
-  "commands": {
+  "scripts": {
     "dev": "node server.js",
     "build": "next build",
     "start": "NODE_ENV=production node server.js"

@@ -28,12 +28,13 @@ export default function SearchResult() {
           console.log(err.message)
           setLoading(false)
         })
-    } else if (searchkey && searchkey.length > 0 && !searchkey[2]) {
+    } else if (searchkey && searchkey.length < 3) {
+      console.log('else if')
       biodataRequests
         .getBios(searchkey[0], searchkey[1])
         .then(data => {
-          data.response.length >= 1 ? setBios(data.response) : setBios(null)
           setBios(data.response)
+          console.log('response', data.response)
           setLoading(false)
         })
         .catch(err => {

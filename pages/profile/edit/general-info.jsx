@@ -37,7 +37,6 @@ export default function GeneralInfo() {
     router.route.split('/edit')[1] === routename ? true : false
 
   const onSubmit = data => {
-    console.log('age', { age: new Date().getFullYear() - data.birth })
     setIsLoading(true)
     biodataRequests
       .updateBio({

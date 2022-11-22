@@ -46,7 +46,7 @@ export default function Favorite() {
         <div className='container my-4'>
           <CardSkeleton />
         </div>
-      ) : ((!localLoading || !isLoading) && data?.bios.length === 0) ||
+      ) : ((!localLoading || !isLoading) && data?.bios?.length === 0) ||
         (auth && data === null) ? (
         <div className='mt-12' style={{ minHeight: '70vh' }}>
           <h1 className='text-3xl text-center text-primary font-bold'>

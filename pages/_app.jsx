@@ -2,6 +2,7 @@ import '../styles/globals.scss'
 import Head from 'next/head'
 import { NextUIProvider } from '@nextui-org/react'
 
+import favicon from 'public/favicon.ico'
 import Layout from '../components/shared/Layout'
 import { AppWrapper } from 'utils/context'
 
@@ -18,6 +19,7 @@ export default function MyApp({ Component, pageProps }) {
           href='https://fonts.maateen.me/siyam-rupali/font.css'
           rel='stylesheet'
         />
+        <link rel='icon' type='image/x-icon' href='./favicon.ico' />
       </Head>
       <Layout>
         <AppWrapper>
