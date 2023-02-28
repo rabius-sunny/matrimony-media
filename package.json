@@ -1,7 +1,7 @@
 {
   "private": true,
   "license": "MIT",
-"homepage": "https://anabuk.com",
+  "homepage": "https://anabuk.com",
   "commands": {
     "dev": "next -p 4000",
     "build": "next build",
