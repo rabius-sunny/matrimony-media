@@ -16,6 +16,8 @@ export default function Dropdown() {
     setJilla('')
   }
 
+  console.log('type is = ', type)
+
   return (
     <div className='my-3 lg:my-4'>
       <div className='mb-2 lg:mb-4'>
@@ -26,8 +28,8 @@ export default function Dropdown() {
           আমি খুঁজছি
         </label>
         <select
+          onChange={e => setType(e.target.value)}
           onClick={e => {
-            setType(e.target.value)
             setIsReset(false)
             setId('')
           }}

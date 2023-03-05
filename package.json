@@ -1,13 +1,13 @@
 {
   "private": true,
   "license": "MIT",
-  "homepage": "https://anabuk.com",
-  "commands": {
+  "homepage": "https://jannatijuti.com",
+  "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start"
   },
-  "scripts": {
+  "script": {
     "dev": "node server.js",
     "build": "next build",
     "start": "NODE_ENV=production node server.js"
@@ -25,7 +25,6 @@
     "react-hook-form": "^7.30.0",
     "react-icons": "^4.4.0",
     "react-loading-skeleton": "^3.1.0",
-    "react-reveal": "^1.2.2",
     "react-toastify": "^9.0.5",
     "sass": "^1.50.0"
   },

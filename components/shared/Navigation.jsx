@@ -44,14 +44,12 @@ export default function Navigation() {
         <div className='mx-auto max-w-7xl px-4 sm:px-6'>
           <div className='flex items-center justify-between border-b-2 border-gray-100 py-6'>
             <div className='lg:w-0 lg:flex-1'>
-              <Link href='/'>
-                <a>
-                  <img
-                    className='h-8 w-auto sm:h-10'
-                    src='/images/logo.png'
-                    alt='logo'
-                  />
-                </a>
+              <Link href='/' legacyBehavior>
+                <img
+                  className='h-8 w-auto sm:h-10'
+                  src='/images/logo.png'
+                  alt='logo'
+                />
               </Link>
             </div>
             <div className='-my-2 -mr-2 lg:hidden'>
@@ -62,7 +60,7 @@ export default function Navigation() {
             </div>
             <div className='hidden space-x-10 lg:flex'>
               {links.map(item => (
-                <Link href={item.href} key={item.href}>
+                <Link href={item.href} key={item.href} legacyBehavior>
                   <a className='text-base font-medium text-primary hover:underline hover:text-secondary'>
                     {item.name}
                   </a>
@@ -70,7 +68,10 @@ export default function Navigation() {
               ))}
             </div>
             <div className='hidden items-center justify-end lg:flex lg:flex-1 lg:w-0'>
-              <Link href={auth ? '/profile/edit/primary' : '/sign-in'}>
+              <Link
+                legacyBehavior
+                href={auth ? '/profile/edit/primary' : '/sign-in'}
+              >
                 <a className='ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-primary  px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-dark'>
                   সিভি পাঠান
                 </a>
@@ -101,7 +102,7 @@ export default function Navigation() {
               <div className='px-5 pt-5 pb-6'>
                 <div className='flex items-center justify-between'>
                   <div>
-                    <Link href='/'>
+                    <Link legacyBehavior href='/'>
                       <a>
                         <img
                           className='h-8 w-auto'
@@ -148,7 +149,10 @@ export default function Navigation() {
               </div>
               <div className='space-y-6 py-6 px-5'>
                 <div>
-                  <Link href={auth ? '/profile/edit/primary' : '/sign-in'}>
+                  <Link
+                    legacyBehavior
+                    href={auth ? '/profile/edit/primary' : '/sign-in'}
+                  >
                     <a className='flex w-full items-center justify-center rounded-md border border-transparent bg-primary  px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-dark'>
                       সিভি পাঠান
                     </a>
@@ -160,5 +164,5 @@ export default function Navigation() {
         </Transition>
       </Menu>
     </Popover>
-  )
+  );
 }

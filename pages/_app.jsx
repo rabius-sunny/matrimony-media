@@ -15,10 +15,6 @@ export default function MyApp({ Component, pageProps }) {
   return (
     <>
       <Head>
-        <link
-          href='https://fonts.maateen.me/siyam-rupali/font.css'
-          rel='stylesheet'
-        />
         <link rel='icon' type='image/x-icon' href='./favicon.ico' />
       </Head>
       <Layout>

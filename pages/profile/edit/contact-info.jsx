@@ -127,14 +127,13 @@ export default function Name() {
         body={fields.map((item, i) => (
           <div key={i}>
             <p style={{ color: 'red', fontSize: '1.3rem' }}>{item.name}</p>
-            <Link href={item.slug}>
-              <a
-                className='text-secondary underline flex items-center'
-                style={{ fontSize: '.9rem' }}
-              >
-                পূরণ করুন
-                <ArrowRightIcon className='text-green-400 h-4 pl-1' />
-              </a>
+            <Link
+              href={item.slug}
+              className='text-secondary underline flex items-center'
+              style={{ fontSize: '.9rem' }}
+              legacyBehavior>
+              পূরণ করুন<ArrowRightIcon className='text-green-400 h-4 pl-1' />
+
             </Link>
           </div>
         ))}
@@ -285,5 +284,5 @@ export default function Name() {
         <FormSkeleton />
       )}
     </ProfileLayout>
-  )
+  );
 }

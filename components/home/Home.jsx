@@ -98,9 +98,9 @@ export default function Home() {
           জীবনসঙ্গী নির্বাচনে ইসলাম কী বলে
         </h1>
         <div className='flex justify-center'>
-          <p style={{ maxWidth: '700px', textAlign: 'justify' }}>
+          <div style={{ maxWidth: '700px', textAlign: 'justify' }}>
             <Hometext />
-          </p>
+          </div>
         </div>
       </section>
     </div>

@@ -40,12 +40,14 @@ export default function BioCard({ bio, type }) {
         <p>{bio.profession}</p>
       </div>
       <div className='pt-2 pb-5 md:py-8 text-center bg-white'>
-        <Link href={`/bios/bio/${type !== 'userid' ? bio?.user?.uId : uId}`}>
-          <a className='bg-primary py-1 md:py-3 px-3 text-sm md:text-md md:px-6 rounded shadow text-white'>
+        <Link
+          href={`/bios/bio/${type !== 'userid' ? bio?.user?.uId : uId}`}
+          className='bg-primary py-1 md:py-3 px-3 text-sm md:text-md md:px-6 rounded shadow text-white'>
+          
             বায়োডাটা দেখুন
-          </a>
+          
         </Link>
       </div>
     </div>
-  )
+  );
 }

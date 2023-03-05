@@ -127,8 +127,8 @@ export default function MarriageRelated() {
             <ExclamationIcon className='text-primary h-10 w-10' />
           </div>
           <div>
-            <Link href='/profile/edit/primary'>
-              <a className=' underline text-indigo-500'>প্রাথমিক</a>
+            <Link href='/profile/edit/primary' className=' underline text-indigo-500'>
+              প্রাথমিক
             </Link>{' '}
             ফিল্ডটি এখনো অপূর্ণাঙ্গ রয়েছে, আগে সেটি ফিল করুন
           </div>
@@ -487,5 +487,5 @@ export default function MarriageRelated() {
         <FormSkeleton />
       )}
     </ProfileLayout>
-  )
+  );
 }

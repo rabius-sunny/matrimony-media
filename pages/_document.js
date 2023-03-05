@@ -14,7 +14,14 @@ class MyDocument extends Document {
   render() {
     return (
       <Html lang='en'>
-        <Head>{CssBaseline.flush()}</Head>
+        <Head>
+          {CssBaseline.flush()}
+
+          <link
+            href='https://fonts.maateen.me/siyam-rupali/font.css'
+            rel='stylesheet'
+          />
+        </Head>
         <body>
           <Main />
           <NextScript />

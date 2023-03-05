@@ -137,7 +137,7 @@ export default function PersonalInfo() {
             <ExclamationIcon className='text-primary h-10 w-10' />
           </div>
           <div>
-            <Link href='/profile/edit/primary'>
+            <Link legacyBehavior href='/profile/edit/primary'>
               <a className=' underline text-indigo-500'>প্রাথমিক</a>
             </Link>{' '}
             ফিল্ডটি এখনো অপূর্ণাঙ্গ রয়েছে, আগে সেটি ফিল করুন
