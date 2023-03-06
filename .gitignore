@@ -4,12 +4,14 @@
 /.pnp
 .pnp.js
 .yarn/
+.yarn
 
 # testing
 /coverage
 
 # next.js
 /.next/
+.next
 /out/
 
 # production
