@@ -149,7 +149,7 @@ export default function Signin() {
 
             <div className='mt-8'>
               {!isOtp && (
-                <form onSubmit={/*onPhoneSubmit */ handleSubmit}>
+                <form onSubmit={/*handleSubmit */ onPhoneSubmit}>
                   <div className='mt-6'>
                     <label
                       htmlFor='phone'
