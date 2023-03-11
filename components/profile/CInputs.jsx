@@ -1,5 +1,3 @@
-import { Fade } from 'react-reveal'
-
 export function CInput({
   legend,
   description,
@@ -45,11 +43,9 @@ export function CInput({
           }`}
         />
       )}
-      <Fade right when={errors[name] ? true : false}>
-        {errors[name] && (
-          <p className='text-primary py-2 pl-2'>{errors[name].message}</p>
-        )}
-      </Fade>
+      {errors[name] && (
+        <p className='text-primary py-2 pl-2'>{errors[name].message}</p>
+      )}
       {description && <p className='pl-2 pt-4 text-secondary'>{description}</p>}
     </fieldset>
   )
@@ -95,11 +91,9 @@ export function CSelect({
             </option>
           ))}
         </select>
-        <Fade right when={errors[name] ? true : false}>
-          {errors[name] && (
-            <p className='text-primary py-2 pl-2'>{errors[name].message}</p>
-          )}
-        </Fade>
+        {errors[name] && (
+          <p className='text-primary py-2 pl-2'>{errors[name].message}</p>
+        )}
       </fieldset>
     </>
   )
