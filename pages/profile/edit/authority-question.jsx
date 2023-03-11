@@ -2,7 +2,6 @@ import ProfileLayout from 'components/profile/ProfileLayout'
 import { useRouter } from 'next/router'
 import ProfileRoutes from 'components/profile/ProfileRoutes'
 import { useForm } from 'react-hook-form'
-import { Fade } from 'react-reveal'
 import OptionMap from 'components/profile/OptionMap'
 import biodataRequests from 'services/biodataRequests'
 import getData from 'hooks/getData'
@@ -87,13 +86,11 @@ export default function AuthorityQuestion() {
               <option value=''>select</option>
               <OptionMap data={yesno} />
             </select>
-            <Fade right when={errors.family_about_bio ? true : false}>
-              {errors.family_about_bio && (
-                <p className='text-primary py-2 pl-2'>
-                  {errors.family_about_bio.message}
-                </p>
-              )}
-            </Fade>
+            {errors.family_about_bio && (
+              <p className='text-primary py-2 pl-2'>
+                {errors.family_about_bio.message}
+              </p>
+            )}
           </fieldset>
 
           <fieldset
@@ -120,13 +117,11 @@ export default function AuthorityQuestion() {
               <option value=''>select</option>
               <OptionMap data={yesno} />
             </select>
-            <Fade right when={errors.is_correct_info ? true : false}>
-              {errors.is_correct_info && (
-                <p className='text-primary py-2 pl-2'>
-                  {errors.is_correct_info.message}
-                </p>
-              )}
-            </Fade>
+            {errors.is_correct_info && (
+              <p className='text-primary py-2 pl-2'>
+                {errors.is_correct_info.message}
+              </p>
+            )}
           </fieldset>
 
           <fieldset
@@ -152,13 +147,11 @@ export default function AuthorityQuestion() {
               <option value=''>select</option>
               <OptionMap data={yesno} />
             </select>
-            <Fade right when={errors.liability ? true : false}>
-              {errors.liability && (
-                <p className='text-primary py-2 pl-2'>
-                  {errors.liability.message}
-                </p>
-              )}
-            </Fade>
+            {errors.liability && (
+              <p className='text-primary py-2 pl-2'>
+                {errors.liability.message}
+              </p>
+            )}
           </fieldset>
           <input
             type='submit'

@@ -1,5 +1,3 @@
-import { Fade } from 'react-reveal'
-
 export default function GInput({
   legend,
   description,
@@ -28,11 +26,9 @@ export default function GInput({
           errors[name] ? 'focus:ring-red-500' : 'focus:ring-secondary'
         }`}
       />
-      <Fade right when={errors[name] ? true : false}>
-        {errors[name] && (
-          <p className='text-primary py-2 pl-2'>{errors[name].message}</p>
-        )}
-      </Fade>
+      {errors[name] && (
+        <p className='text-primary py-2 pl-2'>{errors[name].message}</p>
+      )}
       {description && <p className='pl-2 pt-4 text-secondary'>{description}</p>}
     </div>
   )

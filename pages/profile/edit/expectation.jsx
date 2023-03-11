@@ -2,7 +2,6 @@ import ProfileLayout from 'components/profile/ProfileLayout'
 import { useRouter } from 'next/router'
 import ProfileRoutes from 'components/profile/ProfileRoutes'
 import { useForm } from 'react-hook-form'
-import { Fade } from 'react-reveal'
 import biodataRequests from 'services/biodataRequests'
 import getData from 'hooks/getData'
 import FormSkeleton from 'components/shared/FormSkeleton'
@@ -144,13 +143,9 @@ export default function OthersInfo() {
                   : 'focus:outline-green-500'
               }`}
             />
-            <Fade right when={errors.ex_year ? true : false}>
-              {errors.ex_year && (
-                <p className='text-primary py-2 pl-2'>
-                  {errors.ex_year.message}
-                </p>
-              )}
-            </Fade>
+            {errors.ex_year && (
+              <p className='text-primary py-2 pl-2'>{errors.ex_year.message}</p>
+            )}
           </fieldset>
 
           <fieldset
@@ -178,13 +173,11 @@ export default function OthersInfo() {
                   : 'focus:outline-green-500'
               }`}
             />
-            <Fade right when={errors.ex_complexion ? true : false}>
-              {errors.ex_complexion && (
-                <p className='text-primary py-2 pl-2'>
-                  {errors.ex_complexion.message}
-                </p>
-              )}
-            </Fade>
+            {errors.ex_complexion && (
+              <p className='text-primary py-2 pl-2'>
+                {errors.ex_complexion.message}
+              </p>
+            )}
           </fieldset>
 
           <fieldset
@@ -212,13 +205,11 @@ export default function OthersInfo() {
                   : 'focus:outline-green-500'
               }`}
             />
-            <Fade right when={errors.ex_height ? true : false}>
-              {errors.ex_height && (
-                <p className='text-primary py-2 pl-2'>
-                  {errors.ex_height.message}
-                </p>
-              )}
-            </Fade>
+            {errors.ex_height && (
+              <p className='text-primary py-2 pl-2'>
+                {errors.ex_height.message}
+              </p>
+            )}
           </fieldset>
 
           <fieldset
@@ -246,13 +237,11 @@ export default function OthersInfo() {
                   : 'focus:outline-green-500'
               }`}
             />
-            <Fade right when={errors.ex_education ? true : false}>
-              {errors.ex_education && (
-                <p className='text-primary py-2 pl-2'>
-                  {errors.ex_education.message}
-                </p>
-              )}
-            </Fade>
+            {errors.ex_education && (
+              <p className='text-primary py-2 pl-2'>
+                {errors.ex_education.message}
+              </p>
+            )}
           </fieldset>
 
           <fieldset
@@ -280,13 +269,11 @@ export default function OthersInfo() {
                   : 'focus:outline-green-500'
               }`}
             />
-            <Fade right when={errors.ex_jilla ? true : false}>
-              {errors.ex_jilla && (
-                <p className='text-primary py-2 pl-2'>
-                  {errors.ex_jilla.message}
-                </p>
-              )}
-            </Fade>
+            {errors.ex_jilla && (
+              <p className='text-primary py-2 pl-2'>
+                {errors.ex_jilla.message}
+              </p>
+            )}
           </fieldset>
 
           <fieldset
@@ -316,13 +303,11 @@ export default function OthersInfo() {
                   : 'focus:outline-green-500'
               }`}
             />
-            <Fade right when={errors.ex_marrital_condition ? true : false}>
-              {errors.ex_marrital_condition && (
-                <p className='text-primary py-2 pl-2'>
-                  {errors.ex_marrital_condition.message}
-                </p>
-              )}
-            </Fade>
+            {errors.ex_marrital_condition && (
+              <p className='text-primary py-2 pl-2'>
+                {errors.ex_marrital_condition.message}
+              </p>
+            )}
           </fieldset>
 
           <fieldset
@@ -350,13 +335,11 @@ export default function OthersInfo() {
                   : 'focus:outline-green-500'
               }`}
             />
-            <Fade right when={errors.ex_profession ? true : false}>
-              {errors.ex_profession && (
-                <p className='text-primary py-2 pl-2'>
-                  {errors.ex_profession.message}
-                </p>
-              )}
-            </Fade>
+            {errors.ex_profession && (
+              <p className='text-primary py-2 pl-2'>
+                {errors.ex_profession.message}
+              </p>
+            )}
           </fieldset>
 
           <fieldset
@@ -388,13 +371,11 @@ export default function OthersInfo() {
                   : 'focus:outline-green-500'
               }`}
             />
-            <Fade right when={errors.ex_financial_condition ? true : false}>
-              {errors.ex_financial_condition && (
-                <p className='text-primary py-2 pl-2'>
-                  {errors.ex_financial_condition.message}
-                </p>
-              )}
-            </Fade>
+            {errors.ex_financial_condition && (
+              <p className='text-primary py-2 pl-2'>
+                {errors.ex_financial_condition.message}
+              </p>
+            )}
           </fieldset>
 
           <fieldset className='my-6 rounded-md border-2 border-gray-300 p-4'>
@@ -434,13 +415,11 @@ export default function OthersInfo() {
                   : 'focus:outline-green-500'
               }`}
             />
-            <Fade right when={errors.ex_features ? true : false}>
-              {errors.ex_features && (
-                <p className='text-primary py-2 pl-2'>
-                  {errors.ex_features.message}
-                </p>
-              )}
-            </Fade>
+            {errors.ex_features && (
+              <p className='text-primary py-2 pl-2'>
+                {errors.ex_features.message}
+              </p>
+            )}
             <p className='pl-2 pt-4 text-green-400'>
               এই পয়েন্ট অনেক গুরুত্বপূর্ণ। সময় নিয়ে বিস্তারিত লিখুন। কোন বিশেষ
               শর্ত থাকলে তা-ও লিখতে পারেন।

@@ -1,7 +1,6 @@
 import ProfileLayout from 'components/profile/ProfileLayout'
 import { useRouter } from 'next/router'
 import ProfileRoutes from 'components/profile/ProfileRoutes'
-import { Fade } from 'react-reveal'
 import { useForm } from 'react-hook-form'
 import biodataRequests from 'services/biodataRequests'
 import getData from 'hooks/getData'
@@ -131,9 +130,10 @@ export default function Name() {
               href={item.slug}
               className='text-secondary underline flex items-center'
               style={{ fontSize: '.9rem' }}
-              legacyBehavior>
-              পূরণ করুন<ArrowRightIcon className='text-green-400 h-4 pl-1' />
-
+              legacyBehavior
+            >
+              পূরণ করুন
+              <ArrowRightIcon className='text-green-400 h-4 pl-1' />
             </Link>
           </div>
         ))}
@@ -173,13 +173,11 @@ export default function Name() {
                   : 'focus:outline-secondary'
               }`}
             />
-            <Fade right when={errors.guardian_number ? true : false}>
-              {errors.guardian_number && (
-                <p className='text-primary py-2 pl-2'>
-                  {errors.guardian_number.message}
-                </p>
-              )}
-            </Fade>
+            {errors.guardian_number && (
+              <p className='text-primary py-2 pl-2'>
+                {errors.guardian_number.message}
+              </p>
+            )}
             <p className='pl-2 pt-4 text-green-400'>
               অবশ্যই ইংরেজীতে নাম্বার লিখবেন এভাবে 01700-000000। বিঃদ্রঃ নিজের
               নাম্বার দিলে ভেরিফিকেশনে এপ্রুভ হবে না। এই ব্যাপারে আমরা সর্বোচ্চ
@@ -213,13 +211,11 @@ export default function Name() {
                   : 'focus:outline-secondary'
               }`}
             />
-            <Fade right when={errors.number_relation ? true : false}>
-              {errors.number_relation && (
-                <p className='text-primary py-2 pl-2'>
-                  {errors.number_relation.message}
-                </p>
-              )}
-            </Fade>
+            {errors.number_relation && (
+              <p className='text-primary py-2 pl-2'>
+                {errors.number_relation.message}
+              </p>
+            )}
             <p className='pl-2 pt-4 text-green-400'>
               যে অভিভাবকের নাম্বার দিয়েছেন তার সাথে আপনার সম্পর্ক। এভাবে লিখবেনঃ
               বাবা
@@ -252,14 +248,12 @@ export default function Name() {
                   : 'focus:outline-secondary'
               }`}
             />
-            <Fade right when={errors.receiving_email ? true : false}>
-              {errors.receiving_email && (
-                <p className='text-primary py-2 pl-2'>
-                  {errors.receiving_email.message ||
-                    'enter a valid email address'}
-                </p>
-              )}
-            </Fade>
+            {errors.receiving_email && (
+              <p className='text-primary py-2 pl-2'>
+                {errors.receiving_email.message ||
+                  'enter a valid email address'}
+              </p>
+            )}
             <p className='pl-2 pt-4 text-green-400'>
               এই ই-মেইলে অপরপক্ষ বায়োডাটার লিংক পাঠাতে পারে। তাই নির্ভুলভাবে
               লিখুন।
@@ -284,5 +278,5 @@ export default function Name() {
         <FormSkeleton />
       )}
     </ProfileLayout>
-  );
+  )
 }

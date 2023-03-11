@@ -3,7 +3,6 @@ import { useRouter } from 'next/router'
 import getData from 'hooks/getData'
 import ProfileRoutes from 'components/profile/ProfileRoutes'
 import { useForm } from 'react-hook-form'
-import { Fade } from 'react-reveal'
 import biodataRequests from 'services/biodataRequests'
 import FormSkeleton from 'components/shared/FormSkeleton'
 import Head from 'next/head'
@@ -127,7 +126,10 @@ export default function MarriageRelated() {
             <ExclamationIcon className='text-primary h-10 w-10' />
           </div>
           <div>
-            <Link href='/profile/edit/primary' className=' underline text-indigo-500'>
+            <Link
+              href='/profile/edit/primary'
+              className=' underline text-indigo-500'
+            >
               প্রাথমিক
             </Link>{' '}
             ফিল্ডটি এখনো অপূর্ণাঙ্গ রয়েছে, আগে সেটি ফিল করুন
@@ -163,13 +165,11 @@ export default function MarriageRelated() {
                     : 'focus:outline-green-500'
                 }`}
               />
-              <Fade right when={errors.whenDiedWife ? true : false}>
-                {errors.whenDiedWife && (
-                  <p className='text-primary py-2 pl-2'>
-                    {errors.whenDiedWife.message}
-                  </p>
-                )}
-              </Fade>
+              {errors.whenDiedWife && (
+                <p className='text-primary py-2 pl-2'>
+                  {errors.whenDiedWife.message}
+                </p>
+              )}
               <p className='pl-2 pt-4 text-green-400'>
                 কয় বছরের সংসার ছিল উল্লেখ করতে পারেন। আপনার সন্তান আছে কি না,
                 থাকলে তাদের বয়স সহ বর্ণনা দিবেন সংক্ষেপে।
@@ -203,13 +203,11 @@ export default function MarriageRelated() {
                     : 'focus:outline-green-500'
                 }`}
               />
-              <Fade right when={errors.divorceInfo ? true : false}>
-                {errors.divorceInfo && (
-                  <p className='text-primary py-2 pl-2'>
-                    {errors.divorceInfo.message}
-                  </p>
-                )}
-              </Fade>
+              {errors.divorceInfo && (
+                <p className='text-primary py-2 pl-2'>
+                  {errors.divorceInfo.message}
+                </p>
+              )}
               <p className='pl-2 pt-4 text-green-400'>
                 সময়কাল অর্থাৎ কত মাস বা বছরের সংসার হয়েছিল আর ডিভোর্স কবে হয়েছে
                 তা লিখতে বলা হয়েছে। বাচ্চা থাকলে তাদের বয়স ও অন্যান্য বিষয়ে
@@ -244,13 +242,11 @@ export default function MarriageRelated() {
                     : 'focus:outline-green-500'
                 }`}
               />
-              <Fade right when={errors.whenDiedHusband ? true : false}>
-                {errors.whenDiedHusband && (
-                  <p className='text-primary py-2 pl-2'>
-                    {errors.whenDiedHusband.message}
-                  </p>
-                )}
-              </Fade>
+              {errors.whenDiedHusband && (
+                <p className='text-primary py-2 pl-2'>
+                  {errors.whenDiedHusband.message}
+                </p>
+              )}
               <p className='pl-2 pt-4 text-green-400'>
                 কয় বছরের সংসার ছিল উল্লেখ করতে পারেন। আপনার সন্তান আছে কি না,
                 থাকলে তাদের বয়স সহ বর্ণনা দিবেন সংক্ষেপে।
@@ -284,13 +280,11 @@ export default function MarriageRelated() {
                     : 'focus:outline-green-500'
                 }`}
               />
-              <Fade right when={errors.reMarryReason ? true : false}>
-                {errors.reMarryReason && (
-                  <p className='text-primary py-2 pl-2'>
-                    {errors.reMarryReason.message}
-                  </p>
-                )}
-              </Fade>
+              {errors.reMarryReason && (
+                <p className='text-primary py-2 pl-2'>
+                  {errors.reMarryReason.message}
+                </p>
+              )}
               <p className='pl-2 pt-4 text-green-400'>
                 বর্তমানে কতজন স্ত্রী আছে, স্ত্রী আপনার নতুন বিয়েতে রাজি কি না,
                 নতুন স্ত্রীকে কোথায় রাখবেন এসব সংক্ষেপে লিখুন
@@ -323,13 +317,11 @@ export default function MarriageRelated() {
                   : 'focus:outline-green-500'
               }`}
             />
-            <Fade right when={errors.guardians_permission ? true : false}>
-              {errors.guardians_permission && (
-                <p className='text-primary py-2 pl-2'>
-                  {errors.guardians_permission.message}
-                </p>
-              )}
-            </Fade>
+            {errors.guardians_permission && (
+              <p className='text-primary py-2 pl-2'>
+                {errors.guardians_permission.message}
+              </p>
+            )}
           </fieldset>
 
           {data?.condition !== 'বিবাহিত' && (
@@ -359,13 +351,11 @@ export default function MarriageRelated() {
                     : 'focus:outline-green-500'
                 }`}
               />
-              <Fade right when={errors.marry_reason ? true : false}>
-                {errors.marry_reason && (
-                  <p className='text-primary py-2 pl-2'>
-                    {errors.marry_reason.message}
-                  </p>
-                )}
-              </Fade>
+              {errors.marry_reason && (
+                <p className='text-primary py-2 pl-2'>
+                  {errors.marry_reason.message}
+                </p>
+              )}
               <p className='pl-2 pt-4 text-green-400'>সংক্ষেপে বর্ণনা করুন।</p>
             </fieldset>
           )}
@@ -398,13 +388,11 @@ export default function MarriageRelated() {
                       : 'focus:outline-green-500'
                   }`}
                 />
-                <Fade right when={errors.family_planning ? true : false}>
-                  {errors.family_planning && (
-                    <p className='text-primary py-2 pl-2'>
-                      {errors.family_planning.message}
-                    </p>
-                  )}
-                </Fade>
+                {errors.family_planning && (
+                  <p className='text-primary py-2 pl-2'>
+                    {errors.family_planning.message}
+                  </p>
+                )}
                 <p className='pl-2 pt-4 text-green-400'>
                   বিয়ের পর স্ত্রীর পর্দার ব্যবস্থা, পড়াশোনা এবং চাকরী করতে দিবেন
                   কিনা, স্ত্রীকে নিয়ে কোথায় থাকবেন ইত্যাদি স্পষ্ট লিখুন
@@ -438,13 +426,11 @@ export default function MarriageRelated() {
                       : 'focus:outline-green-500'
                   }`}
                 />
-                <Fade right when={errors.demand ? true : false}>
-                  {errors.demand && (
-                    <p className='text-primary py-2 pl-2'>
-                      {errors.demand.message}
-                    </p>
-                  )}
-                </Fade>
+                {errors.demand && (
+                  <p className='text-primary py-2 pl-2'>
+                    {errors.demand.message}
+                  </p>
+                )}
               </fieldset>
             </div>
           )}
@@ -487,5 +473,5 @@ export default function MarriageRelated() {
         <FormSkeleton />
       )}
     </ProfileLayout>
-  );
+  )
 }

@@ -8,7 +8,6 @@ import FormSkeleton from 'components/shared/FormSkeleton'
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
 import LongModal from 'components/shared/Modals/LongModal'
-import { Fade } from 'react-reveal'
 import { useAppContext } from 'utils/context'
 import SaveButton from 'components/bio/SaveButton'
 
@@ -154,13 +153,11 @@ export default function OthersInfo() {
                   : 'focus:outline-green-500'
               }`}
             />
-            <Fade right when={errors.special_acknowledgement ? true : false}>
-              {errors.special_acknowledgement && (
-                <p className='text-primary py-2 pl-2'>
-                  {errors.special_acknowledgement.message}
-                </p>
-              )}
-            </Fade>
+            {errors.special_acknowledgement && (
+              <p className='text-primary py-2 pl-2'>
+                {errors.special_acknowledgement.message}
+              </p>
+            )}
             <p className='pl-2 pt-4 text-green-400'>
               আপনার কোনো শর্ত বা উপরে লিখার সুযোগ হয় নি এমন কিছু জানানোর থাকলে
               এই ঘরে লিখতে পারেন। যেমনঃ পারিবারিক বা ব্যক্তিগত কোনো সুবিধা বা

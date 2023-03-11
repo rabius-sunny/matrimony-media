@@ -3,7 +3,6 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import ProfileRoutes from 'components/profile/ProfileRoutes'
-import { Fade } from 'react-reveal'
 import getData from 'hooks/getData'
 import biodataRequests from 'services/biodataRequests'
 import FormSkeleton from 'components/shared/FormSkeleton'
@@ -173,13 +172,11 @@ export default function PersonalInfo() {
                       : 'focus:outline-green-500'
                   }`}
                 />
-                <Fade right when={errors.beard ? true : false}>
-                  {errors.beard && (
-                    <p className='text-primary py-2 pl-2'>
-                      {errors.beard.message}
-                    </p>
-                  )}
-                </Fade>
+                {errors.beard && (
+                  <p className='text-primary py-2 pl-2'>
+                    {errors.beard.message}
+                  </p>
+                )}
               </fieldset>
 
               <fieldset
@@ -207,13 +204,11 @@ export default function PersonalInfo() {
                       : 'focus:outline-green-500'
                   }`}
                 />
-                <Fade right when={errors.dress_over_ankle ? true : false}>
-                  {errors.dress_over_ankle && (
-                    <p className='text-primary py-2 pl-2'>
-                      {errors.dress_over_ankle.message}
-                    </p>
-                  )}
-                </Fade>
+                {errors.dress_over_ankle && (
+                  <p className='text-primary py-2 pl-2'>
+                    {errors.dress_over_ankle.message}
+                  </p>
+                )}
               </fieldset>
 
               <fieldset
@@ -241,13 +236,11 @@ export default function PersonalInfo() {
                       : 'focus:outline-green-500'
                   }`}
                 />
-                <Fade right when={errors.dress ? true : false}>
-                  {errors.dress && (
-                    <p className='text-primary py-2 pl-2'>
-                      {errors.dress.message}
-                    </p>
-                  )}
-                </Fade>
+                {errors.dress && (
+                  <p className='text-primary py-2 pl-2'>
+                    {errors.dress.message}
+                  </p>
+                )}
                 <div className='ppl-2 pt-4 text-green-400'>
                   এভাবে উত্তর দিতে পারেনঃ- "সাদা পাঞ্জবী সাথে সাদা টুপি" বা
                   "জিন্স প্যান্ট সাথে শার্ট"
@@ -280,13 +273,9 @@ export default function PersonalInfo() {
                     : 'focus:outline-green-500'
                 }`}
               />
-              <Fade right when={errors.dress ? true : false}>
-                {errors.dress && (
-                  <p className='text-primary py-2 pl-2'>
-                    {errors.dress.message}
-                  </p>
-                )}
-              </Fade>
+              {errors.dress && (
+                <p className='text-primary py-2 pl-2'>{errors.dress.message}</p>
+              )}
               <p className='pl-2 pt-4 text-green-400'>
                 উত্তর যেভাবে দিতে পারেনঃ- "কালো বোরকা ও হিজাব পরি কিন্ত নিকাব
                 পরি না" বা " কালো বোরকা ও নিকাব পরি কিন্ত হাত-পা মোজা পরি না"।
@@ -321,11 +310,9 @@ export default function PersonalInfo() {
                   : 'focus:outline-green-500'
               }`}
             />
-            <Fade right when={errors.salat ? true : false}>
-              {errors.salat && (
-                <p className='text-primary py-2 pl-2'>{errors.salat.message}</p>
-              )}
-            </Fade>
+            {errors.salat && (
+              <p className='text-primary py-2 pl-2'>{errors.salat.message}</p>
+            )}
           </fieldset>
 
           <fieldset
@@ -353,13 +340,11 @@ export default function PersonalInfo() {
                   : 'focus:outline-green-500'
               }`}
             />
-            <Fade right when={errors.salat_duration ? true : false}>
-              {errors.salat_duration && (
-                <p className='text-primary py-2 pl-2'>
-                  {errors.salat_duration.message}
-                </p>
-              )}
-            </Fade>
+            {errors.salat_duration && (
+              <p className='text-primary py-2 pl-2'>
+                {errors.salat_duration.message}
+              </p>
+            )}
             <p className='pl-2 pt-4 text-green-400'>
               কয় বছর/মাস যাবত ৫ ওয়াক্ত সালাত শুরু করেছেন?
             </p>
@@ -390,13 +375,11 @@ export default function PersonalInfo() {
                   : 'focus:outline-green-500'
               }`}
             />
-            <Fade right when={errors.maintain_mahram ? true : false}>
-              {errors.maintain_mahram && (
-                <p className='text-primary py-2 pl-2'>
-                  {errors.maintain_mahram.message}
-                </p>
-              )}
-            </Fade>
+            {errors.maintain_mahram && (
+              <p className='text-primary py-2 pl-2'>
+                {errors.maintain_mahram.message}
+              </p>
+            )}
           </fieldset>
 
           <fieldset
@@ -424,13 +407,11 @@ export default function PersonalInfo() {
                   : 'focus:outline-green-500'
               }`}
             />
-            <Fade right when={errors.can_tilawat ? true : false}>
-              {errors.can_tilawat && (
-                <p className='text-primary py-2 pl-2'>
-                  {errors.can_tilawat.message}
-                </p>
-              )}
-            </Fade>
+            {errors.can_tilawat && (
+              <p className='text-primary py-2 pl-2'>
+                {errors.can_tilawat.message}
+              </p>
+            )}
           </fieldset>
 
           <fieldset
@@ -457,13 +438,9 @@ export default function PersonalInfo() {
                 <option value={item}>{item}</option>
               ))}
             </select>
-            <Fade right when={errors.madhab ? true : false}>
-              {errors.madhab && (
-                <p className='text-primary py-2 pl-2'>
-                  {errors.madhab.message}
-                </p>
-              )}
-            </Fade>
+            {errors.madhab && (
+              <p className='text-primary py-2 pl-2'>{errors.madhab.message}</p>
+            )}
           </fieldset>
 
           <fieldset
@@ -491,13 +468,9 @@ export default function PersonalInfo() {
                   : 'focus:outline-green-500'
               }`}
             />
-            <Fade right when={errors.mazhab ? true : false}>
-              {errors.mazhab && (
-                <p className='text-primary py-2 pl-2'>
-                  {errors.mazhab.message}
-                </p>
-              )}
-            </Fade>
+            {errors.mazhab && (
+              <p className='text-primary py-2 pl-2'>{errors.mazhab.message}</p>
+            )}
           </fieldset>
 
           <fieldset
@@ -525,13 +498,11 @@ export default function PersonalInfo() {
                   : 'focus:outline-green-500'
               }`}
             />
-            <Fade right when={errors.political_view ? true : false}>
-              {errors.political_view && (
-                <p className='text-primary py-2 pl-2'>
-                  {errors.political_view.message}
-                </p>
-              )}
-            </Fade>
+            {errors.political_view && (
+              <p className='text-primary py-2 pl-2'>
+                {errors.political_view.message}
+              </p>
+            )}
           </fieldset>
 
           <fieldset
@@ -559,13 +530,11 @@ export default function PersonalInfo() {
                   : 'focus:outline-green-500'
               }`}
             />
-            <Fade right when={errors.drama_cinnema ? true : false}>
-              {errors.drama_cinnema && (
-                <p className='text-primary py-2 pl-2'>
-                  {errors.drama_cinnema.message}
-                </p>
-              )}
-            </Fade>
+            {errors.drama_cinnema && (
+              <p className='text-primary py-2 pl-2'>
+                {errors.drama_cinnema.message}
+              </p>
+            )}
           </fieldset>
 
           <fieldset
@@ -593,13 +562,9 @@ export default function PersonalInfo() {
                   : 'focus:outline-green-500'
               }`}
             />
-            <Fade right when={errors.disease ? true : false}>
-              {errors.disease && (
-                <p className='text-primary py-2 pl-2'>
-                  {errors.disease.message}
-                </p>
-              )}
-            </Fade>
+            {errors.disease && (
+              <p className='text-primary py-2 pl-2'>{errors.disease.message}</p>
+            )}
           </fieldset>
 
           <fieldset
@@ -627,13 +592,11 @@ export default function PersonalInfo() {
                   : 'focus:outline-green-500'
               }`}
             />
-            <Fade right when={errors.deeni_effort ? true : false}>
-              {errors.deeni_effort && (
-                <p className='text-primary py-2 pl-2'>
-                  {errors.deeni_effort.message}
-                </p>
-              )}
-            </Fade>
+            {errors.deeni_effort && (
+              <p className='text-primary py-2 pl-2'>
+                {errors.deeni_effort.message}
+              </p>
+            )}
             <p className='pl-2 pt-4 text-green-400'>যেমনঃ তাবলীগ ইত্যাদি।</p>
           </fieldset>
 
@@ -663,13 +626,11 @@ export default function PersonalInfo() {
                   : 'focus:outline-green-500'
               }`}
             />
-            <Fade right when={errors.murid_of_peer ? true : false}>
-              {errors.murid_of_peer && (
-                <p className='text-primary py-2 pl-2'>
-                  {errors.murid_of_peer.message}
-                </p>
-              )}
-            </Fade>
+            {errors.murid_of_peer && (
+              <p className='text-primary py-2 pl-2'>
+                {errors.murid_of_peer.message}
+              </p>
+            )}
             <p className='pl-2 pt-4 text-green-400'>
               হয়ে থাকলে পীরের নাম, ঠিকানা ও মুরিদ হওয়ার কারণ লিখুন। না হলে
               পীর-মুরিদি সম্পর্কে আপনার বিশ্বাস লিখুন।
@@ -701,13 +662,11 @@ export default function PersonalInfo() {
                   : 'focus:outline-green-500'
               }`}
             />
-            <Fade right when={errors.majar_view ? true : false}>
-              {errors.majar_view && (
-                <p className='text-primary py-2 pl-2'>
-                  {errors.majar_view.message}
-                </p>
-              )}
-            </Fade>
+            {errors.majar_view && (
+              <p className='text-primary py-2 pl-2'>
+                {errors.majar_view.message}
+              </p>
+            )}
           </fieldset>
 
           <fieldset
@@ -735,13 +694,11 @@ export default function PersonalInfo() {
                   : 'focus:outline-green-500'
               }`}
             />
-            <Fade right when={errors.favorite_books ? true : false}>
-              {errors.favorite_books && (
-                <p className='text-primary py-2 pl-2'>
-                  {errors.favorite_books.message}
-                </p>
-              )}
-            </Fade>
+            {errors.favorite_books && (
+              <p className='text-primary py-2 pl-2'>
+                {errors.favorite_books.message}
+              </p>
+            )}
           </fieldset>
 
           <fieldset
@@ -769,13 +726,11 @@ export default function PersonalInfo() {
                   : 'focus:outline-green-500'
               }`}
             />
-            <Fade right when={errors.favorite_scholars ? true : false}>
-              {errors.favorite_scholars && (
-                <p className='text-primary py-2 pl-2'>
-                  {errors.favorite_scholars.message}
-                </p>
-              )}
-            </Fade>
+            {errors.favorite_scholars && (
+              <p className='text-primary py-2 pl-2'>
+                {errors.favorite_scholars.message}
+              </p>
+            )}
           </fieldset>
 
           <fieldset className='my-6 rounded-md border-2 border-gray-300 p-4'>
@@ -816,13 +771,11 @@ export default function PersonalInfo() {
                   : 'focus:outline-green-500'
               }`}
             />
-            <Fade right when={errors.about_me ? true : false}>
-              {errors.about_me && (
-                <p className='text-primary py-2 pl-2'>
-                  {errors.about_me.message}
-                </p>
-              )}
-            </Fade>
+            {errors.about_me && (
+              <p className='text-primary py-2 pl-2'>
+                {errors.about_me.message}
+              </p>
+            )}
             <p className='pl-2 pt-4 text-green-400'>
               নিজের পছন্দ-অপছন্দ, শখ-ইচ্ছা, দ্বীনী-দুনিয়াবী ইত্যাদি বিষয়
               বিস্তারিত লিখতে হবে। কারণ এই লেখা পড়ে পাঠক আপনার সম্পর্কে সাধারণ

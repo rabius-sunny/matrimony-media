@@ -4,7 +4,6 @@ import { useRouter } from 'next/router'
 import ProfileRoutes from 'components/profile/ProfileRoutes'
 import { _brothers } from 'assets/profileinfo'
 import { useForm } from 'react-hook-form'
-import { Fade } from 'react-reveal'
 import OptionMap from 'components/profile/OptionMap'
 import biodataRequests from 'services/biodataRequests'
 import getData from 'hooks/getData'
@@ -151,13 +150,11 @@ export default function Family() {
                   : 'focus:outline-green-500'
               }`}
             />
-            <Fade right when={errors.father_name ? true : false}>
-              {errors.father_name && (
-                <p className='text-primary py-2 pl-2'>
-                  {errors.father_name.message}
-                </p>
-              )}
-            </Fade>
+            {errors.father_name && (
+              <p className='text-primary py-2 pl-2'>
+                {errors.father_name.message}
+              </p>
+            )}
             <p className='pl-2 pt-4 text-green-400'>
               পিতার পূর্ণ নাম লিখবেন, নাম নেয়া হচ্ছে শুধু ভেরিফিকেশনের জন্য।
               আপনার পিতার নাম পাবলিশ করা হবে না এবং কর্তৃপক্ষ ছাড়া আর কেউ দেখতে
@@ -190,13 +187,11 @@ export default function Family() {
                   : 'focus:outline-green-500'
               }`}
             />
-            <Fade right when={errors.mother_name ? true : false}>
-              {errors.mother_name && (
-                <p className='text-primary py-2 pl-2'>
-                  {errors.mother_name.message}
-                </p>
-              )}
-            </Fade>
+            {errors.mother_name && (
+              <p className='text-primary py-2 pl-2'>
+                {errors.mother_name.message}
+              </p>
+            )}
             <p className='pl-2 pt-4 text-green-400'>
               মাতার পূর্ণ নাম লিখবেন, নাম নেয়া হচ্ছে শুধু ভেরিফিকেশনের জন্য।
               আপনার মাতার নাম পাবলিশ করা হবে না এবং কর্তৃপক্ষ ছাড়া আর কেউ দেখতে
@@ -229,13 +224,11 @@ export default function Family() {
                   : 'focus:outline-green-500'
               }`}
             />
-            <Fade right when={errors.father_profession ? true : false}>
-              {errors.father_profession && (
-                <p className='text-primary py-2 pl-2'>
-                  {errors.father_profession.message}
-                </p>
-              )}
-            </Fade>
+            {errors.father_profession && (
+              <p className='text-primary py-2 pl-2'>
+                {errors.father_profession.message}
+              </p>
+            )}
             <p className='pl-2 pt-4 text-green-400'>
               মৃত হলে প্রথমে (মৃত) লেখার পর পেশা লিখবেন। যেমনঃ (মৃত) ব্যবসায়ী
               ছিলেন।
@@ -267,13 +260,11 @@ export default function Family() {
                   : 'focus:outline-green-500'
               }`}
             />
-            <Fade right when={errors.mother_profession ? true : false}>
-              {errors.mother_profession && (
-                <p className='text-primary py-2 pl-2'>
-                  {errors.mother_profession.message}
-                </p>
-              )}
-            </Fade>
+            {errors.mother_profession && (
+              <p className='text-primary py-2 pl-2'>
+                {errors.mother_profession.message}
+              </p>
+            )}
             <p className='pl-2 pt-4 text-green-400'>
               মৃত হলে প্রথমে (মৃত) লেখার পর পেশা লিখবেন। যেমনঃ (মৃত) গৃহিণী
               ছিলেন।
@@ -303,13 +294,11 @@ export default function Family() {
               <option value=''>select</option>
               <OptionMap data={newBrothers} />
             </select>
-            <Fade right when={errors.brothers ? true : false}>
-              {errors.brothers && (
-                <p className='text-primary py-2 pl-2'>
-                  {errors.brothers.message}
-                </p>
-              )}
-            </Fade>
+            {errors.brothers && (
+              <p className='text-primary py-2 pl-2'>
+                {errors.brothers.message}
+              </p>
+            )}
           </fieldset>
 
           {newBrothers.indexOf(brothers) > 0 && (
@@ -367,13 +356,9 @@ export default function Family() {
               <option value=''>select</option>
               <OptionMap data={newSisters} />
             </select>
-            <Fade right when={errors.sisters ? true : false}>
-              {errors.sisters && (
-                <p className='text-primary py-2 pl-2'>
-                  {errors.sisters.message}
-                </p>
-              )}
-            </Fade>
+            {errors.sisters && (
+              <p className='text-primary py-2 pl-2'>{errors.sisters.message}</p>
+            )}
           </fieldset>
           {newSisters.indexOf(sisters) > 0 && (
             <fieldset
@@ -447,13 +432,11 @@ export default function Family() {
                   : 'focus:outline-green-500'
               }`}
             />
-            <Fade right when={errors.family_status ? true : false}>
-              {errors.family_status && (
-                <p className='text-primary py-2 pl-2'>
-                  {errors.family_status.message}
-                </p>
-              )}
-            </Fade>
+            {errors.family_status && (
+              <p className='text-primary py-2 pl-2'>
+                {errors.family_status.message}
+              </p>
+            )}
             <p className='pl-2 pt-4 text-green-400'>সংক্ষেপে বর্ণনা করুন।</p>
           </fieldset>
 

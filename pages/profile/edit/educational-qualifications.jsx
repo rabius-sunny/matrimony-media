@@ -5,7 +5,6 @@ import ProfileRoutes from 'components/profile/ProfileRoutes'
 import { useForm } from 'react-hook-form'
 import OptionMap from 'components/profile/OptionMap'
 import getData from 'hooks/getData'
-import { Fade } from 'react-reveal'
 import biodataRequests from 'services/biodataRequests'
 import { useEffect } from 'react'
 import FormSkeleton from 'components/shared/FormSkeleton'
@@ -149,13 +148,11 @@ export default function Education() {
               <option value=''>select</option>
               <OptionMap data={educationType} />
             </select>
-            <Fade right when={errors.education ? true : false}>
-              {errors.education && (
-                <p className='text-primary py-2 pl-2'>
-                  {errors.education.message}
-                </p>
-              )}
-            </Fade>
+            {errors.education && (
+              <p className='text-primary py-2 pl-2'>
+                {errors.education.message}
+              </p>
+            )}
           </fieldset>
           {/* General Education */}
           {education === educationType[0] && (
