@@ -19,7 +19,7 @@ import FormSkeleton from 'components/shared/FormSkeleton'
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
 import { useAppContext } from 'utils/context'
-import biodataRequests from 'services/biodataRequests'
+import biodataRequests from 'services/network/biodataRequests'
 import LongModal from 'components/shared/Modals/LongModal'
 import SaveButton from 'components/bio/SaveButton'
 
@@ -33,10 +33,10 @@ export default function GeneralInfo() {
   const [fields, setFields] = useState([])
   const router = useRouter()
 
-  const activeRoute = routename =>
+  const activeRoute = (routename) =>
     router.route.split('/edit')[1] === routename ? true : false
 
-  const onSubmit = data => {
+  const onSubmit = (data) => {
     setIsLoading(true)
     biodataRequests
       .updateBio({
@@ -45,9 +45,9 @@ export default function GeneralInfo() {
         published: false,
         featured: false
       })
-      .then(info => {
+      .then((info) => {
         if (info.message === 'ok') {
-          biodataRequests.setField(3).then(info => {
+          biodataRequests.setField(3).then((info) => {
             if (info.message === 'ok') {
               setIsLoading(false)
               setVisible({ message: '', status: false, done: true })
@@ -61,7 +61,7 @@ export default function GeneralInfo() {
           })
         }
       })
-      .catch(err => {
+      .catch((err) => {
         setIsLoading(false)
         setVisible({
           message: 'ইরর হয়েছে, আবার চেষ্টা করুন',
@@ -98,13 +98,16 @@ export default function GeneralInfo() {
     }
   }, [data, loading])
   useEffect(() => {
-    biodataRequests.checkField().then(data => {
+    biodataRequests.checkField().then((data) => {
       setFields(data.fields)
     })
   }, [visible.done])
   return (
     <>
-      <ProfileLayout data={data} loading={loading}>
+      <ProfileLayout
+        data={data}
+        loading={loading}
+      >
         <Head>
           <title>সাধারণ তথ্য</title>
         </Head>
@@ -217,7 +220,10 @@ export default function GeneralInfo() {
               description='জানাতে অনিচ্ছুক হলে ঘরটি ফাঁকা রাখুন।'
             />
 
-            <SaveButton isLoading={isLoading} fields={fields} />
+            <SaveButton
+              isLoading={isLoading}
+              fields={fields}
+            />
           </CForm>
         ) : (
           <CForm onSubmit={onSubmit}>
@@ -262,11 +268,23 @@ export default function GeneralInfo() {
               name='complexion'
             />
 
-            <CSelect legend='উচ্চতা' options={_height} name='height' />
+            <CSelect
+              legend='উচ্চতা'
+              options={_height}
+              name='height'
+            />
 
-            <CSelect legend='ওজন' options={_weight} name='weight' />
+            <CSelect
+              legend='ওজন'
+              options={_weight}
+              name='weight'
+            />
 
-            <CSelect legend='Blood Group' options={_bloodGroup} name='blood' />
+            <CSelect
+              legend='Blood Group'
+              options={_bloodGroup}
+              name='blood'
+            />
 
             <CInput
               name='profession'

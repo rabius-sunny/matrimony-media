@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import ProfileLayout from 'components/profile/ProfileLayout'
 import ProfileRoutes from 'components/profile/ProfileRoutes'
-import biodataRequests from 'services/biodataRequests'
+import biodataRequests from 'services/network/biodataRequests'
 import getData from 'hooks/getData'
 import { CInput } from 'components/profile/CInputs'
 import CForm from 'components/profile/CFroms'
@@ -21,10 +21,10 @@ export default function Address() {
   const [isLoading, setIsLoading] = useState(false)
   const [fields, setFields] = useState([])
   const router = useRouter()
-  const activeRoute = routename =>
+  const activeRoute = (routename) =>
     router.route.split('/edit')[1] === routename ? true : false
 
-  const onSubmit = data => {
+  const onSubmit = (data) => {
     setIsLoading(true)
     biodataRequests
       .updateBio({
@@ -32,9 +32,9 @@ export default function Address() {
         published: false,
         featured: false
       })
-      .then(info => {
+      .then((info) => {
         if (info.message === 'ok') {
-          biodataRequests.setField(5).then(info => {
+          biodataRequests.setField(5).then((info) => {
             if (info.message === 'ok') {
               setIsLoading(false)
               setVisible({ message: '', status: false, done: true })
@@ -48,7 +48,7 @@ export default function Address() {
           })
         }
       })
-      .catch(err => {
+      .catch((err) => {
         setIsLoading(false)
         setVisible({
           message: 'ইরর হয়েছে, আবার চেষ্টা করুন',
@@ -77,13 +77,16 @@ export default function Address() {
     }
   }, [data, loading])
   useEffect(() => {
-    biodataRequests.checkField().then(data => {
+    biodataRequests.checkField().then((data) => {
       setFields(data.fields)
     })
   }, [visible.done])
 
   return (
-    <ProfileLayout data={data} loading={loading}>
+    <ProfileLayout
+      data={data}
+      loading={loading}
+    >
       <Head>
         <title>ঠিকানা</title>
       </Head>
@@ -127,7 +130,10 @@ export default function Address() {
             message='field is required'
           />
 
-          <SaveButton isLoading={isLoading} fields={fields} />
+          <SaveButton
+            isLoading={isLoading}
+            fields={fields}
+          />
         </CForm>
       ) : (
         <CForm onSubmit={onSubmit}>

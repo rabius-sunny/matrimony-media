@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import DAddress from 'components/bio/DAddress'
-import biodataRequests from 'services/biodataRequests'
+import biodataRequests from 'services/network/biodataRequests'
 import DEducation from 'components/bio/DEducaiton'
 import DFamily from 'components/bio/DFamily'
 import DPersonal from 'components/bio/DPersonal'
@@ -30,15 +30,15 @@ export default function Preview() {
 
     biodataRequests
       .checkField()
-      .then(data => {
+      .then((data) => {
         if (data.fields && data.fields.length < 1) {
           biodataRequests
             .getBioByToken()
-            .then(data => {
+            .then((data) => {
               setBio(data.bio)
               setLoading(false)
             })
-            .catch(err => {
+            .catch((err) => {
               setLoading(false)
               alert(err.message)
             })
@@ -47,23 +47,23 @@ export default function Preview() {
           router.push('/')
         }
       })
-      .catch(err => {
+      .catch((err) => {
         alert('আপনি সব ফিল্ড পূরণ করেন নি')
         router.push('/')
       })
   }, [])
 
-  const handlePublish = _ => {
+  const handlePublish = (_) => {
     setIsLoading(true)
     biodataRequests
       .updateBio({ requested: true })
-      .then(info => {
+      .then((info) => {
         if (info.message === 'ok') {
           setIsLoading(false)
           setVisible(true)
         }
       })
-      .catch(err => {
+      .catch((err) => {
         setIsLoading(false)
         setVisible2(true)
       })
@@ -329,7 +329,10 @@ export default function Preview() {
           className='text-white font-bold text-xl cursor-pointer rounded-md bg-primary  py-3 my-8 w-full'
         >
           {isLoading ? (
-            <Loading color='success' size='sm' />
+            <Loading
+              color='success'
+              size='sm'
+            />
           ) : (
             'পাবলিশ রিকুয়েস্ট করুন'
           )}
@@ -342,16 +345,32 @@ export default function Preview() {
         <title>বায়োডাটা</title>
       </Head>
       <div className='my-4'>
-        <CSkeleton duration={1} height={200} width={'100%'} />
+        <CSkeleton
+          duration={1}
+          height={200}
+          width={'100%'}
+        />
       </div>
       <div className='my-4'>
-        <CSkeleton duration={1} height={100} width={'100%'} />
+        <CSkeleton
+          duration={1}
+          height={100}
+          width={'100%'}
+        />
       </div>
       <div className='my-4'>
-        <CSkeleton duration={1} height={400} width={'100%'} />
+        <CSkeleton
+          duration={1}
+          height={400}
+          width={'100%'}
+        />
       </div>
       <div className='my-4'>
-        <CSkeleton duration={1} height={300} width={'100%'} />
+        <CSkeleton
+          duration={1}
+          height={300}
+          width={'100%'}
+        />
       </div>
     </div>
   )

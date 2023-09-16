@@ -2,7 +2,7 @@ import ProfileLayout from 'components/profile/ProfileLayout'
 import { useRouter } from 'next/router'
 import ProfileRoutes from 'components/profile/ProfileRoutes'
 import { useForm } from 'react-hook-form'
-import biodataRequests from 'services/biodataRequests'
+import biodataRequests from 'services/network/biodataRequests'
 import getData from 'hooks/getData'
 import FormSkeleton from 'components/shared/FormSkeleton'
 import Head from 'next/head'
@@ -22,9 +22,9 @@ export default function Name() {
   const [isLoading, setIsLoading] = useState(false)
   const [visible2, setVisible2] = useState(false)
   const [fields, setFields] = useState([])
-  const onClose = _ => setVisible2(false)
+  const onClose = (_) => setVisible2(false)
   const router = useRouter()
-  const activeRoute = routename =>
+  const activeRoute = (routename) =>
     router.route.split('/edit')[1] === routename ? true : false
 
   const {
@@ -34,7 +34,7 @@ export default function Name() {
   } = useForm({
     mode: 'onChange'
   })
-  const onSubmit = data => {
+  const onSubmit = (data) => {
     setIsLoading(true)
     biodataRequests
       .updateBio({
@@ -42,13 +42,14 @@ export default function Name() {
         published: false,
         featured: false
       })
-      .then(info => {
+      .then((info) => {
         if (info.message === 'ok') {
-          biodataRequests.setField(9).then(info => {
+          biodataRequests.setField(9).then((info) => {
             if (info.message === 'ok') {
               setIsLoading(false)
               if (fields.length > 0) {
                 setVisible2(true)
+                return
               } else router.push('/profile/preview')
             }
           })
@@ -61,7 +62,7 @@ export default function Name() {
           })
         }
       })
-      .catch(err => {
+      .catch((err) => {
         setIsLoading(false)
         setVisible({
           message: 'ইরর হয়েছে, আবার চেষ্টা করুন',
@@ -93,13 +94,16 @@ export default function Name() {
     }
   }, [data, loading])
   useEffect(() => {
-    biodataRequests.checkField().then(data => {
+    biodataRequests.checkField().then((data) => {
       setFields(data.fields)
     })
   }, [visible.done])
 
   return (
-    <ProfileLayout data={data} loading={loading}>
+    <ProfileLayout
+      data={data}
+      loading={loading}
+    >
       <Head>
         <title>যোগাযোগ</title>
       </Head>
@@ -268,7 +272,10 @@ export default function Name() {
             } rounded-md bg-primary  flex items-center font-medium text-white shadow-md hover:bg-primary  px-6 py-3`}
           >
             {isLoading ? (
-              <Loading color='success' size='sm' />
+              <Loading
+                color='success'
+                size='sm'
+              />
             ) : (
               'সেভ করুন ও প্রিভিউ দেখুন'
             )}

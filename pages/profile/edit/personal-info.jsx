@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import ProfileRoutes from 'components/profile/ProfileRoutes'
 import getData from 'hooks/getData'
-import biodataRequests from 'services/biodataRequests'
+import biodataRequests from 'services/network/biodataRequests'
 import FormSkeleton from 'components/shared/FormSkeleton'
 import Head from 'next/head'
 import { useAppContext } from 'utils/context'
@@ -24,7 +24,7 @@ export default function PersonalInfo() {
   const [fields, setFields] = useState([])
   const [done, setDone] = useState(false)
   const router = useRouter()
-  const activeRoute = routename =>
+  const activeRoute = (routename) =>
     router.route.split('/edit')[1] === routename ? true : false
 
   const {
@@ -34,7 +34,7 @@ export default function PersonalInfo() {
   } = useForm({
     mode: 'onChange'
   })
-  const onSubmit = data => {
+  const onSubmit = (data) => {
     setIsLoading(true)
     biodataRequests
       .updateBio({
@@ -42,9 +42,9 @@ export default function PersonalInfo() {
         published: false,
         featured: false
       })
-      .then(info => {
+      .then((info) => {
         if (info.message === 'ok') {
-          biodataRequests.setField(1).then(info => {
+          biodataRequests.setField(1).then((info) => {
             if (info.message === 'ok') {
               setIsLoading(false)
               setVisible({ message: '', status: false, done: true })
@@ -58,7 +58,7 @@ export default function PersonalInfo() {
           })
         }
       })
-      .catch(err => {
+      .catch((err) => {
         setIsLoading(false)
         setVisible({
           message: 'ইরর হয়েছে, আবার চেষ্টা করুন',
@@ -107,13 +107,16 @@ export default function PersonalInfo() {
   }, [data, loading])
 
   useEffect(() => {
-    biodataRequests.checkField().then(data => {
+    biodataRequests.checkField().then((data) => {
       setFields(data.fields)
     })
   }, [visible.done])
 
   return (
-    <ProfileLayout data={data} loading={loading}>
+    <ProfileLayout
+      data={data}
+      loading={loading}
+    >
       <Head>
         <title>ব্যক্তিগত তথ্য</title>
       </Head>
@@ -136,7 +139,10 @@ export default function PersonalInfo() {
             <ExclamationIcon className='text-primary h-10 w-10' />
           </div>
           <div>
-            <Link legacyBehavior href='/profile/edit/primary'>
+            <Link
+              legacyBehavior
+              href='/profile/edit/primary'
+            >
               <a className=' underline text-indigo-500'>প্রাথমিক</a>
             </Link>{' '}
             ফিল্ডটি এখনো অপূর্ণাঙ্গ রয়েছে, আগে সেটি ফিল করুন
@@ -434,7 +440,7 @@ export default function PersonalInfo() {
               {...register('madhab', { required: 'madhab is required' })}
             >
               <option value=''>-------</option>
-              {_madhabs.map(item => (
+              {_madhabs.map((item) => (
                 <option value={item}>{item}</option>
               ))}
             </select>
@@ -782,7 +788,10 @@ export default function PersonalInfo() {
               ধারণা লাভ করবে।
             </p>
           </fieldset>
-          <SaveButton isLoading={isLoading} fields={fields} />
+          <SaveButton
+            isLoading={isLoading}
+            fields={fields}
+          />
         </form>
       ) : (
         <FormSkeleton />

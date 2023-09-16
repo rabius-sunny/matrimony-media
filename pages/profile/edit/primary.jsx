@@ -9,7 +9,7 @@ import {
 } from 'assets/profileinfo'
 import { CInput, CSelect } from 'components/profile/CInputs'
 import CForm from 'components/profile/CFroms'
-import biodataRequests from 'services/biodataRequests'
+import biodataRequests from 'services/network/biodataRequests'
 import getData from 'hooks/getData'
 import FormSkeleton from 'components/shared/FormSkeleton'
 import Head from 'next/head'
@@ -30,10 +30,10 @@ export default function Name() {
   const { data, loading } = getData(visible.done)
   const router = useRouter()
   const [type, setType] = useState(null)
-  const activeRoute = routename =>
+  const activeRoute = (routename) =>
     router.route.split('/edit')[1] === routename ? true : false
 
-  const onSubmit = infos => {
+  const onSubmit = (infos) => {
     setIsLoading(true)
     biodataRequests
       .updateBio({
@@ -41,9 +41,9 @@ export default function Name() {
         published: false,
         featured: false
       })
-      .then(info => {
+      .then((info) => {
         if (info.message === 'ok') {
-          biodataRequests.setField(0).then(info => {
+          biodataRequests.setField(0).then((info) => {
             if (info.message === 'ok') {
               setIsLoading(false)
               setVisible({ message: '', status: false, done: true })
@@ -57,7 +57,7 @@ export default function Name() {
           })
         }
       })
-      .catch(err => {
+      .catch((err) => {
         setIsLoading(false)
         setVisible({
           message: 'ইরর হয়েছে, আবার চেষ্টা করুন',
@@ -86,7 +86,7 @@ export default function Name() {
   }, [data, loading])
 
   useEffect(() => {
-    biodataRequests.checkField().then(data => {
+    biodataRequests.checkField().then((data) => {
       setFields(data.fields)
     })
   }, [visible.done])
@@ -105,7 +105,10 @@ export default function Name() {
   // }
 
   return (
-    <ProfileLayout data={data} loading={loading}>
+    <ProfileLayout
+      data={data}
+      loading={loading}
+    >
       <Head>
         <title>প্রাথমিক তথ্য</title>
       </Head>
@@ -157,7 +160,10 @@ export default function Name() {
             name='condition'
           />
 
-          <SaveButton isLoading={isLoading} fields={fields} />
+          <SaveButton
+            isLoading={isLoading}
+            fields={fields}
+          />
         </CForm>
       ) : (
         <CForm onSubmit={onSubmit}>

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import DAddress from 'components/bio/DAddress'
 import { useRouter } from 'next/router'
-import biodataRequests from 'services/biodataRequests'
+import biodataRequests from 'services/network/biodataRequests'
 import DEducation from 'components/bio/DEducaiton'
 import DFamily from 'components/bio/DFamily'
 import DPersonal from 'components/bio/DPersonal'
@@ -31,11 +31,11 @@ export default function DetailBio() {
     if (uId) {
       biodataRequests
         .getBioByUID(uId)
-        .then(data => {
+        .then((data) => {
           setBio(data.response)
           setLoading(false)
         })
-        .catch(err => {
+        .catch((err) => {
           setLoading(false)
           alert(err.message)
         })
@@ -58,36 +58,36 @@ export default function DetailBio() {
         // check for user
         userRequest
           .checkFavorite(bio?._id)
-          .then(res => {
+          .then((res) => {
             if (res.message === 'exists') {
               setIsBookmarked(true)
             }
           })
-          .catch(err => err)
+          .catch((err) => err)
       }
     }
   }, [uId, bio, auth])
 
-  const handleBookmark = _ => {
+  const handleBookmark = (_) => {
     if (auth) {
       if (isBookmarked) {
         userRequest
           .removeBookmark(bio?._id)
-          .then(res => {
+          .then((res) => {
             if (res.message === 'ok') {
               setIsBookmarked(false)
             }
           })
-          .catch(err => err)
+          .catch((err) => err)
       } else {
         userRequest
           .addToBookmark(bio?._id)
-          .then(res => {
+          .then((res) => {
             if (res.message === 'ok') {
               setIsBookmarked(true)
             }
           })
-          .catch(err => console.log('err', err))
+          .catch((err) => console.log('err', err))
       }
     } else {
       const bookmarks = localStorage.getItem('bookmarks')
@@ -196,7 +196,11 @@ export default function DetailBio() {
       </Head>
       <div className=''>
         <div className=''>
-          <BioInfoCard data={bio} loading={loading} uId={uId} />
+          <BioInfoCard
+            data={bio}
+            loading={loading}
+            uId={uId}
+          />
         </div>
         <div className=''>
           <div className='mt-4'>
@@ -343,16 +347,32 @@ export default function DetailBio() {
         <title>বায়োডাটা</title>
       </Head>
       <div className='my-4'>
-        <CSkeleton duration={1} height={200} width={'100%'} />
+        <CSkeleton
+          duration={1}
+          height={200}
+          width={'100%'}
+        />
       </div>
       <div className='my-4'>
-        <CSkeleton duration={1} height={100} width={'100%'} />
+        <CSkeleton
+          duration={1}
+          height={100}
+          width={'100%'}
+        />
       </div>
       <div className='my-4'>
-        <CSkeleton duration={1} height={400} width={'100%'} />
+        <CSkeleton
+          duration={1}
+          height={400}
+          width={'100%'}
+        />
       </div>
       <div className='my-4'>
-        <CSkeleton duration={1} height={300} width={'100%'} />
+        <CSkeleton
+          duration={1}
+          height={300}
+          width={'100%'}
+        />
       </div>
     </div>
   )

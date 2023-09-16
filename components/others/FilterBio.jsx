@@ -1,6 +1,6 @@
 import { _femalecondition, _madhabs, _malecondition } from 'assets/profileinfo'
 import { useEffect, useState } from 'react'
-import biodataRequests from 'services/biodataRequests'
+import biodataRequests from 'services/network/biodataRequests'
 
 const educationTypes = ['জেনারেল', 'মাদ্রাসা']
 
@@ -26,16 +26,16 @@ export default function FilterBio({ type, jilla, setLoading, setBios }) {
     }
   }, [])
 
-  const filterAge = dataArray => {
+  const filterAge = (dataArray) => {
     const filtered = dataArray.filter(
-      item =>
+      (item) =>
         parseInt(item?.age) >= parseInt(criterias.ageFrom) &&
         parseInt(item?.age) <= parseInt(criterias.ageTo)
     )
     return filtered
   }
 
-  const handleChange = e =>
+  const handleChange = (e) =>
     setCriterias({ ...criterias, [e.target.name]: e.target.value })
 
   const handleSubmit = () => {
@@ -79,11 +79,11 @@ export default function FilterBio({ type, jilla, setLoading, setBios }) {
 
     biodataRequests
       .filterBios(data)
-      .then(info => {
+      .then((info) => {
         setBios(filterAge(info.response))
         setLoading(false)
       })
-      .catch(err => {
+      .catch((err) => {
         setLoading(false)
         console.log('err', err)
         setBios([])
@@ -94,7 +94,10 @@ export default function FilterBio({ type, jilla, setLoading, setBios }) {
     <div className='mb-8 bg-primary p-6'>
       <div className='container block sm:flex items-center justify-evenly mt-4 flex-wrap'>
         <div className='pr-4'>
-          <label className='block text-white font-semibold' htmlFor='s1'>
+          <label
+            className='block text-white font-semibold'
+            htmlFor='s1'
+          >
             বৈবাহিক অবস্থা
           </label>
           <select
@@ -105,13 +108,16 @@ export default function FilterBio({ type, jilla, setLoading, setBios }) {
             id='s1'
             className='m-3 lg:m-0 rounded p-1 bg-gray-50 w-full md:w-auto'
           >
-            {['সকল', ..._types].map(item => (
+            {['সকল', ..._types].map((item) => (
               <option value={item === 'সকল' ? '' : item}>{item}</option>
             ))}
           </select>
         </div>
         <div className='pr-4'>
-          <label className='block text-white font-semibold' htmlFor='s2'>
+          <label
+            className='block text-white font-semibold'
+            htmlFor='s2'
+          >
             বয়স(থেকে)
           </label>
           <select
@@ -124,15 +130,21 @@ export default function FilterBio({ type, jilla, setLoading, setBios }) {
             {Array(50 - 16 + 1)
               .fill()
               .map((_, idx) => 16 + idx)
-              .map(item => (
-                <option value={item} key={item}>
+              .map((item) => (
+                <option
+                  value={item}
+                  key={item}
+                >
                   {item}
                 </option>
               ))}
           </select>
         </div>
         <div className='pr-4'>
-          <label className='block text-white font-semibold' htmlFor='s3'>
+          <label
+            className='block text-white font-semibold'
+            htmlFor='s3'
+          >
             বয়স(পর্যন্ত)
           </label>
           <select
@@ -145,15 +157,21 @@ export default function FilterBio({ type, jilla, setLoading, setBios }) {
             {Array(50 - 16 + 1)
               .fill()
               .map((_, idx) => 16 + idx)
-              .map(item => (
-                <option value={item} key={item}>
+              .map((item) => (
+                <option
+                  value={item}
+                  key={item}
+                >
                   {item}
                 </option>
               ))}
           </select>
         </div>
         <div className='pr-4'>
-          <label className='block text-white font-semibold' htmlFor='s4'>
+          <label
+            className='block text-white font-semibold'
+            htmlFor='s4'
+          >
             পড়াশোনার মাধ্যম
           </label>
           <select
@@ -163,13 +181,16 @@ export default function FilterBio({ type, jilla, setLoading, setBios }) {
             id='s4'
             className='m-3 lg:m-0 rounded p-1 bg-gray-50 w-full md:w-auto'
           >
-            {['সকল', ...educationTypes].map(item => (
+            {['সকল', ...educationTypes].map((item) => (
               <option value={item === 'সকল' ? '' : item}>{item}</option>
             ))}
           </select>
         </div>
         <div className='pr-4'>
-          <label className='block text-white font-semibold' htmlFor='s5'>
+          <label
+            className='block text-white font-semibold'
+            htmlFor='s5'
+          >
             মাযহাব
           </label>
           <select
@@ -179,7 +200,7 @@ export default function FilterBio({ type, jilla, setLoading, setBios }) {
             id='s5'
             className='m-3 lg:m-0 rounded p-1 bg-gray-50 w-full md:w-auto'
           >
-            {['সকল', ..._madhabs].map(item => (
+            {['সকল', ..._madhabs].map((item) => (
               <option value={item === 'সকল' ? '' : item}>{item}</option>
             ))}
           </select>

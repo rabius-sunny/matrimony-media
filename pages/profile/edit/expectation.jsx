@@ -2,7 +2,7 @@ import ProfileLayout from 'components/profile/ProfileLayout'
 import { useRouter } from 'next/router'
 import ProfileRoutes from 'components/profile/ProfileRoutes'
 import { useForm } from 'react-hook-form'
-import biodataRequests from 'services/biodataRequests'
+import biodataRequests from 'services/network/biodataRequests'
 import getData from 'hooks/getData'
 import FormSkeleton from 'components/shared/FormSkeleton'
 import Head from 'next/head'
@@ -20,7 +20,7 @@ export default function OthersInfo() {
   const [isLoading, setIsLoading] = useState(false)
   const [fields, setFields] = useState([])
   const router = useRouter()
-  const activeRoute = routename =>
+  const activeRoute = (routename) =>
     router.route.split('/edit')[1] === routename ? true : false
 
   const {
@@ -30,7 +30,7 @@ export default function OthersInfo() {
   } = useForm({
     mode: 'onChange'
   })
-  const onSubmit = data => {
+  const onSubmit = (data) => {
     setIsLoading(true)
     biodataRequests
       .updateBio({
@@ -38,9 +38,9 @@ export default function OthersInfo() {
         published: false,
         featured: false
       })
-      .then(info => {
+      .then((info) => {
         if (info.message === 'ok') {
-          biodataRequests.setField(8).then(info => {
+          biodataRequests.setField(8).then((info) => {
             if (info.message === 'ok') {
               setIsLoading(false)
               setVisible({ message: '', status: false, done: true })
@@ -54,7 +54,7 @@ export default function OthersInfo() {
           })
         }
       })
-      .catch(err => {
+      .catch((err) => {
         setIsLoading(false)
         setVisible({
           message: 'ইরর হয়েছে, আবার চেষ্টা করুন',
@@ -93,13 +93,16 @@ export default function OthersInfo() {
   }, [data, loading])
 
   useEffect(() => {
-    biodataRequests.checkField().then(data => {
+    biodataRequests.checkField().then((data) => {
       setFields(data.fields)
     })
   }, [visible.done])
 
   return (
-    <ProfileLayout data={data} loading={loading}>
+    <ProfileLayout
+      data={data}
+      loading={loading}
+    >
       <Head>
         <title>যেমন জীবনসঙ্গী আশা করেন</title>
       </Head>
@@ -426,7 +429,10 @@ export default function OthersInfo() {
             </p>
           </fieldset>
 
-          <SaveButton isLoading={isLoading} fields={fields} />
+          <SaveButton
+            isLoading={isLoading}
+            fields={fields}
+          />
         </form>
       ) : (
         <FormSkeleton />

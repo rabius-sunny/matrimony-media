@@ -16,8 +16,6 @@ export default function Dropdown() {
     setJilla('')
   }
 
-  console.log('type is = ', type)
-
   return (
     <div className='my-3 lg:my-4'>
       <div className='mb-2 lg:mb-4'>

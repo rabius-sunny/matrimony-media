@@ -2,12 +2,12 @@
   "private": true,
   "license": "MIT",
   "homepage": "https://jannatijuti.com",
-  "scripts": {
+  "script": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start"
   },
-  "script": {
+  "scripts": {
     "dev": "node server.js",
     "build": "next build",
     "start": "NODE_ENV=production node server.js"
@@ -17,6 +17,7 @@
     "@headlessui/react": "^1.5.0",
     "@heroicons/react": "^1.0.6",
     "@nextui-org/react": "^1.0.0-beta.9",
+    "@reduxjs/toolkit": "^1.9.5",
     "axios": "^0.27.2",
     "firebase": "^9.8.3",
     "next": "latest",
@@ -25,8 +26,11 @@
     "react-hook-form": "^7.30.0",
     "react-icons": "^4.4.0",
     "react-loading-skeleton": "^3.1.0",
+    "react-redux": "^8.1.2",
     "react-toastify": "^9.0.5",
-    "sass": "^1.50.0"
+    "redux-persist": "^6.0.0",
+    "sass": "^1.50.0",
+    "swr": "^2.1.5"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.0",

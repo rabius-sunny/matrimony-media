@@ -5,7 +5,7 @@ import ProfileRoutes from 'components/profile/ProfileRoutes'
 import { _brothers } from 'assets/profileinfo'
 import { useForm } from 'react-hook-form'
 import OptionMap from 'components/profile/OptionMap'
-import biodataRequests from 'services/biodataRequests'
+import biodataRequests from 'services/network/biodataRequests'
 import getData from 'hooks/getData'
 import FormSkeleton from 'components/shared/FormSkeleton'
 import Head from 'next/head'
@@ -22,7 +22,7 @@ export default function Family() {
   const [isLoading, setIsLoading] = useState(false)
   const [fields, setFields] = useState([])
   const router = useRouter()
-  const activeRoute = routename =>
+  const activeRoute = (routename) =>
     router.route.split('/edit')[1] === routename ? true : false
 
   const { data, loading } = getData(visible.done)
@@ -37,7 +37,7 @@ export default function Family() {
   } = useForm({
     mode: 'onChange'
   })
-  const onSubmit = data => {
+  const onSubmit = (data) => {
     setIsLoading(true)
     biodataRequests
       .updateBio({
@@ -45,9 +45,9 @@ export default function Family() {
         published: false,
         featured: false
       })
-      .then(info => {
+      .then((info) => {
         if (info.message === 'ok') {
-          biodataRequests.setField(4).then(info => {
+          biodataRequests.setField(4).then((info) => {
             if (info.message === 'ok') {
               setIsLoading(false)
               setVisible({ message: '', status: false, done: true })
@@ -61,7 +61,7 @@ export default function Family() {
           })
         }
       })
-      .catch(err => {
+      .catch((err) => {
         setIsLoading(false)
         setVisible({
           message: 'ইরর হয়েছে, আবার চেষ্টা করুন',
@@ -100,13 +100,16 @@ export default function Family() {
     }
   }, [data, loading])
   useEffect(() => {
-    biodataRequests.checkField().then(data => {
+    biodataRequests.checkField().then((data) => {
       setFields(data.fields)
     })
   }, [visible.done])
 
   return (
-    <ProfileLayout data={data} loading={loading}>
+    <ProfileLayout
+      data={data}
+      loading={loading}
+    >
       <Head>
         <title>পারিবারিক তথ্য</title>
       </Head>
@@ -284,7 +287,7 @@ export default function Family() {
               ভাই কয়জন? *
             </legend>
             <select
-              onClick={e => setBrothers(e.target.value)}
+              onClick={(e) => setBrothers(e.target.value)}
               defaultValue={data?.brothers}
               className={`w-full focus:outline-none border-2 ${
                 errors.brothers ? 'border-red-500' : 'border-green-300'
@@ -346,7 +349,7 @@ export default function Family() {
               বোন কয়জন? *
             </legend>
             <select
-              onClick={e => setSisters(e.target.value)}
+              onClick={(e) => setSisters(e.target.value)}
               defaultValue={data?.sisters}
               className={`w-full focus:outline-none border-2 ${
                 errors.sisters ? 'border-red-500' : 'border-green-300'
@@ -440,7 +443,10 @@ export default function Family() {
             <p className='pl-2 pt-4 text-green-400'>সংক্ষেপে বর্ণনা করুন।</p>
           </fieldset>
 
-          <SaveButton isLoading={isLoading} fields={fields} />
+          <SaveButton
+            isLoading={isLoading}
+            fields={fields}
+          />
         </form>
       ) : (
         <FormSkeleton />

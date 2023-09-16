@@ -5,7 +5,7 @@ import ProfileRoutes from 'components/profile/ProfileRoutes'
 import { useForm } from 'react-hook-form'
 import OptionMap from 'components/profile/OptionMap'
 import getData from 'hooks/getData'
-import biodataRequests from 'services/biodataRequests'
+import biodataRequests from 'services/network/biodataRequests'
 import { useEffect } from 'react'
 import FormSkeleton from 'components/shared/FormSkeleton'
 import Head from 'next/head'
@@ -22,7 +22,7 @@ export default function Education() {
   const [isLoading, setIsLoading] = useState(false)
   const [fields, setFields] = useState([])
   const router = useRouter()
-  const activeRoute = routename =>
+  const activeRoute = (routename) =>
     router.route.split('/edit')[1] === routename ? true : false
 
   const { data, loading } = getData(visible.done)
@@ -40,7 +40,7 @@ export default function Education() {
   } = useForm({
     mode: 'onChange'
   })
-  const onSubmit = data => {
+  const onSubmit = (data) => {
     setIsLoading(true)
     biodataRequests
       .updateBio({
@@ -48,9 +48,9 @@ export default function Education() {
         published: false,
         featured: false
       })
-      .then(info => {
+      .then((info) => {
         if (info.message === 'ok') {
-          biodataRequests.setField(6).then(info => {
+          biodataRequests.setField(6).then((info) => {
             if (info.message === 'ok') {
               setIsLoading(false)
               setVisible({ message: '', status: false, done: true })
@@ -64,7 +64,7 @@ export default function Education() {
           })
         }
       })
-      .catch(err => {
+      .catch((err) => {
         setIsLoading(false)
         setVisible({
           message: 'ইরর হয়েছে, আবার চেষ্টা করুন',
@@ -100,13 +100,16 @@ export default function Education() {
     }
   }, [data, loading])
   useEffect(() => {
-    biodataRequests.checkField().then(data => {
+    biodataRequests.checkField().then((data) => {
       setFields(data.fields)
     })
   }, [visible.done])
 
   return (
-    <ProfileLayout data={data} loading={loading}>
+    <ProfileLayout
+      data={data}
+      loading={loading}
+    >
       <Head>
         <title>শিক্ষাগত যোগ্যতা</title>
       </Head>
@@ -138,7 +141,7 @@ export default function Education() {
               কোন মাধ্যমে পড়াশোনা করেছেন? *
             </legend>
             <select
-              onClick={e => setEducation(e.target.value)}
+              onClick={(e) => setEducation(e.target.value)}
               defaultValue={data?.education}
               className={`w-full focus:outline-none border-2 ${
                 errors.education ? 'border-red-500' : 'border-gray-300'
@@ -162,7 +165,7 @@ export default function Education() {
                   মাধ্যমিক (SSC) / সমমান পাশ করেছেন?
                 </legend>
                 <select
-                  onClick={e => setSecondary(e.target.value)}
+                  onClick={(e) => setSecondary(e.target.value)}
                   defaultValue={data?.secondary}
                   className='w-full focus:outline-none  border-2 border-gray-300 p-2 rounded-md'
                   {...register('secondary')}
@@ -195,7 +198,7 @@ export default function Education() {
                       উচ্চমাধ্যমিক (HSC) / সমমান পাশ করেছেন?
                     </legend>
                     <select
-                      onClick={e => setHigher(e.target.value)}
+                      onClick={(e) => setHigher(e.target.value)}
                       defaultValue={data?.higher}
                       className='w-full focus:outline-none  border-2 border-gray-300 p-2 rounded-md'
                       {...register('higher')}
@@ -320,7 +323,7 @@ export default function Education() {
                 </legend>
                 <select
                   defaultValue={data?.dawra}
-                  onClick={e => setDawra(e.target.value)}
+                  onClick={(e) => setDawra(e.target.value)}
                   className='w-full focus:outline-none  border-2 border-gray-300 p-2 rounded-md'
                   {...register('dawra')}
                 >
@@ -348,7 +351,7 @@ export default function Education() {
                       আপনি কি তাখাসসুস পড়েছেন?
                     </legend>
                     <select
-                      onClick={e => setTakhassus(e.target.value)}
+                      onClick={(e) => setTakhassus(e.target.value)}
                       defaultValue={data?.takhassus}
                       className='w-full focus:outline-none  border-2 border-gray-300 p-2 rounded-md'
                       {...register('takhassus')}
@@ -420,7 +423,10 @@ export default function Education() {
               শিক্ষার বিষয়, প্রতিষ্ঠানের নাম, পাসের সন ইত্যাদি বিস্তারিত লিখবেন।
             </p>
           </fieldset>
-          <SaveButton isLoading={isLoading} fields={fields} />
+          <SaveButton
+            isLoading={isLoading}
+            fields={fields}
+          />
         </form>
       ) : (
         <FormSkeleton />

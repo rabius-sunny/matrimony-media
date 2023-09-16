@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import getData from 'hooks/getData'
 import ProfileRoutes from 'components/profile/ProfileRoutes'
 import { useForm } from 'react-hook-form'
-import biodataRequests from 'services/biodataRequests'
+import biodataRequests from 'services/network/biodataRequests'
 import FormSkeleton from 'components/shared/FormSkeleton'
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
@@ -23,7 +23,7 @@ export default function MarriageRelated() {
   const [fields, setFields] = useState([])
   const [done, setDone] = useState(false)
   const router = useRouter()
-  const activeRoute = routename =>
+  const activeRoute = (routename) =>
     router.route.split('/edit')[1] === routename ? true : false
 
   const { data, loading } = getData(visible.done)
@@ -35,7 +35,7 @@ export default function MarriageRelated() {
   } = useForm({
     mode: 'onChange'
   })
-  const onSubmit = data => {
+  const onSubmit = (data) => {
     setIsLoading(true)
     biodataRequests
       .updateBio({
@@ -43,9 +43,9 @@ export default function MarriageRelated() {
         published: false,
         featured: false
       })
-      .then(info => {
+      .then((info) => {
         if (info.message === 'ok') {
-          biodataRequests.setField(2).then(info => {
+          biodataRequests.setField(2).then((info) => {
             if (info.message === 'ok') {
               setIsLoading(false)
               setVisible({ message: '', status: false, done: true })
@@ -59,7 +59,7 @@ export default function MarriageRelated() {
           })
         }
       })
-      .catch(err => {
+      .catch((err) => {
         setIsLoading(false)
         setVisible({
           message: 'ইরর হয়েছে, আবার চেষ্টা করুন',
@@ -97,13 +97,16 @@ export default function MarriageRelated() {
     }
   }, [data, loading])
   useEffect(() => {
-    biodataRequests.checkField().then(data => {
+    biodataRequests.checkField().then((data) => {
       setFields(data.fields)
     })
   }, [visible.done])
 
   return (
-    <ProfileLayout data={data} loading={loading}>
+    <ProfileLayout
+      data={data}
+      loading={loading}
+    >
       <Head>
         <title>বিয়েসম্পর্কিত তথ্য</title>
       </Head>
@@ -467,7 +470,10 @@ export default function MarriageRelated() {
             </div>
           )}
 
-          <SaveButton isLoading={isLoading} fields={fields} />
+          <SaveButton
+            isLoading={isLoading}
+            fields={fields}
+          />
         </form>
       ) : (
         <FormSkeleton />

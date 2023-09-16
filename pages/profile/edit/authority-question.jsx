@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import ProfileRoutes from 'components/profile/ProfileRoutes'
 import { useForm } from 'react-hook-form'
 import OptionMap from 'components/profile/OptionMap'
-import biodataRequests from 'services/biodataRequests'
+import biodataRequests from 'services/network/biodataRequests'
 import getData from 'hooks/getData'
 import FormSkeleton from 'components/shared/FormSkeleton'
 import Head from 'next/head'
@@ -12,7 +12,7 @@ import { useEffect } from 'react'
 
 export default function AuthorityQuestion() {
   const router = useRouter()
-  const activeRoute = routename =>
+  const activeRoute = (routename) =>
     router.route.split('/edit')[1] === routename ? true : false
 
   const {
@@ -22,19 +22,19 @@ export default function AuthorityQuestion() {
   } = useForm({
     mode: 'onChange'
   })
-  const onSubmit = data =>
+  const onSubmit = (data) =>
     biodataRequests
       .updateBio({ ...data, published: false })
-      .then(info => {
+      .then((info) => {
         if (info.message === 'ok') {
-          biodataRequests.setField(9).then(info => {
+          biodataRequests.setField(9).then((info) => {
             if (info.message === 'ok') {
               router.push('/profile/edit/contact-info')
             }
           })
         }
       })
-      .catch(err => console.log(err.message))
+      .catch((err) => console.log(err.message))
 
   const { data, loading } = getData()
 
@@ -55,7 +55,10 @@ export default function AuthorityQuestion() {
   }, [data, loading])
 
   return (
-    <ProfileLayout data={data} loading={loading}>
+    <ProfileLayout
+      data={data}
+      loading={loading}
+    >
       <Head>
         <title>কর্তৃপক্ষের জিজ্ঞাসা</title>
       </Head>

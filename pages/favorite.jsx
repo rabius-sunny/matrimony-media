@@ -26,12 +26,11 @@ export default function Favorite() {
 
   useEffect(() => {
     if (localBookmark) {
-      localBookmark.map(item =>
-        requests
-          .get(`/bio-id/${item}`)
-          .then(data => setDatafromLocal(prev => [...prev, data.response]))
-          .catch(err => err)
-      )
+      requests
+        .post(`/favorites`, { uIds: localBookmark })
+        .then(data => setDatafromLocal(data?.response))
+        .catch(err => err)
+
       setLocalLoading(false)
     }
   }, [localBookmark])
@@ -59,7 +58,7 @@ export default function Favorite() {
           <div className='container my-8'>
             <div className='grid grid-cols-12 gap-2 md:gap-3 lg:gap-4 xl:gap-8'>
               {datafromLocal.map(bio => (
-                <BioCard bio={bio} />
+                <BioCard bio={bio?.bio} type='userid' />
               ))}
             </div>
           </div>
