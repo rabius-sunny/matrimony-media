@@ -10,7 +10,7 @@ import DAnother from 'components/bio/DAnother'
 import DExpect from 'components/bio/DExpect'
 import CSkeleton from 'components/shared/CSkeleton'
 import Head from 'next/head'
-import userRequest from 'services/userRequest'
+import userRequest from 'services/network/userRequest'
 import BioInfoCard from 'components/bio/BioInfoCard'
 import useAuth from 'hooks/useAuth'
 

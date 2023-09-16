@@ -3,7 +3,7 @@ import female from 'public/images/female.svg'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import requests from 'services/http'
+import requests from 'services/network/http'
 import getWidth from 'hooks/getWidth'
 
 export default function BioCard({ bio, type }) {
@@ -12,8 +12,8 @@ export default function BioCard({ bio, type }) {
     if (type === 'userid') {
       requests
         .get(`/bio-uId/${bio.user}`)
-        .then(data => setUId(data.uId))
-        .catch(err => err)
+        .then((data) => setUId(data.uId))
+        .catch((err) => err)
     }
   }, [bio.user, type])
   const { xs, md, lg } = getWidth()

@@ -4,8 +4,8 @@ import useAsync from 'hooks/useAsync'
 import useAuth from 'hooks/useAuth'
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
-import requests from 'services/http'
-import userRequest from 'services/userRequest'
+import requests from 'services/network/http'
+import userRequest from 'services/network/userRequest'
 import ColoredHeader from '../components/shared/ColoredHeader'
 
 export default function Favorite() {
@@ -28,8 +28,8 @@ export default function Favorite() {
     if (localBookmark) {
       requests
         .post(`/favorites`, { uIds: localBookmark })
-        .then(data => setDatafromLocal(data?.response))
-        .catch(err => err)
+        .then((data) => setDatafromLocal(data?.response))
+        .catch((err) => err)
 
       setLocalLoading(false)
     }
@@ -47,7 +47,10 @@ export default function Favorite() {
         </div>
       ) : ((!localLoading || !isLoading) && data?.bios?.length === 0) ||
         (auth && data === null) ? (
-        <div className='mt-12' style={{ minHeight: '70vh' }}>
+        <div
+          className='mt-12'
+          style={{ minHeight: '70vh' }}
+        >
           <h1 className='text-3xl text-center text-primary font-bold'>
             কোনো পছন্দের বায়োডাটা নেই। <br />
             {error && `Error: ${error.message}`}
@@ -57,13 +60,19 @@ export default function Favorite() {
         localBookmark && datafromLocal.length > 0 ? (
           <div className='container my-8'>
             <div className='grid grid-cols-12 gap-2 md:gap-3 lg:gap-4 xl:gap-8'>
-              {datafromLocal.map(bio => (
-                <BioCard bio={bio?.bio} type='userid' />
+              {datafromLocal.map((bio) => (
+                <BioCard
+                  bio={bio?.bio}
+                  type='userid'
+                />
               ))}
             </div>
           </div>
         ) : (
-          <div className=' container mt-12' style={{ minHeight: '70vh' }}>
+          <div
+            className=' container mt-12'
+            style={{ minHeight: '70vh' }}
+          >
             <h1 className='text-3xl text-center text-primary font-bold'>
               কোনো পছন্দের বায়োডাটা নেই।
             </h1>
@@ -72,8 +81,11 @@ export default function Favorite() {
       ) : (
         <div className='container my-8'>
           <div className='grid grid-cols-12 gap-2 md:gap-3 lg:gap-4 xl:gap-8'>
-            {data.bios.map(bio => (
-              <BioCard bio={bio} type='userid' />
+            {data.bios.map((bio) => (
+              <BioCard
+                bio={bio}
+                type='userid'
+              />
             ))}
           </div>
         </div>

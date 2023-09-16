@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import requests from 'services/http'
+import requests from 'services/network/http'
 
 export default function getData(dep) {
   const [data, setData] = useState(null)
@@ -17,12 +17,12 @@ export default function getData(dep) {
           'id'
         )}`
       )
-      .then(res => {
+      .then((res) => {
         setData(res)
         isLoading(false)
         setError(null)
       })
-      .catch(err => {
+      .catch((err) => {
         setError(err)
         isLoading(false)
         setData(null)

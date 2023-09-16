@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
-import userRequest from 'services/userRequest'
+import userRequest from 'services/network/userRequest'
 import ColoredHeader from '../components/shared/ColoredHeader'
 
 export default function ContactUs() {
@@ -12,17 +12,18 @@ export default function ContactUs() {
     message: ''
   })
 
-  const onChange = e => setInput({ ...input, [e.target.name]: e.target.value })
-  const handleSubmit = e => {
+  const onChange = (e) =>
+    setInput({ ...input, [e.target.name]: e.target.value })
+  const handleSubmit = (e) => {
     e.preventDefault()
     userRequest
       .postMessage(input)
-      .then(res => {
+      .then((res) => {
         if (res.message === 'ok') {
           router.push('/')
         }
       })
-      .catch(err => alert('error! try again.'))
+      .catch((err) => alert('error! try again.'))
   }
 
   return (

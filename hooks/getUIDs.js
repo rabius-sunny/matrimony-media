@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import requests from 'services/http'
+import requests from 'services/network/http'
 
 export default function getUIDs() {
   const [uIds, setUIds] = useState(null)
@@ -9,10 +9,10 @@ export default function getUIDs() {
 
     requests
       .get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/get-uids`)
-      .then(res => {
+      .then((res) => {
         setUIds(res.uIds)
       })
-      .catch(err => {
+      .catch((err) => {
         setUIds(null)
       })
   }, [])

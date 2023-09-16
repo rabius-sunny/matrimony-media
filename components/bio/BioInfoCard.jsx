@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 import copyToClip from 'utils/copyToClip'
 import LongModal from 'components/shared/Modals/LongModal'
 import { Button } from '@nextui-org/react'
-import userRequest from 'services/userRequest'
+import userRequest from 'services/network/userRequest'
 
 export default function BioInfoCard({ data, loading, uId }) {
   const [id, setId] = useState(null)
@@ -32,13 +32,13 @@ export default function BioInfoCard({ data, loading, uId }) {
     const handleHide = () => {
       userRequest
         .hideByUser()
-        .then(info => {
+        .then((info) => {
           if (info.message === 'ok') {
             setHide(false)
             window.location.reload()
           }
         })
-        .catch(err => {
+        .catch((err) => {
           alert('ইরর হয়েছে, আবার চেষ্টা করুন')
           setHide(false)
         })
@@ -53,10 +53,20 @@ export default function BioInfoCard({ data, loading, uId }) {
         </p>
 
         <div className='flex gap-x-2 justify-end'>
-          <Button bordered auto color='success' onPress={() => setHide(false)}>
+          <Button
+            bordered
+            auto
+            color='success'
+            onPress={() => setHide(false)}
+          >
             ফিরে যান
           </Button>
-          <Button bordered auto color='warning' onPress={handleHide}>
+          <Button
+            bordered
+            auto
+            color='warning'
+            onPress={handleHide}
+          >
             হাইড করুন
           </Button>
         </div>
@@ -67,11 +77,11 @@ export default function BioInfoCard({ data, loading, uId }) {
   const DeleteAction = () => {
     const [reason, setReason] = useState('')
 
-    const handleDelete = type => {
+    const handleDelete = (type) => {
       if (reason !== '') {
         userRequest
           .deleteHideRequest({ reason, type })
-          .then(info => {
+          .then((info) => {
             if (info.message === 'ok') {
               alert(
                 'আপনার delete রিকুয়েস্টটি গৃহীত হয়েছে, শীঘ্রই SMS এর মাধ্যমে ফলাফল পেয়ে যাবেন ইনশা আল্লাহ!'
@@ -79,7 +89,7 @@ export default function BioInfoCard({ data, loading, uId }) {
               set_delete(false)
             }
           })
-          .catch(err => {
+          .catch((err) => {
             alert('ইরর হয়েছে, আবার চেষ্টা করুন')
             set_delete(false)
           })
@@ -149,7 +159,7 @@ export default function BioInfoCard({ data, loading, uId }) {
     localId && setId(localId)
   }, [data])
 
-  const handleCopy = text => {
+  const handleCopy = (text) => {
     copyToClip(text)
     setCopy(true)
     setTimeout(() => {
@@ -181,24 +191,46 @@ export default function BioInfoCard({ data, loading, uId }) {
         />
         {loading && !data ? (
           <div>
-            <CSkeleton height={150} width={150} circle />
+            <CSkeleton
+              height={150}
+              width={150}
+              circle
+            />
             <div className='my-2'>
-              <CSkeleton height={30} width='100%' />
+              <CSkeleton
+                height={30}
+                width='100%'
+              />
             </div>
             <div className='my-2'>
-              <CSkeleton height={30} width='100%' />
+              <CSkeleton
+                height={30}
+                width='100%'
+              />
             </div>
             <div className='my-2'>
-              <CSkeleton height={30} width='100%' />
+              <CSkeleton
+                height={30}
+                width='100%'
+              />
             </div>
             <div className='my-2'>
-              <CSkeleton height={30} width='100%' />
+              <CSkeleton
+                height={30}
+                width='100%'
+              />
             </div>
             <div className='my-2'>
-              <CSkeleton height={30} width='100%' />
+              <CSkeleton
+                height={30}
+                width='100%'
+              />
             </div>
             <div className='my-2'>
-              <CSkeleton height={30} width='100%' />
+              <CSkeleton
+                height={30}
+                width='100%'
+              />
             </div>
           </div>
         ) : (

@@ -7,7 +7,8 @@ import Layout from '../components/shared/Layout'
 import { AppWrapper } from 'utils/context'
 
 export default function MyApp({ Component, pageProps }) {
-  console.log(`
+  process.env.NODE_ENV === 'production' &&
+    console.log(`
   developer: Rabius Sunny \n
   facebook: fb.com/rabibinsalam \n
   linkedin: linkedin.com/in/rabius-sunny
@@ -15,7 +16,11 @@ export default function MyApp({ Component, pageProps }) {
   return (
     <>
       <Head>
-        <link rel='icon' type='image/x-icon' href='./favicon.ico' />
+        <link
+          rel='icon'
+          type='image/x-icon'
+          href='./favicon.ico'
+        />
       </Head>
       <Layout>
         <AppWrapper>

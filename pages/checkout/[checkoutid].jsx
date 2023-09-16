@@ -6,7 +6,7 @@ import { useRouter } from 'next/router'
 import { Collapse, Loading } from '@nextui-org/react'
 import { useState } from 'react'
 import LongModal from 'components/shared/Modals/LongModal'
-import userRequest from 'services/userRequest'
+import userRequest from 'services/network/userRequest'
 
 export default function Checkout() {
   const {
@@ -21,7 +21,7 @@ export default function Checkout() {
     pnumber: '',
     trx: ''
   })
-  const pmethod = method => {
+  const pmethod = (method) => {
     switch (method) {
       case 1:
         return 'bkash'
@@ -33,7 +33,7 @@ export default function Checkout() {
         return 'bkash'
     }
   }
-  const onSubmit = data => {
+  const onSubmit = (data) => {
     if (pement.pnumber === '' || pement.trx === '') {
       alert('Fill your payment info')
     } else {
@@ -45,19 +45,19 @@ export default function Checkout() {
           method: pmethod(method),
           target: checkoutid
         })
-        .then(info => {
+        .then((info) => {
           if (info.message === 'ok') {
             setLoading(false)
             setVisible(true)
           }
         })
-        .catch(err => {
+        .catch((err) => {
           setLoading(false)
           setVisible2(true)
         })
     }
   }
-  const onChange = e =>
+  const onChange = (e) =>
     setPement({ ...pement, [e.target.name]: e.target.value })
 
   return (
@@ -92,7 +92,10 @@ export default function Checkout() {
         blur={true}
       />
 
-      <div className='container' style={{ maxWidth: '600px' }}>
+      <div
+        className='container'
+        style={{ maxWidth: '600px' }}
+      >
         <div className='my-8'>
           <div className='text-center'>
             <p className='text-xl'>
@@ -142,7 +145,7 @@ export default function Checkout() {
                 {checkoutid} এর বায়োডাটাটি পেতে যেকোনো একটি মাধ্যমে পেমেন্ট করুন
                 <hr />
               </div>
-              <Collapse.Group onChange={data => setMethod(data)}>
+              <Collapse.Group onChange={(data) => setMethod(data)}>
                 {_collaps.map((col, idx) => (
                   <Collapse
                     expanded={idx === 0 ? true : false}
@@ -180,7 +183,10 @@ export default function Checkout() {
                   } rounded-md bg-primary  flex items-center font-medium text-white shadow-md hover:bg-primary  px-6 py-3`}
                 >
                   {loading ? (
-                    <Loading color='success' size='sm' />
+                    <Loading
+                      color='success'
+                      size='sm'
+                    />
                   ) : (
                     'রিকুয়েস্ট পাঠান'
                   )}

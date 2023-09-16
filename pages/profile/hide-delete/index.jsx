@@ -4,7 +4,7 @@ import LongModal from 'components/shared/Modals/LongModal'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
-import userRequest from 'services/userRequest'
+import userRequest from 'services/network/userRequest'
 
 export default function Delete() {
   const router = useRouter()
@@ -12,7 +12,7 @@ export default function Delete() {
   const [visible, setVisible] = useState(false)
   const [visible2, setVisible2] = useState(false)
   const [method, setMethod] = useState(1)
-  const _type = type => {
+  const _type = (type) => {
     switch (type) {
       case 1:
         return 'hide'
@@ -22,18 +22,18 @@ export default function Delete() {
         return 'hide'
     }
   }
-  const handleSubmit = _ => {
+  const handleSubmit = (_) => {
     if (info === '') {
       alert('Enter your reason')
     } else {
       userRequest
         .deleteHideRequest({ reason: info, type: _type(method) })
-        .then(info => {
+        .then((info) => {
           if (info.message === 'ok') {
             setVisible(true)
           }
         })
-        .catch(err => setVisible2(true))
+        .catch((err) => setVisible2(true))
     }
   }
   return (
@@ -88,7 +88,7 @@ export default function Delete() {
           </p>
           <div className='my-4'>
             <Collapse.Group
-              onChange={data => {
+              onChange={(data) => {
                 setInfo('')
                 setMethod(data)
               }}
@@ -104,18 +104,21 @@ export default function Delete() {
                 <textarea
                   value={info}
                   rows={5}
-                  onChange={e => setInfo(e.target.value)}
+                  onChange={(e) => setInfo(e.target.value)}
                   className={`w-full rounded bg-blue-100 px-4 py-2 font-medium text-blue-400 shadow-md focus:outline-blue-500`}
                 />
               </Collapse>
-              <Collapse title='ডিলিট করুন' className='font-bold text-2xl'>
+              <Collapse
+                title='ডিলিট করুন'
+                className='font-bold text-2xl'
+              >
                 <label className='text-gray-600 font-bold'>
                   ডিলিট করার কারণ
                 </label>
                 <textarea
                   value={info}
                   rows={5}
-                  onChange={e => setInfo(e.target.value)}
+                  onChange={(e) => setInfo(e.target.value)}
                   className={`w-full rounded bg-blue-100 px-4 py-2 font-medium text-blue-400 shadow-md focus:outline-blue-500`}
                 />
               </Collapse>

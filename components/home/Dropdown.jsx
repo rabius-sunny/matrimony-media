@@ -26,8 +26,8 @@ export default function Dropdown() {
           আমি খুঁজছি
         </label>
         <select
-          onChange={e => setType(e.target.value)}
-          onClick={e => {
+          onChange={(e) => setType(e.target.value)}
+          onClick={(e) => {
             setIsReset(false)
             setId('')
           }}
@@ -50,7 +50,7 @@ export default function Dropdown() {
           জেলা
         </label>
         <select
-          onClick={e => {
+          onClick={(e) => {
             setJilla(e.target.value)
             setIsReset(false)
             setId('')
@@ -61,11 +61,17 @@ export default function Dropdown() {
           name='jilla'
           id='jilla'
         >
-          <option selected={isReset} value=''>
+          <option
+            defaultValue={isReset && ''}
+            value=''
+          >
             সকল
           </option>
-          {_address_jilla.map(item => (
-            <option value={item} key={item}>
+          {_address_jilla.map((item) => (
+            <option
+              value={item}
+              key={item}
+            >
               {item}
             </option>
           ))}
@@ -82,7 +88,7 @@ export default function Dropdown() {
         <input
           onClick={_reset}
           onBlur={() => setIsReset(false)}
-          onChange={e => setId(e.target.value)}
+          onChange={(e) => setId(e.target.value)}
           value={id}
           type='tel'
           placeholder='.....'

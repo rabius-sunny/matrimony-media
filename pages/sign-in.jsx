@@ -5,10 +5,10 @@ import {
   RecaptchaVerifier,
   signInWithPhoneNumber
 } from 'firebase/auth'
-import firebaseApp from 'services/firebaseInit'
+import firebaseApp from 'services/network/firebaseInit'
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
-import userRequest from 'services/userRequest'
+import userRequest from 'services/network/userRequest'
 import getUIDs from 'hooks/getUIDs'
 import getRandomUID from 'hooks/getRandomUID'
 import { Loading } from '@nextui-org/react'
@@ -41,7 +41,7 @@ export default function Signin() {
     }
   }, [uIds])
 
-  const recaptcha = async _ => {
+  const recaptcha = async (_) => {
     const fireAuth = getAuth(firebaseApp)
     const recaptchaVerifier = new RecaptchaVerifier(
       'recaptcha-container',
@@ -56,7 +56,7 @@ export default function Signin() {
     )
   }
 
-  const onPhoneSubmit = async e => {
+  const onPhoneSubmit = async (e) => {
     setLoading(true)
     e.preventDefault()
     if (
@@ -78,7 +78,7 @@ export default function Signin() {
       }
     }
   }
-  const onOtpSubmit = async e => {
+  const onOtpSubmit = async (e) => {
     setLoading(true)
     e.preventDefault()
 
@@ -90,7 +90,7 @@ export default function Signin() {
       setLoading(false)
     }
   }
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     try {
       const data = await userRequest.signIn({
@@ -107,7 +107,7 @@ export default function Signin() {
       window.location.reload()
     }
   }
-  const onChange = e => setCred({ ...cred, [e.target.name]: e.target.value })
+  const onChange = (e) => setCred({ ...cred, [e.target.name]: e.target.value })
 
   return (
     <div className='bg-secondary'>
@@ -179,7 +179,10 @@ export default function Signin() {
                       } w-full bg-primary text-white hover:bg-dark transform rounded-md px-4 py-2 tracking-wide transition-colors duration-200 focus:outline-none focus:ring focus:ring-dark`}
                     >
                       {loading ? (
-                        <Loading color='white' size='sm' />
+                        <Loading
+                          color='white'
+                          size='sm'
+                        />
                       ) : (
                         'OTP কোড নিন'
                       )}
@@ -206,7 +209,10 @@ export default function Signin() {
                         } w-full bg-primary hover:bg-dark transform rounded-md bg-blue-500 px-4 py-2 tracking-wide text-white transition-colors duration-200 hover:bg-blue-400 focus:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300`}
                       >
                         {loading ? (
-                          <Loading color='white' size='sm' />
+                          <Loading
+                            color='white'
+                            size='sm'
+                          />
                         ) : (
                           'OTP দিয়ে প্রবেশ করুন'
                         )}
