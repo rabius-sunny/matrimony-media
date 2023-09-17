@@ -12,6 +12,8 @@ import LongModal from 'components/shared/Modals/LongModal'
 import SaveButton from 'components/bio/SaveButton'
 
 export default function OthersInfo() {
+  const { data, loading, mutate } = getData()
+  const { routes, setRoutes } = useAppContext()
   const [visible, setVisible] = useState({
     message: '',
     status: false,
@@ -43,6 +45,7 @@ export default function OthersInfo() {
           biodataRequests.setField(8).then((info) => {
             if (info.message === 'ok') {
               setIsLoading(false)
+              mutate()
               setVisible({ message: '', status: false, done: true })
 
               window.scroll({
@@ -64,31 +67,16 @@ export default function OthersInfo() {
       })
   }
 
-  const { data, loading } = getData(visible.done)
-
-  const { routes, setRoutes } = useAppContext()
   useEffect(() => {
     if (data) {
-      if (
-        data.ex_year &&
-        data.ex_complexion &&
-        data.ex_height &&
-        data.ex_education &&
-        data.ex_jilla &&
-        data.ex_marrital_condition &&
-        data.ex_profession &&
-        data.ex_financial_condition &&
-        data.ex_features
-      ) {
-        setRoutes({
-          ...routes,
-          expectation: {
-            name: 'আকাঙ্ক্ষিত বৈশিষ্ট্যাবলী',
-            link: '/expectation',
-            status: 'done'
-          }
-        })
-      }
+      setRoutes({
+        ...routes,
+        expectation: {
+          name: 'আকাঙ্ক্ষিত বৈশিষ্ট্যাবলী',
+          link: '/expectation',
+          status: 'done'
+        }
+      })
     }
   }, [data, loading])
 
@@ -119,7 +107,7 @@ export default function OthersInfo() {
         preventClose={false}
         color={visible.done ? 'success' : 'error'}
       />
-      {!loading && data ? (
+      {!loading ? (
         <form onSubmit={handleSubmit(onSubmit)}>
           <fieldset
             className={`my-6 rounded-md border-2 ${

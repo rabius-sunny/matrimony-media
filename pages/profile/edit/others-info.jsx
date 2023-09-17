@@ -12,6 +12,8 @@ import { useAppContext } from 'utils/context'
 import SaveButton from 'components/bio/SaveButton'
 
 export default function OthersInfo() {
+  const { data, loading, mutate } = getData()
+  const { routes, setRoutes } = useAppContext()
   const [visible, setVisible] = useState({
     message: '',
     status: false,
@@ -43,6 +45,7 @@ export default function OthersInfo() {
           biodataRequests.setField(7).then((info) => {
             if (info.message === 'ok') {
               setIsLoading(false)
+              mutate()
               setVisible({ message: '', status: false, done: true })
               window.scroll({
                 top: 100,
@@ -63,21 +66,16 @@ export default function OthersInfo() {
       })
   }
 
-  const { data, loading } = getData(visible.done)
-  const { routes, setRoutes } = useAppContext()
-
   useEffect(() => {
     if (data) {
-      if (data.special_acknowledgement) {
-        setRoutes({
-          ...routes,
-          another: {
-            name: 'অন্যান্য',
-            link: '/others-info',
-            status: 'done'
-          }
-        })
-      }
+      setRoutes({
+        ...routes,
+        another: {
+          name: 'অন্যান্য',
+          link: '/others-info',
+          status: 'done'
+        }
+      })
     }
   }, [data, loading])
   useEffect(() => {
@@ -107,7 +105,7 @@ export default function OthersInfo() {
         preventClose={false}
         color={visible.done ? 'success' : 'error'}
       />
-      {!loading && data ? (
+      {!loading ? (
         <form onSubmit={handleSubmit(onSubmit)}>
           <fieldset className='my-6 rounded-md border-2 border-green-300 p-4'>
             <legend className='ml-4 font-bold text-secondary'>

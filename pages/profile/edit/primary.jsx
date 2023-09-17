@@ -25,9 +25,9 @@ export default function Name() {
     status: false,
     done: false
   })
+  const { data, loading, mutate } = getData()
   const [isLoading, setIsLoading] = useState(false)
   const [fields, setFields] = useState([])
-  const { data, loading } = getData(visible.done)
   const router = useRouter()
   const [type, setType] = useState(null)
   const activeRoute = (routename) =>
@@ -46,6 +46,7 @@ export default function Name() {
           biodataRequests.setField(0).then((info) => {
             if (info.message === 'ok') {
               setIsLoading(false)
+              mutate()
               setVisible({ message: '', status: false, done: true })
 
               window.scroll({
@@ -71,16 +72,14 @@ export default function Name() {
 
   useEffect(() => {
     if (data) {
-      if (data.name && data.type && data.condition) {
-        setRoutes({
-          ...routes,
-          primary: {
-            name: 'প্রাথমিক',
-            link: '/primary',
-            status: 'done'
-          }
-        })
-      }
+      setRoutes({
+        ...routes,
+        primary: {
+          name: 'প্রাথমিক',
+          link: '/primary',
+          status: 'done'
+        }
+      })
       setType(data?.type)
     }
   }, [data, loading])
@@ -90,19 +89,6 @@ export default function Name() {
       setFields(data.fields)
     })
   }, [visible.done])
-
-  // const onReset = data => {
-  //   let _reset = {}
-  //   const dataArray = Object.keys(data)
-  // dataArray.map(item => {
-  //   _reset[item] = ''
-  // })
-  // Unneccessary
-  //   for (const key of dataArray) {
-  //     _reset[key] = ''
-  //   }
-  //   reset(_reset)
-  // }
 
   return (
     <ProfileLayout
@@ -127,79 +113,46 @@ export default function Name() {
       />
       {loading ? (
         <FormSkeleton />
-      ) : data ? (
-        <CForm onSubmit={onSubmit}>
-          <CInput
-            name='name'
-            placeholder='My name'
-            legend='সম্পূর্ণ নাম *'
-            defaultValue={data?.name}
-            description='নাম নেয়া হচ্ছে ভেরিফিকেশনের জন্য, পূর্ণ নাম লিখবেন। আপনার নাম কারো
-          সাথে শেয়ার করা হবে না।'
-            message='name is required'
-          />
-          <CSelect
-            legend='বায়োডাটার ধরন *'
-            message='Field is required'
-            options={_type}
-            onChange={setType}
-            name='type'
-            defaultValue={data?.type}
-          />
-          <CSelect
-            legend='বৈবাহিক অবস্থা *'
-            message='Field is required'
-            defaultValue={data?.condition}
-            options={
-              type === 'পাত্রের বায়োডাটা'
-                ? _malecondition
-                : type === 'পাত্রীর বায়োডাটা'
-                ? _femalecondition
-                : _conditions
-            }
-            name='condition'
-          />
-
-          <SaveButton
-            isLoading={isLoading}
-            fields={fields}
-          />
-        </CForm>
       ) : (
-        <CForm onSubmit={onSubmit}>
-          <CInput
-            name='name'
-            placeholder='My name'
-            legend='সম্পূর্ণ নাম *'
-            description='নাম নেয়া হচ্ছে ভেরিফিকেশনের জন্য, পূর্ণ নাম লিখবেন। আপনার নাম কারো
+        data && (
+          <CForm onSubmit={onSubmit}>
+            <CInput
+              name='name'
+              placeholder='My name'
+              legend='সম্পূর্ণ নাম *'
+              defaultValue={data?.name}
+              description='নাম নেয়া হচ্ছে ভেরিফিকেশনের জন্য, পূর্ণ নাম লিখবেন। আপনার নাম কারো
           সাথে শেয়ার করা হবে না।'
-            message='name is required'
-          />
-          <CSelect
-            legend='বায়োডাটার ধরন *'
-            message='Field is required'
-            options={_type}
-            onChange={setType}
-            name='type'
-          />
-          <CSelect
-            legend='বৈবাহিক অবস্থা *'
-            message='Field is required'
-            options={
-              type === 'পাত্রের বায়োডাটা'
-                ? _malecondition
-                : type === 'পাত্রীর বায়োডাটা'
-                ? _femalecondition
-                : []
-            }
-            name='condition'
-          />
-          <input
-            type='submit'
-            value={isLoading ? <Loading color='success' /> : 'সেভ করুন'}
-            className='rounded-md bg-primary  px-6 py-3 text-xl font-medium text-white shadow-md hover:bg-primary  focus:ring-2 focus:ring-red-800'
-          />
-        </CForm>
+              message='name is required'
+            />
+            <CSelect
+              legend='বায়োডাটার ধরন *'
+              message='Field is required'
+              options={_type}
+              onChange={setType}
+              name='type'
+              defaultValue={data?.type}
+            />
+            <CSelect
+              legend='বৈবাহিক অবস্থা *'
+              message='Field is required'
+              defaultValue={data?.condition}
+              options={
+                type === 'পাত্রের বায়োডাটা'
+                  ? _malecondition
+                  : type === 'পাত্রীর বায়োডাটা'
+                  ? _femalecondition
+                  : _conditions
+              }
+              name='condition'
+            />
+
+            <SaveButton
+              isLoading={isLoading}
+              fields={fields}
+            />
+          </CForm>
+        )
       )}
     </ProfileLayout>
   )

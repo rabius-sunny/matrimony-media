@@ -15,6 +15,8 @@ import LongModal from 'components/shared/Modals/LongModal'
 import SaveButton from 'components/bio/SaveButton'
 
 export default function PersonalInfo() {
+  const { data, loading, mutate } = getData()
+  console.log('data', data)
   const [visible, setVisible] = useState({
     message: '',
     status: false,
@@ -47,6 +49,7 @@ export default function PersonalInfo() {
           biodataRequests.setField(1).then((info) => {
             if (info.message === 'ok') {
               setIsLoading(false)
+              mutate()
               setVisible({ message: '', status: false, done: true })
 
               window.scroll({
@@ -68,38 +71,18 @@ export default function PersonalInfo() {
       })
   }
 
-  const { data, loading } = getData(visible.done)
-
   const { routes, setRoutes } = useAppContext()
 
   useEffect(() => {
     if (data) {
-      if (
-        data.dress &&
-        data.salat &&
-        data.salat_duration &&
-        data.maintain_mahram &&
-        data.can_tilawat &&
-        data.madhab &&
-        data.mazhab &&
-        data.political_view &&
-        data.drama_cinnema &&
-        data.deeni_effort &&
-        data.murid_of_peer &&
-        data.majar_view &&
-        data.favorite_books &&
-        data.favorite_scholars &&
-        data.about_me
-      ) {
-        setRoutes({
-          ...routes,
-          personal: {
-            name: 'ব্যক্তিগত',
-            link: '/personal-info',
-            status: 'done'
-          }
-        })
-      }
+      setRoutes({
+        ...routes,
+        personal: {
+          name: 'ব্যক্তিগত',
+          link: '/personal-info',
+          status: 'done'
+        }
+      })
       if (!data.type) {
         setDone(false)
       } else setDone(true)
@@ -149,7 +132,7 @@ export default function PersonalInfo() {
           </div>
         </p>
       )}
-      {!loading && data && done ? (
+      {data && done ? (
         <form onSubmit={handleSubmit(onSubmit)}>
           {data?.type === 'পাত্রের বায়োডাটা' ? (
             <div>

@@ -189,7 +189,7 @@ export default function BioInfoCard({ data, loading, uId }) {
           body={<HideAction />}
           blur={true}
         />
-        {loading && !data ? (
+        {loading ? (
           <div>
             <CSkeleton
               height={150}

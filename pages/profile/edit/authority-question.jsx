@@ -12,6 +12,8 @@ import { useEffect } from 'react'
 
 export default function AuthorityQuestion() {
   const router = useRouter()
+  const { data, loading, mutate } = getData()
+
   const activeRoute = (routename) =>
     router.route.split('/edit')[1] === routename ? true : false
 
@@ -24,19 +26,18 @@ export default function AuthorityQuestion() {
   })
   const onSubmit = (data) =>
     biodataRequests
-      .updateBio({ ...data, published: false })
+      .updateBio({ ...data, published: false, featured: false })
       .then((info) => {
         if (info.message === 'ok') {
           biodataRequests.setField(9).then((info) => {
             if (info.message === 'ok') {
+              mutate()
               router.push('/profile/edit/contact-info')
             }
           })
         }
       })
       .catch((err) => console.log(err.message))
-
-  const { data, loading } = getData()
 
   const { routes, setRoutes } = useAppContext()
   useEffect(() => {

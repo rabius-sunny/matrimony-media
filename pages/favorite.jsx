@@ -10,7 +10,10 @@ import ColoredHeader from '../components/shared/ColoredHeader'
 
 export default function Favorite() {
   const auth = useAuth()
-  const { data, isLoading, error } = useAsync(userRequest.getFavorites)
+  const { data, isLoading, error } = useAsync(
+    '/favorites',
+    userRequest.getFavorites
+  )
   const [localBookmark, setLocalBookmark] = useState(null)
   const [datafromLocal, setDatafromLocal] = useState([])
   const [localLoading, setLocalLoading] = useState(false)

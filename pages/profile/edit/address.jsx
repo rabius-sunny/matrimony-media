@@ -13,6 +13,7 @@ import LongModal from 'components/shared/Modals/LongModal'
 import SaveButton from 'components/bio/SaveButton'
 
 export default function Address() {
+  const { data, loading, mutate } = getData()
   const [visible, setVisible] = useState({
     message: '',
     status: false,
@@ -23,6 +24,7 @@ export default function Address() {
   const router = useRouter()
   const activeRoute = (routename) =>
     router.route.split('/edit')[1] === routename ? true : false
+  const { routes, setRoutes } = useAppContext()
 
   const onSubmit = (data) => {
     setIsLoading(true)
@@ -37,6 +39,7 @@ export default function Address() {
           biodataRequests.setField(5).then((info) => {
             if (info.message === 'ok') {
               setIsLoading(false)
+              mutate()
               setVisible({ message: '', status: false, done: true })
 
               window.scroll({
@@ -58,22 +61,16 @@ export default function Address() {
       })
   }
 
-  const { data, loading } = getData(visible.done)
-
-  const { routes, setRoutes } = useAppContext()
-
   useEffect(() => {
     if (data) {
-      if (data.permanent_address && data.current_address && data.where_lived) {
-        setRoutes({
-          ...routes,
-          address: {
-            name: 'ঠিকানা',
-            link: '/address',
-            status: 'done'
-          }
-        })
-      }
+      setRoutes({
+        ...routes,
+        address: {
+          name: 'ঠিকানা',
+          link: '/address',
+          status: 'done'
+        }
+      })
     }
   }, [data, loading])
   useEffect(() => {
@@ -105,7 +102,7 @@ export default function Address() {
       />
       {loading ? (
         <FormSkeleton />
-      ) : data ? (
+      ) : (
         <CForm onSubmit={onSubmit}>
           <CInput
             legend='স্থায়ী ঠিকানা *'
@@ -133,34 +130,6 @@ export default function Address() {
           <SaveButton
             isLoading={isLoading}
             fields={fields}
-          />
-        </CForm>
-      ) : (
-        <CForm onSubmit={onSubmit}>
-          <CInput
-            legend='স্থায়ী ঠিকানা *'
-            name='permanent_address'
-            placeholder='গুলশান-২, ঢাকা'
-            message='field is required'
-          />
-
-          <CInput
-            legend='বর্তমান ঠিকানা *'
-            name='current_address'
-            placeholder='ভাটারা, গুলশান-২, ঢাকা'
-            message='field is required'
-          />
-
-          <CInput
-            legend='কোথায় বড় হয়েছেন? *'
-            name='where_lived'
-            message='field is required'
-          />
-
-          <input
-            type='submit'
-            value='সেভ করুন ও পরবর্তী পেজে যান'
-            className='rounded-md bg-primary  px-6 py-3 text-xl font-medium text-white shadow-md hover:bg-primary  focus:ring-2 focus:ring-red-800'
           />
         </CForm>
       )}

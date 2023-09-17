@@ -19,14 +19,13 @@ export default function MarriageRelated() {
     status: false,
     done: false
   })
+  const { data, loading, mutate } = getData()
   const [isLoading, setIsLoading] = useState(false)
   const [fields, setFields] = useState([])
   const [done, setDone] = useState(false)
   const router = useRouter()
   const activeRoute = (routename) =>
     router.route.split('/edit')[1] === routename ? true : false
-
-  const { data, loading } = getData(visible.done)
 
   const {
     register,
@@ -48,6 +47,7 @@ export default function MarriageRelated() {
           biodataRequests.setField(2).then((info) => {
             if (info.message === 'ok') {
               setIsLoading(false)
+              mutate()
               setVisible({ message: '', status: false, done: true })
 
               window.scroll({
@@ -73,24 +73,14 @@ export default function MarriageRelated() {
 
   useEffect(() => {
     if (data) {
-      if (
-        (data.marry_reason ||
-          data.whenDiedWife ||
-          data.divorceInfo ||
-          data.whenDiedHusband ||
-          data.reMarryReason ||
-          data.marry_reason) &&
-        data.guardians_permission
-      ) {
-        setRoutes({
-          ...routes,
-          marriage: {
-            name: 'বিয়ে সংক্রান্ত',
-            link: '/marriage-related-info',
-            status: 'done'
-          }
-        })
-      }
+      setRoutes({
+        ...routes,
+        marriage: {
+          name: 'বিয়ে সংক্রান্ত',
+          link: '/marriage-related-info',
+          status: 'done'
+        }
+      })
       if (!data.type) {
         setDone(false)
       } else setDone(true)
@@ -139,7 +129,7 @@ export default function MarriageRelated() {
           </div>
         </p>
       )}
-      {!loading && data && done ? (
+      {data && done ? (
         <form onSubmit={handleSubmit(onSubmit)}>
           {data?.condition === 'বিপত্মীক' && (
             <fieldset

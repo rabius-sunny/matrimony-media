@@ -14,6 +14,8 @@ import { ArrowRightIcon } from '@heroicons/react/outline'
 import { Loading } from '@nextui-org/react'
 
 export default function Name() {
+  const { data, loading, mutate } = getData()
+  const { routes, setRoutes } = useAppContext()
   const [visible, setVisible] = useState({
     message: '',
     status: false,
@@ -47,18 +49,12 @@ export default function Name() {
           biodataRequests.setField(9).then((info) => {
             if (info.message === 'ok') {
               setIsLoading(false)
+              mutate()
               if (fields.length > 0) {
                 setVisible2(true)
                 return
               } else router.push('/profile/preview')
             }
-          })
-        } else {
-          setIsLoading(false)
-          setVisible({
-            message: 'ইরর হয়েছে, আবার চেষ্টা করুন',
-            status: true,
-            done: false
           })
         }
       })
@@ -72,25 +68,16 @@ export default function Name() {
       })
   }
 
-  const { data, loading } = getData(visible.done)
-  const { routes, setRoutes } = useAppContext()
-
   useEffect(() => {
     if (data) {
-      if (
-        data.guardian_number &&
-        data.number_relation &&
-        data.receiving_email
-      ) {
-        setRoutes({
-          ...routes,
-          contact: {
-            name: 'যোগাযোগ',
-            link: '/contact-info',
-            status: 'done'
-          }
-        })
-      }
+      setRoutes({
+        ...routes,
+        contact: {
+          name: 'যোগাযোগ',
+          link: '/contact-info',
+          status: 'done'
+        }
+      })
     }
   }, [data, loading])
   useEffect(() => {
@@ -146,7 +133,7 @@ export default function Name() {
         color='primary'
       />
       <ProfileRoutes activeRoute={activeRoute} />
-      {!loading && data ? (
+      {!loading ? (
         <form onSubmit={handleSubmit(onSubmit)}>
           <fieldset
             className={`my-6 rounded-md border-2 ${

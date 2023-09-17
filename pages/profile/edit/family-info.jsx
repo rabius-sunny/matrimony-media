@@ -14,6 +14,7 @@ import LongModal from 'components/shared/Modals/LongModal'
 import SaveButton from 'components/bio/SaveButton'
 
 export default function Family() {
+  const { data, loading, mutate } = getData()
   const [visible, setVisible] = useState({
     message: '',
     status: false,
@@ -24,8 +25,6 @@ export default function Family() {
   const router = useRouter()
   const activeRoute = (routename) =>
     router.route.split('/edit')[1] === routename ? true : false
-
-  const { data, loading } = getData(visible.done)
 
   const [brothers, setBrothers] = useState('')
   const [sisters, setSisters] = useState('')
@@ -50,6 +49,7 @@ export default function Family() {
           biodataRequests.setField(4).then((info) => {
             if (info.message === 'ok') {
               setIsLoading(false)
+              mutate()
               setVisible({ message: '', status: false, done: true })
 
               window.scroll({
@@ -71,32 +71,19 @@ export default function Family() {
       })
   }
 
+  const { routes, setRoutes } = useAppContext()
   useEffect(() => {
     if (data) {
       setBrothers(data?.brothers)
       setSisters(data?.sisters)
-    }
-  }, [data])
-  const { routes, setRoutes } = useAppContext()
-  useEffect(() => {
-    if (data) {
-      if (
-        data.father_name &&
-        data.mother_name &&
-        data.father_profession &&
-        data.mother_profession &&
-        data.brothers &&
-        data.sisters
-      ) {
-        setRoutes({
-          ...routes,
-          family: {
-            name: 'পারিবারিক',
-            link: '/family-info',
-            status: 'done'
-          }
-        })
-      }
+      setRoutes({
+        ...routes,
+        family: {
+          name: 'পারিবারিক',
+          link: '/family-info',
+          status: 'done'
+        }
+      })
     }
   }, [data, loading])
   useEffect(() => {
@@ -126,7 +113,7 @@ export default function Family() {
         preventClose={false}
         color={visible.done ? 'success' : 'error'}
       />
-      {!loading && data ? (
+      {!loading ? (
         <form onSubmit={handleSubmit(onSubmit)}>
           <fieldset
             className={`my-6 rounded-md border-2 ${

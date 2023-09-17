@@ -4,7 +4,11 @@ import useAsync from 'hooks/useAsync'
 import userRequest from 'services/network/userRequest'
 
 export default function Featured() {
-  const { data, error, isLoading } = useAsync(userRequest.getFeatureds)
+  const { data, stale, error, isLoading } = useAsync(
+    '/get-featureds',
+    userRequest.getFeatureds
+  )
+  console.log('swr data', stale)
 
   if (isLoading) {
     return (

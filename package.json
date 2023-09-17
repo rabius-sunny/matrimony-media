@@ -30,7 +30,7 @@
     "react-toastify": "^9.0.5",
     "redux-persist": "^6.0.0",
     "sass": "^1.50.0",
-    "swr": "^2.1.5"
+    "swr": "^2.2.2"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.0",

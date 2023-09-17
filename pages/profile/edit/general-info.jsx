@@ -29,6 +29,8 @@ export default function GeneralInfo() {
     status: false,
     done: false
   })
+  const { data, loading, mutate } = getData()
+  const { routes, setRoutes } = useAppContext()
   const [isLoading, setIsLoading] = useState(false)
   const [fields, setFields] = useState([])
   const router = useRouter()
@@ -50,6 +52,7 @@ export default function GeneralInfo() {
           biodataRequests.setField(3).then((info) => {
             if (info.message === 'ok') {
               setIsLoading(false)
+              mutate()
               setVisible({ message: '', status: false, done: true })
 
               window.scroll({
@@ -70,31 +73,17 @@ export default function GeneralInfo() {
         })
       })
   }
-  const { data, loading } = getData(visible.done)
-
-  const { routes, setRoutes } = useAppContext()
 
   useEffect(() => {
     if (data) {
-      if (
-        data.condition &&
-        data.permanent_jilla &&
-        data.permanent_division &&
-        data.current_jilla &&
-        data.current_division &&
-        data.birth &&
-        data.profession &&
-        data.income
-      ) {
-        setRoutes({
-          ...routes,
-          general: {
-            name: 'সাধারণ',
-            link: '/general-info',
-            status: 'done'
-          }
-        })
-      }
+      setRoutes({
+        ...routes,
+        general: {
+          name: 'সাধারণ',
+          link: '/general-info',
+          status: 'done'
+        }
+      })
     }
   }, [data, loading])
   useEffect(() => {
@@ -132,182 +121,101 @@ export default function GeneralInfo() {
 
         {loading ? (
           <FormSkeleton />
-        ) : data ? (
-          <CForm onSubmit={onSubmit}>
-            <CSelect
-              legend='স্থায়ী ঠিকানা *'
-              message='Field is required'
-              options={_address_jilla}
-              name='permanent_jilla'
-              defaultValue={data?.permanent_jilla}
-            />
-
-            <CSelect
-              legend='বিভাগ *'
-              message='Field is required'
-              options={_address_division}
-              name='permanent_division'
-              defaultValue={data?.permanent_division}
-            />
-
-            <CSelect
-              legend='বর্তমান ঠিকানা *'
-              message='Field is required'
-              options={_address_jilla}
-              name='current_jilla'
-              defaultValue={data?.current_jilla}
-            />
-
-            <CSelect
-              legend='বিভাগ *'
-              message='Field is required'
-              options={_address_division}
-              name='current_division'
-              defaultValue={data?.current_division}
-            />
-
-            <CSelect
-              legend='জন্মসন (আসল) *'
-              message='Field is required'
-              options={_birthYear}
-              name='birth'
-              defaultValue={data?.birth}
-            />
-
-            <CSelect
-              legend='গাত্রবর্ণ'
-              options={_complexion}
-              name='complexion'
-              defaultValue={data?.complexion}
-            />
-
-            <CSelect
-              legend='উচ্চতা'
-              options={_height}
-              name='height'
-              defaultValue={data?.height}
-            />
-
-            <CSelect
-              legend='ওজন'
-              options={_weight}
-              name='weight'
-              defaultValue={data?.weight}
-            />
-
-            <CSelect
-              legend='Blood Group'
-              options={_bloodGroup}
-              name='blood'
-              defaultValue={data?.blood}
-            />
-
-            <CInput
-              name='profession'
-              placeholder='সফটওয়্যার ইঞ্জিনিয়ার'
-              legend='পেশা *'
-              defaultValue={data?.profession}
-              description='সর্বোচ্চ ৩ শব্দে শুধু পদবী লিখবেন। পেশা সম্পর্কে বিস্তারিত লিখার
-            জন্য সামনে প্রশ্ন আসছে।'
-              message='profession is required'
-            />
-
-            <CInput
-              name='income'
-              placeholder='৩০ হাজার'
-              legend='মাসিক আয়'
-              defaultValue={data?.income}
-              description='জানাতে অনিচ্ছুক হলে ঘরটি ফাঁকা রাখুন।'
-            />
-
-            <SaveButton
-              isLoading={isLoading}
-              fields={fields}
-            />
-          </CForm>
         ) : (
-          <CForm onSubmit={onSubmit}>
-            <CSelect
-              legend='স্থায়ী ঠিকানা *'
-              message='Field is required'
-              options={_address_jilla}
-              name='permanent_jilla'
-            />
+          data && (
+            <CForm onSubmit={onSubmit}>
+              <CSelect
+                legend='স্থায়ী ঠিকানা *'
+                message='Field is required'
+                options={_address_jilla}
+                name='permanent_jilla'
+                defaultValue={data?.permanent_jilla}
+              />
 
-            <CSelect
-              legend='বিভাগ *'
-              message='Field is required'
-              options={_address_division}
-              name='permanent_division'
-            />
+              <CSelect
+                legend='বিভাগ *'
+                message='Field is required'
+                options={_address_division}
+                name='permanent_division'
+                defaultValue={data?.permanent_division}
+              />
 
-            <CSelect
-              legend='বর্তমান ঠিকানা *'
-              message='Field is required'
-              options={_address_jilla}
-              name='current_jilla'
-            />
+              <CSelect
+                legend='বর্তমান ঠিকানা *'
+                message='Field is required'
+                options={_address_jilla}
+                name='current_jilla'
+                defaultValue={data?.current_jilla}
+              />
 
-            <CSelect
-              legend='বিভাগ *'
-              message='Field is required'
-              options={_address_division}
-              name='current_division'
-            />
+              <CSelect
+                legend='বিভাগ *'
+                message='Field is required'
+                options={_address_division}
+                name='current_division'
+                defaultValue={data?.current_division}
+              />
 
-            <CSelect
-              legend='জন্মসন (আসল) *'
-              message='Field is required'
-              options={_birthYear}
-              name='birth'
-            />
+              <CSelect
+                legend='জন্মসন (আসল) *'
+                message='Field is required'
+                options={_birthYear}
+                name='birth'
+                defaultValue={data?.birth}
+              />
 
-            <CSelect
-              legend='গাত্রবর্ণ'
-              options={_complexion}
-              name='complexion'
-            />
+              <CSelect
+                legend='গাত্রবর্ণ'
+                options={_complexion}
+                name='complexion'
+                defaultValue={data?.complexion}
+              />
 
-            <CSelect
-              legend='উচ্চতা'
-              options={_height}
-              name='height'
-            />
+              <CSelect
+                legend='উচ্চতা'
+                options={_height}
+                name='height'
+                defaultValue={data?.height}
+              />
 
-            <CSelect
-              legend='ওজন'
-              options={_weight}
-              name='weight'
-            />
+              <CSelect
+                legend='ওজন'
+                options={_weight}
+                name='weight'
+                defaultValue={data?.weight}
+              />
 
-            <CSelect
-              legend='Blood Group'
-              options={_bloodGroup}
-              name='blood'
-            />
+              <CSelect
+                legend='Blood Group'
+                options={_bloodGroup}
+                name='blood'
+                defaultValue={data?.blood}
+              />
 
-            <CInput
-              name='profession'
-              placeholder='সফটওয়্যার ইঞ্জিনিয়ার'
-              legend='পেশা *'
-              description='সর্বোচ্চ ৩ শব্দে শুধু পদবী লিখবেন। পেশা সম্পর্কে বিস্তারিত লিখার
+              <CInput
+                name='profession'
+                placeholder='সফটওয়্যার ইঞ্জিনিয়ার'
+                legend='পেশা *'
+                defaultValue={data?.profession}
+                description='সর্বোচ্চ ৩ শব্দে শুধু পদবী লিখবেন। পেশা সম্পর্কে বিস্তারিত লিখার
             জন্য সামনে প্রশ্ন আসছে।'
-              message='profession is required'
-            />
+                message='profession is required'
+              />
 
-            <CInput
-              name='income'
-              placeholder='৩০ হাজার'
-              legend='মাসিক আয় *'
-              description='জানাতে অনিচ্ছুক হলে ঘরটি ফাঁকা রাখুন।'
-            />
+              <CInput
+                name='income'
+                placeholder='৩০ হাজার'
+                legend='মাসিক আয়'
+                defaultValue={data?.income}
+                description='জানাতে অনিচ্ছুক হলে ঘরটি ফাঁকা রাখুন।'
+              />
 
-            <input
-              type='submit'
-              value='সেভ করুন ও পরবর্তী পেজে যান'
-              className='rounded-md bg-primary  px-6 py-3 text-xl font-medium text-white shadow-md hover:bg-primary  focus:ring-2 focus:ring-red-800'
-            />
-          </CForm>
+              <SaveButton
+                isLoading={isLoading}
+                fields={fields}
+              />
+            </CForm>
+          )
         )}
       </ProfileLayout>
     </>
