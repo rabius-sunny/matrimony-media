@@ -1,5 +1,7 @@
 import { useRouter } from 'next/router'
 import ProfileLayout from 'components/profile/ProfileLayout'
+import { useForm, hasLength, isNotEmpty } from '@mantine/form'
+import { MyInput, MySelect } from 'components/profile/MyInputs'
 import ProfileRoutes from 'components/profile/ProfileRoutes'
 import biodataRequests from 'services/network/biodataRequests'
 import getData from 'hooks/getData'

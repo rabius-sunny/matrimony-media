@@ -1,7 +1,5 @@
-import React from 'react'
 import Navigation from './Navigation'
 import Footer from './Footer'
-import { ChatAlt2Icon } from '@heroicons/react/solid'
 
 export default function Layout({ children }) {
   return (
