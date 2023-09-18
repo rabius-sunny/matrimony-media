@@ -14,6 +14,7 @@ import LongModal from 'components/shared/Modals/LongModal'
 import SaveButton from 'components/bio/SaveButton'
 
 export default function Education() {
+  const { data, loading, mutate } = getData()
   const [visible, setVisible] = useState({
     message: '',
     status: false,
@@ -25,7 +26,6 @@ export default function Education() {
   const activeRoute = (routename) =>
     router.route.split('/edit')[1] === routename ? true : false
 
-  const { data, loading } = getData(visible.done)
   const [education, setEducation] = useState(data?.education)
   const [secondary, setSecondary] = useState('')
   const [higher, setHigher] = useState('')
@@ -53,6 +53,7 @@ export default function Education() {
           biodataRequests.setField(6).then((info) => {
             if (info.message === 'ok') {
               setIsLoading(false)
+              mutate()
               setVisible({ message: '', status: false, done: true })
 
               window.scroll({
@@ -87,16 +88,14 @@ export default function Education() {
   const { routes, setRoutes } = useAppContext()
   useEffect(() => {
     if (data) {
-      if (data.education) {
-        setRoutes({
-          ...routes,
-          education: {
-            name: 'শিক্ষাগত',
-            link: '/educational-qualifications',
-            status: 'done'
-          }
-        })
-      }
+      setRoutes({
+        ...routes,
+        education: {
+          name: 'শিক্ষাগত',
+          link: '/educational-qualifications',
+          status: 'done'
+        }
+      })
     }
   }, [data, loading])
   useEffect(() => {
@@ -126,7 +125,7 @@ export default function Education() {
         preventClose={false}
         color={visible.done ? 'success' : 'error'}
       />
-      {!loading && data ? (
+      {!loading ? (
         <form onSubmit={handleSubmit(onSubmit)}>
           <fieldset
             className={`my-6 rounded-md border-2 ${

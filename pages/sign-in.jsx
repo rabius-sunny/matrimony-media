@@ -56,9 +56,8 @@ export default function Signin() {
     )
   }
 
-  const onPhoneSubmit = async (e) => {
+  const onPhoneSubmit = async () => {
     setLoading(true)
-    e.preventDefault()
     if (
       isNaN(Number(cred.phone)) ||
       cred.phone.length < 11 ||
@@ -90,8 +89,8 @@ export default function Signin() {
       setLoading(false)
     }
   }
-  const handleSubmit = async (e) => {
-    e.preventDefault()
+  const handleSubmit = async () => {
+    console.log('handler')
     try {
       const data = await userRequest.signIn({
         phone: cred.phone.split(' ').join(''),
@@ -108,6 +107,13 @@ export default function Signin() {
     }
   }
   const onChange = (e) => setCred({ ...cred, [e.target.name]: e.target.value })
+  const submitHandler = (e) => {
+    e.preventDefault()
+    console.log('clicked')
+    return process.env.NODE_ENV === 'production'
+      ? onPhoneSubmit()
+      : handleSubmit()
+  }
 
   return (
     <div className='bg-secondary'>
@@ -149,7 +155,7 @@ export default function Signin() {
 
             <div className='mt-8'>
               {!isOtp && (
-                <form onSubmit={handleSubmit /* onPhoneSubmit */}>
+                <form onSubmit={submitHandler}>
                   <div className='mt-6'>
                     <label
                       htmlFor='phone'

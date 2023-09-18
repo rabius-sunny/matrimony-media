@@ -1,13 +1,23 @@
 import React from 'react'
 import Document, { Html, Head, Main, NextScript } from 'next/document'
 import { CssBaseline } from '@nextui-org/react'
+import { ServerStyles, createStylesServer } from '@mantine/next'
+
+const stylesServer = createStylesServer()
 
 class MyDocument extends Document {
   static async getInitialProps(ctx) {
     const initialProps = await Document.getInitialProps(ctx)
     return {
       ...initialProps,
-      styles: React.Children.toArray([initialProps.styles])
+      styles: [
+        initialProps.styles,
+        <ServerStyles
+          html={initialProps.html}
+          server={stylesServer}
+          key='styles'
+        />
+      ]
     }
   }
 

@@ -80,13 +80,16 @@ export function CSelect({
             errors[name] ? 'border-red-500' : 'border-green-300'
           } p-2 rounded-md`}
           {...register(name, { required: message && message })}
-          onClick={onClick ? e => onClick(e.target.value) : null}
-          onChange={onChange ? e => onChange(e.target.value) : null}
+          onClick={onClick ? (e) => onClick(e.target.value) : null}
+          onChange={onChange ? (e) => onChange(e.target.value) : null}
           {...rest}
         >
           <option value=''>---</option>
-          {options.map(value => (
-            <option key={value} value={value}>
+          {options.map((value) => (
+            <option
+              key={value}
+              value={value}
+            >
               {value}
             </option>
           ))}

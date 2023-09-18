@@ -4,7 +4,6 @@ import { useRouter } from 'next/router'
 import ProfileRoutes from 'components/profile/ProfileRoutes'
 import { _brothers } from 'assets/profileinfo'
 import { useForm } from 'react-hook-form'
-import OptionMap from 'components/profile/OptionMap'
 import biodataRequests from 'services/network/biodataRequests'
 import getData from 'hooks/getData'
 import FormSkeleton from 'components/shared/FormSkeleton'
@@ -25,9 +24,6 @@ export default function Family() {
   const router = useRouter()
   const activeRoute = (routename) =>
     router.route.split('/edit')[1] === routename ? true : false
-
-  const [brothers, setBrothers] = useState('')
-  const [sisters, setSisters] = useState('')
 
   const {
     register,
@@ -74,8 +70,6 @@ export default function Family() {
   const { routes, setRoutes } = useAppContext()
   useEffect(() => {
     if (data) {
-      setBrothers(data?.brothers)
-      setSisters(data?.sisters)
       setRoutes({
         ...routes,
         family: {
@@ -151,7 +145,6 @@ export default function Family() {
               পারবে না।
             </p>
           </fieldset>
-
           <fieldset
             className={`my-6 rounded-md border-2 ${
               errors.mother_name ? 'border-red-500' : 'border-green-300'
@@ -188,7 +181,6 @@ export default function Family() {
               পারবে না।
             </p>
           </fieldset>
-
           <fieldset
             className={`my-6 rounded-md border-2 ${
               errors.father_profession ? 'border-red-500' : 'border-green-300'
@@ -224,7 +216,6 @@ export default function Family() {
               ছিলেন।
             </p>
           </fieldset>
-
           <fieldset
             className={`my-6 rounded-md border-2 ${
               errors.mother_profession ? 'border-red-500' : 'border-green-300'
@@ -260,128 +251,69 @@ export default function Family() {
               ছিলেন।
             </p>
           </fieldset>
-
           <fieldset
             className={`my-6 rounded-md border-2 ${
-              errors.brothers ? 'border-red-500' : 'border-green-300'
+              errors.brothers_info ? 'border-red-500' : 'border-green-300'
             } p-4`}
           >
             <legend
               className={`ml-4 font-bold ${
-                errors.brothers ? 'text-primary' : 'text-secondary'
+                errors.brothers_info ? 'text-primary' : 'text-secondary'
               }`}
             >
-              ভাই কয়জন? *
+              ভাইদের সম্পর্কে তথ্য
             </legend>
-            <select
-              onClick={(e) => setBrothers(e.target.value)}
-              defaultValue={data?.brothers}
-              className={`w-full focus:outline-none border-2 ${
-                errors.brothers ? 'border-red-500' : 'border-green-300'
-              } p-2 rounded-md`}
-              {...register('brothers', { required: 'field is required' })}
-            >
-              <option value=''>select</option>
-              <OptionMap data={newBrothers} />
-            </select>
-            {errors.brothers && (
-              <p className='text-primary py-2 pl-2'>
-                {errors.brothers.message}
-              </p>
-            )}
+            <textarea
+              defaultValue={data?.brothers_info}
+              rows={5}
+              {...register('brothers_info')}
+              className={`w-full rounded ${
+                errors.brothers_info ? 'bg-red-100' : 'bg-green-100'
+              } px-4 py-2 font-medium text-green-400 shadow-md ${
+                errors.brothers_info
+                  ? 'focus:outline-red-500'
+                  : 'focus:outline-green-500'
+              }`}
+            />
+            <p className='pl-2 pt-4 text-green-400'>
+              কয়জন ভাই রয়েছে তা লিখুন। এরপর সকল ভাইদের শিক্ষাগত যোগ্যতা, বৈবাহিক
+              অবস্থা, পেশা, বর্তমান অবস্থান লিখুন। একাধিক ভাই থাকলে কমা দিয়ে
+              নিচের লাইনে এসে লিখবেন। ভাই না থাকলে লিখবেন{' '}
+              <span className='text-red-300'>ভাই নেই</span>
+            </p>
           </fieldset>
-
-          {newBrothers.indexOf(brothers) > 0 && (
-            <fieldset
-              className={`my-6 rounded-md border-2 ${
-                errors.brothers_info ? 'border-red-500' : 'border-green-300'
-              } p-4`}
-            >
-              <legend
-                className={`ml-4 font-bold ${
-                  errors.brothers_info ? 'text-primary' : 'text-secondary'
-                }`}
-              >
-                ভাইদের সম্পর্কে তথ্য
-              </legend>
-              <textarea
-                defaultValue={data?.brothers_info}
-                rows={5}
-                {...register('brothers_info')}
-                className={`w-full rounded ${
-                  errors.brothers_info ? 'bg-red-100' : 'bg-green-100'
-                } px-4 py-2 font-medium text-green-400 shadow-md ${
-                  errors.brothers_info
-                    ? 'focus:outline-red-500'
-                    : 'focus:outline-green-500'
-                }`}
-              />
-              <p className='pl-2 pt-4 text-green-400'>
-                সকল ভাইদের শিক্ষাগত যোগ্যতা, বৈবাহিক অবস্থা, পেশা, বর্তমান
-                অবস্থান লিখুন। একাধিক ভাই থাকলে কমা দিয়ে নিচের লাইনে এসে লিখবেন।
-              </p>
-            </fieldset>
-          )}
 
           <fieldset
             className={`my-6 rounded-md border-2 ${
-              errors.sisters ? 'border-red-500' : 'border-green-300'
+              errors.sisters_info ? 'border-red-500' : 'border-green-300'
             } p-4`}
           >
             <legend
               className={`ml-4 font-bold ${
-                errors.sisters ? 'text-primary' : 'text-secondary'
+                errors.sisters_info ? 'text-primary' : 'text-secondary'
               }`}
             >
-              বোন কয়জন? *
+              বোনদের সম্পর্কে তথ্য
             </legend>
-            <select
-              onClick={(e) => setSisters(e.target.value)}
-              defaultValue={data?.sisters}
-              className={`w-full focus:outline-none border-2 ${
-                errors.sisters ? 'border-red-500' : 'border-green-300'
-              } p-2 rounded-md`}
-              {...register('sisters', { required: 'field is required' })}
-            >
-              <option value=''>select</option>
-              <OptionMap data={newSisters} />
-            </select>
-            {errors.sisters && (
-              <p className='text-primary py-2 pl-2'>{errors.sisters.message}</p>
-            )}
+            <textarea
+              defaultValue={data?.sisters_info}
+              rows={5}
+              {...register('sisters_info')}
+              className={`w-full rounded ${
+                errors.sisters_info ? 'bg-red-100' : 'bg-green-100'
+              } px-4 py-2 font-medium text-green-400 shadow-md ${
+                errors.sisters_info
+                  ? 'focus:outline-red-500'
+                  : 'focus:outline-green-500'
+              }`}
+            />
+            <p className='pl-2 pt-4 text-green-400'>
+              কয়জন বোন রয়েছে তা লিখুন। এরপর সকল বোনদের শিক্ষাগত যোগ্যতা, বৈবাহিক
+              অবস্থা, পেশা, বিবাহিত হলে স্বামীর পেশা লিখুন। একাধিক বোন থাকলে কমা
+              দিয়ে নিচের লাইনে এসে লিখবেন। বোন না থাকলে লিখবেন{' '}
+              <span className='text-red-300'>বোন নেই</span>
+            </p>
           </fieldset>
-          {newSisters.indexOf(sisters) > 0 && (
-            <fieldset
-              className={`my-6 rounded-md border-2 ${
-                errors.sisters_info ? 'border-red-500' : 'border-green-300'
-              } p-4`}
-            >
-              <legend
-                className={`ml-4 font-bold ${
-                  errors.sisters_info ? 'text-primary' : 'text-secondary'
-                }`}
-              >
-                বোনদের সম্পর্কে তথ্য
-              </legend>
-              <textarea
-                defaultValue={data?.sisters_info}
-                rows={5}
-                {...register('sisters_info')}
-                className={`w-full rounded ${
-                  errors.sisters_info ? 'bg-red-100' : 'bg-green-100'
-                } px-4 py-2 font-medium text-green-400 shadow-md ${
-                  errors.sisters_info
-                    ? 'focus:outline-red-500'
-                    : 'focus:outline-green-500'
-                }`}
-              />
-              <p className='pl-2 pt-4 text-green-400'>
-                সকল বোনদের শিক্ষাগত যোগ্যতা, বৈবাহিক অবস্থা, পেশা, বিবাহিত হলে
-                স্বামীর পেশা লিখুন। একাধিক বোন থাকলে কমা দিয়ে নিচের লাইনে এসে
-                লিখবেন।
-              </p>
-            </fieldset>
-          )}
 
           <fieldset className='my-6 rounded-md border-2 border-green-300 p-4'>
             <legend className='ml-4 font-bold text-secondary'>
@@ -397,7 +329,6 @@ export default function Family() {
               জানাতে অনিচ্ছুক হলে ফাঁকা রাখুন।
             </p>
           </fieldset>
-
           <fieldset
             className={`my-6 rounded-md border-2 ${
               errors.family_status ? 'border-red-500' : 'border-green-300'
@@ -429,7 +360,6 @@ export default function Family() {
             )}
             <p className='pl-2 pt-4 text-green-400'>সংক্ষেপে বর্ণনা করুন।</p>
           </fieldset>
-
           <SaveButton
             isLoading={isLoading}
             fields={fields}
@@ -441,5 +371,3 @@ export default function Family() {
     </ProfileLayout>
   )
 }
-const newBrothers = ['ভাই নেই', ..._brothers]
-const newSisters = ['বোন নেই', ..._brothers]

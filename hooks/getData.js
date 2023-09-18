@@ -2,10 +2,8 @@ import requests from 'services/network/http'
 import useSWR from 'swr'
 
 export default function getData() {
-  const { data, error, isLoading, mutate } = useSWR(
-    `/bio/6291c5ac73f888b0bd348ee2`,
-    requests.get
-  )
+  const id = typeof window !== 'undefined' ? localStorage.getItem('id') : ''
+  const { data, error, isLoading, mutate } = useSWR(`/bio/${id}`, requests.get)
   return {
     data: data?.response,
     error,
