@@ -2,7 +2,9 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   isHome: true,
-  from: null
+  from: null,
+  token: '',
+  id: ''
 }
 
 const utilSlice = createSlice({
@@ -20,6 +22,14 @@ const utilSlice = createSlice({
     },
     removeFrom(state) {
       state.from = null
+    },
+    addAuth(state, { payload: { token, id } }) {
+      state.token = token
+      state.id = id
+    },
+    remmoveAuth(state) {
+      state.token = ''
+      state.id = ''
     }
   }
 })

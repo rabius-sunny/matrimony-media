@@ -1,6 +1,33 @@
-import { Select, TextInput } from '@mantine/core'
+import { Select, TextInput, Textarea } from '@mantine/core'
 
 export function MyInput({
+  label,
+  placeholder,
+  description,
+  withAsterisk = true,
+  form,
+  error
+}) {
+  return (
+    <TextInput
+      mt={15}
+      label={label}
+      placeholder={placeholder}
+      description={description}
+      withAsterisk={withAsterisk}
+      classNames={{
+        label: 'ml-1 text-lg font-bold text-secondary',
+        input: `shadow-md bg-${
+          error ? 'red' : 'green'
+        }-100 border-0 focus:border-[1px] focus:border-green-300`,
+        description: 'mt-1 text-secondary'
+      }}
+      inputWrapperOrder={['label', 'input', 'error', 'description']}
+      {...form}
+    />
+  )
+}
+export function MyTextarea({
   label,
   placeholder,
   description,
@@ -8,8 +35,8 @@ export function MyInput({
   form
 }) {
   return (
-    <TextInput
-      mt={10}
+    <Textarea
+      mt={15}
       label={label}
       placeholder={placeholder}
       description={description}

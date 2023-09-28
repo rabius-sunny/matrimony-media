@@ -1,6 +1,6 @@
 import ProfileLayout from 'components/profile/ProfileLayout'
 import { useForm, hasLength, isNotEmpty } from '@mantine/form'
-import { MyInput, MySelect } from 'components/profile/MyInputs'
+import { MyInput, MySelect, MyTextarea } from 'components/profile/MyInputs'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import ProfileRoutes from 'components/profile/ProfileRoutes'
@@ -14,6 +14,7 @@ import Link from 'next/link'
 import { ExclamationIcon } from '@heroicons/react/solid'
 import LongModal from 'components/shared/Modals/LongModal'
 import SaveButton from 'components/bio/SaveButton'
+import filterEmptyProperties from 'hooks/filterEmptyObject'
 
 export default function PersonalInfo() {
   const { data, loading, mutate } = getData()
@@ -55,12 +56,14 @@ export default function PersonalInfo() {
     validate: {
       beard: (value) => {
         if (data?.type === 'পাত্রের বায়োডাটা' && value.length < 1) {
+          console.log('beard is required')
           return 'ফিল্ডটি পূরণ করুন'
         } else null
       },
       dress: isNotEmpty('ফিল্ডটি পূরণ করুন'),
       dress_over_ankle: (value) => {
         if (data?.type === 'পাত্রের বায়োডাটা' && value.length < 1) {
+          console.log('beard is required')
           return 'ফিল্ডটি পূরণ করুন'
         } else null
       },
@@ -163,7 +166,7 @@ export default function PersonalInfo() {
         color={visible.done ? 'success' : 'error'}
       />
       {!loading && !done && (
-        <p className='border-l-4 border-red-500 flex bg-red-50 py-8 rounded px-2 items-center md:text-2xl text-primary font-bold text-center my-8'>
+        <div className='border-l-4 border-red-500 flex bg-red-50 py-8 rounded px-2 items-center md:text-2xl text-primary font-bold text-center my-8'>
           <div className='mr-5'>
             <ExclamationIcon className='text-primary h-10 w-10' />
           </div>
@@ -176,15 +179,21 @@ export default function PersonalInfo() {
             </Link>{' '}
             ফিল্ডটি এখনো অপূর্ণাঙ্গ রয়েছে, আগে সেটি ফিল করুন
           </div>
-        </p>
+        </div>
       )}
       {data && done ? (
-        <form onSubmit={form.onSubmit((values) => onSubmit(values))}>
+        <form
+          onSubmit={form.onSubmit((values) => {
+            const { filteredObj, emptyObject } = filterEmptyProperties(values)
+            console.log('data', { filteredObj, emptyObject })
+          })}
+        >
           {data?.type === 'পাত্রের বায়োডাটা' && (
             <div>
               <MyInput
                 label='সুন্নতি দাঁড়ি আছে কি?'
                 form={{ ...form.getInputProps('beard') }}
+                error={form.errors.beard}
               />
               <MyInput
                 label='কাপড় পায়ের টাখনুর উপরে পড়েন?'
@@ -192,7 +201,7 @@ export default function PersonalInfo() {
               />
             </div>
           )}
-          <MyInput
+          <MyTextarea
             label='ঘরের বাইরে সাধারণত কেমন ধরণের পোশাক পড়েন?'
             description={
               data?.type === 'পাত্রের বায়োডাটা'
@@ -267,6 +276,7 @@ export default function PersonalInfo() {
           />
           <MyInput
             label='বিশেষ দ্বীনি বা দুনিয়াবি যোগ্যতা (যদি থাকে)'
+            withAsterisk={false}
             form={{ ...form.getInputProps('special_qualifications') }}
           />
           <MyInput

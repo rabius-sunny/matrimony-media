@@ -12,8 +12,13 @@ import userRequest from 'services/network/userRequest'
 import getUIDs from 'hooks/getUIDs'
 import getRandomUID from 'hooks/getRandomUID'
 import { Loading } from '@nextui-org/react'
+import { useDispatch } from 'react-redux'
+import { atHome, notHome } from 'services/state/utilSlice'
+import Link from 'next/link'
 
 export default function Signin() {
+  const dispatch = useDispatch()
+
   const { uIds } = getUIDs()
   const [cred, setCred] = useState({
     phone: '',
@@ -27,6 +32,11 @@ export default function Signin() {
   const router = useRouter()
   const auth = useAuth()
   useEffect(() => {
+    dispatch(notHome())
+    return () => dispatch(atHome())
+  }, [])
+
+  useEffect(() => {
     auth && router.push('/')
   }, [auth])
 
@@ -36,7 +46,7 @@ export default function Signin() {
     if (uIds) {
       while (uIds.includes(uId)) {
         setUId(getRandomUID(10100, 99999))
-        console.log('exists, trying again!')
+        console.log('exists, trying again..wait...')
       }
     }
   }, [uIds])
@@ -55,7 +65,6 @@ export default function Signin() {
       recaptchaVerifier
     )
   }
-
   const onPhoneSubmit = async () => {
     setLoading(true)
     if (
@@ -144,9 +153,14 @@ export default function Signin() {
         <div className='mx-auto bg-secondary flex w-full max-w-md items-center px-6 lg:w-2/6'>
           <div className='flex-1'>
             <div className='text-center'>
-              <h2 className='text-center text-4xl md:text-6xl font-bold text-primary dark:text-white'>
-                জান্নাতি জুটি
-              </h2>
+              <Link
+                href='/'
+                legacyBehavior
+              >
+                <a className='text-center text-4xl md:text-6xl font-bold text-primary dark:text-white'>
+                  জান্নাতি জুটি
+                </a>
+              </Link>
 
               <p className='mt-5 text-lg text-white dark:text-gray-300'>
                 আপনার ফোন নম্বর দিয়ে প্রবেশ করুন
@@ -164,7 +178,7 @@ export default function Signin() {
                       Phone
                     </label>
                     <input
-                      type='number'
+                      type='tel'
                       placeholder='01XXXXXXXXX'
                       name='phone'
                       id='phone'
