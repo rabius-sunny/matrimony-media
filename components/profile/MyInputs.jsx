@@ -16,7 +16,7 @@ export function MyInput({
       description={description}
       withAsterisk={withAsterisk}
       classNames={{
-        label: 'ml-1 text-lg font-bold text-secondary',
+        label: `ml-1 font-bold ${error ? 'text-danger' : 'text-secondary'}`,
         input: `shadow-md bg-${
           error ? 'red' : 'green'
         }-100 border-0 focus:border-[1px] focus:border-green-300`,
@@ -32,7 +32,8 @@ export function MyTextarea({
   placeholder,
   description,
   withAsterisk = true,
-  form
+  form,
+  error
 }) {
   return (
     <Textarea
@@ -42,9 +43,10 @@ export function MyTextarea({
       description={description}
       withAsterisk={withAsterisk}
       classNames={{
-        label: 'ml-1 text-lg font-bold text-secondary',
-        input:
-          'shadow-md bg-green-100 border-0 focus:border-[1px] focus:border-green-300',
+        label: `ml-1 font-bold ${error ? 'text-danger' : 'text-secondary'}`,
+        input: `shadow-md bg-${
+          error ? 'red' : 'green'
+        }-100 border-0 focus:border-[1px] focus:border-green-300`,
         description: 'mt-1 text-secondary'
       }}
       inputWrapperOrder={['label', 'input', 'error', 'description']}
@@ -59,11 +61,14 @@ export function MySelect({
   withAsterisk = true,
   data,
   onClick,
-  form
+  onDropdownClose,
+  form,
+  error
 }) {
   return (
     <Select
       onClick={onClick}
+      onDropdownClose={onDropdownClose}
       mt={15}
       label={label}
       placeholder={placeholder}
@@ -71,7 +76,7 @@ export function MySelect({
       withAsterisk={withAsterisk}
       searchable
       classNames={{
-        label: 'ml-1 text-lg font-bold text-secondary',
+        label: `ml-1 font-bold ${error ? 'text-danger' : 'text-secondary'}`,
         input:
           'shadow-md bg-green-100 border-0 focus:border-[1px] focus:border-green-300',
         description: 'mt-1 text-secondary'

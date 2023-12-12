@@ -17,8 +17,8 @@ const utilSlice = createSlice({
     notHome(state) {
       state.isHome = false
     },
-    addFrom(state, action) {
-      state.from = action.payload
+    addFrom(state, { payload }) {
+      state.from = payload
     },
     removeFrom(state) {
       state.from = null
@@ -34,5 +34,6 @@ const utilSlice = createSlice({
   }
 })
 
-export const { atHome, notHome, addFrom, removeFrom } = utilSlice.actions
+export const { atHome, notHome, addFrom, removeFrom, updateSecondary } =
+  utilSlice.actions
 export default utilSlice.reducer

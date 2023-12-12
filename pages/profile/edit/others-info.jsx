@@ -1,20 +1,20 @@
 import ProfileLayout from 'components/profile/ProfileLayout'
-import { useForm, hasLength, isNotEmpty } from '@mantine/form'
-import { MyInput, MySelect } from 'components/profile/MyInputs'
+import { useForm as mantineForm, isNotEmpty } from '@mantine/form'
+import { MyTextarea } from 'components/profile/MyInputs'
 import { useRouter } from 'next/router'
 import ProfileRoutes from 'components/profile/ProfileRoutes'
-import { useForm } from 'react-hook-form'
 import biodataRequests from 'services/network/biodataRequests'
 import getData from 'hooks/getData'
 import FormSkeleton from 'components/shared/FormSkeleton'
 import Head from 'next/head'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import LongModal from 'components/shared/Modals/LongModal'
 import { useAppContext } from 'utils/context'
 import SaveButton from 'components/bio/SaveButton'
 
 export default function OthersInfo() {
   const { data, loading, mutate } = getData()
+  const router = useRouter()
   const { routes, setRoutes } = useAppContext()
   const [visible, setVisible] = useState({
     message: '',
@@ -23,17 +23,22 @@ export default function OthersInfo() {
   })
   const [isLoading, setIsLoading] = useState(false)
   const [fields, setFields] = useState([])
-  const router = useRouter()
   const activeRoute = (routename) =>
     router.route.split('/edit')[1] === routename ? true : false
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors }
-  } = useForm({
-    mode: 'onChange'
+  const form = mantineForm({
+    initialValues: {
+      profession_info: '',
+      special_acknowledgement: ''
+    },
+    validate: {
+      special_acknowledgement: isNotEmpty('অনুগ্রহ করে কিছু লিখুন')
+    }
   })
+  const formProperty = useMemo(() => {
+    return Object.keys(form.values)
+  }, [])
+
   const onSubmit = (data) => {
     setIsLoading(true)
     biodataRequests
@@ -70,6 +75,9 @@ export default function OthersInfo() {
 
   useEffect(() => {
     if (data) {
+      formProperty.forEach((item) => {
+        return form.setFieldValue(item, data[item])
+      })
       setRoutes({
         ...routes,
         another: {
@@ -108,65 +116,41 @@ export default function OthersInfo() {
         color={visible.done ? 'success' : 'error'}
       />
       {!loading ? (
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <fieldset className='my-6 rounded-md border-2 border-green-300 p-4'>
-            <legend className='ml-4 font-bold text-secondary'>
-              পেশা সম্পর্কিত তথ্য
-            </legend>
-            <textarea
-              defaultValue={data?.profession_info}
-              rows={5}
-              {...register('profession_info')}
-              className='w-full rounded bg-green-100 px-4 py-2 font-medium text-green-400 shadow-md focus:outline-green-500'
-            />
-            <p className='pl-2 pt-4 text-green-400'>
-              {data?.type === 'পাত্রের বায়োডাটা'
-                ? 'এখানে বিভিন্ন বিষয় লিখতে পারেন। যেমনঃ আপনার ইনকাম  হালাল কি না, অফিস কোথায়, আপনার পদবী ও কাজ সম্পর্কে একটু বিস্তারিত বর্ণনা দিতে পারেন, আপনার পেশাগত ভবিষ্যৎ পরিকল্পনাও লিখতে পারেন। আপনি ছাত্র বা বেকার হলে সে বিষয়েও কিছু জানাতে পারেন। মূল বিষয় হচ্ছে পাত্রীপক্ষ যেন আপনার পেশা সম্পর্কে ক্লিয়ার ধারণা পেয়ে যায়।'
-                : 'আপনি যদি চাকুরীজীবি হয়ে থাকেন তাহলে অফিসের অবস্থান, পেশাগত ভবিষ্যৎ পরিকল্পনা, বিয়ের পর চাকরী ও সংসার কিভাবে চালাতে চান ইত্যাদি বিষয় লিখতে পারেন। যদি চাকুরীজীবি না হয়ে থাকেন তাহলে ঘরটি ফাঁকা রাখুন।'}
-            </p>
-          </fieldset>
-
-          <fieldset
-            className={`my-6 rounded-md border-2 ${
-              errors.special_acknowledgement
-                ? 'border-red-500'
-                : 'border-green-300'
-            } p-4`}
-          >
-            <legend
-              className={`ml-4 font-bold ${
-                errors.special_acknowledgement
-                  ? 'text-primary'
-                  : 'text-secondary'
-              }`}
-            >
-              বিশেষ কিছু যদি জানাতে চান *
-            </legend>
-            <textarea
-              defaultValue={data?.special_acknowledgement}
-              rows={5}
-              {...register('special_acknowledgement', {
-                required: 'field is required'
-              })}
-              className={`w-full rounded ${
-                errors.special_acknowledgement ? 'bg-red-100' : 'bg-green-100'
-              } px-4 py-2 font-medium text-green-400 shadow-md ${
-                errors.special_acknowledgement
-                  ? 'focus:outline-red-500'
-                  : 'focus:outline-green-500'
-              }`}
-            />
-            {errors.special_acknowledgement && (
-              <p className='text-primary py-2 pl-2'>
-                {errors.special_acknowledgement.message}
+        <form onSubmit={form.onSubmit((values) => onSubmit(values))}>
+          <MyTextarea
+            label='পেশা সম্পর্কিত তথ্য'
+            withAsterisk={false}
+            description={
+              data?.type === 'পাত্রের বায়োডাটা' ? (
+                <p>
+                  এখানে বিভিন্ন বিষয় লিখতে পারেন। যেমনঃ আপনার ইনকাম হালাল কি না,
+                  অফিস কোথায়, আপনার পদবী ও কাজ সম্পর্কে একটু বিস্তারিত বর্ণনা
+                  দিতে পারেন, আপনার পেশাগত ভবিষ্যৎ পরিকল্পনাও লিখতে পারেন। আপনি
+                  ছাত্র বা বেকার হলে সে বিষয়েও কিছু জানাতে পারেন। মূল বিষয় হচ্ছে
+                  পাত্রীপক্ষ যেন আপনার পেশা সম্পর্কে ক্লিয়ার ধারণা পেয়ে যায়।
+                </p>
+              ) : (
+                <p>
+                  আপনি যদি চাকুরীজীবি হয়ে থাকেন তাহলে অফিসের অবস্থান, পেশাগত
+                  ভবিষ্যৎ পরিকল্পনা, বিয়ের পর চাকরী ও সংসার কিভাবে চালাতে চান
+                  ইত্যাদি বিষয় লিখতে পারেন। যদি চাকুরীজীবি না হয়ে থাকেন তাহলে
+                  ঘরটি ফাঁকা রাখুন।
+                </p>
+              )
+            }
+            form={{ ...form.getInputProps('profession_info') }}
+          />
+          <MyTextarea
+            label='বিশেষ কিছু যদি জানাতে চান'
+            form={{ ...form.getInputProps('special_acknowledgement') }}
+            description={
+              <p>
+                আপনার কোনো শর্ত বা উপরে লিখার সুযোগ হয় নি এমন কিছু জানানোর থাকলে
+                এই ঘরে লিখতে পারেন। যেমনঃ পারিবারিক বা ব্যক্তিগত কোনো সুবিধা বা
+                অসুবিধা ইত্যাদি যে কোনো বিষয়ে যত ইচ্ছা লিখতে পারবেন।
               </p>
-            )}
-            <p className='pl-2 pt-4 text-green-400'>
-              আপনার কোনো শর্ত বা উপরে লিখার সুযোগ হয় নি এমন কিছু জানানোর থাকলে
-              এই ঘরে লিখতে পারেন। যেমনঃ পারিবারিক বা ব্যক্তিগত কোনো সুবিধা বা
-              অসুবিধা ইত্যাদি যে কোনো বিষয়ে যত ইচ্ছা লিখতে পারবেন। ।
-            </p>
-          </fieldset>
+            }
+          />
 
           <SaveButton
             isLoading={isLoading}

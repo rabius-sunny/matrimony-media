@@ -14,7 +14,7 @@ import getData from 'hooks/getData'
 import FormSkeleton from 'components/shared/FormSkeleton'
 import Head from 'next/head'
 import { useAppContext } from 'utils/context'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import LongModal from 'components/shared/Modals/LongModal'
 import SaveButton from 'components/bio/SaveButton'
 
@@ -80,15 +80,14 @@ export default function Name() {
         })
       })
   }
+  const formProperty = useMemo(() => {
+    return Object.keys(form.values)
+  }, [])
 
   useEffect(() => {
     if (data) {
-      const { name, type, condition, education } = data
-      form.setValues({
-        name,
-        type,
-        condition,
-        education
+      formProperty.forEach((item) => {
+        return form.setFieldValue(item, data[item])
       })
       setRoutes({
         ...routes,

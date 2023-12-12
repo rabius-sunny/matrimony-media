@@ -15,7 +15,7 @@ const persistConfig = {
       }
     })
   ],
-  whitelist: ['auth', 'cart', 'util']
+  whitelist: ['util']
 }
 
 const rootReducer = combineReducers({

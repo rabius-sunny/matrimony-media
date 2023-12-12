@@ -1,5 +1,5 @@
 import ProfileLayout from 'components/profile/ProfileLayout'
-import { /* useForm, */ hasLength, isNotEmpty } from '@mantine/form'
+import { useForm as mantineForm, hasLength, isNotEmpty } from '@mantine/form'
 import { MyInput, MySelect } from 'components/profile/MyInputs'
 import { useRouter } from 'next/router'
 import getData from 'hooks/getData'
@@ -16,12 +16,12 @@ import LongModal from 'components/shared/Modals/LongModal'
 import SaveButton from 'components/bio/SaveButton'
 
 export default function MarriageRelated() {
+  const { data, loading, mutate } = getData()
   const [visible, setVisible] = useState({
     message: '',
     status: false,
     done: false
   })
-  const { data, loading, mutate } = getData()
   const [isLoading, setIsLoading] = useState(false)
   const [fields, setFields] = useState([])
   const [done, setDone] = useState(false)
@@ -36,6 +36,31 @@ export default function MarriageRelated() {
   } = useForm({
     mode: 'onChange'
   })
+
+  const maleForm = mantineForm({
+    initialValues: {
+      whenDiedWife: '',
+      divorceInfo: '',
+      reMarryReason: '',
+      family_planning: '',
+      guardians_permission: ''
+    },
+    validate: {
+      guardians_permission: isNotEmpty('ফিল্ডটিতে কিছু লিখতে হবে।')
+    }
+  })
+  const femaleForm = mantineForm({
+    initialValues: {
+      divorceInfo: '',
+      whenDiedHusband: '',
+      education_after_marriage: '',
+      guardians_permission: ''
+    },
+    validate: {
+      guardians_permission: isNotEmpty('ফিল্ডটিতে কিছু লিখতে হবে।')
+    }
+  })
+
   const onSubmit = (data) => {
     setIsLoading(true)
     biodataRequests
@@ -210,44 +235,7 @@ export default function MarriageRelated() {
               </p>
             </fieldset>
           )}
-          {data?.condition === 'বিধবা' && (
-            <fieldset
-              className={`my-6 rounded-md border-2 ${
-                errors.whenDiedHusband ? 'border-red-500' : 'border-gray-300'
-              } p-4`}
-            >
-              <legend
-                className={`ml-4 font-bold ${
-                  errors.whenDiedHusband ? 'text-primary' : 'text-secondary'
-                }`}
-              >
-                আপনার স্বামী কবে, কিভাবে মারা গিয়েছিল? *
-              </legend>
-              <textarea
-                defaultValue={data?.whenDiedHusband}
-                rows={5}
-                {...register('whenDiedHusband', {
-                  required: 'please fill the field'
-                })}
-                className={`w-full rounded ${
-                  errors.whenDiedHusband ? 'bg-red-100' : 'bg-green-100'
-                } px-4 py-2 font-medium text-green-400 shadow-md ${
-                  errors.whenDiedHusband
-                    ? 'focus:outline-red-500'
-                    : 'focus:outline-green-500'
-                }`}
-              />
-              {errors.whenDiedHusband && (
-                <p className='text-primary py-2 pl-2'>
-                  {errors.whenDiedHusband.message}
-                </p>
-              )}
-              <p className='pl-2 pt-4 text-green-400'>
-                কয় বছরের সংসার ছিল উল্লেখ করতে পারেন। আপনার সন্তান আছে কি না,
-                থাকলে তাদের বয়স সহ বর্ণনা দিবেন সংক্ষেপে।
-              </p>
-            </fieldset>
-          )}
+
           {data?.condition === 'বিবাহিত' && (
             <fieldset
               className={`my-6 rounded-md border-2 ${
@@ -430,6 +418,44 @@ export default function MarriageRelated() {
             </div>
           )}
 
+          {data?.condition === 'বিধবা' && (
+            <fieldset
+              className={`my-6 rounded-md border-2 ${
+                errors.whenDiedHusband ? 'border-red-500' : 'border-gray-300'
+              } p-4`}
+            >
+              <legend
+                className={`ml-4 font-bold ${
+                  errors.whenDiedHusband ? 'text-primary' : 'text-secondary'
+                }`}
+              >
+                আপনার স্বামী কবে, কিভাবে মারা গিয়েছিল? *
+              </legend>
+              <textarea
+                defaultValue={data?.whenDiedHusband}
+                rows={5}
+                {...register('whenDiedHusband', {
+                  required: 'please fill the field'
+                })}
+                className={`w-full rounded ${
+                  errors.whenDiedHusband ? 'bg-red-100' : 'bg-green-100'
+                } px-4 py-2 font-medium text-green-400 shadow-md ${
+                  errors.whenDiedHusband
+                    ? 'focus:outline-red-500'
+                    : 'focus:outline-green-500'
+                }`}
+              />
+              {errors.whenDiedHusband && (
+                <p className='text-primary py-2 pl-2'>
+                  {errors.whenDiedHusband.message}
+                </p>
+              )}
+              <p className='pl-2 pt-4 text-green-400'>
+                কয় বছরের সংসার ছিল উল্লেখ করতে পারেন। আপনার সন্তান আছে কি না,
+                থাকলে তাদের বয়স সহ বর্ণনা দিবেন সংক্ষেপে।
+              </p>
+            </fieldset>
+          )}
           {data?.type === 'পাত্রীর বায়োডাটা' && (
             <div>
               <fieldset className='my-6 rounded-md border-2 border-gray-300 p-4'>

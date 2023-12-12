@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux'
 
 export default function Layout({ children }) {
   const util = useSelector((state) => state.util)
-  console.log('util', util)
 
   return (
     <div className='relative'>
