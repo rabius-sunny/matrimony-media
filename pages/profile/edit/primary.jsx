@@ -86,9 +86,7 @@ export default function Name() {
 
   useEffect(() => {
     if (data) {
-      formProperty.forEach((item) => {
-        return form.setFieldValue(item, data[item])
-      })
+      formProperty.forEach((item) => form.setFieldValue(item, data[item]))
       setRoutes({
         ...routes,
         primary: {
