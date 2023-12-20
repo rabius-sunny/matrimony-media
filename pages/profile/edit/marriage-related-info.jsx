@@ -14,20 +14,6 @@ import { ExclamationIcon } from '@heroicons/react/solid'
 import LongModal from 'components/shared/Modals/LongModal'
 import SaveButton from 'components/bio/SaveButton'
 
-// const conditions = ['অবিবাহিত', 'বিবাহিত', 'ডিভোর্সড', 'বিপত্মীক', 'বিধবা']
-// const properties = [
-//   'whenDiedWife',
-//   'reMarryReason',
-//   'divorceInfo',
-//   'whenDiedHusband',
-//   'demand',
-//   'family_planning',
-//   'education_after_marriage',
-//   'job_after_marriage',
-//   'marry_reason',
-//   'guardians_permission'
-// ]
-
 export default function MarriageRelated() {
   const [states, setStates] = useState({
     widower: false,

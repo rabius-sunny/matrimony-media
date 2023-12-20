@@ -1,6 +1,6 @@
 import ProfileLayout from 'components/profile/ProfileLayout'
-import { useForm, hasLength, isNotEmpty } from '@mantine/form'
-import { MyInput, MySelect } from 'components/profile/MyInputs'
+import { useForm as mantineForm, hasLength, isNotEmpty } from '@mantine/form'
+import { MyInput, MySelect, MyTextarea } from 'components/profile/MyInputs'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import ProfileRoutes from 'components/profile/ProfileRoutes'
@@ -27,6 +27,28 @@ export default function Family() {
   const activeRoute = (routename) =>
     router.route.split('/edit')[1] === routename ? true : false
 
+  const form = mantineForm({
+    initialValues: {
+      father_name: '',
+      mother_name: '',
+      father_profession: '',
+      mother_profession: '',
+      brothers_info: '',
+      sisters_info: '',
+      uncles_profession: '',
+      family_status: ''
+    },
+
+    validate: {
+      father_name: isNotEmpty('ফিল্ডটি পূরণ করতে হবে'),
+      mother_name: isNotEmpty('ফিল্ডটি পূরণ করতে হবে'),
+      father_profession: isNotEmpty('ফিল্ডটি পূরণ করতে হবে'),
+      mother_profession: isNotEmpty('ফিল্ডটি পূরণ করতে হবে'),
+      brothers_info: isNotEmpty('ফিল্ডটি পূরণ করতে হবে'),
+      sisters_info: isNotEmpty('ফিল্ডটি পূরণ করতে হবে'),
+      family_status: isNotEmpty('ফিল্ডটি পূরণ করতে হবে')
+    }
+  })
   const {
     register,
     formState: { errors },
@@ -110,258 +132,68 @@ export default function Family() {
         color={visible.done ? 'success' : 'error'}
       />
       {!loading ? (
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <fieldset
-            className={`my-6 rounded-md border-2 ${
-              errors.father_name ? 'border-red-500' : 'border-green-300'
-            } p-4`}
-          >
-            <legend
-              className={`ml-4 font-bold ${
-                errors.father_name ? 'text-primary' : 'text-secondary'
-              }`}
-            >
-              পিতার নাম (শেয়ার করা হবে না) *
-            </legend>
-            <input
-              defaultValue={data?.father_name}
-              {...register('father_name', {
-                required: 'Father name is required'
-              })}
-              className={`w-full rounded ${
-                errors.father_name ? 'bg-red-100' : 'bg-green-100'
-              } px-4 py-2 font-medium text-green-400 shadow-md ${
-                errors.father_name
-                  ? 'focus:outline-red-500'
-                  : 'focus:outline-green-500'
-              }`}
-            />
-            {errors.father_name && (
-              <p className='text-primary py-2 pl-2'>
-                {errors.father_name.message}
+        <form onSubmit={form.onSubmit((values) => onSubmit(values))}>
+          <MyInput
+            label='পিতার নাম (শেয়ার করা হবে না)'
+            description='পিতার পূর্ণ নাম লিখবেন, নাম নেয়া হচ্ছে শুধু ভেরিফিকেশনের জন্য।
+                আপনার পিতার নাম পাবলিশ করা হবে না এবং কর্তৃপক্ষ ছাড়া আর কেউ দেখতে
+                পারবে না।'
+            form={{ ...form.getInputProps('father_name') }}
+          />
+          <MyInput
+            label='মাতার নাম (শেয়ার করা হবে না)'
+            description='মাতার পূর্ণ নাম লিখবেন, নাম নেয়া হচ্ছে শুধু ভেরিফিকেশনের জন্য।
+                আপনার মাতার নাম পাবলিশ করা হবে না এবং কর্তৃপক্ষ ছাড়া আর কেউ দেখতে
+                পারবে না।'
+            form={{ ...form.getInputProps('mother_name') }}
+          />
+          <MyInput
+            label='পিতার পেশা'
+            description='মৃত হলে প্রথমে (মৃত) লেখার পর পেশা লিখবেন। যেমনঃ (মৃত) ব্যবসায়ী
+                ছিলেন।'
+            form={{ ...form.getInputProps('father_profession') }}
+          />
+          <MyInput
+            label='মাতার পেশা'
+            description='মৃত হলে প্রথমে (মৃত) লেখার পর পেশা লিখবেন। যেমনঃ (মৃত) গৃহিণী
+                ছিলেন।'
+            form={{ ...form.getInputProps('mother_profession') }}
+          />
+          <MyTextarea
+            label='ভাইদের সম্পর্কে তথ্য'
+            description={
+              <p className='text-xs'>
+                কয়জন ভাই রয়েছে তা লিখুন। এরপর সকল ভাইদের শিক্ষাগত যোগ্যতা,
+                বৈবাহিক অবস্থা, পেশা, বর্তমান অবস্থান লিখুন। একাধিক ভাই থাকলে
+                কমা দিয়ে নিচের লাইনে এসে লিখবেন। ভাই না থাকলে লিখবেন{' '}
+                <span className='text-red-300'>ভাই নেই</span>
               </p>
-            )}
-            <p className='pl-2 pt-4 text-green-400'>
-              পিতার পূর্ণ নাম লিখবেন, নাম নেয়া হচ্ছে শুধু ভেরিফিকেশনের জন্য।
-              আপনার পিতার নাম পাবলিশ করা হবে না এবং কর্তৃপক্ষ ছাড়া আর কেউ দেখতে
-              পারবে না।
-            </p>
-          </fieldset>
-          <fieldset
-            className={`my-6 rounded-md border-2 ${
-              errors.mother_name ? 'border-red-500' : 'border-green-300'
-            } p-4`}
-          >
-            <legend
-              className={`ml-4 font-bold ${
-                errors.mother_name ? 'text-primary' : 'text-secondary'
-              }`}
-            >
-              মাতার নাম (শেয়ার করা হবে না) *
-            </legend>
-            <input
-              defaultValue={data?.mother_name}
-              {...register('mother_name', {
-                required: 'Mother name is required'
-              })}
-              className={`w-full rounded ${
-                errors.mother_name ? 'bg-red-100' : 'bg-green-100'
-              } px-4 py-2 font-medium text-green-400 shadow-md ${
-                errors.mother_name
-                  ? 'focus:outline-red-500'
-                  : 'focus:outline-green-500'
-              }`}
-            />
-            {errors.mother_name && (
-              <p className='text-primary py-2 pl-2'>
-                {errors.mother_name.message}
+            }
+            form={{ ...form.getInputProps('brothers_info') }}
+          />
+          <MyTextarea
+            label='ভাইদের সম্পর্কে তথ্য'
+            description={
+              <p className='text-xs'>
+                কয়জন বোন রয়েছে তা লিখুন। এরপর সকল বোনদের শিক্ষাগত যোগ্যতা,
+                বৈবাহিক অবস্থা, পেশা, বিবাহিত হলে স্বামীর পেশা লিখুন। একাধিক বোন
+                থাকলে কমা দিয়ে নিচের লাইনে এসে লিখবেন। বোন না থাকলে লিখবেন{' '}
+                <span className='text-red-300'>বোন নেই</span>
               </p>
-            )}
-            <p className='pl-2 pt-4 text-green-400'>
-              মাতার পূর্ণ নাম লিখবেন, নাম নেয়া হচ্ছে শুধু ভেরিফিকেশনের জন্য।
-              আপনার মাতার নাম পাবলিশ করা হবে না এবং কর্তৃপক্ষ ছাড়া আর কেউ দেখতে
-              পারবে না।
-            </p>
-          </fieldset>
-          <fieldset
-            className={`my-6 rounded-md border-2 ${
-              errors.father_profession ? 'border-red-500' : 'border-green-300'
-            } p-4`}
-          >
-            <legend
-              className={`ml-4 font-bold ${
-                errors.father_profession ? 'text-primary' : 'text-secondary'
-              }`}
-            >
-              পিতার পেশা *
-            </legend>
-            <input
-              defaultValue={data?.father_profession}
-              {...register('father_profession', {
-                required: "Father's profession is required"
-              })}
-              className={`w-full rounded ${
-                errors.father_profession ? 'bg-red-100' : 'bg-green-100'
-              } px-4 py-2 font-medium text-green-400 shadow-md ${
-                errors.father_profession
-                  ? 'focus:outline-red-500'
-                  : 'focus:outline-green-500'
-              }`}
-            />
-            {errors.father_profession && (
-              <p className='text-primary py-2 pl-2'>
-                {errors.father_profession.message}
-              </p>
-            )}
-            <p className='pl-2 pt-4 text-green-400'>
-              মৃত হলে প্রথমে (মৃত) লেখার পর পেশা লিখবেন। যেমনঃ (মৃত) ব্যবসায়ী
-              ছিলেন।
-            </p>
-          </fieldset>
-          <fieldset
-            className={`my-6 rounded-md border-2 ${
-              errors.mother_profession ? 'border-red-500' : 'border-green-300'
-            } p-4`}
-          >
-            <legend
-              className={`ml-4 font-bold ${
-                errors.mother_profession ? 'text-primary' : 'text-secondary'
-              }`}
-            >
-              মাতার পেশা *
-            </legend>
-            <input
-              defaultValue={data?.mother_profession}
-              {...register('mother_profession', {
-                required: "Mother's profession is required"
-              })}
-              className={`w-full rounded ${
-                errors.mother_profession ? 'bg-red-100' : 'bg-green-100'
-              } px-4 py-2 font-medium text-green-400 shadow-md ${
-                errors.mother_profession
-                  ? 'focus:outline-red-500'
-                  : 'focus:outline-green-500'
-              }`}
-            />
-            {errors.mother_profession && (
-              <p className='text-primary py-2 pl-2'>
-                {errors.mother_profession.message}
-              </p>
-            )}
-            <p className='pl-2 pt-4 text-green-400'>
-              মৃত হলে প্রথমে (মৃত) লেখার পর পেশা লিখবেন। যেমনঃ (মৃত) গৃহিণী
-              ছিলেন।
-            </p>
-          </fieldset>
-          <fieldset
-            className={`my-6 rounded-md border-2 ${
-              errors.brothers_info ? 'border-red-500' : 'border-green-300'
-            } p-4`}
-          >
-            <legend
-              className={`ml-4 font-bold ${
-                errors.brothers_info ? 'text-primary' : 'text-secondary'
-              }`}
-            >
-              ভাইদের সম্পর্কে তথ্য
-            </legend>
-            <textarea
-              defaultValue={data?.brothers_info}
-              rows={5}
-              {...register('brothers_info')}
-              className={`w-full rounded ${
-                errors.brothers_info ? 'bg-red-100' : 'bg-green-100'
-              } px-4 py-2 font-medium text-green-400 shadow-md ${
-                errors.brothers_info
-                  ? 'focus:outline-red-500'
-                  : 'focus:outline-green-500'
-              }`}
-            />
-            <p className='pl-2 pt-4 text-green-400'>
-              কয়জন ভাই রয়েছে তা লিখুন। এরপর সকল ভাইদের শিক্ষাগত যোগ্যতা, বৈবাহিক
-              অবস্থা, পেশা, বর্তমান অবস্থান লিখুন। একাধিক ভাই থাকলে কমা দিয়ে
-              নিচের লাইনে এসে লিখবেন। ভাই না থাকলে লিখবেন{' '}
-              <span className='text-red-300'>ভাই নেই</span>
-            </p>
-          </fieldset>
-
-          <fieldset
-            className={`my-6 rounded-md border-2 ${
-              errors.sisters_info ? 'border-red-500' : 'border-green-300'
-            } p-4`}
-          >
-            <legend
-              className={`ml-4 font-bold ${
-                errors.sisters_info ? 'text-primary' : 'text-secondary'
-              }`}
-            >
-              বোনদের সম্পর্কে তথ্য
-            </legend>
-            <textarea
-              defaultValue={data?.sisters_info}
-              rows={5}
-              {...register('sisters_info')}
-              className={`w-full rounded ${
-                errors.sisters_info ? 'bg-red-100' : 'bg-green-100'
-              } px-4 py-2 font-medium text-green-400 shadow-md ${
-                errors.sisters_info
-                  ? 'focus:outline-red-500'
-                  : 'focus:outline-green-500'
-              }`}
-            />
-            <p className='pl-2 pt-4 text-green-400'>
-              কয়জন বোন রয়েছে তা লিখুন। এরপর সকল বোনদের শিক্ষাগত যোগ্যতা, বৈবাহিক
-              অবস্থা, পেশা, বিবাহিত হলে স্বামীর পেশা লিখুন। একাধিক বোন থাকলে কমা
-              দিয়ে নিচের লাইনে এসে লিখবেন। বোন না থাকলে লিখবেন{' '}
-              <span className='text-red-300'>বোন নেই</span>
-            </p>
-          </fieldset>
-
-          <fieldset className='my-6 rounded-md border-2 border-green-300 p-4'>
-            <legend className='ml-4 font-bold text-secondary'>
-              চাচা-মামাদের পেশা
-            </legend>
-            <textarea
-              defaultValue={data?.uncles_profession}
-              rows={5}
-              {...register('uncles_profession')}
-              className='w-full rounded bg-green-100 px-4 py-2 font-medium text-green-400 shadow-md focus:outline-green-500'
-            />
-            <p className='pl-2 pt-4 text-green-400'>
-              জানাতে অনিচ্ছুক হলে ফাঁকা রাখুন।
-            </p>
-          </fieldset>
-          <fieldset
-            className={`my-6 rounded-md border-2 ${
-              errors.family_status ? 'border-red-500' : 'border-green-300'
-            } p-4`}
-          >
-            <legend
-              className={`ml-4 font-bold ${
-                errors.family_status ? 'text-primary' : 'text-secondary'
-              }`}
-            >
-              পরিবারের অর্থনৈতিক ও সামাজিক অবস্থা *
-            </legend>
-            <textarea
-              defaultValue={data?.family_status}
-              rows={5}
-              {...register('family_status', { required: 'field is required' })}
-              className={`w-full rounded ${
-                errors.family_status ? 'bg-red-100' : 'bg-green-100'
-              } px-4 py-2 font-medium text-green-400 shadow-md ${
-                errors.family_status
-                  ? 'focus:outline-red-500'
-                  : 'focus:outline-green-500'
-              }`}
-            />
-            {errors.family_status && (
-              <p className='text-primary py-2 pl-2'>
-                {errors.family_status.message}
-              </p>
-            )}
-            <p className='pl-2 pt-4 text-green-400'>সংক্ষেপে বর্ণনা করুন।</p>
-          </fieldset>
+            }
+            form={{ ...form.getInputProps('sisters_info') }}
+          />
+          <MyTextarea
+            label='চাচা-মামাদের পেশা'
+            withAsterisk={false}
+            description='জানাতে অনিচ্ছুক হলে ফাঁকা রাখুন।'
+            form={{ ...form.getInputProps('uncles_profession') }}
+          />
+          <MyTextarea
+            label='পরিবারের অর্থনৈতিক ও সামাজিক অবস্থা'
+            description='সংক্ষেপে বর্ণনা করুন।'
+            form={{ ...form.getInputProps('family_status') }}
+          />
           <SaveButton
             isLoading={isLoading}
             fields={fields}

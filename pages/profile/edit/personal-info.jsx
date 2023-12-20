@@ -1,5 +1,5 @@
 import ProfileLayout from 'components/profile/ProfileLayout'
-import { useForm, hasLength, isNotEmpty } from '@mantine/form'
+import { useForm, isNotEmpty } from '@mantine/form'
 import { MyInput, MySelect, MyTextarea } from 'components/profile/MyInputs'
 import { useRouter } from 'next/router'
 import { useEffect, useMemo, useState } from 'react'
@@ -14,7 +14,6 @@ import Link from 'next/link'
 import { ExclamationIcon } from '@heroicons/react/solid'
 import LongModal from 'components/shared/Modals/LongModal'
 import SaveButton from 'components/bio/SaveButton'
-import filterEmptyProperties from 'hooks/filterEmptyObject'
 
 export default function PersonalInfo() {
   const { data, loading, mutate } = getData()
@@ -123,19 +122,21 @@ export default function PersonalInfo() {
   useEffect(() => {
     if (data) {
       formProperty.forEach((item) => {
-        return form.setFieldValue(item, data[item])
-      })
-      setRoutes({
-        ...routes,
-        personal: {
-          name: 'ব্যক্তিগত',
-          link: '/personal-info',
-          status: 'done'
-        }
+        return form.setFieldValue(item, data[item] || '')
       })
       if (!data.type) {
         setDone(false)
-      } else setDone(true)
+      } else {
+        setDone(true)
+        setRoutes({
+          ...routes,
+          personal: {
+            name: 'ব্যক্তিগত',
+            link: '/personal-info',
+            status: 'done'
+          }
+        })
+      }
     }
   }, [data, loading])
 

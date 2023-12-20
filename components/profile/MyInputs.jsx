@@ -17,9 +17,7 @@ export function MyInput({
       withAsterisk={withAsterisk}
       classNames={{
         label: `ml-1 font-bold ${error ? 'text-danger' : 'text-secondary'}`,
-        input: `shadow-md bg-${
-          error ? 'red' : 'green'
-        }-100 border-0 focus:border-[1px] focus:border-green-300`,
+        input: `shadow-md bg-green-100 border-0 focus:border-[1px] focus:border-green-300`,
         description: 'mt-1 text-secondary'
       }}
       inputWrapperOrder={['label', 'input', 'error', 'description']}
@@ -44,9 +42,7 @@ export function MyTextarea({
       withAsterisk={withAsterisk}
       classNames={{
         label: `ml-1 font-bold ${error ? 'text-danger' : 'text-secondary'}`,
-        input: `shadow-md bg-${
-          error ? 'red' : 'green'
-        }-100 border-0 focus:border-[1px] focus:border-green-300`,
+        input: `shadow-md bg-green-100 border-0 focus:border-[1px] focus:border-green-300`,
         description: 'mt-1 text-secondary'
       }}
       inputWrapperOrder={['label', 'input', 'error', 'description']}

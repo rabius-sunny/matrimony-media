@@ -1,11 +1,9 @@
 import ProfileLayout from 'components/profile/ProfileLayout'
-import { useForm, hasLength, isNotEmpty } from '@mantine/form'
+import { useForm, isNotEmpty } from '@mantine/form'
 import { MyInput, MySelect } from 'components/profile/MyInputs'
 import ProfileRoutes from 'components/profile/ProfileRoutes'
 import { useRouter } from 'next/router'
 import getData from 'hooks/getData'
-import { CInput, CSelect } from 'components/profile/CInputs'
-import CForm from 'components/profile/CFroms'
 import {
   _type,
   _condition,
@@ -40,40 +38,71 @@ export default function GeneralInfo() {
   const activeRoute = (routename) =>
     router.route.split('/edit')[1] === routename ? true : false
 
-  const onSubmit = (data) => {
-    setIsLoading(true)
-    biodataRequests
-      .updateBio({
-        ...data,
-        age: new Date().getFullYear() - data.birth,
-        published: false,
-        featured: false
-      })
-      .then((info) => {
-        if (info.message === 'ok') {
-          biodataRequests.setField(3).then((info) => {
-            if (info.message === 'ok') {
-              setIsLoading(false)
-              mutate()
-              setVisible({ message: '', status: false, done: true })
+  const form = useForm({
+    initialValues: {
+      permanent_jilla: '',
+      permanent_division: '',
+      current_jilla: '',
+      current_division: '',
+      birth: '',
+      complexion: '',
+      height: '',
+      weight: '',
+      blood: '',
+      profession: '',
+      income: ''
+    },
 
-              window.scroll({
-                top: 100,
-                left: 100,
-                behavior: 'smooth'
-              })
-            }
-          })
-        }
-      })
-      .catch((err) => {
-        setIsLoading(false)
-        setVisible({
-          message: 'ইরর হয়েছে, আবার চেষ্টা করুন',
-          status: true,
-          done: false
-        })
-      })
+    validate: {
+      permanent_jilla: isNotEmpty('ফিল্ডটি পূরণ করুন'),
+      permanent_division: isNotEmpty('ফিল্ডটি পূরণ করুন'),
+      current_jilla: isNotEmpty('ফিল্ডটি পূরণ করুন'),
+      current_division: isNotEmpty('ফিল্ডটি পূরণ করুন'),
+      birth: isNotEmpty('ফিল্ডটি পূরণ করুন'),
+      complexion: isNotEmpty('ফিল্ডটি পূরণ করুন'),
+      height: isNotEmpty('ফিল্ডটি পূরণ করুন'),
+      weight: isNotEmpty('ফিল্ডটি পূরণ করুন'),
+      blood: isNotEmpty('ফিল্ডটি পূরণ করুন'),
+      profession: isNotEmpty('ফিল্ডটি পূরণ করুন'),
+      income:
+        data?.type === 'পাত্রের বায়োডাটা' && isNotEmpty('ফিল্ডটি পূরণ করুন')
+    }
+  })
+  const onSubmit = (data) => {
+    console.log('data', data)
+    // setIsLoading(true)
+    // biodataRequests
+    //   .updateBio({
+    //     ...data,
+    //     age: new Date().getFullYear() - data.birth,
+    //     published: false,
+    //     featured: false
+    //   })
+    //   .then((info) => {
+    //     if (info.message === 'ok') {
+    //       biodataRequests.setField(3).then((info) => {
+    //         if (info.message === 'ok') {
+    //           setIsLoading(false)
+    //           mutate()
+    //           setVisible({ message: '', status: false, done: true })
+
+    //           window.scroll({
+    //             top: 100,
+    //             left: 100,
+    //             behavior: 'smooth'
+    //           })
+    //         }
+    //       })
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     setIsLoading(false)
+    //     setVisible({
+    //       message: 'ইরর হয়েছে, আবার চেষ্টা করুন',
+    //       status: true,
+    //       done: false
+    //     })
+    //   })
   }
 
   useEffect(() => {
@@ -125,98 +154,80 @@ export default function GeneralInfo() {
           <FormSkeleton />
         ) : (
           data && (
-            <CForm onSubmit={onSubmit}>
-              <CSelect
-                legend='স্থায়ী ঠিকানা *'
-                message='Field is required'
-                options={_address_jilla}
-                name='permanent_jilla'
-                defaultValue={data?.permanent_jilla}
+            <form onSubmit={form.onSubmit((values) => onSubmit(values))}>
+              <MySelect
+                label='স্থায়ী ঠিকানা'
+                placeholder='select option'
+                data={_address_jilla}
+                form={{ ...form.getInputProps('permanent_jilla') }}
               />
-
-              <CSelect
-                legend='বিভাগ *'
-                message='Field is required'
-                options={_address_division}
-                name='permanent_division'
-                defaultValue={data?.permanent_division}
+              <MySelect
+                label='বিভাগ'
+                placeholder='select option'
+                data={_address_division}
+                form={{ ...form.getInputProps('permanent_division') }}
               />
-
-              <CSelect
-                legend='বর্তমান ঠিকানা *'
-                message='Field is required'
-                options={_address_jilla}
-                name='current_jilla'
-                defaultValue={data?.current_jilla}
+              <MySelect
+                label='বর্তমান ঠিকানা'
+                placeholder='select option'
+                data={_address_jilla}
+                form={{ ...form.getInputProps('current_jilla') }}
               />
-
-              <CSelect
-                legend='বিভাগ *'
-                message='Field is required'
-                options={_address_division}
-                name='current_division'
-                defaultValue={data?.current_division}
+              <MySelect
+                label='বিভাগ'
+                placeholder='select option'
+                data={_address_division}
+                form={{ ...form.getInputProps('current_division') }}
               />
-
-              <CSelect
-                legend='জন্মসন (আসল) *'
-                message='Field is required'
-                options={_birthYear}
-                name='birth'
-                defaultValue={data?.birth}
+              <MySelect
+                label='জন্মসন (আসল)'
+                placeholder='select option'
+                data={_birthYear}
+                form={{ ...form.getInputProps('birth') }}
               />
-
-              <CSelect
-                legend='গাত্রবর্ণ'
-                options={_complexion}
-                name='complexion'
-                defaultValue={data?.complexion}
+              <MySelect
+                label='গাত্রবর্ণ'
+                placeholder='select option'
+                data={_complexion}
+                form={{ ...form.getInputProps('complexion') }}
               />
-
-              <CSelect
-                legend='উচ্চতা'
-                options={_height}
-                name='height'
-                defaultValue={data?.height}
+              <MySelect
+                label='উচ্চতা'
+                placeholder='select option'
+                data={_height}
+                form={{ ...form.getInputProps('height') }}
               />
-
-              <CSelect
-                legend='ওজন'
-                options={_weight}
-                name='weight'
-                defaultValue={data?.weight}
+              <MySelect
+                label='ওজন'
+                placeholder='select option'
+                data={_weight}
+                form={{ ...form.getInputProps('weight') }}
               />
-
-              <CSelect
-                legend='Blood Group'
-                options={_bloodGroup}
-                name='blood'
-                defaultValue={data?.blood}
+              <MySelect
+                label='রক্তের গ্রুপ'
+                placeholder='select option'
+                data={_bloodGroup}
+                form={{ ...form.getInputProps('blood') }}
               />
-
-              <CInput
-                name='profession'
+              <MyInput
+                label='পেশা'
                 placeholder='সফটওয়্যার ইঞ্জিনিয়ার'
-                legend='পেশা *'
-                defaultValue={data?.profession}
                 description='সর্বোচ্চ ৩ শব্দে শুধু পদবী লিখবেন। পেশা সম্পর্কে বিস্তারিত লিখার
-            জন্য সামনে প্রশ্ন আসছে।'
-                message='profession is required'
+                জন্য সামনে প্রশ্ন আসছে।'
+                form={{ ...form.getInputProps('profession') }}
               />
-
-              <CInput
-                name='income'
+              <MyInput
+                label='মাসিক আয়'
+                withAsterisk={data?.type === 'পাত্রের বায়োডাটা'}
                 placeholder='৩০ হাজার'
-                legend='মাসিক আয়'
-                defaultValue={data?.income}
-                description='জানাতে অনিচ্ছুক হলে ঘরটি ফাঁকা রাখুন।'
+                form={{ ...form.getInputProps('income') }}
               />
 
               <SaveButton
                 isLoading={isLoading}
                 fields={fields}
               />
-            </CForm>
+            </form>
           )
         )}
       </ProfileLayout>
