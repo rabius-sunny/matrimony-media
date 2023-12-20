@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import ProfileLayout from 'components/profile/ProfileLayout'
-import { useForm, hasLength, isNotEmpty } from '@mantine/form'
+import { useForm as mantineForm, isNotEmpty } from '@mantine/form'
 import { MyInput, MySelect } from 'components/profile/MyInputs'
 import ProfileRoutes from 'components/profile/ProfileRoutes'
 import biodataRequests from 'services/network/biodataRequests'
@@ -10,7 +10,7 @@ import CForm from 'components/profile/CFroms'
 import FormSkeleton from 'components/shared/FormSkeleton'
 import Head from 'next/head'
 import { useAppContext } from 'utils/context'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import LongModal from 'components/shared/Modals/LongModal'
 import SaveButton from 'components/bio/SaveButton'
 
@@ -27,6 +27,20 @@ export default function Address() {
   const activeRoute = (routename) =>
     router.route.split('/edit')[1] === routename ? true : false
   const { routes, setRoutes } = useAppContext()
+
+  const form = mantineForm({
+    initialValues: {
+      permanent_address: '',
+      current_address: '',
+      where_lived: ''
+    },
+
+    validate: {
+      permanent_address: isNotEmpty('ফিল্ডটি পূরণ করতে হবে।'),
+      current_address: isNotEmpty('ফিল্ডটি পূরণ করতে হবে।'),
+      where_lived: isNotEmpty('ফিল্ডটি পূরণ করতে হবে।')
+    }
+  })
 
   const onSubmit = (data) => {
     setIsLoading(true)
@@ -62,9 +76,12 @@ export default function Address() {
         })
       })
   }
-
+  const formProperty = useMemo(() => {
+    return Object.keys(form.values)
+  }, [])
   useEffect(() => {
     if (data) {
+      formProperty.forEach((item) => form.setFieldValue(item, data[item]))
       setRoutes({
         ...routes,
         address: {
@@ -105,35 +122,27 @@ export default function Address() {
       {loading ? (
         <FormSkeleton />
       ) : (
-        <CForm onSubmit={onSubmit}>
-          <CInput
-            legend='স্থায়ী ঠিকানা *'
-            name='permanent_address'
+        <form onSubmit={form.onSubmit((values) => onSubmit(values))}>
+          <MyInput
+            label='স্থায়ী ঠিকানা'
             placeholder='গুলশান-২, ঢাকা'
-            defaultValue={data?.permanent_address}
-            message='field is required'
+            form={{ ...form.getInputProps('permanent_address') }}
           />
-
-          <CInput
-            legend='বর্তমান ঠিকানা *'
-            name='current_address'
-            placeholder='ভাটারা, গুলশান-২, ঢাকা'
-            defaultValue={data?.current_address}
-            message='field is required'
+          <MyInput
+            label='বর্তমান ঠিকানা'
+            placeholder='গুলশান-২, ঢাকা'
+            form={{ ...form.getInputProps('current_address') }}
           />
-
-          <CInput
-            legend='কোথায় বড় হয়েছেন? *'
-            name='where_lived'
-            defaultValue={data?.where_lived}
-            message='field is required'
+          <MyInput
+            label='কোথায় বড় হয়েছেন?'
+            form={{ ...form.getInputProps('where_lived') }}
           />
 
           <SaveButton
             isLoading={isLoading}
             fields={fields}
           />
-        </CForm>
+        </form>
       )}
     </ProfileLayout>
   )

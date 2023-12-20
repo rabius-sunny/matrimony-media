@@ -17,7 +17,7 @@ import {
 } from 'assets/profileinfo'
 import FormSkeleton from 'components/shared/FormSkeleton'
 import Head from 'next/head'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useAppContext } from 'utils/context'
 import biodataRequests from 'services/network/biodataRequests'
 import LongModal from 'components/shared/Modals/LongModal'
@@ -29,7 +29,7 @@ export default function GeneralInfo() {
     status: false,
     done: false
   })
-  const { data, loading, mutate } = getData()
+  const { data, loading } = getData()
   const { routes, setRoutes } = useAppContext()
   const [isLoading, setIsLoading] = useState(false)
   const [fields, setFields] = useState([])
@@ -69,44 +69,47 @@ export default function GeneralInfo() {
     }
   })
   const onSubmit = (data) => {
-    console.log('data', data)
-    // setIsLoading(true)
-    // biodataRequests
-    //   .updateBio({
-    //     ...data,
-    //     age: new Date().getFullYear() - data.birth,
-    //     published: false,
-    //     featured: false
-    //   })
-    //   .then((info) => {
-    //     if (info.message === 'ok') {
-    //       biodataRequests.setField(3).then((info) => {
-    //         if (info.message === 'ok') {
-    //           setIsLoading(false)
-    //           mutate()
-    //           setVisible({ message: '', status: false, done: true })
+    setIsLoading(true)
+    biodataRequests
+      .updateBio({
+        ...data,
+        age: new Date().getFullYear() - data.birth,
+        published: false,
+        featured: false
+      })
+      .then((info) => {
+        if (info.message === 'ok') {
+          biodataRequests.setField(3).then((info) => {
+            if (info.message === 'ok') {
+              setIsLoading(false)
+              mutate()
+              setVisible({ message: '', status: false, done: true })
 
-    //           window.scroll({
-    //             top: 100,
-    //             left: 100,
-    //             behavior: 'smooth'
-    //           })
-    //         }
-    //       })
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     setIsLoading(false)
-    //     setVisible({
-    //       message: 'ইরর হয়েছে, আবার চেষ্টা করুন',
-    //       status: true,
-    //       done: false
-    //     })
-    //   })
+              window.scroll({
+                top: 100,
+                left: 100,
+                behavior: 'smooth'
+              })
+            }
+          })
+        }
+      })
+      .catch((err) => {
+        setIsLoading(false)
+        setVisible({
+          message: 'ইরর হয়েছে, আবার চেষ্টা করুন',
+          status: true,
+          done: false
+        })
+      })
   }
+  const formProperty = useMemo(() => {
+    return Object.keys(form.values)
+  }, [])
 
   useEffect(() => {
     if (data) {
+      formProperty.forEach((item) => form.setFieldValue(item, data[item]))
       setRoutes({
         ...routes,
         general: {

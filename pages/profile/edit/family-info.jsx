@@ -1,11 +1,10 @@
 import ProfileLayout from 'components/profile/ProfileLayout'
-import { useForm as mantineForm, hasLength, isNotEmpty } from '@mantine/form'
-import { MyInput, MySelect, MyTextarea } from 'components/profile/MyInputs'
-import { useState, useEffect } from 'react'
+import { useForm as mantineForm, isNotEmpty } from '@mantine/form'
+import { MyInput, MyTextarea } from 'components/profile/MyInputs'
+import { useState, useEffect, useMemo } from 'react'
 import { useRouter } from 'next/router'
 import ProfileRoutes from 'components/profile/ProfileRoutes'
 import { _brothers } from 'assets/profileinfo'
-import { useForm } from 'react-hook-form'
 import biodataRequests from 'services/network/biodataRequests'
 import getData from 'hooks/getData'
 import FormSkeleton from 'components/shared/FormSkeleton'
@@ -49,13 +48,10 @@ export default function Family() {
       family_status: isNotEmpty('ফিল্ডটি পূরণ করতে হবে')
     }
   })
-  const {
-    register,
-    formState: { errors },
-    handleSubmit
-  } = useForm({
-    mode: 'onChange'
-  })
+  const formProperty = useMemo(() => {
+    return Object.keys(form.values)
+  }, [])
+
   const onSubmit = (data) => {
     setIsLoading(true)
     biodataRequests
@@ -94,6 +90,7 @@ export default function Family() {
   const { routes, setRoutes } = useAppContext()
   useEffect(() => {
     if (data) {
+      formProperty.forEach((item) => form.setFieldValue(item, data[item]))
       setRoutes({
         ...routes,
         family: {
