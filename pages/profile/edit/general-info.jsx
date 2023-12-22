@@ -1,8 +1,7 @@
 import ProfileLayout from 'components/profile/ProfileLayout'
 import { useForm, isNotEmpty } from '@mantine/form'
 import { MyInput, MySelect } from 'components/profile/MyInputs'
-import ProfileRoutes from 'components/profile/ProfileRoutes'
-import { useRouter } from 'next/router'
+
 import getData from 'hooks/getData'
 import {
   _type,
@@ -33,10 +32,6 @@ export default function GeneralInfo() {
   const { routes, setRoutes } = useAppContext()
   const [isLoading, setIsLoading] = useState(false)
   const [fields, setFields] = useState([])
-  const router = useRouter()
-
-  const activeRoute = (routename) =>
-    router.route.split('/edit')[1] === routename ? true : false
 
   const form = useForm({
     initialValues: {
@@ -74,23 +69,20 @@ export default function GeneralInfo() {
       .updateBio({
         ...data,
         age: new Date().getFullYear() - data.birth,
+        key: 'general',
         published: false,
         featured: false
       })
       .then((info) => {
         if (info.message === 'ok') {
-          biodataRequests.setField(3).then((info) => {
-            if (info.message === 'ok') {
-              setIsLoading(false)
-              mutate()
-              setVisible({ message: '', status: false, done: true })
+          setIsLoading(false)
+          mutate()
+          setVisible({ message: '', status: false, done: true })
 
-              window.scroll({
-                top: 100,
-                left: 100,
-                behavior: 'smooth'
-              })
-            }
+          window.scroll({
+            top: 100,
+            left: 100,
+            behavior: 'smooth'
           })
         }
       })
@@ -134,7 +126,6 @@ export default function GeneralInfo() {
         <Head>
           <title>সাধারণ তথ্য</title>
         </Head>
-        <ProfileRoutes activeRoute={activeRoute} />
 
         <LongModal
           visible={visible.status}

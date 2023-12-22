@@ -1,8 +1,7 @@
 import ProfileLayout from 'components/profile/ProfileLayout'
 import { useForm as mantineForm, isNotEmpty } from '@mantine/form'
 import { MyTextarea } from 'components/profile/MyInputs'
-import { useRouter } from 'next/router'
-import ProfileRoutes from 'components/profile/ProfileRoutes'
+
 import biodataRequests from 'services/network/biodataRequests'
 import getData from 'hooks/getData'
 import FormSkeleton from 'components/shared/FormSkeleton'
@@ -14,7 +13,7 @@ import SaveButton from 'components/bio/SaveButton'
 
 export default function OthersInfo() {
   const { data, loading, mutate } = getData()
-  const router = useRouter()
+
   const { routes, setRoutes } = useAppContext()
   const [visible, setVisible] = useState({
     message: '',
@@ -23,8 +22,6 @@ export default function OthersInfo() {
   })
   const [isLoading, setIsLoading] = useState(false)
   const [fields, setFields] = useState([])
-  const activeRoute = (routename) =>
-    router.route.split('/edit')[1] === routename ? true : false
 
   const form = mantineForm({
     initialValues: {
@@ -44,22 +41,20 @@ export default function OthersInfo() {
     biodataRequests
       .updateBio({
         ...data,
+        key: 'others',
         published: false,
         featured: false
       })
       .then((info) => {
         if (info.message === 'ok') {
-          biodataRequests.setField(7).then((info) => {
-            if (info.message === 'ok') {
-              setIsLoading(false)
-              mutate()
-              setVisible({ message: '', status: false, done: true })
-              window.scroll({
-                top: 100,
-                left: 100,
-                behavior: 'smooth'
-              })
-            }
+          setIsLoading(false)
+          mutate()
+          setVisible({ message: '', status: false, done: true })
+
+          window.scroll({
+            top: 100,
+            left: 100,
+            behavior: 'smooth'
           })
         }
       })
@@ -102,7 +97,7 @@ export default function OthersInfo() {
       <Head>
         <title>অন্যান্য তথ্য</title>
       </Head>
-      <ProfileRoutes activeRoute={activeRoute} />
+
       <LongModal
         visible={visible.status}
         onClose={() => setVisible({ message: '', status: false, done: false })}

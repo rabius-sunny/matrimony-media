@@ -2,8 +2,7 @@ import ProfileLayout from 'components/profile/ProfileLayout'
 import { useForm as mantineForm, isNotEmpty } from '@mantine/form'
 import { MyInput, MyTextarea } from 'components/profile/MyInputs'
 import { useState, useEffect, useMemo } from 'react'
-import { useRouter } from 'next/router'
-import ProfileRoutes from 'components/profile/ProfileRoutes'
+
 import { _brothers } from 'assets/profileinfo'
 import biodataRequests from 'services/network/biodataRequests'
 import getData from 'hooks/getData'
@@ -22,9 +21,6 @@ export default function Family() {
   })
   const [isLoading, setIsLoading] = useState(false)
   const [fields, setFields] = useState([])
-  const router = useRouter()
-  const activeRoute = (routename) =>
-    router.route.split('/edit')[1] === routename ? true : false
 
   const form = mantineForm({
     initialValues: {
@@ -57,23 +53,20 @@ export default function Family() {
     biodataRequests
       .updateBio({
         ...data,
+        key: 'family',
         published: false,
         featured: false
       })
       .then((info) => {
         if (info.message === 'ok') {
-          biodataRequests.setField(4).then((info) => {
-            if (info.message === 'ok') {
-              setIsLoading(false)
-              mutate()
-              setVisible({ message: '', status: false, done: true })
+          setIsLoading(false)
+          mutate()
+          setVisible({ message: '', status: false, done: true })
 
-              window.scroll({
-                top: 100,
-                left: 100,
-                behavior: 'smooth'
-              })
-            }
+          window.scroll({
+            top: 100,
+            left: 100,
+            behavior: 'smooth'
           })
         }
       })
@@ -115,7 +108,7 @@ export default function Family() {
       <Head>
         <title>পারিবারিক তথ্য</title>
       </Head>
-      <ProfileRoutes activeRoute={activeRoute} />
+
       <LongModal
         visible={visible.status}
         onClose={() => setVisible({ message: '', status: false, done: false })}

@@ -1,9 +1,9 @@
 import ProfileLayout from 'components/profile/ProfileLayout'
 import { useForm, isNotEmpty } from '@mantine/form'
 import { MyInput, MySelect, MyTextarea } from 'components/profile/MyInputs'
-import { useRouter } from 'next/router'
+
 import { useEffect, useMemo, useState } from 'react'
-import ProfileRoutes from 'components/profile/ProfileRoutes'
+
 import getData from 'hooks/getData'
 import biodataRequests from 'services/network/biodataRequests'
 import FormSkeleton from 'components/shared/FormSkeleton'
@@ -25,9 +25,6 @@ export default function PersonalInfo() {
   const [isLoading, setIsLoading] = useState(false)
   const [fields, setFields] = useState([])
   const [done, setDone] = useState(false)
-  const router = useRouter()
-  const activeRoute = (routename) =>
-    router.route.split('/edit')[1] === routename ? true : false
 
   const form = useForm({
     initialValues: {
@@ -84,23 +81,20 @@ export default function PersonalInfo() {
     biodataRequests
       .updateBio({
         ...data,
+        key: 'personal',
         published: false,
         featured: false
       })
       .then((info) => {
         if (info.message === 'ok') {
-          biodataRequests.setField(1).then((info) => {
-            if (info.message === 'ok') {
-              setIsLoading(false)
-              mutate()
-              setVisible({ message: '', status: false, done: true })
+          setIsLoading(false)
+          mutate()
+          setVisible({ message: '', status: false, done: true })
 
-              window.scroll({
-                top: 100,
-                left: 100,
-                behavior: 'smooth'
-              })
-            }
+          window.scroll({
+            top: 100,
+            left: 100,
+            behavior: 'smooth'
           })
         }
       })
@@ -121,9 +115,7 @@ export default function PersonalInfo() {
 
   useEffect(() => {
     if (data) {
-      formProperty.forEach((item) => {
-        return form.setFieldValue(item, data[item] || '')
-      })
+      formProperty.forEach((item) => form.setFieldValue(item, data[item] || ''))
       if (!data.type) {
         setDone(false)
       } else {
@@ -154,7 +146,7 @@ export default function PersonalInfo() {
       <Head>
         <title>ব্যক্তিগত তথ্য</title>
       </Head>
-      <ProfileRoutes activeRoute={activeRoute} />
+
       <LongModal
         visible={visible.status}
         onClose={() => setVisible({ message: '', status: false, done: false })}

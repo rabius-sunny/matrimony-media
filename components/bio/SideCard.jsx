@@ -1,30 +1,15 @@
+import { useState } from 'react'
 import Image from 'next/image'
 import male from 'public/images/male.svg'
 import female from 'public/images/female.svg'
 import CSkeleton from 'components/shared/CSkeleton'
-import { useEffect, useState } from 'react'
 import copyToClip from 'utils/copyToClip'
 import LongModal from 'components/shared/Modals/LongModal'
 import { Button } from '@nextui-org/react'
 import userRequest from 'services/network/userRequest'
 
-export default function BioInfoCard({ data, loading, uId }) {
-  const [id, setId] = useState(null)
+export default function SideCard({ data, loading }) {
   const [copy, setCopy] = useState(false)
-  const [info, setInfo] = useState({
-    type: '',
-    condition: '',
-    permanent_address: '',
-    permanent_division: '',
-    current_address: '',
-    current_division: '',
-    birth: '',
-    complexion: '',
-    height: '',
-    weight: '',
-    blood: '',
-    profession: ''
-  })
   const [_delete, set_delete] = useState(false)
   const [hide, setHide] = useState(false)
 
@@ -138,27 +123,6 @@ export default function BioInfoCard({ data, loading, uId }) {
     )
   }
 
-  useEffect(() => {
-    data &&
-      setInfo({
-        type: data.type,
-        condition: data.condition,
-        permanent_address: data.permanent_address,
-        permanent_division: data.permanent_division,
-        current_address: data.current_address,
-        current_division: data.current_division,
-        birth: data.birth,
-        complexion: data.complexion,
-        height: data.height,
-        weight: data.weight,
-        blood: data.blood,
-        profession: data.profession
-      })
-
-    const localId = localStorage.getItem('id')
-    localId && setId(localId)
-  }, [data])
-
   const handleCopy = (text) => {
     copyToClip(text)
     setCopy(true)
@@ -216,105 +180,92 @@ export default function BioInfoCard({ data, loading, uId }) {
   }
 
   return (
-    <div className='rounded-md bg-primary p-1 sm:p-4 text-center'>
-      <LongModal
-        color='error'
-        bodyColor='error'
-        header='প্রোফাইলে ডিলিট করুন'
-        visible={_delete}
-        onClose={() => set_delete(false)}
-        preventClose={false}
-        body={<DeleteAction action='ডিলিট' />}
-        blur={true}
-      />
-      <LongModal
-        header='প্রোফাইল হাইড করুন'
-        color='warning'
-        bodyColor='warning'
-        visible={hide}
-        onClose={() => setHide(false)}
-        preventClose={false}
-        body={<HideAction />}
-        blur={true}
-      />
-      <div>
-        <div className='flex justify-between items-center px-2 pt-2 md:px-8 mb-4'>
-          <div className='flex items-center'>
+    <>
+      <div className='rounded-md bg-primary p-1 sm:p-4 text-center'>
+        <LongModal
+          color='error'
+          bodyColor='error'
+          header='প্রোফাইলে ডিলিট করুন'
+          visible={_delete}
+          onClose={() => set_delete(false)}
+          preventClose={false}
+          body={<DeleteAction action='ডিলিট' />}
+          blur={true}
+        />
+        <LongModal
+          header='প্রোফাইল হাইড করুন'
+          color='warning'
+          bodyColor='warning'
+          visible={hide}
+          onClose={() => setHide(false)}
+          preventClose={false}
+          body={<HideAction />}
+          blur={true}
+        />
+
+        <div>
+          <div className=''>
             <Image
-              height='60px'
-              width='60px'
-              src={info.type === 'পাত্রীর বায়োডাটা' ? female : male}
+              height='100px'
+              width='100px'
+              src={data.type === 'পাত্রীর বায়োডাটা' ? female : male}
               alt='profile avatar'
             />
-            <div className='pl-3 text-xl text-left md:text-3xl text-white'>
-              <p className=' text-sm sm:text-2xl font-semibold '>Biodata ID</p>{' '}
-              <p className=' text-sm sm:text-2xl font-semibold'>" {uId} "</p>
-            </div>
+            <h2 className='mt-2 text-xl text-white'>
+              Biodata ID
+              <div className='text-5xl'>{data?.user?.uId}</div>
+            </h2>
           </div>
-          <div>
-            <div>
-              <button
-                onClick={() => handleCopy(uId)}
-                className={`block text-sm sm:text-md px-1 sm:px-4 rounded-md border-2 ${
-                  copy ? 'border-red-800' : 'border-white'
-                } py-1 sm:py-2 font-bold text-white`}
-              >
-                {copy ? 'Copied' : 'Copy BioID'}
-              </button>
-            </div>
+
+          <div className='mt-6'>
+            <button
+              onClick={() => handleCopy(data?.user?.uId)}
+              className={`block w-full rounded-md ${
+                copy ? 'bg-red-800' : 'bg-white'
+              } py-3 font-bold ${
+                copy ? 'text-white' : 'text-primary'
+              } focus:ring-2 focus:ring-red-700`}
+            >
+              {copy ? 'Copied' : 'Copy BioID'}
+            </button>
           </div>
-        </div>
-        <div className='item__holder2'>
-          <div className='item'>
-            <span>বায়োডাটার ধরণ</span>
-            <span>{info.type}</span>
-          </div>
-          <div className='item'>
-            <span>বৈবাহিক অবস্থা</span>
-            <span>{info.condition}</span>
-          </div>
-          <div className='item'>
-            <span>স্থায়ী ঠিকানা</span>
-            <span>{info.permanent_address}</span>
-          </div>
-          <div className='item'>
-            <span>স্থায়ী বিভাগ</span>
-            <span>{info.permanent_division}</span>
-          </div>
-          <div className='item'>
-            <span>বর্তমান ঠিকানা</span>
-            <span>{info.current_address}</span>
-          </div>
-          <div className='item'>
-            <span>বর্তমান বিভাগ</span>
-            <span>{info.current_division}</span>
-          </div>
-          <div className='item'>
-            <span>জন্মসন (আসল)</span>
-            <span>{info.birth}</span>
-          </div>
-          <div className='item'>
-            <span>গাত্রবর্ণ</span>
-            <span>{info.complexion}</span>
-          </div>
-          <div className='item'>
-            <span>উচ্চতা</span>
-            <span>{info.height}</span>
-          </div>
-          <div className='item'>
-            <span>ওজন</span>
-            <span>{info.weight}</span>
-          </div>
-          <div className='item'>
-            <span>রক্তের গ্রুপ</span>
-            <span>{info.blood}</span>
-          </div>
-          <div className='item'>
-            <span>পেশা</span>
-            <span>{info.profession}</span>
+          <div className='btnHolder mt-4 flex rounded-md bg-white font-bold text-primary'>
+            <button
+              onClick={() => {
+                set_delete(true)
+              }}
+              className='font-semibold text-md md:text-sm lg:text-md hover:bg-red-200'
+            >
+              Delete Biodata
+            </button>
+            <span></span>
+            <button
+              onClick={() => {
+                setHide(true)
+              }}
+              className={`font-semibold text-md md:text-sm lg:text-md ${
+                data?.published ? 'cursor-pointer' : 'pointer-events-none'
+              } hover:bg-red-200`}
+            >
+              Hide Biodata
+            </button>
           </div>
         </div>
       </div>
-    </div>
+      <div
+        className={`${data ? 'block' : 'hidden'} my-4 ${
+          data?.published ? 'bg-green-600' : 'bg-primary '
+        } shadow-lg py-2 text-white rounded text-xl text-center`}
+      >
+        {data?.published ? 'বায়োটি পাবলিশড রয়েছে' : 'বায়োটি হাইড রয়েছে'}
+      </div>
+      <div
+        className={`${
+          !data || data?.published ? 'hidden' : 'block'
+        } bg-red-200 text-primary text-sm sm:text-md text-center p-2 shadow font-semibold`}
+      >
+        পাবলিশ করতে প্রিভিউ থেকে পাবলিশ রিকুয়েস্ট করুন
+      </div>
+    </>
   )
 }

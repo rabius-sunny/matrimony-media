@@ -1,9 +1,9 @@
 import ProfileLayout from 'components/profile/ProfileLayout'
 import { useForm as mantineForm, isNotEmpty } from '@mantine/form'
 import { MyInput } from 'components/profile/MyInputs'
-import { useRouter } from 'next/router'
+
 import getData from 'hooks/getData'
-import ProfileRoutes from 'components/profile/ProfileRoutes'
+
 import biodataRequests from 'services/network/biodataRequests'
 import FormSkeleton from 'components/shared/FormSkeleton'
 import Head from 'next/head'
@@ -33,9 +33,6 @@ export default function MarriageRelated() {
   const [isLoading, setIsLoading] = useState(false)
   const [fields, setFields] = useState([])
   const [done, setDone] = useState(false)
-  const router = useRouter()
-  const activeRoute = (routename) =>
-    router.route.split('/edit')[1] === routename ? true : false
 
   const { routes, setRoutes } = useAppContext()
 
@@ -109,23 +106,20 @@ export default function MarriageRelated() {
     biodataRequests
       .updateBio({
         ...data,
+        key: 'marriage',
         published: false,
         featured: false
       })
       .then((info) => {
         if (info.message === 'ok') {
-          biodataRequests.setField(2).then((info) => {
-            if (info.message === 'ok') {
-              setIsLoading(false)
-              mutate()
-              setVisible({ message: '', status: false, done: true })
+          setIsLoading(false)
+          mutate()
+          setVisible({ message: '', status: false, done: true })
 
-              window.scroll({
-                top: 100,
-                left: 100,
-                behavior: 'smooth'
-              })
-            }
+          window.scroll({
+            top: 100,
+            left: 100,
+            behavior: 'smooth'
           })
         }
       })
@@ -151,7 +145,7 @@ export default function MarriageRelated() {
       <Head>
         <title>বিয়েসম্পর্কিত তথ্য</title>
       </Head>
-      <ProfileRoutes activeRoute={activeRoute} />
+
       <LongModal
         visible={visible.status}
         onClose={() => setVisible({ message: '', status: false, done: false })}

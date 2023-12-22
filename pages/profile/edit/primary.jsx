@@ -1,8 +1,6 @@
 import { useForm, hasLength, isNotEmpty } from '@mantine/form'
 import { MyInput, MySelect } from 'components/profile/MyInputs'
 import ProfileLayout from 'components/profile/ProfileLayout'
-import { useRouter } from 'next/router'
-import ProfileRoutes from 'components/profile/ProfileRoutes'
 import {
   _femalecondition,
   _malecondition,
@@ -28,9 +26,7 @@ export default function Name() {
   const { routes, setRoutes } = useAppContext()
   const [isLoading, setIsLoading] = useState(false)
   const [fields, setFields] = useState([])
-  const router = useRouter()
-  const activeRoute = (routename) =>
-    router.route.split('/edit')[1] === routename ? true : false
+
   const form = useForm({
     initialValues: {
       name: '',
@@ -52,22 +48,19 @@ export default function Name() {
       .updateBio({
         ...infos,
         published: false,
-        featured: false
+        featured: false,
+        key: 'primary'
       })
       .then((info) => {
         if (info.message === 'ok') {
-          biodataRequests.setField(0).then((info) => {
-            if (info.message === 'ok') {
-              setIsLoading(false)
-              mutate()
-              setVisible({ message: '', status: false, done: true })
+          setIsLoading(false)
+          mutate()
+          setVisible({ message: '', status: false, done: true })
 
-              window.scroll({
-                top: 100,
-                left: 100,
-                behavior: 'smooth'
-              })
-            }
+          window.scroll({
+            top: 100,
+            left: 100,
+            behavior: 'smooth'
           })
         }
       })
@@ -112,7 +105,7 @@ export default function Name() {
       <Head>
         <title>প্রাথমিক তথ্য</title>
       </Head>
-      <ProfileRoutes activeRoute={activeRoute} />
+
       <LongModal
         visible={visible.status}
         onClose={() => setVisible({ message: '', status: false, done: false })}

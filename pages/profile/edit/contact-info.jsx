@@ -1,8 +1,7 @@
 import ProfileLayout from 'components/profile/ProfileLayout'
-import { useForm as mantineForm, hasLength, isNotEmpty } from '@mantine/form'
+import { useForm as mantineForm, isNotEmpty } from '@mantine/form'
 import { MyInput } from 'components/profile/MyInputs'
-import { useRouter } from 'next/router'
-import ProfileRoutes from 'components/profile/ProfileRoutes'
+
 import biodataRequests from 'services/network/biodataRequests'
 import getData from 'hooks/getData'
 import FormSkeleton from 'components/shared/FormSkeleton'
@@ -13,8 +12,10 @@ import LongModal from 'components/shared/Modals/LongModal'
 import Link from 'next/link'
 import { ArrowRightIcon } from '@heroicons/react/outline'
 import { Loading } from '@nextui-org/react'
+import { useRouter } from 'next/router'
 
 export default function Name() {
+  const router = useRouter()
   const { data, loading, mutate } = getData()
   const { routes, setRoutes } = useAppContext()
   const [visible, setVisible] = useState({
@@ -26,9 +27,6 @@ export default function Name() {
   const [visible2, setVisible2] = useState(false)
   const [fields, setFields] = useState([])
   const onClose = (_) => setVisible2(false)
-  const router = useRouter()
-  const activeRoute = (routename) =>
-    router.route.split('/edit')[1] === routename ? true : false
 
   const form = mantineForm({
     initialValues: {
@@ -49,21 +47,18 @@ export default function Name() {
     biodataRequests
       .updateBio({
         ...data,
+        key: 'contact',
         published: false,
         featured: false
       })
       .then((info) => {
         if (info.message === 'ok') {
-          biodataRequests.setField(9).then((info) => {
-            if (info.message === 'ok') {
-              setIsLoading(false)
-              mutate()
-              if (fields.length > 0) {
-                setVisible2(true)
-                return
-              } else router.push('/profile/preview')
-            }
-          })
+          setIsLoading(false)
+          mutate()
+          if (fields.length > 0) {
+            setVisible2(true)
+            return
+          } else router.push('/profile/preview')
         }
       })
       .catch((err) => {
@@ -145,7 +140,7 @@ export default function Name() {
         btn='ফিরে যান'
         color='primary'
       />
-      <ProfileRoutes activeRoute={activeRoute} />
+
       {!loading ? (
         <form onSubmit={form.onSubmit((values) => onSubmit(values))}>
           <MyInput

@@ -1,8 +1,7 @@
 import ProfileLayout from 'components/profile/ProfileLayout'
 import { useForm, isNotEmpty } from '@mantine/form'
 import { MyInput } from 'components/profile/MyInputs'
-import { useRouter } from 'next/router'
-import ProfileRoutes from 'components/profile/ProfileRoutes'
+
 import biodataRequests from 'services/network/biodataRequests'
 import getData from 'hooks/getData'
 import FormSkeleton from 'components/shared/FormSkeleton'
@@ -22,9 +21,6 @@ export default function OthersInfo() {
   })
   const [isLoading, setIsLoading] = useState(false)
   const [fields, setFields] = useState([])
-  const router = useRouter()
-  const activeRoute = (routename) =>
-    router.route.split('/edit')[1] === routename ? true : false
 
   const form = useForm({
     initialValues: {
@@ -59,23 +55,20 @@ export default function OthersInfo() {
     biodataRequests
       .updateBio({
         ...data,
+        key: 'expectation',
         published: false,
         featured: false
       })
       .then((info) => {
         if (info.message === 'ok') {
-          biodataRequests.setField(8).then((info) => {
-            if (info.message === 'ok') {
-              setIsLoading(false)
-              mutate()
-              setVisible({ message: '', status: false, done: true })
+          setIsLoading(false)
+          mutate()
+          setVisible({ message: '', status: false, done: true })
 
-              window.scroll({
-                top: 100,
-                left: 100,
-                behavior: 'smooth'
-              })
-            }
+          window.scroll({
+            top: 100,
+            left: 100,
+            behavior: 'smooth'
           })
         }
       })
@@ -121,7 +114,7 @@ export default function OthersInfo() {
       <Head>
         <title>যেমন জীবনসঙ্গী আশা করেন</title>
       </Head>
-      <ProfileRoutes activeRoute={activeRoute} />
+
       <LongModal
         visible={visible.status}
         onClose={() => setVisible({ message: '', status: false, done: false })}

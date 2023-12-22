@@ -1,11 +1,9 @@
 import ProfileLayout from 'components/profile/ProfileLayout'
 import { useForm as mantineForm, hasLength, isNotEmpty } from '@mantine/form'
 import { MyInput, MySelect } from 'components/profile/MyInputs'
-import { useRouter } from 'next/router'
+
 import { useMemo, useState } from 'react'
-import ProfileRoutes from 'components/profile/ProfileRoutes'
-import { useForm } from 'react-hook-form'
-import OptionMap from 'components/profile/OptionMap'
+
 import getData from 'hooks/getData'
 import biodataRequests from 'services/network/biodataRequests'
 import { useEffect } from 'react'
@@ -14,10 +12,13 @@ import Head from 'next/head'
 import { useAppContext } from 'utils/context'
 import LongModal from 'components/shared/Modals/LongModal'
 import SaveButton from 'components/bio/SaveButton'
+import Link from 'next/link'
+import { ExclamationIcon } from '@heroicons/react/outline'
 
 export default function Education() {
   const { data, loading, mutate } = getData()
   const { routes, setRoutes } = useAppContext()
+  const [filledPrimary, setFilledPrimary] = useState(false)
   const [required, setRequired] = useState({
     secondary: false,
     higher: false
@@ -29,10 +30,6 @@ export default function Education() {
   })
   const [isLoading, setIsLoading] = useState(false)
   const [fields, setFields] = useState([])
-
-  const router = useRouter()
-  const activeRoute = (routename) =>
-    router.route.split('/edit')[1] === routename ? true : false
 
   const form = mantineForm({
     initialValues: {
@@ -60,17 +57,20 @@ export default function Education() {
 
   useEffect(() => {
     if (data) {
-      formProperty.forEach((item) => {
-        return form.setFieldValue(item, data[item])
-      })
-      setRoutes({
-        ...routes,
-        education: {
-          name: 'শিক্ষাগত',
-          link: '/educational-qualifications',
-          status: 'done'
-        }
-      })
+      formProperty.forEach((item) => form.setFieldValue(item, data[item]))
+      if (!data.education) {
+        setFilledPrimary(false)
+      } else {
+        setFilledPrimary(true)
+        setRoutes({
+          ...routes,
+          education: {
+            name: 'শিক্ষাগত',
+            link: '/educational-qualifications',
+            status: 'done'
+          }
+        })
+      }
     }
   }, [data, loading])
   useEffect(() => {
@@ -100,22 +100,20 @@ export default function Education() {
     biodataRequests
       .updateBio({
         ...data,
+        key: 'education',
         published: false,
         featured: false
       })
       .then((info) => {
         if (info.message === 'ok') {
-          biodataRequests.setField(6).then((info) => {
-            if (info.message === 'ok') {
-              setIsLoading(false)
-              mutate()
-              setVisible({ message: '', status: false, done: true })
-              window.scroll({
-                top: 100,
-                left: 100,
-                behavior: 'smooth'
-              })
-            }
+          setIsLoading(false)
+          mutate()
+          setVisible({ message: '', status: false, done: true })
+
+          window.scroll({
+            top: 100,
+            left: 100,
+            behavior: 'smooth'
           })
         }
       })
@@ -175,7 +173,7 @@ export default function Education() {
       <Head>
         <title>শিক্ষাগত যোগ্যতা</title>
       </Head>
-      <ProfileRoutes activeRoute={activeRoute} />
+
       <LongModal
         visible={visible.status}
         onClose={() => setVisible({ message: '', status: false, done: false })}
@@ -188,6 +186,22 @@ export default function Education() {
         preventClose={false}
         color={visible.done ? 'success' : 'error'}
       />
+      {!loading && !filledPrimary && (
+        <div className='border-l-4 border-red-500 flex bg-red-50 py-8 rounded px-2 items-center md:text-2xl text-primary font-bold text-center my-8'>
+          <div className='mr-5'>
+            <ExclamationIcon className='text-primary h-10 w-10' />
+          </div>
+          <div>
+            <Link
+              legacyBehavior
+              href='/profile/edit/primary'
+            >
+              <a className=' underline text-indigo-500'>প্রাথমিক</a>
+            </Link>{' '}
+            ফিল্ডটি এখনো অপূর্ণাঙ্গ রয়েছে, আগে সেটি ফিল করুন
+          </div>
+        </div>
+      )}
       {!loading ? (
         <>
           <form onSubmit={form.onSubmit((values) => trimResult(values))}>
