@@ -8,12 +8,12 @@ import biodataRequests from 'services/network/biodataRequests'
 import getData from 'hooks/getData'
 import FormSkeleton from 'components/shared/FormSkeleton'
 import Head from 'next/head'
-import { useAppContext } from 'utils/context'
+
 import LongModal from 'components/shared/Modals/LongModal'
 import SaveButton from 'components/bio/SaveButton'
 
 export default function Family() {
-  const { data, loading, mutate } = getData()
+  const { data, loading, mutate } = getData('family')
   const [visible, setVisible] = useState({
     message: '',
     status: false,
@@ -80,20 +80,9 @@ export default function Family() {
       })
   }
 
-  const { routes, setRoutes } = useAppContext()
   useEffect(() => {
-    if (data) {
-      formProperty.forEach((item) => form.setFieldValue(item, data[item]))
-      setRoutes({
-        ...routes,
-        family: {
-          name: 'পারিবারিক',
-          link: '/family-info',
-          status: 'done'
-        }
-      })
-    }
-  }, [data, loading])
+    data && formProperty.forEach((item) => form.setFieldValue(item, data[item]))
+  }, [data])
   useEffect(() => {
     biodataRequests.checkField().then((data) => {
       setFields(data.fields)

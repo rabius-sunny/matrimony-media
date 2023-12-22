@@ -11,13 +11,13 @@ export default function ProfileLayout({ children, data, loading }) {
         <div className='grid grid-cols-12 gap-4'>
           <div className='col-span-12 lg:col-span-4'>
             <SideCard
-              data={data}
+              data={data?.bio}
               loading={loading}
             />
           </div>
 
           <div className='col-span-12 lg:col-span-8'>
-            <ProfileRoutes />
+            <ProfileRoutes filled={data?.filled} />
             {children}
           </div>
         </div>

@@ -8,7 +8,7 @@ import biodataRequests from 'services/network/biodataRequests'
 import FormSkeleton from 'components/shared/FormSkeleton'
 import Head from 'next/head'
 import { useEffect, useMemo, useState } from 'react'
-import { useAppContext } from 'utils/context'
+
 import Link from 'next/link'
 import { ExclamationIcon } from '@heroicons/react/solid'
 import LongModal from 'components/shared/Modals/LongModal'
@@ -23,7 +23,7 @@ export default function MarriageRelated() {
     male: false,
     female: false
   })
-  const { data, loading, mutate } = getData()
+  const { data, loading, mutate } = getData('marriage')
   const [visible, setVisible] = useState({
     message: '',
     status: false,
@@ -33,8 +33,6 @@ export default function MarriageRelated() {
   const [isLoading, setIsLoading] = useState(false)
   const [fields, setFields] = useState([])
   const [done, setDone] = useState(false)
-
-  const { routes, setRoutes } = useAppContext()
 
   const form = mantineForm({
     initialValues: {
@@ -70,7 +68,7 @@ export default function MarriageRelated() {
 
   useEffect(() => {
     if (data) {
-      formProperty.forEach((item) => form.setFieldValue(item, data[item] || ''))
+      formProperty.forEach((item) => form.setFieldValue(item, data[item] ?? ''))
 
       if (!data.type || !data.condition) {
         setDone(false)
@@ -83,14 +81,6 @@ export default function MarriageRelated() {
           widow: data.condition === 'বিধবা',
           male: data.type === 'পাত্রের বায়োডাটা',
           female: data.type === 'পাত্রীর বায়োডাটা'
-        })
-        setRoutes({
-          ...routes,
-          marriage: {
-            name: 'বিয়েসংক্রান্ত',
-            link: '/marriage-related-info',
-            status: 'done'
-          }
         })
       }
     }

@@ -138,7 +138,6 @@ export default function Preview() {
     managing_hijab,
     education_after_marriage,
     job_after_marriage,
-    continue_job,
     living_place,
     demand,
     profession_info,
@@ -152,10 +151,7 @@ export default function Preview() {
     ex_profession,
     ex_financial_condition,
     ex_family_condition,
-    ex_features,
-    family_about_bio,
-    is_correct_info,
-    liability
+    ex_features
   } = bio
 
   return !loading && bio ? (
@@ -290,7 +286,6 @@ export default function Preview() {
               managing_hijab,
               education_after_marriage,
               job_after_marriage,
-              continue_job,
               living_place,
               demand
             }}

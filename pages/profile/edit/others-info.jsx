@@ -8,13 +8,12 @@ import FormSkeleton from 'components/shared/FormSkeleton'
 import Head from 'next/head'
 import { useEffect, useMemo, useState } from 'react'
 import LongModal from 'components/shared/Modals/LongModal'
-import { useAppContext } from 'utils/context'
+
 import SaveButton from 'components/bio/SaveButton'
 
 export default function OthersInfo() {
-  const { data, loading, mutate } = getData()
+  const { data, loading, mutate } = getData('others')
 
-  const { routes, setRoutes } = useAppContext()
   const [visible, setVisible] = useState({
     message: '',
     status: false,
@@ -29,7 +28,7 @@ export default function OthersInfo() {
       special_acknowledgement: ''
     },
     validate: {
-      special_acknowledgement: isNotEmpty('অনুগ্রহ করে কিছু লিখুন')
+      special_acknowledgement: isNotEmpty('ফিল্ডটি পূরণ করতে হবে')
     }
   })
   const formProperty = useMemo(() => {
@@ -69,20 +68,8 @@ export default function OthersInfo() {
   }
 
   useEffect(() => {
-    if (data) {
-      formProperty.forEach((item) => {
-        return form.setFieldValue(item, data[item])
-      })
-      setRoutes({
-        ...routes,
-        another: {
-          name: 'অন্যান্য',
-          link: '/others-info',
-          status: 'done'
-        }
-      })
-    }
-  }, [data, loading])
+    data && formProperty.forEach((item) => form.setFieldValue(item, data[item]))
+  }, [data])
   useEffect(() => {
     biodataRequests.checkField().then((data) => {
       setFields(data.fields)
@@ -117,7 +104,7 @@ export default function OthersInfo() {
             withAsterisk={false}
             description={
               data?.type === 'পাত্রের বায়োডাটা' ? (
-                <p>
+                <p className='text-xs'>
                   এখানে বিভিন্ন বিষয় লিখতে পারেন। যেমনঃ আপনার ইনকাম হালাল কি না,
                   অফিস কোথায়, আপনার পদবী ও কাজ সম্পর্কে একটু বিস্তারিত বর্ণনা
                   দিতে পারেন, আপনার পেশাগত ভবিষ্যৎ পরিকল্পনাও লিখতে পারেন। আপনি
@@ -125,7 +112,7 @@ export default function OthersInfo() {
                   পাত্রীপক্ষ যেন আপনার পেশা সম্পর্কে ক্লিয়ার ধারণা পেয়ে যায়।
                 </p>
               ) : (
-                <p>
+                <p className='text-xs'>
                   আপনি যদি চাকুরীজীবি হয়ে থাকেন তাহলে অফিসের অবস্থান, পেশাগত
                   ভবিষ্যৎ পরিকল্পনা, বিয়ের পর চাকরী ও সংসার কিভাবে চালাতে চান
                   ইত্যাদি বিষয় লিখতে পারেন। যদি চাকুরীজীবি না হয়ে থাকেন তাহলে
@@ -139,7 +126,7 @@ export default function OthersInfo() {
             label='বিশেষ কিছু যদি জানাতে চান'
             form={{ ...form.getInputProps('special_acknowledgement') }}
             description={
-              <p>
+              <p className='text-xs'>
                 আপনার কোনো শর্ত বা উপরে লিখার সুযোগ হয় নি এমন কিছু জানানোর থাকলে
                 এই ঘরে লিখতে পারেন। যেমনঃ পারিবারিক বা ব্যক্তিগত কোনো সুবিধা বা
                 অসুবিধা ইত্যাদি যে কোনো বিষয়ে যত ইচ্ছা লিখতে পারবেন।

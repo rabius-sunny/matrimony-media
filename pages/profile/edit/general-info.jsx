@@ -1,7 +1,6 @@
 import ProfileLayout from 'components/profile/ProfileLayout'
 import { useForm, isNotEmpty } from '@mantine/form'
 import { MyInput, MySelect } from 'components/profile/MyInputs'
-
 import getData from 'hooks/getData'
 import {
   _type,
@@ -17,7 +16,6 @@ import {
 import FormSkeleton from 'components/shared/FormSkeleton'
 import Head from 'next/head'
 import { useEffect, useMemo, useState } from 'react'
-import { useAppContext } from 'utils/context'
 import biodataRequests from 'services/network/biodataRequests'
 import LongModal from 'components/shared/Modals/LongModal'
 import SaveButton from 'components/bio/SaveButton'
@@ -28,8 +26,8 @@ export default function GeneralInfo() {
     status: false,
     done: false
   })
-  const { data, loading } = getData()
-  const { routes, setRoutes } = useAppContext()
+  const { data, loading } = getData('general')
+
   const [isLoading, setIsLoading] = useState(false)
   const [fields, setFields] = useState([])
 
@@ -100,18 +98,8 @@ export default function GeneralInfo() {
   }, [])
 
   useEffect(() => {
-    if (data) {
-      formProperty.forEach((item) => form.setFieldValue(item, data[item]))
-      setRoutes({
-        ...routes,
-        general: {
-          name: 'সাধারণ',
-          link: '/general-info',
-          status: 'done'
-        }
-      })
-    }
-  }, [data, loading])
+    data && formProperty.forEach((item) => form.setFieldValue(item, data[item]))
+  }, [data])
   useEffect(() => {
     biodataRequests.checkField().then((data) => {
       setFields(data.fields)

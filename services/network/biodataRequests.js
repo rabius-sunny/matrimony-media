@@ -19,14 +19,6 @@ class BiodataRequests {
   updateBio(body) {
     return requests.post('/createorupdate-biodata', body)
   }
-
-  setField(num) {
-    return requests.get(`/set-field/${num}`)
-  }
-
-  checkField() {
-    return requests.get('/check-field')
-  }
 }
 
 export default new BiodataRequests()

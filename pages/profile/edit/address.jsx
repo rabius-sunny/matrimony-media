@@ -6,13 +6,13 @@ import biodataRequests from 'services/network/biodataRequests'
 import getData from 'hooks/getData'
 import FormSkeleton from 'components/shared/FormSkeleton'
 import Head from 'next/head'
-import { useAppContext } from 'utils/context'
+
 import { useEffect, useMemo, useState } from 'react'
 import LongModal from 'components/shared/Modals/LongModal'
 import SaveButton from 'components/bio/SaveButton'
 
 export default function Address() {
-  const { data, loading, mutate } = getData()
+  const { data, loading, mutate } = getData('address')
   const [visible, setVisible] = useState({
     message: '',
     status: false,
@@ -20,8 +20,6 @@ export default function Address() {
   })
   const [isLoading, setIsLoading] = useState(false)
   const [fields, setFields] = useState([])
-
-  const { routes, setRoutes } = useAppContext()
 
   const form = mantineForm({
     initialValues: {
@@ -72,18 +70,8 @@ export default function Address() {
     return Object.keys(form.values)
   }, [])
   useEffect(() => {
-    if (data) {
-      formProperty.forEach((item) => form.setFieldValue(item, data[item]))
-      setRoutes({
-        ...routes,
-        address: {
-          name: 'ঠিকানা',
-          link: '/address',
-          status: 'done'
-        }
-      })
-    }
-  }, [data, loading])
+    data && formProperty.forEach((item) => form.setFieldValue(item, data[item]))
+  }, [data])
   useEffect(() => {
     biodataRequests.checkField().then((data) => {
       setFields(data.fields)

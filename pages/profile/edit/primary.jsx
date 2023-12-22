@@ -11,21 +11,20 @@ import biodataRequests from 'services/network/biodataRequests'
 import getData from 'hooks/getData'
 import FormSkeleton from 'components/shared/FormSkeleton'
 import Head from 'next/head'
-import { useAppContext } from 'utils/context'
+
 import { useEffect, useMemo, useState } from 'react'
 import LongModal from 'components/shared/Modals/LongModal'
 import SaveButton from 'components/bio/SaveButton'
 
 export default function Name() {
-  const { data, loading, mutate } = getData()
+  const { data, loading, mutate } = getData('primary')
   const [visible, setVisible] = useState({
     message: '',
     status: false,
     done: false
   })
-  const { routes, setRoutes } = useAppContext()
+
   const [isLoading, setIsLoading] = useState(false)
-  const [fields, setFields] = useState([])
 
   const form = useForm({
     initialValues: {
@@ -53,10 +52,7 @@ export default function Name() {
       })
       .then((info) => {
         if (info.message === 'ok') {
-          setIsLoading(false)
           mutate()
-          setVisible({ message: '', status: false, done: true })
-
           window.scroll({
             top: 100,
             left: 100,
@@ -65,12 +61,15 @@ export default function Name() {
         }
       })
       .catch((err) => {
-        setIsLoading(false)
         setVisible({
           message: 'ইরর হয়েছে, আবার চেষ্টা করুন',
           status: true,
           done: false
         })
+      })
+      .finally(() => {
+        setIsLoading(false)
+        setVisible({ message: '', status: false, done: true })
       })
   }
   const formProperty = useMemo(() => {
@@ -78,24 +77,9 @@ export default function Name() {
   }, [])
 
   useEffect(() => {
-    if (data) {
-      formProperty.forEach((item) => form.setFieldValue(item, data[item]))
-      setRoutes({
-        ...routes,
-        primary: {
-          name: 'প্রাথমিক',
-          link: '/primary',
-          status: 'done'
-        }
-      })
-    }
-  }, [data, loading])
-
-  useEffect(() => {
-    biodataRequests.checkField().then((data) => {
-      setFields(data.fields)
-    })
-  }, [visible.done])
+    data &&
+      formProperty.forEach((item) => form.setFieldValue(item, data.bio[item]))
+  }, [data])
 
   return (
     <ProfileLayout
@@ -157,7 +141,7 @@ export default function Name() {
               />
               <SaveButton
                 isLoading={isLoading}
-                fields={fields}
+                // fields={fields}
               />
             </form>
           </>

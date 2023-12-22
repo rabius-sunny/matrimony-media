@@ -6,7 +6,7 @@ import biodataRequests from 'services/network/biodataRequests'
 import getData from 'hooks/getData'
 import FormSkeleton from 'components/shared/FormSkeleton'
 import Head from 'next/head'
-import { useAppContext } from 'utils/context'
+
 import { useEffect, useMemo, useState } from 'react'
 import LongModal from 'components/shared/Modals/LongModal'
 import Link from 'next/link'
@@ -16,8 +16,8 @@ import { useRouter } from 'next/router'
 
 export default function Name() {
   const router = useRouter()
-  const { data, loading, mutate } = getData()
-  const { routes, setRoutes } = useAppContext()
+  const { data, loading, mutate } = getData('contact')
+
   const [visible, setVisible] = useState({
     message: '',
     status: false,
@@ -76,18 +76,8 @@ export default function Name() {
   }, [])
 
   useEffect(() => {
-    if (data) {
-      formProperty.forEach((item) => form.setFieldValue(item, data[item]))
-      setRoutes({
-        ...routes,
-        contact: {
-          name: 'যোগাযোগ',
-          link: '/contact-info',
-          status: 'done'
-        }
-      })
-    }
-  }, [data, loading])
+    data && formProperty.forEach((item) => form.setFieldValue(item, data[item]))
+  }, [data])
   useEffect(() => {
     biodataRequests.checkField().then((data) => {
       setFields(data.fields)

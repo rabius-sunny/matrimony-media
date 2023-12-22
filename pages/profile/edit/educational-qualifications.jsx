@@ -9,16 +9,16 @@ import biodataRequests from 'services/network/biodataRequests'
 import { useEffect } from 'react'
 import FormSkeleton from 'components/shared/FormSkeleton'
 import Head from 'next/head'
-import { useAppContext } from 'utils/context'
+
 import LongModal from 'components/shared/Modals/LongModal'
 import SaveButton from 'components/bio/SaveButton'
 import Link from 'next/link'
 import { ExclamationIcon } from '@heroicons/react/outline'
 
 export default function Education() {
-  const { data, loading, mutate } = getData()
-  const { routes, setRoutes } = useAppContext()
-  const [filledPrimary, setFilledPrimary] = useState(false)
+  const { data, loading, mutate } = getData('education')
+
+  const [filledPrimary, setFilledPrimary] = useState(true)
   const [required, setRequired] = useState({
     secondary: false,
     higher: false
@@ -57,19 +57,11 @@ export default function Education() {
 
   useEffect(() => {
     if (data) {
-      formProperty.forEach((item) => form.setFieldValue(item, data[item]))
+      formProperty.forEach((item) => form.setFieldValue(item, data[item]) ?? '')
       if (!data.education) {
         setFilledPrimary(false)
       } else {
         setFilledPrimary(true)
-        setRoutes({
-          ...routes,
-          education: {
-            name: 'শিক্ষাগত',
-            link: '/educational-qualifications',
-            status: 'done'
-          }
-        })
       }
     }
   }, [data, loading])

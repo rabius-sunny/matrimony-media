@@ -1,26 +1,10 @@
 const formRoutes = [
   {
     name: 'প্রাথমিক',
-    link: '/name'
+    link: '/primary'
   },
   {
-    name: 'সাধারণ তথ্য',
-    link: '/general-info'
-  },
-  {
-    name: 'ঠিকানা',
-    link: '/address'
-  },
-  {
-    name: 'শিক্ষাগত যোগ্যতা',
-    link: '/educational-qualifications'
-  },
-  {
-    name: 'পারিবারিক তথ্য',
-    link: '/family-info'
-  },
-  {
-    name: 'ব্যক্তিগত তথ্য',
+    name: 'ব্যক্তিগত',
     link: '/personal-info'
   },
   {
@@ -28,24 +12,32 @@ const formRoutes = [
     link: '/marriage-related-info'
   },
   {
-    name: 'অন্যান্য তথ্য',
+    name: 'সাধারণ',
+    link: '/general-info'
+  },
+  {
+    name: 'পারিবারিক',
+    link: '/family-info'
+  },
+  {
+    name: 'ঠিকানা',
+    link: '/address'
+  },
+  {
+    name: 'শিক্ষাগত',
+    link: '/educational-qualifications'
+  },
+  {
+    name: 'অন্যান্য',
     link: '/others-info'
   },
   {
-    name: 'যেমন জীবনসঙ্গী আশা করেন',
+    name: 'আকাঙ্ক্ষিত বৈশিষ্ট্যাবলী',
     link: '/expectation'
-  },
-  {
-    name: 'কর্তৃপক্ষের জিজ্ঞাসা',
-    link: '/authority-question'
   },
   {
     name: 'যোগাযোগ',
     link: '/contact-info'
-  },
-  {
-    name: 'হাইড/ডিলিট',
-    link: '/hide-delete'
   }
 ]
 

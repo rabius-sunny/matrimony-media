@@ -8,7 +8,7 @@ import getData from 'hooks/getData'
 import biodataRequests from 'services/network/biodataRequests'
 import FormSkeleton from 'components/shared/FormSkeleton'
 import Head from 'next/head'
-import { useAppContext } from 'utils/context'
+
 import { _madhabs } from 'assets/profileinfo'
 import Link from 'next/link'
 import { ExclamationIcon } from '@heroicons/react/solid'
@@ -16,7 +16,7 @@ import LongModal from 'components/shared/Modals/LongModal'
 import SaveButton from 'components/bio/SaveButton'
 
 export default function PersonalInfo() {
-  const { data, loading, mutate } = getData()
+  const { data, loading, mutate } = getData('personal')
   const [visible, setVisible] = useState({
     message: '',
     status: false,
@@ -24,7 +24,7 @@ export default function PersonalInfo() {
   })
   const [isLoading, setIsLoading] = useState(false)
   const [fields, setFields] = useState([])
-  const [done, setDone] = useState(false)
+  const [done, setDone] = useState(true)
 
   const form = useForm({
     initialValues: {
@@ -111,24 +111,12 @@ export default function PersonalInfo() {
     return Object.keys(form.values)
   }, [])
 
-  const { routes, setRoutes } = useAppContext()
-
   useEffect(() => {
     if (data) {
-      formProperty.forEach((item) => form.setFieldValue(item, data[item] || ''))
+      formProperty.forEach((item) => form.setFieldValue(item, data[item] ?? ''))
       if (!data.type) {
         setDone(false)
-      } else {
-        setDone(true)
-        setRoutes({
-          ...routes,
-          personal: {
-            name: 'ব্যক্তিগত',
-            link: '/personal-info',
-            status: 'done'
-          }
-        })
-      }
+      } else setDone(true)
     }
   }, [data, loading])
 
@@ -182,12 +170,10 @@ export default function PersonalInfo() {
               <MyInput
                 label='সুন্নতি দাঁড়ি আছে কি?'
                 form={{ ...form.getInputProps('beard') }}
-                error={form.errors.beard}
               />
               <MyInput
                 label='কাপড় পায়ের টাখনুর উপরে পড়েন?'
                 form={{ ...form.getInputProps('dress_over_ankle') }}
-                error={form.errors.dress_over_ankle}
               />
             </div>
           )}
@@ -203,94 +189,78 @@ export default function PersonalInfo() {
                 পর্দার ব্যাপারে নূন্যতম ধারণা করতে পারেন।`
             }
             form={{ ...form.getInputProps('dress') }}
-            error={form.errors.dress}
           />
           <MyInput
             label='প্রতিদিন পাঁচ ওয়াক্ত সালাত পড়া হয়?'
             form={{ ...form.getInputProps('salat') }}
-            error={form.errors.salat}
           />
           <MyInput
             label='নিয়মিত কত সময় যাবত সালাত পড়ছেন?'
             description='কয় বছর/মাস যাবত ৫ ওয়াক্ত সালাত শুরু করেছেন?'
             form={{ ...form.getInputProps('salat_duration') }}
-            error={form.errors.salat_duration}
           />
           <MyInput
             label='মাহরাম/গায়রে-মাহরাম মেনে চলেন কি?'
             form={{ ...form.getInputProps('maintain_mahram') }}
-            error={form.errors.maintain_mahram}
           />
           <MyInput
             label='শুদ্ধভাবে কুরআন তিলাওয়াত করতে পারেন?'
             form={{ ...form.getInputProps('can_tilawat') }}
-            error={form.errors.can_tilawat}
           />
           <MySelect
             label='কোন মাযহাব অনুসরণ করেন'
             data={_madhabs}
             form={{ ...form.getInputProps('madhab') }}
-            error={form.errors.madhab}
           />
           <MyInput
             label='আপনার মাযহাব নিয়ে সংক্ষেপে লিখুন'
             form={{ ...form.getInputProps('mazhab') }}
-            error={form.errors.mazhab}
           />
           <MyInput
             label='কোনো রাজনৈতিক দর্শন থাকলে লিখুন'
             form={{ ...form.getInputProps('political_view') }}
-            error={form.errors.political_view}
           />
           <MyInput
             label='নাটক/সিনেমা/সিরিয়াল/গান এসব দেখেন বা শুনেন?'
             form={{ ...form.getInputProps('drama_cinnema') }}
-            error={form.errors.drama_cinnema}
           />
           <MyInput
             label='মানসিক বা শারীরিক কোনো রোগ আছে কি?'
             form={{ ...form.getInputProps('disease') }}
-            error={form.errors.disease}
           />
           <MyInput
             label='দ্বীনের কোন বিশেষ মেহনতে যুক্ত আছেন?'
             form={{ ...form.getInputProps('deeni_effort') }}
-            error={form.errors.deeni_effort}
           />
           <MyInput
             label='আপনি কি কোনো পীরের মুরিদ?'
             description='হয়ে থাকলে পীরের নাম, ঠিকানা ও মুরিদ হওয়ার কারণ লিখুন। না হলে
             পীর-মুরিদি সম্পর্কে আপনার বিশ্বাস লিখুন।'
             form={{ ...form.getInputProps('murid_of_peer') }}
-            error={form.errors.murid_of_peer}
           />
           <MyInput
             label='মাজার সম্পর্কে আপনার ধারণা বা বিশ্বাস কি?'
             form={{ ...form.getInputProps('majar_view') }}
-            error={form.errors.majar_view}
           />
           <MyInput
             label='আপনার পছন্দের অন্তত ৩ টি ইসলামী বইয়ের নাম লিখুন'
             form={{ ...form.getInputProps('favorite_books') }}
-            error={form.errors.favorite_books}
           />
           <MyInput
             label='আপনার পছন্দের অন্তত ৩ জন আলেমের নাম লিখুন'
             form={{ ...form.getInputProps('favorite_scholars') }}
-            error={form.errors.favorite_scholars}
           />
           <MyInput
             label='বিশেষ দ্বীনি বা দুনিয়াবি যোগ্যতা (যদি থাকে)'
             withAsterisk={false}
             form={{ ...form.getInputProps('special_qualifications') }}
           />
-          <MyInput
+          <MyTextarea
             label='নিজের সম্পর্কে কিছু লিখুন'
             description='নিজের পছন্দ-অপছন্দ, শখ-ইচ্ছা, দ্বীনী-দুনিয়াবী ইত্যাদি বিষয়
             বিস্তারিত লিখতে হবে। কারণ এই লেখা পড়ে পাঠক আপনার সম্পর্কে সাধারণ
             ধারণা লাভ করবে।'
             form={{ ...form.getInputProps('about_me') }}
-            error={form.errors.about_me}
           />
 
           <SaveButton
