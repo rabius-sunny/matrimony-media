@@ -58,7 +58,8 @@ export default function GeneralInfo() {
       blood: isNotEmpty('ফিল্ডটি পূরণ করুন'),
       profession: isNotEmpty('ফিল্ডটি পূরণ করুন'),
       income:
-        data?.type === 'পাত্রের বায়োডাটা' && isNotEmpty('ফিল্ডটি পূরণ করুন')
+        data?.bio?.type === 'পাত্রের বায়োডাটা' &&
+        isNotEmpty('ফিল্ডটি পূরণ করুন')
     }
   })
   const onSubmit = (data) => {
@@ -73,7 +74,6 @@ export default function GeneralInfo() {
       })
       .then((info) => {
         if (info.message === 'ok') {
-          setIsLoading(false)
           mutate()
           setVisible({ message: '', status: false, done: true })
 
@@ -85,26 +85,23 @@ export default function GeneralInfo() {
         }
       })
       .catch((err) => {
-        setIsLoading(false)
         setVisible({
           message: 'ইরর হয়েছে, আবার চেষ্টা করুন',
           status: true,
           done: false
         })
       })
+      .finally(() => setIsLoading(false))
   }
   const formProperty = useMemo(() => {
     return Object.keys(form.values)
   }, [])
 
   useEffect(() => {
-    data && formProperty.forEach((item) => form.setFieldValue(item, data[item]))
+    data &&
+      formProperty.forEach((item) => form.setFieldValue(item, data.bio[item]))
   }, [data])
-  useEffect(() => {
-    biodataRequests.checkField().then((data) => {
-      setFields(data.fields)
-    })
-  }, [visible.done])
+
   return (
     <>
       <ProfileLayout
@@ -200,14 +197,14 @@ export default function GeneralInfo() {
               />
               <MyInput
                 label='মাসিক আয়'
-                withAsterisk={data?.type === 'পাত্রের বায়োডাটা'}
+                withAsterisk={data?.bio?.type === 'পাত্রের বায়োডাটা'}
                 placeholder='৩০ হাজার'
                 form={{ ...form.getInputProps('income') }}
               />
 
               <SaveButton
                 isLoading={isLoading}
-                fields={fields}
+                fields={data?.filled}
               />
             </form>
           )

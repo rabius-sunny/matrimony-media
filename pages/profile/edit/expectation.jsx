@@ -1,6 +1,6 @@
 import ProfileLayout from 'components/profile/ProfileLayout'
 import { useForm, isNotEmpty } from '@mantine/form'
-import { MyInput } from 'components/profile/MyInputs'
+import { MyInput, MyTextarea } from 'components/profile/MyInputs'
 
 import biodataRequests from 'services/network/biodataRequests'
 import getData from 'hooks/getData'
@@ -61,7 +61,6 @@ export default function OthersInfo() {
       })
       .then((info) => {
         if (info.message === 'ok') {
-          setIsLoading(false)
           mutate()
           setVisible({ message: '', status: false, done: true })
 
@@ -73,13 +72,13 @@ export default function OthersInfo() {
         }
       })
       .catch((err) => {
-        setIsLoading(false)
         setVisible({
           message: 'ইরর হয়েছে, আবার চেষ্টা করুন',
           status: true,
           done: false
         })
       })
+      .finally(() => setIsLoading(false))
   }
 
   const formProperty = useMemo(() => {
@@ -87,14 +86,9 @@ export default function OthersInfo() {
   }, [])
 
   useEffect(() => {
-    data && formProperty.forEach((item) => form.setFieldValue(item, data[item]))
+    data &&
+      formProperty.forEach((item) => form.setFieldValue(item, data.bio[item]))
   }, [data])
-
-  useEffect(() => {
-    biodataRequests.checkField().then((data) => {
-      setFields(data.fields)
-    })
-  }, [visible.done])
 
   return (
     <ProfileLayout
@@ -155,14 +149,14 @@ export default function OthersInfo() {
             label='পারিবারিক অবস্থা'
             form={{ ...form.getInputProps('ex_family_condition') }}
           />
-          <MyInput
+          <MyTextarea
             label='জীবনসঙ্গীর যে বৈশিষ্ট্য বা গুণাবলি আশা করেন'
             form={{ ...form.getInputProps('ex_features') }}
           />
 
           <SaveButton
             isLoading={isLoading}
-            fields={fields}
+            fields={data?.filled}
           />
         </form>
       ) : (

@@ -28,6 +28,9 @@ export default function OthersInfo() {
       special_acknowledgement: ''
     },
     validate: {
+      profession_info:
+        data?.bio?.type === 'পাত্রের বায়োডাটা' &&
+        isNotEmpty('ফিল্ডটি পূরণ করুন'),
       special_acknowledgement: isNotEmpty('ফিল্ডটি পূরণ করতে হবে')
     }
   })
@@ -46,7 +49,6 @@ export default function OthersInfo() {
       })
       .then((info) => {
         if (info.message === 'ok') {
-          setIsLoading(false)
           mutate()
           setVisible({ message: '', status: false, done: true })
 
@@ -58,23 +60,19 @@ export default function OthersInfo() {
         }
       })
       .catch((err) => {
-        setIsLoading(false)
         setVisible({
           message: 'ইরর হয়েছে, আবার চেষ্টা করুন',
           status: true,
           done: false
         })
       })
+      .finally(() => setIsLoading(false))
   }
 
   useEffect(() => {
-    data && formProperty.forEach((item) => form.setFieldValue(item, data[item]))
+    data &&
+      formProperty.forEach((item) => form.setFieldValue(item, data.bio[item]))
   }, [data])
-  useEffect(() => {
-    biodataRequests.checkField().then((data) => {
-      setFields(data.fields)
-    })
-  }, [visible.done])
 
   return (
     <ProfileLayout
@@ -101,9 +99,9 @@ export default function OthersInfo() {
         <form onSubmit={form.onSubmit((values) => onSubmit(values))}>
           <MyTextarea
             label='পেশা সম্পর্কিত তথ্য'
-            withAsterisk={false}
+            withAsterisk={data?.bio?.type === 'পাত্রের বায়োডাটা'}
             description={
-              data?.type === 'পাত্রের বায়োডাটা' ? (
+              data?.bio?.type === 'পাত্রের বায়োডাটা' ? (
                 <p className='text-xs'>
                   এখানে বিভিন্ন বিষয় লিখতে পারেন। যেমনঃ আপনার ইনকাম হালাল কি না,
                   অফিস কোথায়, আপনার পদবী ও কাজ সম্পর্কে একটু বিস্তারিত বর্ণনা
@@ -136,7 +134,7 @@ export default function OthersInfo() {
 
           <SaveButton
             isLoading={isLoading}
-            fields={fields}
+            fields={data?.filled}
           />
         </form>
       ) : (

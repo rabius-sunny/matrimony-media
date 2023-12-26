@@ -31,7 +31,6 @@ export default function MarriageRelated() {
   })
 
   const [isLoading, setIsLoading] = useState(false)
-  const [fields, setFields] = useState([])
   const [done, setDone] = useState(false)
 
   const form = mantineForm({
@@ -48,18 +47,19 @@ export default function MarriageRelated() {
       job_after_marriage: ''
     },
     validate: {
-      guardians_permission: isNotEmpty('ফিল্ডটিতে কিছু লিখতে হবে।'),
+      guardians_permission:
+        !states.married && isNotEmpty('ফিল্ডটিতে কিছু লিখতে হবে।'),
       marry_reason: !states.married && isNotEmpty('ফিল্ডটিতে কিছু লিখতে হবে।'),
       family_planning: states.male && isNotEmpty('ফিল্ডটিতে কিছু লিখতে হবে।'),
       whenDiedWife: states.widower && isNotEmpty('ফিল্ডটিতে কিছু লিখতে হবে।'),
       divorceInfo: states.divorced && isNotEmpty('ফিল্ডটিতে কিছু লিখতে হবে।'),
       reMarryReason: states.married && isNotEmpty('ফিল্ডটিতে কিছু লিখতে হবে।'),
       demand: states.male && isNotEmpty('ফিল্ডটিতে কিছু লিখতে হবে।'),
-      whenDiedHusband: states.widow && isNotEmpty('ফিল্ডটিতে কিছু লিখতে হবে।')
-      //   education_after_marriage:
-      //     states.female && isNotEmpty('ফিল্ডটিতে কিছু লিখতে হবে।'),
-      //   job_after_marriage:
-      //     states.female && isNotEmpty('ফিল্ডটিতে কিছু লিখতে হবে।')
+      whenDiedHusband: states.widow && isNotEmpty('ফিল্ডটিতে কিছু লিখতে হবে।'),
+      education_after_marriage:
+        states.female && isNotEmpty('ফিল্ডটিতে কিছু লিখতে হবে।'),
+      job_after_marriage:
+        states.female && isNotEmpty('ফিল্ডটিতে কিছু লিখতে হবে।')
     }
   })
   const formProperty = useMemo(() => {
@@ -68,28 +68,25 @@ export default function MarriageRelated() {
 
   useEffect(() => {
     if (data) {
-      formProperty.forEach((item) => form.setFieldValue(item, data[item] ?? ''))
+      formProperty.forEach(
+        (item) => form.setFieldValue(item, data.bio[item]) ?? ''
+      )
 
-      if (!data.type || !data.condition) {
+      if (!data.bio.type || !data.bio.condition) {
         setDone(false)
       } else {
         setDone(true)
         setStates({
-          widower: data.condition === 'বিপত্মীক',
-          married: data.condition === 'বিবাহিত',
-          divorced: data.condition === 'ডিভোর্সড',
-          widow: data.condition === 'বিধবা',
-          male: data.type === 'পাত্রের বায়োডাটা',
-          female: data.type === 'পাত্রীর বায়োডাটা'
+          widower: data.bio.condition === 'বিপত্মীক',
+          married: data.bio.condition === 'বিবাহিত',
+          divorced: data.bio.condition === 'ডিভোর্সড',
+          widow: data.bio.condition === 'বিধবা',
+          male: data.bio.type === 'পাত্রের বায়োডাটা',
+          female: data.bio.type === 'পাত্রীর বায়োডাটা'
         })
       }
     }
   }, [data, loading])
-  useEffect(() => {
-    biodataRequests.checkField().then((data) => {
-      setFields(data.fields)
-    })
-  }, [visible.done])
 
   const onSubmit = (data) => {
     setIsLoading(true)
@@ -102,7 +99,6 @@ export default function MarriageRelated() {
       })
       .then((info) => {
         if (info.message === 'ok') {
-          setIsLoading(false)
           mutate()
           setVisible({ message: '', status: false, done: true })
 
@@ -114,17 +110,13 @@ export default function MarriageRelated() {
         }
       })
       .catch((err) => {
-        setIsLoading(false)
         setVisible({
           message: 'ইরর হয়েছে, আবার চেষ্টা করুন',
           status: true,
           done: false
         })
       })
-  }
-
-  const onSubmit2 = (data) => {
-    console.log('datqa', data)
+      .finally(() => setIsLoading(false))
   }
 
   return (
@@ -165,7 +157,7 @@ export default function MarriageRelated() {
         </p>
       )}
       {data && done ? (
-        <form onSubmit={form.onSubmit((values) => onSubmit2(values))}>
+        <form onSubmit={form.onSubmit((values) => onSubmit(values))}>
           {states.widower && (
             <MyInput
               label='আপনার স্ত্রী কবে, কিভাবে মারা গিয়েছিল ?'
@@ -207,10 +199,12 @@ export default function MarriageRelated() {
             />
           )}
 
-          <MyInput
-            label='অভিভাবক আপনার বিয়েতে রাজি কি না?'
-            form={{ ...form.getInputProps('guardians_permission') }}
-          />
+          {!states.married && (
+            <MyInput
+              label='অভিভাবক আপনার বিয়েতে রাজি কি না?'
+              form={{ ...form.getInputProps('guardians_permission') }}
+            />
+          )}
 
           {states.male && (
             <div>
@@ -232,13 +226,11 @@ export default function MarriageRelated() {
             <div>
               <MyInput
                 label='আপনি কি বিয়ের পর পড়াশোনা করতে ইচ্ছুক ?'
-                withAsterisk={false}
                 form={{ ...form.getInputProps('education_after_marriage') }}
                 description='ছাত্রী হলে বিয়ের পর পড়াশোনা চালিয়ে যেতে চান কিনা লিখুন।'
               />
               <MyInput
                 label='আপনি কি বিয়ের পর চাকরি করতে ইচ্ছুক ?'
-                withAsterisk={false}
                 form={{ ...form.getInputProps('job_after_marriage') }}
                 description='চাকরীজীবী হলে বিয়ের পর চাকরি চালিয়ে যেতে চান কিনা লিখুন।'
               />
@@ -246,8 +238,8 @@ export default function MarriageRelated() {
           )}
 
           <SaveButton
+            fields={data?.filled}
             isLoading={isLoading}
-            fields={fields}
           />
         </form>
       ) : (

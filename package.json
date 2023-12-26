@@ -37,12 +37,12 @@
     "redux-persist": "^6.0.0",
     "redux-persist-transform-encrypt": "^5.0.0",
     "sass": "^1.50.0",
-    "swr": "^2.2.2"
+    "swr": "^2.2.2",
+    "tailwindcss": "^3.4.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.0",
     "postcss": "^8.4.5",
-    "prettier": "^2.5.1",
-    "tailwindcss": "^3.0.7"
+    "prettier": "^2.5.1"
   }
 }

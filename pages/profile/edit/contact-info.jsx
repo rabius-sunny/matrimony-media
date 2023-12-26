@@ -25,7 +25,6 @@ export default function Name() {
   })
   const [isLoading, setIsLoading] = useState(false)
   const [visible2, setVisible2] = useState(false)
-  const [fields, setFields] = useState([])
   const onClose = (_) => setVisible2(false)
 
   const form = mantineForm({
@@ -55,10 +54,11 @@ export default function Name() {
         if (info.message === 'ok') {
           setIsLoading(false)
           mutate()
-          if (fields.length > 0) {
-            setVisible2(true)
-            return
-          } else router.push('/profile/preview')
+          alert('successfully saved data')
+          // if (fields.length > 0) {
+          //   setVisible2(true)
+          //   return
+          // } else router.push('/profile/preview')
         }
       })
       .catch((err) => {
@@ -76,13 +76,9 @@ export default function Name() {
   }, [])
 
   useEffect(() => {
-    data && formProperty.forEach((item) => form.setFieldValue(item, data[item]))
+    data &&
+      formProperty.forEach((item) => form.setFieldValue(item, data.bio[item]))
   }, [data])
-  useEffect(() => {
-    biodataRequests.checkField().then((data) => {
-      setFields(data.fields)
-    })
-  }, [visible.done])
 
   return (
     <ProfileLayout
@@ -112,7 +108,10 @@ export default function Name() {
         visible={visible2}
         onClose={onClose}
         header='নিম্নোক্ত ফিল্ডগুলো ঠিকভাবে পূরণ করা হয় নি, পাবলিশ রিকুয়েস্ট করতে সবগুলো ফিল্ড ঠিকভাবে পুরণ করুন।'
-        body={fields.map((item, i) => (
+        body={[
+          { name: 'primary', slug: '/primary' },
+          { name: 'education', slug: '/education' }
+        ].map((item, i) => (
           <div key={i}>
             <p style={{ color: 'red', fontSize: '1.3rem' }}>{item.name}</p>
             <Link

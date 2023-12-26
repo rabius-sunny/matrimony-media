@@ -59,7 +59,6 @@ export default function Family() {
       })
       .then((info) => {
         if (info.message === 'ok') {
-          setIsLoading(false)
           mutate()
           setVisible({ message: '', status: false, done: true })
 
@@ -71,23 +70,19 @@ export default function Family() {
         }
       })
       .catch((err) => {
-        setIsLoading(false)
         setVisible({
           message: 'ইরর হয়েছে, আবার চেষ্টা করুন',
           status: true,
           done: false
         })
       })
+      .finally(() => setIsLoading(false))
   }
 
   useEffect(() => {
-    data && formProperty.forEach((item) => form.setFieldValue(item, data[item]))
+    data &&
+      formProperty.forEach((item) => form.setFieldValue(item, data.bio[item]))
   }, [data])
-  useEffect(() => {
-    biodataRequests.checkField().then((data) => {
-      setFields(data.fields)
-    })
-  }, [visible.done])
 
   return (
     <ProfileLayout
@@ -175,7 +170,7 @@ export default function Family() {
           />
           <SaveButton
             isLoading={isLoading}
-            fields={fields}
+            fields={data?.filled}
           />
         </form>
       ) : (

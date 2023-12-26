@@ -23,7 +23,6 @@ export default function PersonalInfo() {
     done: false
   })
   const [isLoading, setIsLoading] = useState(false)
-  const [fields, setFields] = useState([])
   const [done, setDone] = useState(true)
 
   const form = useForm({
@@ -51,12 +50,12 @@ export default function PersonalInfo() {
 
     validate: {
       beard:
-        data?.type === 'পাত্রের বায়োডাটা'
+        data?.bio?.type === 'পাত্রের বায়োডাটা'
           ? isNotEmpty('ফিল্ডটি পূরণ করুন')
           : null,
       dress: isNotEmpty('ফিল্ডটি পূরণ করুন'),
       dress_over_ankle:
-        data?.type === 'পাত্রের বায়োডাটা'
+        data?.bio?.type === 'পাত্রের বায়োডাটা'
           ? isNotEmpty('ফিল্ডটি পূরণ করুন')
           : null,
       salat: isNotEmpty('ফিল্ডটি পূরণ করুন'),
@@ -87,7 +86,6 @@ export default function PersonalInfo() {
       })
       .then((info) => {
         if (info.message === 'ok') {
-          setIsLoading(false)
           mutate()
           setVisible({ message: '', status: false, done: true })
 
@@ -99,13 +97,13 @@ export default function PersonalInfo() {
         }
       })
       .catch((err) => {
-        setIsLoading(false)
         setVisible({
           message: 'ইরর হয়েছে, আবার চেষ্টা করুন',
           status: true,
           done: false
         })
       })
+      .finally(() => setIsLoading(false))
   }
   const formProperty = useMemo(() => {
     return Object.keys(form.values)
@@ -113,18 +111,14 @@ export default function PersonalInfo() {
 
   useEffect(() => {
     if (data) {
-      formProperty.forEach((item) => form.setFieldValue(item, data[item] ?? ''))
-      if (!data.type) {
+      formProperty.forEach(
+        (item) => form.setFieldValue(item, data.bio[item]) ?? ''
+      )
+      if (!data.bio.type) {
         setDone(false)
-      } else setDone(true)
+      }
     }
   }, [data, loading])
-
-  useEffect(() => {
-    biodataRequests.checkField().then((data) => {
-      setFields(data.fields)
-    })
-  }, [visible.done])
 
   return (
     <ProfileLayout
@@ -147,7 +141,7 @@ export default function PersonalInfo() {
         preventClose={false}
         color={visible.done ? 'success' : 'error'}
       />
-      {!loading && !done && (
+      {!done && (
         <div className='border-l-4 border-red-500 flex bg-red-50 py-8 rounded px-2 items-center md:text-2xl text-primary font-bold text-center my-8'>
           <div className='mr-5'>
             <ExclamationIcon className='text-primary h-10 w-10' />
@@ -165,7 +159,7 @@ export default function PersonalInfo() {
       )}
       {data && done ? (
         <form onSubmit={form.onSubmit((values) => onSubmit(values))}>
-          {data?.type === 'পাত্রের বায়োডাটা' && (
+          {data?.bio?.type === 'পাত্রের বায়োডাটা' && (
             <div>
               <MyInput
                 label='সুন্নতি দাঁড়ি আছে কি?'
@@ -180,7 +174,7 @@ export default function PersonalInfo() {
           <MyTextarea
             label='ঘরের বাইরে সাধারণত কেমন ধরণের পোশাক পড়েন?'
             description={
-              data?.type === 'পাত্রের বায়োডাটা'
+              data?.bio?.type === 'পাত্রের বায়োডাটা'
                 ? `এভাবে উত্তর দিতে পারেনঃ- "সাদা পাঞ্জবী সাথে সাদা টুপি" বা
                 "জিন্স প্যান্ট সাথে শার্ট"`
                 : `উত্তর যেভাবে দিতে পারেনঃ- "কালো বোরকা ও হিজাব পরি কিন্ত নিকাব
@@ -265,7 +259,7 @@ export default function PersonalInfo() {
 
           <SaveButton
             isLoading={isLoading}
-            fields={fields}
+            fields={data?.filled}
           />
         </form>
       ) : (

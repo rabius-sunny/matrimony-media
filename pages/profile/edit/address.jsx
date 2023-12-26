@@ -19,7 +19,6 @@ export default function Address() {
     done: false
   })
   const [isLoading, setIsLoading] = useState(false)
-  const [fields, setFields] = useState([])
 
   const form = mantineForm({
     initialValues: {
@@ -70,13 +69,9 @@ export default function Address() {
     return Object.keys(form.values)
   }, [])
   useEffect(() => {
-    data && formProperty.forEach((item) => form.setFieldValue(item, data[item]))
+    data &&
+      formProperty.forEach((item) => form.setFieldValue(item, data.bio[item]))
   }, [data])
-  useEffect(() => {
-    biodataRequests.checkField().then((data) => {
-      setFields(data.fields)
-    })
-  }, [visible.done])
 
   return (
     <ProfileLayout
@@ -120,7 +115,7 @@ export default function Address() {
 
           <SaveButton
             isLoading={isLoading}
-            fields={fields}
+            fields={data?.filled}
           />
         </form>
       )}

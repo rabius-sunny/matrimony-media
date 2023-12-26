@@ -18,7 +18,7 @@ export default function ProfileRoutes({ filled }) {
               activeRoute(route.link)
                 ? 'bg-primary text-white'
                 : 'bg-secondary text-white'
-            } m-1 text-xs md:text-sm lg:text-lg py-1 px-2`}
+            } m-1 text-xs md:text-sm lg:text-md py-1 px-2`}
           >
             <div className='flex items-center'>
               <Link
@@ -31,7 +31,9 @@ export default function ProfileRoutes({ filled }) {
               <div className='ml-1'>
                 {route.link.includes(
                   filled?.find((item) => route.link.includes(item))
-                ) && <CheckCircleIcon className='h-5 w-5 text-white' />}
+                ) && (
+                  <CheckCircleIcon className=' size-3 md:size-4 text-white' />
+                )}
               </div>
             </div>
           </div>
