@@ -19,6 +19,7 @@ import { useEffect, useMemo, useState } from 'react'
 import biodataRequests from 'services/network/biodataRequests'
 import LongModal from 'components/shared/Modals/LongModal'
 import SaveButton from 'components/bio/SaveButton'
+import updateResponse from 'hooks/updateResponse'
 
 export default function GeneralInfo() {
   const [visible, setVisible] = useState({
@@ -29,7 +30,6 @@ export default function GeneralInfo() {
   const { data, loading } = getData('general')
 
   const [isLoading, setIsLoading] = useState(false)
-  const [fields, setFields] = useState([])
 
   const form = useForm({
     initialValues: {
@@ -62,28 +62,16 @@ export default function GeneralInfo() {
         isNotEmpty('ফিল্ডটি পূরণ করুন')
     }
   })
+
   const onSubmit = (data) => {
     setIsLoading(true)
     biodataRequests
       .updateBio({
         ...data,
         age: new Date().getFullYear() - data.birth,
-        key: 'general',
-        published: false,
-        featured: false
+        key: 'general'
       })
-      .then((info) => {
-        if (info.message === 'ok') {
-          mutate()
-          setVisible({ message: '', status: false, done: true })
-
-          window.scroll({
-            top: 100,
-            left: 100,
-            behavior: 'smooth'
-          })
-        }
-      })
+      .then((info) => updateResponse(info, mutate))
       .catch((err) => {
         setVisible({
           message: 'ইরর হয়েছে, আবার চেষ্টা করুন',
@@ -91,7 +79,10 @@ export default function GeneralInfo() {
           done: false
         })
       })
-      .finally(() => setIsLoading(false))
+      .finally(() => {
+        setIsLoading(false)
+        setVisible({ message: '', status: false, done: true })
+      })
   }
   const formProperty = useMemo(() => {
     return Object.keys(form.values)

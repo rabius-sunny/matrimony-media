@@ -8,7 +8,10 @@ export default function BioHeading({ heading, children, link }) {
         <h1 className='flex justify-between bg-primary  text-white text-xl sm:text-3xl px-2 py-4 sm:p-4'>
           <span>{heading}</span>
           {link && (
-            <Link href={`/profile/edit/${link}`} legacyBehavior>
+            <Link
+              href={`/profile/edit${link}`}
+              legacyBehavior
+            >
               <PencilAltIcon className='h-7 w-7 sm:h-10 sm:w-10  cursor-pointer hover:text-blue-500' />
             </Link>
           )}
@@ -16,5 +19,5 @@ export default function BioHeading({ heading, children, link }) {
         <div className='p-1 sm:p-4 item__holder'>{children}</div>
       </div>
     </div>
-  );
+  )
 }

@@ -13,6 +13,7 @@ import Link from 'next/link'
 import { ExclamationIcon } from '@heroicons/react/solid'
 import LongModal from 'components/shared/Modals/LongModal'
 import SaveButton from 'components/bio/SaveButton'
+import updateResponse from 'hooks/updateResponse'
 
 export default function MarriageRelated() {
   const [states, setStates] = useState({
@@ -93,22 +94,9 @@ export default function MarriageRelated() {
     biodataRequests
       .updateBio({
         ...data,
-        key: 'marriage',
-        published: false,
-        featured: false
+        key: 'marriage'
       })
-      .then((info) => {
-        if (info.message === 'ok') {
-          mutate()
-          setVisible({ message: '', status: false, done: true })
-
-          window.scroll({
-            top: 100,
-            left: 100,
-            behavior: 'smooth'
-          })
-        }
-      })
+      .then((info) => updateResponse(info, mutate))
       .catch((err) => {
         setVisible({
           message: 'ইরর হয়েছে, আবার চেষ্টা করুন',
@@ -116,7 +104,10 @@ export default function MarriageRelated() {
           done: false
         })
       })
-      .finally(() => setIsLoading(false))
+      .finally(() => {
+        setIsLoading(false)
+        setVisible({ message: '', status: false, done: true })
+      })
   }
 
   return (

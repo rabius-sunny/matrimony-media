@@ -10,6 +10,7 @@ import Head from 'next/head'
 import { useEffect, useMemo, useState } from 'react'
 import LongModal from 'components/shared/Modals/LongModal'
 import SaveButton from 'components/bio/SaveButton'
+import updateResponse from 'hooks/updateResponse'
 
 export default function OthersInfo() {
   const { data, loading, mutate } = getData('expectation')
@@ -20,7 +21,6 @@ export default function OthersInfo() {
     done: false
   })
   const [isLoading, setIsLoading] = useState(false)
-  const [fields, setFields] = useState([])
 
   const form = useForm({
     initialValues: {
@@ -55,22 +55,9 @@ export default function OthersInfo() {
     biodataRequests
       .updateBio({
         ...data,
-        key: 'expectation',
-        published: false,
-        featured: false
+        key: 'expectation'
       })
-      .then((info) => {
-        if (info.message === 'ok') {
-          mutate()
-          setVisible({ message: '', status: false, done: true })
-
-          window.scroll({
-            top: 100,
-            left: 100,
-            behavior: 'smooth'
-          })
-        }
-      })
+      .then((info) => updateResponse(info, mutate))
       .catch((err) => {
         setVisible({
           message: 'ইরর হয়েছে, আবার চেষ্টা করুন',
@@ -78,7 +65,10 @@ export default function OthersInfo() {
           done: false
         })
       })
-      .finally(() => setIsLoading(false))
+      .finally(() => {
+        setIsLoading(false)
+        setVisible({ message: '', status: false, done: true })
+      })
   }
 
   const formProperty = useMemo(() => {

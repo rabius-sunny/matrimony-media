@@ -10,6 +10,7 @@ import Head from 'next/head'
 import { useEffect, useMemo, useState } from 'react'
 import LongModal from 'components/shared/Modals/LongModal'
 import SaveButton from 'components/bio/SaveButton'
+import updateResponse from 'hooks/updateResponse'
 
 export default function Address() {
   const { data, loading, mutate } = getData('address')
@@ -39,30 +40,19 @@ export default function Address() {
     biodataRequests
       .updateBio({
         ...data,
-        key: 'address',
-        published: false,
-        featured: false
+        key: 'address'
       })
-      .then((info) => {
-        if (info.message === 'ok') {
-          setIsLoading(false)
-          mutate()
-          setVisible({ message: '', status: false, done: true })
-
-          window.scroll({
-            top: 100,
-            left: 100,
-            behavior: 'smooth'
-          })
-        }
-      })
+      .then((info) => updateResponse(info, mutate))
       .catch((err) => {
-        setIsLoading(false)
         setVisible({
           message: 'ইরর হয়েছে, আবার চেষ্টা করুন',
           status: true,
           done: false
         })
+      })
+      .finally(() => {
+        setIsLoading(false)
+        setVisible({ message: '', status: false, done: true })
       })
   }
   const formProperty = useMemo(() => {

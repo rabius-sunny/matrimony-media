@@ -25,14 +25,23 @@ export default function LongModal({
       onClose={onClose}
     >
       <Modal.Header>
-        <Text b color={bodyColor} size={18}>
+        <Text
+          b
+          color={bodyColor}
+          className='text-xs md:text-lg'
+        >
           {header}
         </Text>
       </Modal.Header>
       <Modal.Body>{body}</Modal.Body>
       <Modal.Footer>
         {btn && (
-          <Button bordered auto color={color} onPress={onTask || onClose}>
+          <Button
+            bordered
+            auto
+            color={color}
+            onPress={onTask || onClose}
+          >
             {btn}
           </Button>
         )}

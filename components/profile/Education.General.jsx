@@ -5,6 +5,7 @@ import biodataRequests from 'services/network/biodataRequests'
 import { useEffect } from 'react'
 import LongModal from 'components/shared/Modals/LongModal'
 import SaveButton from 'components/bio/SaveButton'
+import updateResponse from 'hooks/updateResponse'
 
 export default function EducationGeneral({ data, loading, mutate }) {
   const [visible, setVisible] = useState({
@@ -55,22 +56,9 @@ export default function EducationGeneral({ data, loading, mutate }) {
     biodataRequests
       .updateBio({
         ...data,
-        key: 'education',
-        published: false,
-        featured: false
+        key: 'education'
       })
-      .then((info) => {
-        if (info.message === 'ok') {
-          mutate()
-          setVisible({ message: '', status: false, done: true })
-
-          window.scroll({
-            top: 100,
-            left: 100,
-            behavior: 'smooth'
-          })
-        }
-      })
+      .then((info) => updateResponse(info, mutate))
       .catch((err) => {
         setVisible({
           message: 'ইরর হয়েছে, আবার চেষ্টা করুন',
@@ -78,7 +66,10 @@ export default function EducationGeneral({ data, loading, mutate }) {
           done: false
         })
       })
-      .finally(() => setIsLoading(false))
+      .finally(() => {
+        setIsLoading(false)
+        setVisible({ message: '', status: false, done: true })
+      })
   }
 
   const trimResult = () => {

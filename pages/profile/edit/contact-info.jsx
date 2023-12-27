@@ -1,12 +1,10 @@
 import ProfileLayout from 'components/profile/ProfileLayout'
 import { useForm as mantineForm, isNotEmpty } from '@mantine/form'
 import { MyInput } from 'components/profile/MyInputs'
-
 import biodataRequests from 'services/network/biodataRequests'
 import getData from 'hooks/getData'
 import FormSkeleton from 'components/shared/FormSkeleton'
 import Head from 'next/head'
-
 import { useEffect, useMemo, useState } from 'react'
 import LongModal from 'components/shared/Modals/LongModal'
 import Link from 'next/link'
@@ -18,14 +16,14 @@ export default function Name() {
   const router = useRouter()
   const { data, loading, mutate } = getData('contact')
 
-  const [visible, setVisible] = useState({
+  const [errorState, setErrorState] = useState({
     message: '',
     status: false,
     done: false
   })
   const [isLoading, setIsLoading] = useState(false)
-  const [visible2, setVisible2] = useState(false)
-  const onClose = (_) => setVisible2(false)
+  const [unfilledMessage, setUnfilledMessage] = useState(false)
+  const onClose = (_) => setUnfilledMessage(false)
 
   const form = mantineForm({
     initialValues: {
@@ -41,34 +39,29 @@ export default function Name() {
     }
   })
 
-  const onSubmit = (data) => {
+  const onSubmit = (values) => {
     setIsLoading(true)
     biodataRequests
       .updateBio({
-        ...data,
-        key: 'contact',
-        published: false,
-        featured: false
+        ...values,
+        key: 'contact'
       })
       .then((info) => {
         if (info.message === 'ok') {
-          setIsLoading(false)
           mutate()
-          alert('successfully saved data')
-          // if (fields.length > 0) {
-          //   setVisible2(true)
-          //   return
-          // } else router.push('/profile/preview')
+          if (data?.filled?.length !== 10) {
+            setUnfilledMessage(true)
+          } else router.push('/profile/preview')
         }
       })
       .catch((err) => {
-        setIsLoading(false)
-        setVisible({
+        setErrorState({
           message: 'ইরর হয়েছে, আবার চেষ্টা করুন',
           status: true,
           done: false
         })
       })
+      .finally(() => setIsLoading(false))
   }
 
   const formProperty = useMemo(() => {
@@ -89,39 +82,43 @@ export default function Name() {
         <title>যোগাযোগ</title>
       </Head>
       <LongModal
-        visible={visible.status}
-        onClose={() => setVisible({ message: '', status: false, done: false })}
+        visible={errorState.status}
+        onClose={() =>
+          setErrorState({ message: '', status: false, done: false })
+        }
         body={
           <p
             className={`text-${
-              visible.done ? 'secondary' : 'red-500'
+              errorState.done ? 'secondary' : 'red-500'
             } text-2xl`}
           >
-            {visible.message}
+            {errorState.message}
           </p>
         }
         btn='ok'
         preventClose={false}
-        color={visible.done ? 'success' : 'error'}
+        color={errorState.done ? 'success' : 'error'}
       />
       <LongModal
-        visible={visible2}
+        visible={unfilledMessage}
         onClose={onClose}
         header='নিম্নোক্ত ফিল্ডগুলো ঠিকভাবে পূরণ করা হয় নি, পাবলিশ রিকুয়েস্ট করতে সবগুলো ফিল্ড ঠিকভাবে পুরণ করুন।'
-        body={[
-          { name: 'primary', slug: '/primary' },
-          { name: 'education', slug: '/education' }
-        ].map((item, i) => (
-          <div key={i}>
-            <p style={{ color: 'red', fontSize: '1.3rem' }}>{item.name}</p>
+        body={data?.unfilled?.map((item, i) => (
+          <div
+            key={i}
+            className='flex items-center justify-between'
+          >
+            <p className='text-primary font-semibold text-xl'>{item.name}</p>
             <Link
-              href={item.slug}
-              className='text-secondary underline flex items-center'
-              style={{ fontSize: '.9rem' }}
-              legacyBehavior
+              href={'/profile/edit' + item.slug}
+              className='text-secondary text-xs flex items-center hover:underline underline-offset-4'
+              // legacyBehavior
             >
               পূরণ করুন
-              <ArrowRightIcon className='text-green-400 h-4 pl-1' />
+              <ArrowRightIcon
+                className='text-green-400 h-3 pl-1'
+                strokeWidth={2.5}
+              />
             </Link>
           </div>
         ))}

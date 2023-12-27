@@ -206,6 +206,7 @@ export default function SideCard({ data, loading }) {
         <div>
           <div className=''>
             <Image
+              priority
               height='100px'
               width='100px'
               src={data.type === 'পাত্রীর বায়োডাটা' ? female : male}

@@ -16,8 +16,16 @@ class BiodataRequests {
     return requests.get('/getbio-by-token')
   }
 
+  checkField() {
+    return requests.get('/check-field')
+  }
+
   updateBio(body) {
     return requests.post('/createorupdate-biodata', body)
+  }
+
+  publishRequest() {
+    return requests.get('/request-publish')
   }
 }
 

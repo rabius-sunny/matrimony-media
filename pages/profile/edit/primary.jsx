@@ -15,6 +15,7 @@ import Head from 'next/head'
 import { useEffect, useMemo, useState } from 'react'
 import LongModal from 'components/shared/Modals/LongModal'
 import SaveButton from 'components/bio/SaveButton'
+import updateResponse from 'hooks/updateResponse'
 
 export default function Name() {
   const { data, loading, mutate } = getData('primary')
@@ -46,20 +47,9 @@ export default function Name() {
     biodataRequests
       .updateBio({
         ...infos,
-        published: false,
-        featured: false,
         key: 'primary'
       })
-      .then((info) => {
-        if (info.message === 'ok') {
-          mutate()
-          window.scroll({
-            top: 100,
-            left: 100,
-            behavior: 'smooth'
-          })
-        }
-      })
+      .then((info) => updateResponse(info, mutate))
       .catch((err) => {
         setVisible({
           message: 'ইরর হয়েছে, আবার চেষ্টা করুন',

@@ -166,10 +166,9 @@ export default function DetailBio() {
     marry_reason,
     guardians_permission,
     family_planning,
-    managing_hijab,
     education_after_marriage,
     job_after_marriage,
-    living_place,
+
     demand,
     profession_info,
     special_acknowledgement,
@@ -280,10 +279,9 @@ export default function DetailBio() {
                   marry_reason,
                   guardians_permission,
                   family_planning,
-                  managing_hijab,
                   education_after_marriage,
                   job_after_marriage,
-                  living_place,
+
                   demand
                 }}
               />

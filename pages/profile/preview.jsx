@@ -14,147 +14,57 @@ import LongModal from 'components/shared/Modals/LongModal'
 import useAuth from 'hooks/useAuth'
 import { PencilAltIcon } from '@heroicons/react/outline'
 import { Loading } from '@nextui-org/react'
+import useAsync from 'hooks/useAsync'
+import requests from 'services/network/http'
 
 export default function Preview() {
+  const { data, isLoading, error } = useAsync('/getbio-by-token', requests.get)
   const auth = useAuth()
-  const [bio, setBio] = useState({})
-  const [loading, setLoading] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
-  const [visible, setVisible] = useState(false)
-  const [visible2, setVisible2] = useState(false)
-  const [visible3, setVisible3] = useState(true)
+  const [btnLoading, setBtnLoading] = useState(false)
+  const [publishMessage, setPublishMessage] = useState(false)
+  const [errorState, setErrorState] = useState(false)
+  const [initialMessage, setInitialMessage] = useState(false)
   const router = useRouter()
 
   useEffect(() => {
-    setLoading(true)
-
-    biodataRequests
-      .checkField()
-      .then((data) => {
-        if (data.fields && data.fields.length < 1) {
-          biodataRequests
-            .getBioByToken()
-            .then((data) => {
-              setBio(data.bio)
-              setLoading(false)
-            })
-            .catch((err) => {
-              setLoading(false)
-              alert(err.message)
-            })
-        } else {
-          alert('আপনি সব ফিল্ড পূরণ করেন নি')
-          router.push('/')
-        }
-      })
-      .catch((err) => {
-        alert('আপনি সব ফিল্ড পূরণ করেন নি')
-        router.push('/')
-      })
+    if (data?.unfilled?.length !== 0) {
+      // alert('আপনি সব ফিল্ড পূরণ করেন নি')
+      // router.back()
+    }
   }, [])
 
   const handlePublish = (_) => {
-    setIsLoading(true)
+    setBtnLoading(true)
     biodataRequests
-      .updateBio({ requested: true })
-      .then((info) => {
-        if (info.message === 'ok') {
-          setIsLoading(false)
-          setVisible(true)
-        }
-      })
-      .catch((err) => {
-        setIsLoading(false)
-        setVisible2(true)
-      })
+      .publishRequest()
+      .then((info) => info.message === 'ok' && setPublishMessage(true))
+      .catch((err) => setErrorState(true))
+      .finally(() => setBtnLoading(false))
   }
 
-  const {
-    type,
-    condition,
-    permanent_jilla,
-    permanent_division,
-    current_jilla,
-    current_division,
-    birth,
-    complexion,
-    height,
-    weight,
-    blood,
-    profession,
-    income,
-    permanent_address,
-    current_address,
-    where_lived,
-    education,
-    hafej,
-    dawra,
-    dawra_details,
-    dawra_year,
-    takhassus,
-    takhassus_details,
-    highest_education,
-    secondary,
-    secondary_details,
-    higher,
-    higher_year,
-    higher_details,
-    diploma_details,
-    honors_details,
-    another_education,
-    father_name,
-    mother_name,
-    father_profession,
-    mother_profession,
-    brothers,
-    brothers_info,
-    sisters,
-    sisters_info,
-    uncles_profession,
-    family_status,
-    dress,
-    beard,
-    dress_over_ankle,
-    salat,
-    salat_duration,
-    maintain_mahram,
-    can_tilawat,
-    mazhab,
-    political_view,
-    drama_cinnema,
-    disease,
-    deeni_effort,
-    murid_of_peer,
-    majar_view,
-    favorite_books,
-    favorite_scholars,
-    special_qualifications,
-    about_me,
-    when_died,
-    divorce_reason,
-    marry_reason,
-    guardians_permission,
-    family_planning,
-    managing_hijab,
-    education_after_marriage,
-    job_after_marriage,
-    living_place,
-    demand,
-    profession_info,
-    special_acknowledgement,
-    ex_year,
-    ex_complexion,
-    ex_height,
-    ex_education,
-    ex_jilla,
-    ex_marrital_condition,
-    ex_profession,
-    ex_financial_condition,
-    ex_family_condition,
-    ex_features
-  } = bio
+  if (error || data?.unfilled?.length !== 0) {
+    return (
+      <div>
+        <LongModal
+          blur
+          scroll={false}
+          visible={true}
+          onClose={() => router.back()}
+          header='Error'
+          body={
+            data?.unfilled?.length !== 0
+              ? 'সবগুলো ফরম ফিল্ড পূরণ করা হয়নি, অনুগ্রহ করে পূরণ করে প্রিভিউ দেখুন।'
+              : 'ইরর হয়েছে, আবার চেষ্টা করুন।'
+          }
+          btn='Go Back'
+          color='success'
+          bodyColor='error'
+        />
+      </div>
+    )
+  }
 
-  return !loading && bio ? (
+  return !isLoading && data ? (
     <div className='container3'>
       <Head>
         <title>প্রিভিউ | জান্নাতি জুটি.COM</title>
@@ -162,8 +72,8 @@ export default function Preview() {
       <LongModal
         blur
         scroll={false}
-        visible={visible3}
-        onClose={() => setVisible3(false)}
+        visible={initialMessage}
+        onClose={() => setInitialMessage(false)}
         header='Editing Report'
         body={
           <div>
@@ -182,10 +92,10 @@ export default function Preview() {
       <LongModal
         blur
         scroll={false}
-        visible={visible}
+        visible={publishMessage}
         onClose={() => router.push('/')}
         header='Publishing report'
-        body='আপনার রিকুয়েস্টটি প্যানেলের এ্যাপ্রুভাল পেন্ডিংয়ে রয়েছে। পাবলিশ হলে জানিয়ে দেয়া হবে।'
+        body='আপনার রিকুয়েস্টটি এ্যাপ্রুভাল পেন্ডিংয়ে লিস্ট করা হল। পাবলিশ করা হলে জানিয়ে দেয়া হবে।'
         btn='OK'
         color='success'
         bodyColor='success'
@@ -194,8 +104,8 @@ export default function Preview() {
       <LongModal
         blur
         scroll={false}
-        visible={visible2}
-        onClose={() => setVisible2(false)}
+        visible={errorState}
+        onClose={() => setErrorState(false)}
         header='Publishing report'
         body='ইরর হয়েছে, আবার চেষ্টা করুন।'
         btn='OK'
@@ -206,115 +116,47 @@ export default function Preview() {
         <div className='my-4'>
           <DAddress
             auth={auth}
-            data={{ permanent_address, current_address, where_lived }}
+            data={data?.bio?.address}
           />
         </div>
         <div className='my-4'>
           <DEducation
             auth={auth}
-            data={{
-              education,
-              hafej,
-              dawra,
-              dawra_details,
-              dawra_year,
-              takhassus,
-              takhassus_details,
-              highest_education,
-              secondary,
-              secondary_details,
-              higher,
-              higher_year,
-              higher_details,
-              diploma_details,
-              honors_details,
-              another_education
-            }}
+            data={data?.bio?.education}
           />
         </div>
         <div className='my-4'>
           <DFamily
             auth={auth}
-            data={{
-              father_name,
-              mother_name,
-              father_profession,
-              mother_profession,
-              brothers,
-              brothers_info,
-              sisters,
-              sisters_info,
-              uncles_profession,
-              family_status
-            }}
+            data={data?.bio?.family}
           />
         </div>
         <div className='my-4'>
           <DPersonal
             auth={auth}
-            data={{
-              type,
-              dress,
-              beard,
-              dress_over_ankle,
-              salat,
-              salat_duration,
-              maintain_mahram,
-              can_tilawat,
-              mazhab,
-              political_view,
-              drama_cinnema,
-              disease,
-              deeni_effort,
-              murid_of_peer,
-              majar_view,
-              favorite_books,
-              favorite_scholars,
-              special_qualifications,
-              about_me
-            }}
+            data={data?.bio?.personal}
           />
         </div>
         <div className='my-4'>
           <DMarital
             auth={auth}
-            data={{
-              type,
-              marry_reason,
-              guardians_permission,
-              family_planning,
-              managing_hijab,
-              education_after_marriage,
-              job_after_marriage,
-              living_place,
-              demand
-            }}
+            data={data?.bio?.marriage}
           />
         </div>
 
-        {(profession_info || special_acknowledgement) && (
+        {(data?.bio?.others?.profession_info ||
+          data?.bio?.others?.special_acknowledgement) && (
           <div className='my-4'>
             <DAnother
               auth={auth}
-              data={{ profession_info, special_acknowledgement }}
+              data={data?.bio?.others}
             />
           </div>
         )}
         <div className='my-4'>
           <DExpect
             auth={auth}
-            data={{
-              ex_year,
-              ex_complexion,
-              ex_height,
-              ex_education,
-              ex_jilla,
-              ex_marrital_condition,
-              ex_profession,
-              ex_financial_condition,
-              ex_family_condition,
-              ex_features
-            }}
+            data={data?.bio?.expectation}
           />
         </div>
       </div>
@@ -323,7 +165,7 @@ export default function Preview() {
           onClick={handlePublish}
           className='text-white font-bold text-xl cursor-pointer rounded-md bg-primary  py-3 my-8 w-full'
         >
-          {isLoading ? (
+          {btnLoading ? (
             <Loading
               color='success'
               size='sm'

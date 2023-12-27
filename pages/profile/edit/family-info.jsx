@@ -11,6 +11,7 @@ import Head from 'next/head'
 
 import LongModal from 'components/shared/Modals/LongModal'
 import SaveButton from 'components/bio/SaveButton'
+import updateResponse from 'hooks/updateResponse'
 
 export default function Family() {
   const { data, loading, mutate } = getData('family')
@@ -20,7 +21,6 @@ export default function Family() {
     done: false
   })
   const [isLoading, setIsLoading] = useState(false)
-  const [fields, setFields] = useState([])
 
   const form = mantineForm({
     initialValues: {
@@ -53,22 +53,9 @@ export default function Family() {
     biodataRequests
       .updateBio({
         ...data,
-        key: 'family',
-        published: false,
-        featured: false
+        key: 'family'
       })
-      .then((info) => {
-        if (info.message === 'ok') {
-          mutate()
-          setVisible({ message: '', status: false, done: true })
-
-          window.scroll({
-            top: 100,
-            left: 100,
-            behavior: 'smooth'
-          })
-        }
-      })
+      .then((info) => updateResponse(info, mutate))
       .catch((err) => {
         setVisible({
           message: 'ইরর হয়েছে, আবার চেষ্টা করুন',
@@ -76,7 +63,10 @@ export default function Family() {
           done: false
         })
       })
-      .finally(() => setIsLoading(false))
+      .finally(() => {
+        setIsLoading(false)
+        setVisible({ message: '', status: false, done: true })
+      })
   }
 
   useEffect(() => {
