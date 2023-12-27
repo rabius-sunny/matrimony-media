@@ -22,8 +22,11 @@ export default function Home() {
               </h1>
               <div className='flex items-center mt-2'>
                 <div className='h-[1px] md:h-[3px] bg-white w-16 md:w-28' />
-                {[1, 2, 3, 4, 5, 6, 7, 8].map(item => (
-                  <div className='flex items-center -mt-[5px]' key={item}>
+                {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
+                  <div
+                    className='flex items-center -mt-[5px]'
+                    key={item}
+                  >
                     <div className='h-[1px] md:h-[2px] bg-white w-2 -mx-[2px] -rotate-45' />
                     <div className='h-[1px] md:h-[2px] bg-white w-2 -mx-[2px] rotate-45' />
                   </div>

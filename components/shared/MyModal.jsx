@@ -1,5 +1,5 @@
-import { Dialog, Transition } from '@headlessui/react'
-import { Fragment, useRef, useState } from 'react'
+import { Dialog } from '@headlessui/react'
+import { useRef, useState } from 'react'
 
 export default function MyModal() {
   let [isOpen, setIsOpen] = useState(true)
@@ -26,7 +26,11 @@ export default function MyModal() {
       </div>
 
       {/* <Transition appear show={isOpen}> */}
-      <Dialog open={isOpen} className='relative z-10' onClose={closeModal}>
+      <Dialog
+        open={isOpen}
+        className='relative z-10'
+        onClose={closeModal}
+      >
         {/* <Transition.Child
           enter='ease-out duration-300'
           enterFrom='opacity-0'

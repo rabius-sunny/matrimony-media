@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import { TbExternalLink } from 'react-icons/tb'
 
 export default function Footer() {
   return (
