@@ -2,29 +2,31 @@ import Image from 'next/image'
 import male from 'public/images/male.svg'
 import female from 'public/images/female.svg'
 import CSkeleton from 'components/shared/CSkeleton'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import copyToClip from 'utils/copyToClip'
 import LongModal from 'components/shared/Modals/LongModal'
 import { Button } from '@nextui-org/react'
 import userRequest from 'services/network/userRequest'
 
-export default function BioInfoCard({ data, loading, uId }) {
-  const [id, setId] = useState(null)
+export default function BioInfoCard({
+  data: {
+    type,
+    condition,
+    permanent_address,
+    permanent_division,
+    current_address,
+    current_division,
+    birth,
+    complexion,
+    height,
+    weight,
+    blood,
+    profession
+  },
+  loading,
+  uId
+}) {
   const [copy, setCopy] = useState(false)
-  const [info, setInfo] = useState({
-    type: '',
-    condition: '',
-    permanent_address: '',
-    permanent_division: '',
-    current_address: '',
-    current_division: '',
-    birth: '',
-    complexion: '',
-    height: '',
-    weight: '',
-    blood: '',
-    profession: ''
-  })
   const [_delete, set_delete] = useState(false)
   const [hide, setHide] = useState(false)
 
@@ -33,7 +35,7 @@ export default function BioInfoCard({ data, loading, uId }) {
       userRequest
         .hideByUser()
         .then((info) => {
-          if (info.message === 'ok') {
+          if (message === 'ok') {
             setHide(false)
             window.location.reload()
           }
@@ -82,7 +84,7 @@ export default function BioInfoCard({ data, loading, uId }) {
         userRequest
           .deleteHideRequest({ reason, type })
           .then((info) => {
-            if (info.message === 'ok') {
+            if (message === 'ok') {
               alert(
                 'আপনার delete রিকুয়েস্টটি গৃহীত হয়েছে, শীঘ্রই SMS এর মাধ্যমে ফলাফল পেয়ে যাবেন ইনশা আল্লাহ!'
               )
@@ -137,27 +139,6 @@ export default function BioInfoCard({ data, loading, uId }) {
       </div>
     )
   }
-
-  useEffect(() => {
-    data &&
-      setInfo({
-        type: data.type,
-        condition: data.condition,
-        permanent_address: data.permanent_address,
-        permanent_division: data.permanent_division,
-        current_address: data.current_address,
-        current_division: data.current_division,
-        birth: data.birth,
-        complexion: data.complexion,
-        height: data.height,
-        weight: data.weight,
-        blood: data.blood,
-        profession: data.profession
-      })
-
-    const localId = localStorage.getItem('id')
-    localId && setId(localId)
-  }, [data])
 
   const handleCopy = (text) => {
     copyToClip(text)
@@ -238,80 +219,80 @@ export default function BioInfoCard({ data, loading, uId }) {
         blur={true}
       />
       <div>
-        <div className='flex justify-between items-center px-2 pt-2 md:px-8 mb-4'>
-          <div className='flex items-center'>
+        <div className='flex items-center justify-between my-4'>
+          <div className='flex items-center gap-2'>
             <Image
-              height='60px'
-              width='60px'
-              src={info.type === 'পাত্রীর বায়োডাটা' ? female : male}
+              priority
+              height={30}
+              width={30}
+              src={type === 'পাত্রীর বায়োডাটা' ? female : male}
+              className='size-20 sm:size-28'
               alt='profile avatar'
             />
-            <div className='pl-3 text-xl text-left md:text-3xl text-white'>
-              <p className=' text-sm sm:text-2xl font-semibold '>Biodata ID</p>{' '}
-              <p className=' text-sm sm:text-2xl font-semibold'>" {uId} "</p>
+            <div className='font-bold text-lg text-white'>
+              Biodata ID
+              <p className='font-bold -mt-2 text-4xl tracking-normal'>{uId}</p>
             </div>
           </div>
-          <div>
-            <div>
-              <button
-                onClick={() => handleCopy(uId)}
-                className={`block text-sm sm:text-md px-1 sm:px-4 rounded-md border-2 ${
-                  copy ? 'border-red-800' : 'border-white'
-                } py-1 sm:py-2 font-bold text-white`}
-              >
-                {copy ? 'Copied' : 'Copy BioID'}
-              </button>
-            </div>
+          <div className=''>
+            <button
+              onClick={() => handleCopy(uId)}
+              className={`rounded-md w-20 text-sm ${
+                copy ? 'bg-secondary' : 'bg-white'
+              } py-2 font-bold ${copy ? 'text-white' : 'text-primary'}`}
+            >
+              {copy ? 'Copied' : 'Copy BioID'}
+            </button>
           </div>
         </div>
         <div className='item__holder2'>
           <div className='item'>
             <span>বায়োডাটার ধরণ</span>
-            <span>{info.type}</span>
+            <span>{type}</span>
           </div>
           <div className='item'>
             <span>বৈবাহিক অবস্থা</span>
-            <span>{info.condition}</span>
+            <span>{condition}</span>
           </div>
           <div className='item'>
             <span>স্থায়ী ঠিকানা</span>
-            <span>{info.permanent_address}</span>
+            <span>{permanent_address}</span>
           </div>
           <div className='item'>
             <span>স্থায়ী বিভাগ</span>
-            <span>{info.permanent_division}</span>
+            <span>{permanent_division}</span>
           </div>
           <div className='item'>
             <span>বর্তমান ঠিকানা</span>
-            <span>{info.current_address}</span>
+            <span>{current_address}</span>
           </div>
           <div className='item'>
             <span>বর্তমান বিভাগ</span>
-            <span>{info.current_division}</span>
+            <span>{current_division}</span>
           </div>
           <div className='item'>
             <span>জন্মসন (আসল)</span>
-            <span>{info.birth}</span>
+            <span>{birth}</span>
           </div>
           <div className='item'>
             <span>গাত্রবর্ণ</span>
-            <span>{info.complexion}</span>
+            <span>{complexion}</span>
           </div>
           <div className='item'>
             <span>উচ্চতা</span>
-            <span>{info.height}</span>
+            <span>{height}</span>
           </div>
           <div className='item'>
             <span>ওজন</span>
-            <span>{info.weight}</span>
+            <span>{weight}</span>
           </div>
           <div className='item'>
             <span>রক্তের গ্রুপ</span>
-            <span>{info.blood}</span>
+            <span>{blood}</span>
           </div>
           <div className='item'>
             <span>পেশা</span>
-            <span>{info.profession}</span>
+            <span>{profession}</span>
           </div>
         </div>
       </div>

@@ -3,6 +3,7 @@ import { persistStore, persistReducer } from 'redux-persist'
 import { encryptTransform } from 'redux-persist-transform-encrypt'
 import storage from 'redux-persist/lib/storage'
 import utilSlice from './utilSlice'
+import dataSlice from './dataSlice'
 
 const persistConfig = {
   key: 'state',
@@ -15,11 +16,12 @@ const persistConfig = {
       }
     })
   ],
-  whitelist: ['util']
+  whitelist: ['util', 'data']
 }
 
 const rootReducer = combineReducers({
-  util: utilSlice
+  util: utilSlice,
+  data: dataSlice
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

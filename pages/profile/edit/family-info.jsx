@@ -136,7 +136,7 @@ export default function Family() {
             form={{ ...form.getInputProps('brothers_info') }}
           />
           <MyTextarea
-            label='ভাইদের সম্পর্কে তথ্য'
+            label='বোনদের সম্পর্কে তথ্য'
             description={
               <p className='text-xs'>
                 কয়জন বোন রয়েছে তা লিখুন। এরপর সকল বোনদের শিক্ষাগত যোগ্যতা,

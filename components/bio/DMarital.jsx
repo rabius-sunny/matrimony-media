@@ -4,12 +4,13 @@ export default function DMarital({
   auth,
   data: {
     type,
+    condition,
     whenDiedWife,
     whenDiedHusband,
     divorceInfo,
     reMarryReason,
-    guardians_permission,
     marry_reason,
+    guardians_permission,
     family_planning,
     education_after_marriage,
     job_after_marriage,
@@ -52,16 +53,19 @@ export default function DMarital({
         </div>
       )}
 
-      <div className='item'>
-        <span>অভিভাবক আপনার বিয়েতে রাজি কি না?</span>
-        <span>{guardians_permission}</span>
-      </div>
       <div className='pl-3 items py-2'>
         <div className='pb-2 font-bold'>
           বিয়ে কেন করছেন? বিয়ে সম্পর্কে আপনার ধারণা কি?
         </div>
         <div className='pt-1 whitespace-pre-wrap'>{marry_reason}</div>
       </div>
+
+      {condition !== 'বিবাহিত' && (
+        <div className='item'>
+          <span>অভিভাবক আপনার বিয়েতে রাজি কি না?</span>
+          <span>{guardians_permission}</span>
+        </div>
+      )}
 
       {type === 'পাত্রের বায়োডাটা' ? (
         <>

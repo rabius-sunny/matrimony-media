@@ -235,7 +235,7 @@ export default function PersonalInfo() {
             label='আপনার পছন্দের অন্তত ৩ জন আলেমের নাম লিখুন'
             form={{ ...form.getInputProps('favorite_scholars') }}
           />
-          <MyInput
+          <MyTextarea
             label='বিশেষ দ্বীনি বা দুনিয়াবি যোগ্যতা (যদি থাকে)'
             withAsterisk={false}
             form={{ ...form.getInputProps('special_qualifications') }}

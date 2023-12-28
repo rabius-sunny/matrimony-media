@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import DAddress from 'components/bio/DAddress'
 import biodataRequests from 'services/network/biodataRequests'
 import DEducation from 'components/bio/DEducaiton'
@@ -16,6 +16,7 @@ import { PencilAltIcon } from '@heroicons/react/outline'
 import { Loading } from '@nextui-org/react'
 import useAsync from 'hooks/useAsync'
 import requests from 'services/network/http'
+import BioInfoCard from 'components/bio/BioInfoCard'
 
 export default function Preview() {
   const { data, isLoading, error } = useAsync('/getbio-by-token', requests.get)
@@ -25,13 +26,6 @@ export default function Preview() {
   const [errorState, setErrorState] = useState(false)
   const [initialMessage, setInitialMessage] = useState(false)
   const router = useRouter()
-
-  useEffect(() => {
-    if (data?.unfilled?.length !== 0) {
-      // alert('আপনি সব ফিল্ড পূরণ করেন নি')
-      // router.back()
-    }
-  }, [])
 
   const handlePublish = (_) => {
     setBtnLoading(true)
@@ -113,30 +107,39 @@ export default function Preview() {
         bodyColor='error'
       />
       <div className='mt-4'>
+        <BioInfoCard
+          data={data?.bio?.card}
+          loading={isLoading}
+          uId={data?.uId}
+        />
         <div className='my-4'>
           <DAddress
             auth={auth}
             data={data?.bio?.address}
           />
         </div>
+
         <div className='my-4'>
           <DEducation
             auth={auth}
             data={data?.bio?.education}
           />
         </div>
+
         <div className='my-4'>
           <DFamily
             auth={auth}
             data={data?.bio?.family}
           />
         </div>
+
         <div className='my-4'>
           <DPersonal
             auth={auth}
             data={data?.bio?.personal}
           />
         </div>
+
         <div className='my-4'>
           <DMarital
             auth={auth}
@@ -144,15 +147,13 @@ export default function Preview() {
           />
         </div>
 
-        {(data?.bio?.others?.profession_info ||
-          data?.bio?.others?.special_acknowledgement) && (
-          <div className='my-4'>
-            <DAnother
-              auth={auth}
-              data={data?.bio?.others}
-            />
-          </div>
-        )}
+        <div className='my-4'>
+          <DAnother
+            auth={auth}
+            data={data?.bio?.others}
+          />
+        </div>
+
         <div className='my-4'>
           <DExpect
             auth={auth}
@@ -160,6 +161,7 @@ export default function Preview() {
           />
         </div>
       </div>
+
       <div className='my-4'>
         <button
           onClick={handlePublish}

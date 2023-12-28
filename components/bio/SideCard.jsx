@@ -204,33 +204,36 @@ export default function SideCard({ data, loading }) {
         />
 
         <div>
-          <div className=''>
-            <Image
-              priority
-              height='100px'
-              width='100px'
-              src={data.type === 'পাত্রীর বায়োডাটা' ? female : male}
-              alt='profile avatar'
-            />
-            <h2 className='mt-2 text-xl text-white'>
-              Biodata ID
-              <div className='text-5xl'>{data?.user?.uId}</div>
-            </h2>
+          <div className='sm:flex lg:block xl:flex items-center justify-between mt-4 sm:mt-2'>
+            <div className='flex items-center gap-2'>
+              <Image
+                priority
+                height={30}
+                width={30}
+                src={data.type === 'পাত্রীর বায়োডাটা' ? female : male}
+                className='size-20 sm:size-28 lg:size-20 xl:size-28'
+                alt='profile avatar'
+              />
+              <div className='font-bold text-lg text-white'>
+                Biodata ID
+                <p className='font-bold -mt-2 text-4xl tracking-normal'>
+                  {data?.user?.uId}
+                </p>
+              </div>
+            </div>
+            <div className='mt-8 sm:mt-0 lg:mt-8 xl:mt-0'>
+              <button
+                onClick={() => handleCopy(data?.user?.uId)}
+                className={`rounded-md w-full sm:w-28 lg:w-full xl:w-24 text-sm ${
+                  copy ? 'bg-secondary' : 'bg-white'
+                } py-2 font-bold ${copy ? 'text-white' : 'text-primary'}`}
+              >
+                {copy ? 'Copied' : 'Copy BioID'}
+              </button>
+            </div>
           </div>
 
-          <div className='mt-6'>
-            <button
-              onClick={() => handleCopy(data?.user?.uId)}
-              className={`block w-full rounded-md ${
-                copy ? 'bg-red-800' : 'bg-white'
-              } py-3 font-bold ${
-                copy ? 'text-white' : 'text-primary'
-              } focus:ring-2 focus:ring-red-700`}
-            >
-              {copy ? 'Copied' : 'Copy BioID'}
-            </button>
-          </div>
-          <div className='btnHolder mt-4 flex rounded-md bg-white font-bold text-primary'>
+          <div className='btnHolder mt-1 sm:mt-8 lg:mt-1 xl:mt-8 flex rounded-md bg-white font-bold text-primary'>
             <button
               onClick={() => {
                 set_delete(true)

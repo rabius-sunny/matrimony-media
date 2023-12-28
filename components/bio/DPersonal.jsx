@@ -11,8 +11,8 @@ export default function DPersonal({
     salat_duration,
     maintain_mahram,
     can_tilawat,
-    mazhab,
     madhab,
+    mazhab,
     political_view,
     drama_cinnema,
     disease,
@@ -26,7 +26,10 @@ export default function DPersonal({
   }
 }) {
   return (
-    <BioHeading heading='ব্যক্তিগত তথ্য' link={auth && '/personal-info'}>
+    <BioHeading
+      heading='ব্যক্তিগত তথ্য'
+      link={auth && '/personal-info'}
+    >
       {type === 'পাত্রের বায়োডাটা' && (
         <>
           <div className='item'>
