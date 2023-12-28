@@ -5,6 +5,8 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import useAuth from 'hooks/useAuth'
 import { LogoutIcon } from '@heroicons/react/outline'
+import { useDispatch } from 'react-redux'
+import { addBookmark } from 'services/state/dataSlice'
 
 const links = [
   {
@@ -26,25 +28,33 @@ const links = [
 ]
 
 export default function Navigation() {
+  const dispatch = useDispatch()
   const router = useRouter()
   const auth = useAuth()
 
-  const _reload = _ => window.location.reload()
+  const _reload = (_) => window.location.reload()
 
-  const handleLogOut = _ => {
-    if (router.pathname === '/') _reload()
+  const handleLogOut = (_) => {
     localStorage.removeItem('token')
     localStorage.removeItem('id')
+    dispatch(addBookmark(null))
+    if (router.pathname === '/') _reload()
     router.push('/')
   }
 
   return (
     <Popover className='relative z-20 bg-white'>
-      <Menu as='div' className='relative z-20 bg-white'>
+      <Menu
+        as='div'
+        className='relative z-20 bg-white'
+      >
         <div className='mx-auto max-w-7xl px-4 sm:px-6'>
           <div className='flex items-center justify-between border-b-2 border-gray-100 py-6'>
             <div className='lg:w-0 lg:flex-1'>
-              <Link href='/' legacyBehavior>
+              <Link
+                href='/'
+                legacyBehavior
+              >
                 <img
                   className='h-8 w-auto sm:h-10'
                   src='/images/logo.png'
@@ -55,12 +65,19 @@ export default function Navigation() {
             <div className='-my-2 -mr-2 lg:hidden'>
               <Menu.Button className='inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary'>
                 <span className='sr-only'>Open menu</span>
-                <MenuIcon className='h-6 w-6' aria-hidden='true' />
+                <MenuIcon
+                  className='h-6 w-6'
+                  aria-hidden='true'
+                />
               </Menu.Button>
             </div>
             <div className='hidden space-x-10 lg:flex'>
-              {links.map(item => (
-                <Link href={item.href} key={item.href} legacyBehavior>
+              {links.map((item) => (
+                <Link
+                  href={item.href}
+                  key={item.href}
+                  legacyBehavior
+                >
                   <a className='text-base font-medium text-primary hover:underline hover:text-secondary'>
                     {item.name}
                   </a>
@@ -102,7 +119,10 @@ export default function Navigation() {
               <div className='px-5 pt-5 pb-6'>
                 <div className='flex items-center justify-between'>
                   <div>
-                    <Link legacyBehavior href='/'>
+                    <Link
+                      legacyBehavior
+                      href='/'
+                    >
                       <a>
                         <img
                           className='h-8 w-auto'
@@ -115,13 +135,16 @@ export default function Navigation() {
                   <div className='-mr-2'>
                     <Popover.Button className='inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary'>
                       <span className='sr-only'>Close menu</span>
-                      <XIcon className='h-6 w-6' aria-hidden='true' />
+                      <XIcon
+                        className='h-6 w-6'
+                        aria-hidden='true'
+                      />
                     </Popover.Button>
                   </div>
                 </div>
                 <div className='mt-6'>
                   <Menu.Items className='grid gap-y-8'>
-                    {links.map(item => (
+                    {links.map((item) => (
                       <Menu.Item key={item.href}>
                         {({ active }) => (
                           <button
@@ -164,5 +187,5 @@ export default function Navigation() {
         </Transition>
       </Menu>
     </Popover>
-  );
+  )
 }

@@ -16,11 +16,11 @@ class UserRequests {
   checkFavorite(bioid) {
     return requests.get(`/is-favorite/${bioid}`)
   }
-  addToBookmark(id) {
-    return requests.get(`/post-favorites/${id}`)
+  addToBookmark(uId) {
+    return requests.get(`/post-favorites/${uId}`)
   }
-  removeBookmark(id) {
-    return requests.delete(`/delete-favorites/${id}`)
+  removeBookmark(uId) {
+    return requests.delete(`/delete-favorites/${uId}`)
   }
   getFeatureds() {
     return requests.get('/get-featureds')

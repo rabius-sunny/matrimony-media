@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import DAddress from 'components/bio/DAddress'
 import { useRouter } from 'next/router'
-import biodataRequests from 'services/network/biodataRequests'
 import DEducation from 'components/bio/DEducaiton'
 import DFamily from 'components/bio/DFamily'
 import DPersonal from 'components/bio/DPersonal'
@@ -17,83 +16,74 @@ import useAsync from 'hooks/useAsync'
 import requests from 'services/network/http'
 import LongModal from 'components/shared/Modals/LongModal'
 import { Button } from '@nextui-org/react'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  addLocalBookmark,
+  addSingleBookmark,
+  removeLocalBookmark,
+  removeSingleBookmark
+} from 'services/state/dataSlice'
 
 export default function DetailBio() {
   const {
     query: { uId }
   } = useRouter()
   const { data, error, isLoading } = useAsync(`/bio-id/${uId}`, requests.get)
-  const [bio, setBio] = useState({})
+  const dispatch = useDispatch()
+  const { bookmarks, localBookmarks } = useSelector((state) => state.data)
   const [isBookmarked, setIsBookmarked] = useState(false)
   const [isBookmarkedLocal, setIsBookmarkedLocal] = useState(false)
-
   const router = useRouter()
   const auth = useAuth()
 
-  console.log('response', { data, error, isLoading })
-
   // check favorite for signed user and public user
-  // useEffect(() => {
-  //   if (uId) {
-  //     if (!auth) {
-  //       // check for public
-  //       const bookmarks = localStorage.getItem('bookmarks')
-  //       if (bookmarks) {
-  //         const result = JSON.parse(bookmarks)
-  //         if (result.hasOwnProperty(uId)) {
-  //           setIsBookmarkedLocal(true)
-  //         }
-  //       }
-  //     } else {
-  //       // check for user
-  //       userRequest
-  //         .checkFavorite(bio?._id)
-  //         .then((res) => {
-  //           if (res.message === 'exists') {
-  //             setIsBookmarked(true)
-  //           }
-  //         })
-  //         .catch((err) => err)
-  //     }
-  //   }
-  // }, [uId, bio, auth])
+  useEffect(() => {
+    if (uId) {
+      // check for user
+      if (auth && bookmarks.includes(uId)) {
+        setIsBookmarked(true)
+      } else {
+        // check for local
+        if (localBookmarks.includes(uId)) {
+          setIsBookmarkedLocal(true)
+        }
+      }
+    }
+  }, [uId, auth])
 
-  const handleBookmark = (_) => {
+  const handleBookmark = () => {
     if (auth) {
       if (isBookmarked) {
         userRequest
-          .removeBookmark(bio?._id)
+          .removeBookmark(uId)
           .then((res) => {
             if (res.message === 'ok') {
               setIsBookmarked(false)
+              dispatch(removeSingleBookmark(uId))
             }
           })
-          .catch((err) => err)
+          .catch((err) =>
+            alert('একটি ইরর হয়েছে, পেজটি রিফ্রেশ দিয়ে চেষ্টা করুন।')
+          )
       } else {
         userRequest
-          .addToBookmark(bio?._id)
+          .addToBookmark(uId)
           .then((res) => {
             if (res.message === 'ok') {
               setIsBookmarked(true)
+              dispatch(addSingleBookmark(uId))
             }
           })
-          .catch((err) => console.log('err', err))
+          .catch((err) =>
+            alert('একটি ইরর হয়েছে, পেজটি রিফ্রেশ দিয়ে চেষ্টা করুন।')
+          )
       }
     } else {
-      const bookmarks = localStorage.getItem('bookmarks')
-      if (bookmarks) {
-        const result = JSON.parse(bookmarks)
-        if (result.hasOwnProperty(uId)) {
-          delete result[uId]
-          setIsBookmarkedLocal(false)
-        } else {
-          result[uId] = uId
-          setIsBookmarkedLocal(true)
-        }
-        localStorage.setItem('bookmarks', JSON.stringify(result))
+      if (isBookmarkedLocal) {
+        dispatch(removeLocalBookmark(uId))
+        setIsBookmarkedLocal(false)
       } else {
-        const bookmarkObj = { [uId]: uId }
-        localStorage.setItem('bookmarks', JSON.stringify(bookmarkObj))
+        dispatch(addLocalBookmark(uId))
         setIsBookmarkedLocal(true)
       }
     }

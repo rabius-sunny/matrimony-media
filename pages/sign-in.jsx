@@ -15,6 +15,7 @@ import { Loading } from '@nextui-org/react'
 import { useDispatch } from 'react-redux'
 import { atHome, notHome } from 'services/state/utilSlice'
 import Link from 'next/link'
+import { addBookmark } from 'services/state/dataSlice'
 
 export default function Signin() {
   const dispatch = useDispatch()
@@ -67,11 +68,7 @@ export default function Signin() {
   }
   const onPhoneSubmit = async () => {
     setLoading(true)
-    if (
-      isNaN(Number(cred.phone)) ||
-      cred.phone.length < 11 ||
-      cred.phone.length > 14
-    ) {
+    if (isNaN(Number(cred.phone)) || cred.phone.length !== 11) {
       alert('Please enter a valid phone number')
       setLoading(false)
     } else {
@@ -91,7 +88,7 @@ export default function Signin() {
     e.preventDefault()
 
     try {
-      const confirmation = await confirm.confirm(cred.otp)
+      await confirm.confirm(cred.otp)
       handleSubmit(e)
     } catch (error) {
       alert('wrong otp')
@@ -99,12 +96,12 @@ export default function Signin() {
     }
   }
   const handleSubmit = async () => {
-    console.log('handler')
     try {
       const data = await userRequest.signIn({
         phone: cred.phone.split(' ').join(''),
         uId
       })
+      dispatch(addBookmark(data.bookmarks))
       localStorage.setItem('token', data.token)
       localStorage.setItem('id', data.id)
       localStorage.removeItem('bookmarks')
@@ -118,7 +115,6 @@ export default function Signin() {
   const onChange = (e) => setCred({ ...cred, [e.target.name]: e.target.value })
   const submitHandler = (e) => {
     e.preventDefault()
-    console.log('clicked')
     return process.env.NODE_ENV === 'production'
       ? onPhoneSubmit()
       : handleSubmit()
