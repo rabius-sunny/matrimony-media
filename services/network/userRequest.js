@@ -10,8 +10,8 @@ class UserRequests {
   getType() {
     return requests.get('/get-type')
   }
-  getFavorites() {
-    return requests.get('/favorites')
+  getFavorites(uIds) {
+    return requests.post('/favorites', { uIds })
   }
   checkFavorite(bioid) {
     return requests.get(`/is-favorite/${bioid}`)

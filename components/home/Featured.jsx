@@ -11,9 +11,9 @@ export default function Featured() {
 
   return (
     <div>
-      {isLoading || error ? (
+      {isLoading || error || !data?.bios?.length ? (
         <div className='my-4'>
-          <CardSkeleton />
+          <CardSkeleton count={3} />
         </div>
       ) : (
         <div className='my-4'>
@@ -22,7 +22,15 @@ export default function Featured() {
               {data.bios.map((bio, i) => (
                 <BioCard
                   key={i}
-                  bio={bio}
+                  bio={{
+                    bio: {
+                      type: bio?.type,
+                      condition: bio?.condition,
+                      profession: bio?.profession,
+                      birth: bio?.birth
+                    },
+                    uId: bio?.user?.uId
+                  }}
                 />
               ))}
             </div>

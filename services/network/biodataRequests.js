@@ -1,7 +1,7 @@
 import requests from './http'
 class BiodataRequests {
-  getBios(type, jilla) {
-    return requests.get(`/home/${type}/${jilla}`)
+  getBios(criteria) {
+    return requests.post('/initial-filter', criteria)
   }
 
   filterBios(body) {

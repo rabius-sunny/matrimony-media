@@ -7,14 +7,8 @@ const _types = ['পাত্রের বায়োডাটা', 'পাত্�
 export default function Dropdown() {
   const router = useRouter()
   const [type, setType] = useState(_types[0])
-  const [jilla, setJilla] = useState('')
+  const [jilla, setJilla] = useState('all')
   const [id, setId] = useState('')
-  const [isReset, setIsReset] = useState(false)
-  const _reset = () => {
-    setIsReset(true)
-    setType('')
-    setJilla('')
-  }
 
   return (
     <div className='my-3 lg:my-4'>
@@ -27,14 +21,9 @@ export default function Dropdown() {
         </label>
         <select
           onChange={(e) => setType(e.target.value)}
-          onClick={(e) => {
-            setIsReset(false)
-            setId('')
-          }}
-          className={`w-full ${
-            isReset ? 'opacity-70' : 'opacity-100'
-          } py-1 rounded px-1 focus:outline-red-800`}
-          name='type'
+          onClick={(e) => setId('')}
+          value={type}
+          className='w-full py-1 rounded px-1 focus:outline-red-800'
           id='type'
         >
           <option value='পাত্রের বায়োডাটা'>পাত্রের বায়োডাটা</option>
@@ -50,23 +39,13 @@ export default function Dropdown() {
           জেলা
         </label>
         <select
-          onClick={(e) => {
-            setJilla(e.target.value)
-            setIsReset(false)
-            setId('')
-          }}
-          className={`w-full ${
-            isReset ? 'opacity-70' : 'opacity-100'
-          } py-1 rounded px-1 focus:outline-red-800`}
-          name='jilla'
+          onClick={() => setId('')}
+          onChange={(e) => setJilla(e.target.value)}
+          value={jilla}
+          className='w-full py-1 rounded px-1 focus:outline-red-800'
           id='jilla'
         >
-          <option
-            defaultValue={isReset && ''}
-            value=''
-          >
-            সকল
-          </option>
+          <option value='all'>সকল</option>
           {_address_jilla.map((item) => (
             <option
               value={item}
@@ -78,6 +57,8 @@ export default function Dropdown() {
         </select>
       </div>
 
+      <div className='my-2 font-medium'>অথবা</div>
+
       <div>
         <label
           className='mb-1 block text-sm font-medium text-white'
@@ -86,8 +67,6 @@ export default function Dropdown() {
           বায়োডাটা আইডি
         </label>
         <input
-          onClick={_reset}
-          onBlur={() => setIsReset(false)}
           onChange={(e) => setId(e.target.value)}
           value={id}
           type='tel'
@@ -98,7 +77,9 @@ export default function Dropdown() {
       <div className='submit text-right'>
         <button
           onClick={() =>
-            router.push(`/bios/search/${type || 'all'}/${jilla || 'all'}/${id}`)
+            router.push(
+              id ? `/bios/bio/${id}` : `/bios/search/${type}/${jilla}`
+            )
           }
           className='rounded bg-white px-4 py-2 text-primary shadow-md hover:bg-red-100'
         >

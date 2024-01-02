@@ -27,7 +27,7 @@ export default function GeneralInfo() {
     status: false,
     done: false
   })
-  const { data, loading } = getData('general')
+  const { data, loading, mutate } = getData('general')
 
   const [isLoading, setIsLoading] = useState(false)
 

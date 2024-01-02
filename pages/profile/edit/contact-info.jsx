@@ -49,7 +49,7 @@ export default function Name() {
       .then((info) => {
         if (info.message === 'ok') {
           mutate()
-          if (data?.filled?.length !== 10) {
+          if (data?.filled?.length < 9) {
             setUnfilledMessage(true)
           } else router.push('/profile/preview')
         }

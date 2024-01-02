@@ -34,7 +34,7 @@ export default function SideCard({ data, loading }) {
         <p className='mb-4 italic text-yellow-500'>
           বায়োডাটা “হাইড” এর মাধ্যমে আপনার বায়োডাটাটি সার্চ ফিল্টার থেকে গোপনে
           রাখতে পারবেন। পরবর্তীতে যে যেকোন সময় পুনরায় পাব্লিশ করতে পারবেন <br />
-          ইন শা আল্লাহ।
+          ইনশা আল্লাহ।
         </p>
 
         <div className='flex gap-x-2 justify-end'>
