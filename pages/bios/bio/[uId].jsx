@@ -89,98 +89,7 @@ export default function DetailBio() {
     }
   }
 
-  return !isLoading && data ? (
-    <div className='container3 my-8'>
-      <Head>
-        <title>বায়োডাটা | {uId}</title>
-      </Head>
-      <div className=''>
-        <BioInfoCard
-          data={data?.bio?.card}
-          loading={isLoading}
-          uId={uId}
-        />
-        <div className='my-4'>
-          <DAddress
-            auth={auth}
-            data={data?.bio?.address}
-          />
-        </div>
-
-        <div className='my-4'>
-          <DEducation
-            auth={auth}
-            data={data?.bio?.education}
-          />
-        </div>
-
-        <div className='my-4'>
-          <DFamily
-            auth={auth}
-            data={data?.bio?.family}
-          />
-        </div>
-
-        <div className='my-4'>
-          <DPersonal
-            auth={auth}
-            data={data?.bio?.personal}
-          />
-        </div>
-
-        <div className='my-4'>
-          <DMarital
-            auth={auth}
-            data={data?.bio?.marriage}
-          />
-        </div>
-
-        <div className='my-4'>
-          <DAnother
-            auth={auth}
-            data={data?.bio?.others}
-          />
-        </div>
-
-        <div className='my-4'>
-          <DExpect
-            auth={auth}
-            data={data?.bio?.expectation}
-          />
-        </div>
-        <div className='mt-4'>
-          <div className='my-8 flex flex-wrap gap-4'>
-            <Button
-              onPress={() => router.push(`/checkout/${uId}`)}
-              className='bg-secondary w-full sm:w-auto'
-            >
-              অভিভাবকের সাথে যোগাযোগ করুন
-            </Button>
-            <Button
-              onPress={handleBookmark}
-              className='bg-primary w-full sm:w-auto'
-            >
-              {isBookmarkedLocal || isBookmarked
-                ? 'ফেভারিট থেকে মুছে ফেলুন'
-                : 'ফেভারিট এ যোগ করুন'}
-            </Button>
-          </div>
-        </div>
-      </div>
-    </div>
-  ) : error ? (
-    <LongModal
-      blur
-      scroll={false}
-      visible={true}
-      onClose={() => router.back()}
-      header='ইরর হয়েছে'
-      body='কোন বায়োডাটা পাওয়া যায়নি।'
-      btn='ফিরে যান'
-      color='default'
-      bodyColor='error'
-    />
-  ) : (
+  return isLoading ? (
     <div className='container3'>
       <Head>
         <title>বায়োডাটা</title>
@@ -214,5 +123,100 @@ export default function DetailBio() {
         />
       </div>
     </div>
+  ) : error ? (
+    <div className='min-h-[50vh]'>
+      <LongModal
+        blur
+        scroll={false}
+        visible={true}
+        onClose={() => router.back()}
+        header='পাওয়া যায়নি'
+        body={`${uId} - এই আইডি দিয়ে কোন বায়োডাটা পাওয়া যায়নি। সঠিক আইডি দিয়ে আবার সার্চ করুন। `}
+        btn='ফিরে যান'
+        color='default'
+        bodyColor='error'
+      />
+    </div>
+  ) : (
+    data && (
+      <div className='container3 my-8'>
+        <Head>
+          <title>বায়োডাটা | {uId}</title>
+        </Head>
+        <div className=''>
+          <BioInfoCard
+            data={data?.bio?.card}
+            loading={isLoading}
+            uId={uId}
+          />
+          <div className='my-4'>
+            <DAddress
+              auth={auth}
+              data={data?.bio?.address}
+            />
+          </div>
+
+          <div className='my-4'>
+            <DEducation
+              auth={auth}
+              data={data?.bio?.education}
+            />
+          </div>
+
+          <div className='my-4'>
+            <DFamily
+              auth={auth}
+              data={data?.bio?.family}
+            />
+          </div>
+
+          <div className='my-4'>
+            <DPersonal
+              auth={auth}
+              data={data?.bio?.personal}
+            />
+          </div>
+
+          <div className='my-4'>
+            <DMarital
+              auth={auth}
+              data={data?.bio?.marriage}
+            />
+          </div>
+
+          <div className='my-4'>
+            <DAnother
+              auth={auth}
+              data={data?.bio?.others}
+            />
+          </div>
+
+          <div className='my-4'>
+            <DExpect
+              auth={auth}
+              data={data?.bio?.expectation}
+            />
+          </div>
+          <div className='mt-4'>
+            <div className='my-8 flex flex-wrap gap-4'>
+              <Button
+                onPress={() => router.push(`/checkout/${uId}`)}
+                className='bg-secondary w-full sm:w-auto'
+              >
+                অভিভাবকের সাথে যোগাযোগ করুন
+              </Button>
+              <Button
+                onPress={handleBookmark}
+                className='bg-primary w-full sm:w-auto'
+              >
+                {isBookmarkedLocal || isBookmarked
+                  ? 'ফেভারিট থেকে মুছে ফেলুন'
+                  : 'ফেভারিট এ যোগ করুন'}
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
   )
 }

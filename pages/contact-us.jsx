@@ -3,14 +3,16 @@ import { useRouter } from 'next/router'
 import { useState } from 'react'
 import userRequest from 'services/network/userRequest'
 import ColoredHeader from '../components/shared/ColoredHeader'
+import LongModal from 'components/shared/Modals/LongModal'
 
 export default function ContactUs() {
-  const router = useRouter()
+  const { back } = useRouter()
   const [input, setInput] = useState({
     name: '',
     email: '',
     message: ''
   })
+  const [isVisible, setIsVisible] = useState(false)
 
   const onChange = (e) =>
     setInput({ ...input, [e.target.name]: e.target.value })
@@ -18,11 +20,7 @@ export default function ContactUs() {
     e.preventDefault()
     userRequest
       .postMessage(input)
-      .then((res) => {
-        if (res.message === 'ok') {
-          router.push('/')
-        }
-      })
+      .then((res) => res.message === 'ok' && setIsVisible(true))
       .catch((err) => alert('error! try again.'))
   }
 
@@ -31,6 +29,16 @@ export default function ContactUs() {
       <Head>
         <title>যোগাযোগ</title>
       </Head>
+      <LongModal
+        blur
+        scroll={false}
+        visible={isVisible}
+        onClose={() => back()}
+        body='আপনার মেসেজটি কর্তৃপক্ষের নিকট পাঠানো হয়েছে। জাযাকাল্লাহু খাইরান।'
+        btn='ok'
+        color='success'
+        bodyColor='success'
+      />
       <ColoredHeader heading='যোগাযোগ' />
       <div className='container minHeight'>
         <p className='my-16 text-center text-xl text-gray-600'>
@@ -93,7 +101,7 @@ export default function ContactUs() {
               <input
                 type='submit'
                 value='পাঠান'
-                className='shadow-lg bg-secondary  text-center text-white px-10 py-2 rounded'
+                className=' cursor-pointer shadow-lg bg-secondary  text-center text-white px-10 py-2 rounded'
               />
             </div>
           </form>

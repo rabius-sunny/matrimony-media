@@ -12,9 +12,9 @@ export default function BioInfoCard({
   data: {
     type,
     condition,
-    permanent_address,
+    permanent_jilla,
     permanent_division,
-    current_address,
+    current_jilla,
     current_division,
     birth,
     complexion,
@@ -256,7 +256,7 @@ export default function BioInfoCard({
           </div>
           <div className='item'>
             <span>স্থায়ী ঠিকানা</span>
-            <span>{permanent_address}</span>
+            <span>{permanent_jilla}</span>
           </div>
           <div className='item'>
             <span>স্থায়ী বিভাগ</span>
@@ -264,7 +264,7 @@ export default function BioInfoCard({
           </div>
           <div className='item'>
             <span>বর্তমান ঠিকানা</span>
-            <span>{current_address}</span>
+            <span>{current_jilla}</span>
           </div>
           <div className='item'>
             <span>বর্তমান বিভাগ</span>

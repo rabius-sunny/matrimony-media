@@ -14,7 +14,7 @@ export default function Dropdown() {
     <div className='my-3 lg:my-4'>
       <div className='mb-2 lg:mb-4'>
         <label
-          className='mb-1 block text-sm font-medium text-white'
+          className='mb-1 block text-sm font-semibold text-white'
           htmlFor='type'
         >
           আমি খুঁজছি
@@ -33,7 +33,7 @@ export default function Dropdown() {
 
       <div className='my-2 lg:my-4'>
         <label
-          className='mb-1 block text-sm font-medium text-white'
+          className='mb-1 block text-sm font-semibold text-white'
           htmlFor='jilla'
         >
           জেলা
@@ -57,11 +57,15 @@ export default function Dropdown() {
         </select>
       </div>
 
-      <div className='my-2 font-medium'>অথবা</div>
+      <div className='font-semibold flex items-center justify-center text-white/80 gap-4'>
+        <div className='h-[1px] bg-white/60 w-full' />
+        <span>অথবা</span>
+        <div className='h-[1px] bg-white/60 w-full' />
+      </div>
 
       <div>
         <label
-          className='mb-1 block text-sm font-medium text-white'
+          className='mb-1 block text-sm font-semibold text-white'
           htmlFor='biono'
         >
           বায়োডাটা আইডি
@@ -70,6 +74,7 @@ export default function Dropdown() {
           onChange={(e) => setId(e.target.value)}
           value={id}
           type='tel'
+          maxLength={6}
           placeholder='.....'
           className='mb-4 w-full rounded px-3 py-1 shadow-md focus:ring-secondary focus:ring-2'
         />

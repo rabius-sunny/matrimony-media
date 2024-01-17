@@ -27,12 +27,12 @@ export default function LongModal({
         <Text
           b
           color={bodyColor}
-          className='text-xs md:text-lg'
+          className='text-sm md:text-lg'
         >
           {header}
         </Text>
       </Modal.Header>
-      <Modal.Body>{body}</Modal.Body>
+      <Modal.Body className='text-sm md:text-base'>{body}</Modal.Body>
       <Modal.Footer>
         {btn && (
           <Button
