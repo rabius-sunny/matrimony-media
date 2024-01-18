@@ -17,7 +17,7 @@ class UserRequests {
     return requests.get(`/is-favorite/${bioid}`)
   }
   addToBookmark(uId) {
-    return requests.get(`/post-favorites/${uId}`)
+    return requests.get(`/add-favorites/${uId}`)
   }
   removeBookmark(uId) {
     return requests.delete(`/delete-favorites/${uId}`)
@@ -28,8 +28,8 @@ class UserRequests {
   makeRequest(body) {
     return requests.post('/request-info', body)
   }
-  deleteHideRequest(reason) {
-    return requests.post('/delete-hide-request', reason)
+  deleteRequest(reason) {
+    return requests.post('/delete-request', reason)
   }
   hideByUser() {
     return requests.get('/hide-by-user')

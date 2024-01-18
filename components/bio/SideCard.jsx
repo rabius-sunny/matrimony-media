@@ -65,9 +65,9 @@ export default function SideCard({ data, loading }) {
     const handleDelete = (type) => {
       if (reason !== '') {
         userRequest
-          .deleteHideRequest({ reason, type })
-          .then((info) => {
-            if (info.message === 'ok') {
+          .deleteRequest({ reason })
+          .then((res) => {
+            if (res.ok) {
               alert(
                 'আপনার delete রিকুয়েস্টটি গৃহীত হয়েছে, শীঘ্রই SMS এর মাধ্যমে ফলাফল পেয়ে যাবেন ইনশা আল্লাহ!'
               )
@@ -75,6 +75,7 @@ export default function SideCard({ data, loading }) {
             }
           })
           .catch((err) => {
+            console.log('err', err)
             alert('ইরর হয়েছে, আবার চেষ্টা করুন')
             set_delete(false)
           })

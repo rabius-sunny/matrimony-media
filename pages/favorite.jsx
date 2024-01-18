@@ -17,27 +17,31 @@ export default function Favorite() {
   })
 
   useEffect(() => {
-    if (bookmarks?.length || localBookmarks.length !== 0) {
+    if (auth && bookmarks?.length) {
       userRequest
-        .getFavorites(
-          auth && bookmarks.length !== 0 ? bookmarks : localBookmarks
-        )
-        .then((data) => setData(data.response))
+        .getFavorites(bookmarks)
+        .then((data) => data.data.length && setData(data.data))
+        .catch((err) => setNetState({ error: !!err }))
+        .finally(() => setNetState({ loading: false }))
+    } else if (!auth && localBookmarks.length > 0) {
+      userRequest
+        .getFavorites(localBookmarks)
+        .then((data) => data.data.length && setData(data.data))
         .catch((err) => setNetState({ error: !!err }))
         .finally(() => setNetState({ loading: false }))
     } else {
       setNetState({ loading: false })
       setData([])
     }
-  }, [])
+  }, [auth])
 
   return (
-    <div>
+    <div className='min-h-[50vh]'>
       <Head>
         <title>পছন্দের বায়োডাটাসমূহ | জান্নাতি জুটি.COM</title>
       </Head>
       <ColoredHeader heading='পছন্দের বায়োডাটাসমূহ' />
-      {netState.loading ? (
+      {!data || netState.loading ? (
         <div className='container my-4'>
           <CardSkeleton />
         </div>
@@ -62,8 +66,11 @@ export default function Favorite() {
       ) : (
         <div className='container my-8'>
           <div className='grid grid-cols-12 gap-2 md:gap-3 lg:gap-4 xl:gap-8'>
-            {data?.map((bio) => (
-              <BioCard bio={bio} />
+            {data?.map((bio, idx) => (
+              <BioCard
+                key={idx}
+                bio={bio}
+              />
             ))}
           </div>
         </div>

@@ -83,6 +83,7 @@ export default function Signin() {
       }
     }
   }
+
   const onOtpSubmit = async (e) => {
     setLoading(true)
     e.preventDefault()
@@ -95,6 +96,7 @@ export default function Signin() {
       setLoading(false)
     }
   }
+
   const handleSubmit = async () => {
     try {
       const data = await userRequest.signIn({
@@ -104,7 +106,6 @@ export default function Signin() {
       dispatch(addBookmark(data.bookmarks))
       localStorage.setItem('token', data.token)
       localStorage.setItem('id', data.id)
-      localStorage.removeItem('bookmarks')
       router.push('/profile/edit/primary')
       // window.location.reload()
     } catch (error) {
@@ -115,9 +116,10 @@ export default function Signin() {
   const onChange = (e) => setCred({ ...cred, [e.target.name]: e.target.value })
   const submitHandler = (e) => {
     e.preventDefault()
-    return process.env.NODE_ENV === 'production'
-      ? onPhoneSubmit()
-      : handleSubmit()
+    // return process.env.NODE_ENV === 'production'
+    //   ? onPhoneSubmit()
+    //   : handleSubmit()
+    return onPhoneSubmit()
   }
 
   return (

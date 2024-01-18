@@ -40,13 +40,11 @@ export default function DetailBio() {
   useEffect(() => {
     if (uId) {
       // check for user
-      if (auth && bookmarks.includes(uId)) {
-        setIsBookmarked(true)
+      if (auth) {
+        bookmarks?.includes(uId) && setIsBookmarked(true)
       } else {
         // check for local
-        if (localBookmarks.includes(uId)) {
-          setIsBookmarkedLocal(true)
-        }
+        localBookmarks.includes(uId) && setIsBookmarkedLocal(true)
       }
     }
   }, [uId, auth])
@@ -57,7 +55,7 @@ export default function DetailBio() {
         userRequest
           .removeBookmark(uId)
           .then((res) => {
-            if (res.message === 'ok') {
+            if (res.ok) {
               setIsBookmarked(false)
               dispatch(removeSingleBookmark(uId))
             }
@@ -69,7 +67,7 @@ export default function DetailBio() {
         userRequest
           .addToBookmark(uId)
           .then((res) => {
-            if (res.message === 'ok') {
+            if (res.ok) {
               setIsBookmarked(true)
               dispatch(addSingleBookmark(uId))
             }
