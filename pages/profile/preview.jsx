@@ -165,16 +165,13 @@ export default function Preview() {
       <div className='my-4'>
         <button
           onClick={handlePublish}
-          className='text-white font-bold text-xl cursor-pointer rounded-md bg-primary  py-3 my-8 w-full'
+          className={`text-white font-bold text-xl cursor-pointer rounded-md ${
+            data?.requested ? 'pointer-events-none bg-slate-300' : 'bg-primary'
+          }  py-3 my-8 w-full`}
         >
-          {btnLoading ? (
-            <Loading
-              color='success'
-              size='sm'
-            />
-          ) : (
-            'পাবলিশ রিকুয়েস্ট করুন'
-          )}
+          {data?.requested
+            ? 'আপনার রিকুয়েস্টটি এপ্রুভ্যালে রয়েছে'
+            : 'পাবলিশ রিকুয়েস্ট করুন'}
         </button>
       </div>
     </div>
