@@ -17,7 +17,7 @@ export default function Checkout() {
   const [visible, setVisible] = useState(false)
   const [visible2, setVisible2] = useState(false)
   const [method, setMethod] = useState(1)
-  const [pement, setPement] = useState({
+  const [payment, setPayment] = useState({
     pnumber: '',
     trx: ''
   })
@@ -34,19 +34,19 @@ export default function Checkout() {
     }
   }
   const onSubmit = (data) => {
-    if (pement.pnumber === '' || pement.trx === '') {
-      alert('Fill your payment info')
+    if (payment.pnumber === '' || payment.trx === '') {
+      alert('আপনার পেমেন্ট তথ্য প্রদান করুন।')
     } else {
       setLoading(true)
       userRequest
         .makeRequest({
           ...data,
-          ...pement,
+          ...payment,
           method: pmethod(method),
           target: checkoutid
         })
-        .then((info) => {
-          if (info.message === 'ok') {
+        .then((res) => {
+          if (res.ok) {
             setLoading(false)
             setVisible(true)
           }
@@ -58,7 +58,7 @@ export default function Checkout() {
     }
   }
   const onChange = (e) =>
-    setPement({ ...pement, [e.target.name]: e.target.value })
+    setPayment({ ...payment, [e.target.name]: e.target.value })
 
   return (
     <div>
