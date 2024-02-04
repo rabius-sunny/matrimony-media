@@ -2,9 +2,9 @@ import { initializeApp } from 'firebase/app'
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_APIKEY,
-  authDomain: 'matrimony-media.firebaseapp.com',
-  projectId: 'matrimony-media',
-  storageBucket: 'matrimony-media.appspot.com',
+  authDomain: 'jannatijuti-79830.firebaseapp.com',
+  projectId: 'jannatijuti-79830',
+  storageBucket: 'jannatijuti-79830.appspot.com',
   messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGINGSERNDERID,
   appId: process.env.NEXT_PUBLIC_FIREBASE_APPID
 }

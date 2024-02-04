@@ -66,10 +66,11 @@ export default function Signin() {
       recaptchaVerifier
     )
   }
+
   const onPhoneSubmit = async () => {
     setLoading(true)
     if (isNaN(Number(cred.phone)) || cred.phone.length !== 11) {
-      alert('Please enter a valid phone number')
+      alert('ভ্যালিড নাম্বার ব্যবহার করুন। ফরমেট = 01XXXXXXXXX')
       setLoading(false)
     } else {
       try {
@@ -113,6 +114,7 @@ export default function Signin() {
       window.location.reload()
     }
   }
+
   const onChange = (e) => setCred({ ...cred, [e.target.name]: e.target.value })
   const submitHandler = (e) => {
     e.preventDefault()

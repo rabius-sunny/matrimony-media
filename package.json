@@ -2,15 +2,10 @@
   "private": true,
   "license": "MIT",
   "homepage": "https://jannatijuti.com",
-  "script": {
+  "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start"
-  },
-  "scripts": {
-    "dev": "node server.js",
-    "build": "next build",
-    "start": "NODE_ENV=production node server.js"
   },
   "dependencies": {
     "@emailjs/browser": "^3.7.0",
