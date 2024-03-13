@@ -1,11 +1,11 @@
 import useAuth from 'hooks/useAuth'
 import Head from 'next/head'
-import {
-  getAuth,
-  RecaptchaVerifier,
-  signInWithPhoneNumber
-} from 'firebase/auth'
-import firebaseApp from 'services/network/firebaseInit'
+// import {
+//   getAuth,
+//   RecaptchaVerifier,
+//   signInWithPhoneNumber
+// } from 'firebase/auth'
+// import firebaseApp from 'services/network/firebaseInit'
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 import userRequest from 'services/network/userRequest'
@@ -27,7 +27,7 @@ export default function Signin() {
   })
   const [uId, setUId] = useState(null)
   const [loading, setLoading] = useState(false)
-  const [confirm, setConfirm] = useState(null)
+  // const [confirm, setConfirm] = useState(null)
   const [isOtp, setIsOtp] = useState(false)
 
   const router = useRouter()
@@ -52,53 +52,59 @@ export default function Signin() {
     }
   }, [uIds])
 
-  const recaptcha = async (_) => {
-    const fireAuth = getAuth(firebaseApp)
-    const recaptchaVerifier = new RecaptchaVerifier(
-      'recaptcha-container',
-      {},
-      fireAuth
-    )
-    recaptchaVerifier.render()
-    return signInWithPhoneNumber(
-      fireAuth,
-      '+88' + cred.phone.split(' ').join(''),
-      recaptchaVerifier
-    )
-  }
+  // const recaptcha = async (_) => {
+  //   const fireAuth = getAuth(firebaseApp)
+  //   const recaptchaVerifier = new RecaptchaVerifier(
+  //     'recaptcha-container',
+  //     {},
+  //     fireAuth
+  //   )
+  //   recaptchaVerifier.render()
+  //   return signInWithPhoneNumber(
+  //     fireAuth,
+  //     '+88' + cred.phone.split(' ').join(''),
+  //     recaptchaVerifier
+  //   )
+  // }
 
-  const onPhoneSubmit = async () => {
+  // const onPhoneSubmit = async () => {
+  //   setLoading(true)
+  //   if (isNaN(Number(cred.phone)) || cred.phone.length !== 11) {
+  //     alert('ভ্যালিড নাম্বার ব্যবহার করুন। ফরমেট = 01XXXXXXXXX')
+  //     setLoading(false)
+  //   } else {
+  //     try {
+  //       const response = await recaptcha()
+  //       setConfirm(response)
+  //       setIsOtp(true)
+  //       setLoading(false)
+  //     } catch (error) {
+  //       console.log('otp error', error)
+  //       setLoading(false)
+  //     }
+  //   }
+  // }
+
+  // const onOtpSubmit = async (e) => {
+  //   setLoading(true)
+  //   e.preventDefault()
+
+  //   try {
+  //     await confirm.confirm(cred.otp)
+  //     handleSubmit(e)
+  //   } catch (error) {
+  //     alert('wrong otp')
+  //     setLoading(false)
+  //   }
+  // }
+
+  const handleSubmit = async () => {
     setLoading(true)
     if (isNaN(Number(cred.phone)) || cred.phone.length !== 11) {
       alert('ভ্যালিড নাম্বার ব্যবহার করুন। ফরমেট = 01XXXXXXXXX')
       setLoading(false)
-    } else {
-      try {
-        const response = await recaptcha()
-        setConfirm(response)
-        setIsOtp(true)
-        setLoading(false)
-      } catch (error) {
-        console.log('otp error', error)
-        setLoading(false)
-      }
+      return
     }
-  }
-
-  const onOtpSubmit = async (e) => {
-    setLoading(true)
-    e.preventDefault()
-
-    try {
-      await confirm.confirm(cred.otp)
-      handleSubmit(e)
-    } catch (error) {
-      alert('wrong otp')
-      setLoading(false)
-    }
-  }
-
-  const handleSubmit = async () => {
     try {
       const data = await userRequest.signIn({
         phone: cred.phone.split(' ').join(''),
@@ -116,12 +122,11 @@ export default function Signin() {
   }
 
   const onChange = (e) => setCred({ ...cred, [e.target.name]: e.target.value })
+
   const submitHandler = (e) => {
     e.preventDefault()
-    // return process.env.NODE_ENV === 'production'
-    //   ? onPhoneSubmit()
-    //   : handleSubmit()
-    return onPhoneSubmit()
+    return handleSubmit()
+    // return onPhoneSubmit()
   }
 
   return (
@@ -210,7 +215,7 @@ export default function Signin() {
                   </div>
                 </form>
               )}
-              {isOtp && (
+              {/* isOtp && (
                 <div className='text-center'>
                   <h1 className='text-3xl text-white'>OTP কোড দিন</h1>
                   <form onSubmit={onOtpSubmit}>
@@ -240,7 +245,7 @@ export default function Signin() {
                     </div>
                   </form>
                 </div>
-              )}
+              ) */}
             </div>
           </div>
         </div>
