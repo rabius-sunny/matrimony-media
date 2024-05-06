@@ -14,8 +14,12 @@ import { ExclamationIcon } from '@heroicons/react/solid'
 import LongModal from 'components/shared/Modals/LongModal'
 import SaveButton from 'components/bio/SaveButton'
 import updateResponse from 'hooks/updateResponse'
+import { useSession } from 'next-auth/react'
 
 export default function MarriageRelated() {
+  const {} = useSession({
+    required: true
+  })
   const [states, setStates] = useState({
     widower: false,
     married: false,

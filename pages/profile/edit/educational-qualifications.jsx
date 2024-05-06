@@ -6,8 +6,12 @@ import Link from 'next/link'
 import { ExclamationIcon } from '@heroicons/react/outline'
 import EducationGeneral from 'components/profile/Education.General'
 import EducationMadrasa from 'components/profile/Education.Madrasa'
+import { useSession } from 'next-auth/react'
 
 export default function Education() {
+  const {} = useSession({
+    required: true
+  })
   const { data, loading, mutate } = getData('education')
 
   return (

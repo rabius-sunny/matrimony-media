@@ -8,11 +8,11 @@ export default function Layout({ children }) {
   return (
     <div className='relative'>
       <header>
-        {util.isHome && (
-          <nav>
-            <Navigation />
-          </nav>
-        )}
+        {/* {util.isHome && ( */}
+        <nav>
+          <Navigation />
+        </nav>
+        {/*)} */}
       </header>
       {children}
       {/* <div className="fixed bottom-10 right-10">

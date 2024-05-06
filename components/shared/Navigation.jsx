@@ -1,12 +1,10 @@
 import { Fragment } from 'react'
 import { Menu, Popover, Transition } from '@headlessui/react'
-import { MenuIcon, XIcon } from '@heroicons/react/outline'
+import { LogoutIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
 import Link from 'next/link'
+import { signIn, signOut } from 'next-auth/react'
+import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
-import useAuth from 'hooks/useAuth'
-import { LogoutIcon } from '@heroicons/react/outline'
-import { useDispatch } from 'react-redux'
-import { addBookmark } from 'services/state/dataSlice'
 
 const links = [
   {
@@ -28,18 +26,11 @@ const links = [
 ]
 
 export default function Navigation() {
-  const dispatch = useDispatch()
-  const router = useRouter()
-  const auth = useAuth()
-
-  const _reload = (_) => window.location.reload()
+  const { status } = useSession()
+  const { push } = useRouter()
 
   const handleLogOut = (_) => {
-    localStorage.removeItem('token')
-    localStorage.removeItem('id')
-    dispatch(addBookmark(null))
-    if (router.pathname === '/') _reload()
-    router.push('/')
+    signOut()
   }
 
   return (
@@ -85,15 +76,17 @@ export default function Navigation() {
               ))}
             </div>
             <div className='hidden items-center justify-end lg:flex lg:flex-1 lg:w-0'>
-              <Link
-                legacyBehavior
-                href={auth ? '/profile/edit/primary' : '/sign-in'}
+              <button
+                onClick={() => {
+                  status === 'unauthenticated'
+                    ? signIn('google')
+                    : push('/profile/edit/primary')
+                }}
+                className='ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-primary  px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-dark'
               >
-                <a className='ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-primary  px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-dark'>
-                  সিভি পাঠান
-                </a>
-              </Link>
-              {auth && (
+                সিভি পাঠান
+              </button>
+              {status === 'authenticated' && (
                 <button onClick={handleLogOut}>
                   <LogoutIcon className='h-12 ml-4 text-primary hover:text-dark' />
                 </button>
@@ -156,17 +149,6 @@ export default function Navigation() {
                         )}
                       </Menu.Item>
                     ))}
-                    <Menu.Item>
-                      {({ active }) =>
-                        auth ? (
-                          <button onClick={handleLogOut}>
-                            <LogoutIcon className='h-8 text-primary text-center hover:text-dark' />
-                          </button>
-                        ) : (
-                          <div></div>
-                        )
-                      }
-                    </Menu.Item>
                   </Menu.Items>
                 </div>
               </div>
@@ -174,7 +156,7 @@ export default function Navigation() {
                 <div>
                   <Link
                     legacyBehavior
-                    href={auth ? '/profile/edit/primary' : '/sign-in'}
+                    href={'/sign-in'}
                   >
                     <a className='flex w-full items-center justify-center rounded-md border border-transparent bg-primary  px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-dark'>
                       সিভি পাঠান

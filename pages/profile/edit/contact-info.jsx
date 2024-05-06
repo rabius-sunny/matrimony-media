@@ -11,8 +11,12 @@ import Link from 'next/link'
 import { ArrowRightIcon } from '@heroicons/react/outline'
 import { Loading } from '@nextui-org/react'
 import { useRouter } from 'next/router'
+import { useSession } from 'next-auth/react'
 
 export default function Name() {
+  const {} = useSession({
+    required: true
+  })
   const router = useRouter()
   const { data, loading, mutate } = getData('contact')
 
