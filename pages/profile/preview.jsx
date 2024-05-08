@@ -13,27 +13,26 @@ import { useRouter } from 'next/router'
 import LongModal from 'components/shared/Modals/LongModal'
 import useAuth from 'hooks/useAuth'
 import { PencilAltIcon } from '@heroicons/react/outline'
-import { Loading } from '@nextui-org/react'
 import useAsync from 'hooks/useAsync'
-import requests from 'services/network/http'
 import BioInfoCard from 'components/bio/BioInfoCard'
+import useRequest from 'services/network/useRequest'
 
 export default function Preview() {
-  const { data, isLoading, error } = useAsync('/getbio-by-token', requests.get)
+  const { data, isLoading, error } = useAsync(
+    '/getbio-by-token',
+    useRequest('auth').get
+  )
   const auth = useAuth()
-  const [btnLoading, setBtnLoading] = useState(false)
   const [publishMessage, setPublishMessage] = useState(false)
   const [errorState, setErrorState] = useState(false)
   const [initialMessage, setInitialMessage] = useState(false)
   const router = useRouter()
 
   const handlePublish = (_) => {
-    setBtnLoading(true)
     biodataRequests
       .publishRequest()
       .then((info) => info.message === 'ok' && setPublishMessage(true))
       .catch((err) => setErrorState(true))
-      .finally(() => setBtnLoading(false))
   }
 
   if (error || data?.unfilled?.length !== 0) {

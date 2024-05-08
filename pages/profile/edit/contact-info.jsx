@@ -1,5 +1,10 @@
 import ProfileLayout from 'components/profile/ProfileLayout'
-import { useForm as mantineForm, isNotEmpty } from '@mantine/form'
+import {
+  useForm as mantineForm,
+  isNotEmpty,
+  hasLength,
+  isEmail
+} from '@mantine/form'
 import { MyInput } from 'components/profile/MyInputs'
 import biodataRequests from 'services/network/biodataRequests'
 import getData from 'hooks/getData'
@@ -33,13 +38,18 @@ export default function Name() {
     initialValues: {
       guardian_number: '',
       number_relation: '',
-      receiving_email: ''
+      receiving_email: '',
+      phone: ''
     },
 
     validate: {
-      guardian_number: isNotEmpty('ফিল্ডটি পূরণ করতে হবে'),
+      guardian_number: hasLength(
+        { min: 11, max: 11 },
+        'সঠিক ফোন নাম্বার লিখুন'
+      ),
       number_relation: isNotEmpty('ফিল্ডটি পূরণ করতে হবে'),
-      receiving_email: isNotEmpty('ফিল্ডটি পূরণ করতে হবে')
+      receiving_email: isEmail('সঠিক ইমেইল অ্যাড্রেস লিখুন'),
+      phone: hasLength({ min: 11, max: 11 }, 'সঠিক ফোন নাম্বার লিখুন')
     }
   })
 
@@ -50,8 +60,8 @@ export default function Name() {
         ...values,
         key: 'contact'
       })
-      .then((info) => {
-        if (info.message === 'ok') {
+      .then((res) => {
+        if (res.ok) {
           mutate()
           if (data?.filled?.length < 9) {
             setUnfilledMessage(true)
@@ -134,8 +144,8 @@ export default function Name() {
       {!loading ? (
         <form onSubmit={form.onSubmit((values) => onSubmit(values))}>
           <MyInput
+            type='tel'
             label='অভিভাবকের নাম্বার'
-            placeholder='আপনার নাম'
             description='অবশ্যই ইংরেজীতে নাম্বার লিখবেন এভাবে 01700000000। বিঃদ্রঃ নিজের
                 নাম্বার দিলে ভেরিফিকেশনে এপ্রুভ হবে না। এই ব্যাপারে আমরা সর্বোচ্চ
                 কঠোর। সব সময় খোলা থাকবে এমন নাম্বার লিখবেন। নাম্বার বন্ধ থাকার
@@ -144,14 +154,18 @@ export default function Name() {
           />
           <MyInput
             label='যার নাম্বার লিখেছেন'
-            placeholder='আপনার নাম'
             description='যে অভিভাবকের নাম্বার দিয়েছেন তার সাথে আপনার সম্পর্ক। এভাবে লিখবেনঃ
             বাবা'
             form={{ ...form.getInputProps('number_relation') }}
           />
           <MyInput
+            type='tel'
+            label='আপনার নাম্বার'
+            description='কারো সাথে শেয়ার করা হবে না।'
+            form={{ ...form.getInputProps('phone') }}
+          />
+          <MyInput
             label='বায়োডাটা গ্রহণের ই-মেইল এড্রেস'
-            placeholder='আপনার নাম'
             description='এই ই-মেইলে অপরপক্ষ বায়োডাটার লিংক পাঠাতে পারে। তাই নির্ভুলভাবে
             লিখুন।'
             form={{ ...form.getInputProps('receiving_email') }}

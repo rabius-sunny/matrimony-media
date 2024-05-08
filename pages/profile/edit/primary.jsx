@@ -18,7 +18,7 @@ import SaveButton from 'components/bio/SaveButton'
 import updateResponse from 'hooks/updateResponse'
 import { useSession } from 'next-auth/react'
 
-export default function Name() {
+export default function Primary() {
   const {} = useSession({
     required: true
   })
@@ -78,7 +78,7 @@ export default function Name() {
   return (
     <ProfileLayout
       data={data}
-      loading={loading}
+      loading={!data || loading}
     >
       <Head>
         <title>প্রাথমিক তথ্য</title>
@@ -96,7 +96,7 @@ export default function Name() {
         preventClose={false}
         color={visible.done ? 'success' : 'error'}
       />
-      {loading ? (
+      {loading || !data ? (
         <FormSkeleton />
       ) : (
         data && (

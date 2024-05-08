@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { signIn, signOut } from 'next-auth/react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
+import userRequest from 'services/network/userRequest'
 
 const links = [
   {
@@ -29,8 +30,12 @@ export default function Navigation() {
   const { status } = useSession()
   const { push } = useRouter()
 
-  const handleLogOut = (_) => {
+  const handleLogOut = () => {
     signOut()
+  }
+  const handleLogin = async () => {
+    await signIn('google')
+    await userRequest.signinOrCreateBio()
   }
 
   return (
@@ -79,7 +84,7 @@ export default function Navigation() {
               <button
                 onClick={() => {
                   status === 'unauthenticated'
-                    ? signIn('google')
+                    ? handleLogin()
                     : push('/profile/edit/primary')
                 }}
                 className='ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-primary  px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-dark'
@@ -141,7 +146,7 @@ export default function Navigation() {
                       <Menu.Item key={item.href}>
                         {({ active }) => (
                           <button
-                            onClick={() => router.push(item.href)}
+                            onClick={() => push(item.href)}
                             className='text-left font-medium text-primary hover:text-dark'
                           >
                             {item.name}
@@ -154,15 +159,26 @@ export default function Navigation() {
               </div>
               <div className='space-y-6 py-6 px-5'>
                 <div>
-                  <Link
-                    legacyBehavior
-                    href={'/sign-in'}
+                  <button
+                    onClick={() => {
+                      status === 'unauthenticated'
+                        ? handleLogin()
+                        : push('/profile/edit/primary')
+                    }}
+                    className='flex w-full items-center justify-center rounded-md border border-transparent bg-primary  px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-dark'
                   >
-                    <a className='flex w-full items-center justify-center rounded-md border border-transparent bg-primary  px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-dark'>
-                      সিভি পাঠান
-                    </a>
-                  </Link>
+                    সিভি পাঠান
+                  </button>
                 </div>
+                {status === 'authenticated' && (
+                  <button
+                    onClick={handleLogOut}
+                    className='flex items-center gap-2 w-full justify-center bg-slate-200 py-2 rounded-md'
+                  >
+                    লগ আউট{' '}
+                    <LogoutIcon className='text-primary hover:text-dark h-6' />
+                  </button>
+                )}
               </div>
             </div>
           </Popover.Panel>

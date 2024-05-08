@@ -1,5 +1,5 @@
 export default function updateResponse(info, mutate) {
-  if (info.message === 'ok') {
+  if (info.ok) {
     mutate()
     typeof window !== 'undefined' &&
       window.scroll({

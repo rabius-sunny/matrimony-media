@@ -9,9 +9,6 @@ import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import state, { persistor } from 'services/state'
 import { SessionProvider } from 'next-auth/react'
-import { useEffect } from 'react'
-import { instance } from 'services/network/http'
-import { getCookie } from 'utils/getCookie'
 
 export default function MyApp({
   Component,

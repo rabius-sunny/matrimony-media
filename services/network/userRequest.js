@@ -1,41 +1,44 @@
-import requests from './http'
+import useRequest from './useRequest'
 
 class UserRequests {
   signIn(body) {
-    return requests.post('/sign-in', body)
+    return useRequest().post('/sign-in', body)
+  }
+  signinOrCreateBio() {
+    return useRequest('check').get('/signin-or-createbio')
   }
   getUser() {
-    return requests.get('/get-user')
+    return useRequest().get('/get-user')
   }
   getType() {
-    return requests.get('/get-type')
+    return useRequest().get('/get-type')
   }
   getFavorites(uIds) {
-    return requests.post('/favorites', { uIds })
+    return useRequest().post('/favorites', { uIds })
   }
   checkFavorite(bioid) {
-    return requests.get(`/is-favorite/${bioid}`)
+    return useRequest().get(`/is-favorite/${bioid}`)
   }
   addToBookmark(uId) {
-    return requests.get(`/add-favorites/${uId}`)
+    return useRequest().get(`/add-favorites/${uId}`)
   }
   removeBookmark(uId) {
-    return requests.delete(`/delete-favorites/${uId}`)
+    return useRequest().delete(`/delete-favorites/${uId}`)
   }
   getFeatureds() {
-    return requests.get('/get-featureds')
+    return useRequest().get('/get-featureds')
   }
   makeRequest(body) {
-    return requests.post('/request-info', body)
+    return useRequest().post('/request-info', body)
   }
   deleteRequest(reason) {
-    return requests.post('/delete-request', reason)
+    return useRequest().post('/delete-request', reason)
   }
   hideByUser() {
-    return requests.get('/hide-by-user')
+    return useRequest().get('/hide-by-user')
   }
   postMessage(body) {
-    return requests.post('/post-message', body)
+    return useRequest().post('/post-message', body)
   }
 }
 
