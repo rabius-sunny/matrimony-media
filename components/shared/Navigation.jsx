@@ -35,7 +35,6 @@ export default function Navigation() {
   }
   const handleLogin = async () => {
     await signIn('google')
-    await userRequest.signinOrCreateBio()
   }
 
   return (

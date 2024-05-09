@@ -4,9 +4,6 @@ class UserRequests {
   signIn(body) {
     return useRequest().post('/sign-in', body)
   }
-  signinOrCreateBio() {
-    return useRequest('check').get('/signin-or-createbio')
-  }
   getUser() {
     return useRequest().get('/get-user')
   }

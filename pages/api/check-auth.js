@@ -2,7 +2,7 @@ import authOptions from 'configs/authOptions'
 import { getServerSession } from 'next-auth/next'
 import CryptoJS from 'crypto-js'
 
-export default async function GET(req, res) {
+export default async function handler(req, res) {
   const session = await getServerSession(req, res, authOptions)
 
   if (!session) {
