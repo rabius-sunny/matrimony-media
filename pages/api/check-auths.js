@@ -5,10 +5,11 @@ import CryptoJS from 'crypto-js'
 export default async function handler(req, res) {
   const session = await getServerSession(req, res, authOptions)
 
+  console.log('session', session)
+
   if (!session) {
     return res.json({ auth: false })
   }
-  /** @TODO encrypt the email before sending */
   const encrypted = CryptoJS.AES.encrypt(
     session.user.email,
     process.env.CRYPTO_SECRET

@@ -1,4 +1,5 @@
 import axios from 'axios'
+import useCheckAuth from './useCheckAuth'
 
 export default function useRequest(check = null) {
   const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL
