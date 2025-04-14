@@ -12,8 +12,12 @@ import Head from 'next/head'
 import LongModal from 'components/shared/Modals/LongModal'
 import SaveButton from 'components/bio/SaveButton'
 import updateResponse from 'hooks/updateResponse'
+import { useSession } from 'next-auth/react'
 
 export default function Family() {
+  const {} = useSession({
+    required: true
+  })
   const { data, loading, mutate } = getData('family')
   const [visible, setVisible] = useState({
     message: '',

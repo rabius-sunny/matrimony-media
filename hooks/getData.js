@@ -1,10 +1,10 @@
-import requests from 'services/network/http'
+import useRequest from 'services/network/useRequest'
 import useSWR from 'swr'
 
 export default function getData(key) {
   const { data, error, isLoading, mutate } = useSWR(
     `/get-specific-data/${key}`,
-    requests.get
+    useRequest('auth').get
   )
   return {
     data,

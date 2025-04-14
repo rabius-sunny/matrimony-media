@@ -20,8 +20,12 @@ import biodataRequests from 'services/network/biodataRequests'
 import LongModal from 'components/shared/Modals/LongModal'
 import SaveButton from 'components/bio/SaveButton'
 import updateResponse from 'hooks/updateResponse'
+import { useSession } from 'next-auth/react'
 
 export default function GeneralInfo() {
+  const {} = useSession({
+    required: true
+  })
   const [visible, setVisible] = useState({
     message: '',
     status: false,

@@ -15,8 +15,12 @@ import { ExclamationIcon } from '@heroicons/react/solid'
 import LongModal from 'components/shared/Modals/LongModal'
 import SaveButton from 'components/bio/SaveButton'
 import updateResponse from 'hooks/updateResponse'
+import { useSession } from 'next-auth/react'
 
 export default function PersonalInfo() {
+  const {} = useSession({
+    required: true
+  })
   const { data, loading, mutate } = getData('personal')
   const [visible, setVisible] = useState({
     message: '',

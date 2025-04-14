@@ -8,8 +8,12 @@ import { AppWrapper } from 'utils/context'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import state, { persistor } from 'services/state'
+import { SessionProvider } from 'next-auth/react'
 
-export default function MyApp({ Component, pageProps }) {
+export default function MyApp({
+  Component,
+  pageProps: { session, ...pageProps }
+}) {
   process.env.NODE_ENV === 'production' &&
     console.log(`
   developer: Rabius Sunny \n
@@ -17,7 +21,7 @@ export default function MyApp({ Component, pageProps }) {
   linkedin: linkedin.com/in/rabius-sunny
   `)
   return (
-    <>
+    <SessionProvider session={session}>
       <Head>
         <link
           rel='icon'
@@ -44,6 +48,6 @@ export default function MyApp({ Component, pageProps }) {
           </Layout>
         </PersistGate>
       </Provider>
-    </>
+    </SessionProvider>
   )
 }

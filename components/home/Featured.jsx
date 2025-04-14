@@ -1,13 +1,11 @@
 import BioCard from 'components/shared/BioCard'
 import CardSkeleton from 'components/shared/CardSkeleton'
 import useAsync from 'hooks/useAsync'
-import userRequest from 'services/network/userRequest'
+import useRequest from 'services/network/useRequest'
 
 export default function Featured() {
-  const { data, error, isLoading } = useAsync(
-    '/get-featureds',
-    userRequest.getFeatureds
-  )
+  const request = useRequest()
+  const { data, error, isLoading } = useAsync('/get-featureds', request.get)
 
   return (
     <div>

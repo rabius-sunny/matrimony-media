@@ -1,12 +1,11 @@
 import { Fragment } from 'react'
 import { Menu, Popover, Transition } from '@headlessui/react'
-import { MenuIcon, XIcon } from '@heroicons/react/outline'
+import { LogoutIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
 import Link from 'next/link'
+import { signIn, signOut } from 'next-auth/react'
+import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
-import useAuth from 'hooks/useAuth'
-import { LogoutIcon } from '@heroicons/react/outline'
-import { useDispatch } from 'react-redux'
-import { addBookmark } from 'services/state/dataSlice'
+import userRequest from 'services/network/userRequest'
 
 const links = [
   {
@@ -28,18 +27,14 @@ const links = [
 ]
 
 export default function Navigation() {
-  const dispatch = useDispatch()
-  const router = useRouter()
-  const auth = useAuth()
+  const { status } = useSession()
+  const { push } = useRouter()
 
-  const _reload = (_) => window.location.reload()
-
-  const handleLogOut = (_) => {
-    localStorage.removeItem('token')
-    localStorage.removeItem('id')
-    dispatch(addBookmark(null))
-    if (router.pathname === '/') _reload()
-    router.push('/')
+  const handleLogOut = () => {
+    signOut()
+  }
+  const handleLogin = async () => {
+    await signIn('google')
   }
 
   return (
@@ -85,15 +80,17 @@ export default function Navigation() {
               ))}
             </div>
             <div className='hidden items-center justify-end lg:flex lg:flex-1 lg:w-0'>
-              <Link
-                legacyBehavior
-                href={auth ? '/profile/edit/primary' : '/sign-in'}
+              <button
+                onClick={() => {
+                  status === 'unauthenticated'
+                    ? handleLogin()
+                    : push('/profile/edit/primary')
+                }}
+                className='ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-primary  px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-dark'
               >
-                <a className='ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-primary  px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-dark'>
-                  সিভি পাঠান
-                </a>
-              </Link>
-              {auth && (
+                সিভি পাঠান
+              </button>
+              {status === 'authenticated' && (
                 <button onClick={handleLogOut}>
                   <LogoutIcon className='h-12 ml-4 text-primary hover:text-dark' />
                 </button>
@@ -148,7 +145,7 @@ export default function Navigation() {
                       <Menu.Item key={item.href}>
                         {({ active }) => (
                           <button
-                            onClick={() => router.push(item.href)}
+                            onClick={() => push(item.href)}
                             className='text-left font-medium text-primary hover:text-dark'
                           >
                             {item.name}
@@ -156,31 +153,31 @@ export default function Navigation() {
                         )}
                       </Menu.Item>
                     ))}
-                    <Menu.Item>
-                      {({ active }) =>
-                        auth ? (
-                          <button onClick={handleLogOut}>
-                            <LogoutIcon className='h-8 text-primary text-center hover:text-dark' />
-                          </button>
-                        ) : (
-                          <div></div>
-                        )
-                      }
-                    </Menu.Item>
                   </Menu.Items>
                 </div>
               </div>
               <div className='space-y-6 py-6 px-5'>
                 <div>
-                  <Link
-                    legacyBehavior
-                    href={auth ? '/profile/edit/primary' : '/sign-in'}
+                  <button
+                    onClick={() => {
+                      status === 'unauthenticated'
+                        ? handleLogin()
+                        : push('/profile/edit/primary')
+                    }}
+                    className='flex w-full items-center justify-center rounded-md border border-transparent bg-primary  px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-dark'
                   >
-                    <a className='flex w-full items-center justify-center rounded-md border border-transparent bg-primary  px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-dark'>
-                      সিভি পাঠান
-                    </a>
-                  </Link>
+                    সিভি পাঠান
+                  </button>
                 </div>
+                {status === 'authenticated' && (
+                  <button
+                    onClick={handleLogOut}
+                    className='flex items-center gap-2 w-full justify-center bg-slate-200 py-2 rounded-md'
+                  >
+                    লগ আউট{' '}
+                    <LogoutIcon className='text-primary hover:text-dark h-6' />
+                  </button>
+                )}
               </div>
             </div>
           </Popover.Panel>
